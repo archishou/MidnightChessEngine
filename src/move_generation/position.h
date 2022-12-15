@@ -180,33 +180,6 @@ inline Bitboard Position::attackers_from(Square s, Bitboard occ) const {
 		(attacks<ROOK>(s, occ) & (piece_bb[BLACK_ROOK] | piece_bb[BLACK_QUEEN]));
 }
 
-
-/*template<Color C>
-Bitboard Position::pinned(Square s, Bitboard us, Bitboard occ) const {
-	Bitboard pinned = 0;
-
-	Bitboard pinners = get_xray_rook_attacks(s, occ, us) & orthogonal_sliders<~C>();
-	while (pinners) pinned |= SQUARES_BETWEEN_BB[s][pop_lsb(&pinners)] & us;
-
-	pinners = get_xray_bishop_attacks(s, occ, us) & diagonal_sliders<~C>();
-	while (pinners) pinned |= SQUARES_BETWEEN_BB[s][pop_lsb(&pinners)] & us;
-
-	return pinned;
-}
-
-template<Color C>
-Bitboard Position::blockers_to(Square s, Bitboard occ) const {
-	Bitboard blockers = 0;
-	Bitboard candidates = get_rook_attacks(s, occ) & occ;
-	Bitboard attackers = get_rook_attacks(s, occ ^ candidates) & orthogonal_sliders<~C>();
-
-	candidates = get_bishop_attacks(s, occ) & occ;
-	attackers |= get_bishop_attacks(s, occ ^ candidates) & diagonal_sliders<~C>();
-
-	while (attackers) blockers |= SQUARES_BETWEEN_BB[s][pop_lsb(&attackers)];
-	return blockers;
-}*/
-
 //Plays a move in the position
 template<Color C>
 void Position::play(const Move m) {
@@ -694,7 +667,7 @@ public:
 	const Move* begin() const { return list; }
 	const Move* end() const { return last; }
 	size_t size() const { return last - list; }
+    Move list[218];
 private:
-	Move list[218];
 	Move *last;
 };

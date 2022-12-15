@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include "move_generation/tables.h"
 #include "move_generation/position.h"
 #include "move_generation/types.h"
@@ -63,5 +64,25 @@ void test_perft() {
 int main() {
     initialise_all_databases();
     zobrist::initialise_zobrist_keys();
-    test_perft();
+    Position p;
+    Position::set("rnbqkbnr/pppppppp/8/8/8/8/PPPP1PPP/RNBQKBNR w KQkq -", p);
+    std::cout << p;
+
+    std::string userMove;
+    std::cin >> userMove;
+
+    while (userMove != "quit") {
+
+        MoveList<WHITE> moveList(p);
+        int moveListLength = sizeof(moveList.list) / sizeof(moveList.list[0]);
+
+        std::random_device dev;
+        std::mt19937 rng(dev());
+        std::uniform_int_distribution<std::mt19937::result_type> dist6(0,moveListLength);
+
+        int randomIdx = dist6(rng);
+
+        std::cout << randomIdx << std::endl;
+        std::cout << moveList.list[randomIdx];
+    }
 }
