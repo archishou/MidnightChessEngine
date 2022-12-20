@@ -68,21 +68,17 @@ int main() {
     Position::set("rnbqkbnr/pppppppp/8/8/8/8/PPPP1PPP/RNBQKBNR w KQkq -", p);
     std::cout << p;
 
-    std::string userMove;
-    std::cin >> userMove;
+    std::string userInput;
+    std::cin >> userInput;
 
-    while (userMove != "quit") {
+    MoveList<WHITE> moveList(p);
+    int moveListLength = sizeof(moveList.list) / sizeof(moveList.list[0]);
 
-        MoveList<WHITE> moveList(p);
-        int moveListLength = sizeof(moveList.list) / sizeof(moveList.list[0]);
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(0,moveListLength);
 
-        std::random_device dev;
-        std::mt19937 rng(dev());
-        std::uniform_int_distribution<std::mt19937::result_type> dist6(0,moveListLength);
+    Move randMove = moveList.list[dist6(rng)];
 
-        int randomIdx = dist6(rng);
-
-        std::cout << randomIdx << std::endl;
-        std::cout << moveList.list[randomIdx];
-    }
+    std::cin >> userInput;
 }
