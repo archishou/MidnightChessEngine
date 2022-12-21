@@ -82,12 +82,10 @@ Move randomMove(Position board) {
 }
 template <Color color>
 int checkmate(Position board) {
-    std::cout << "here 2" << std::endl;
     MoveList<color> moveList(board);
-    std::cout << "here 3" << std::endl;
     return moveList.size() == 0;
 }
-
+/*
 int main() {
     initialise_all_databases();
     zobrist::initialise_zobrist_keys();
@@ -96,33 +94,21 @@ int main() {
     Position::set(startFen, board);
     std::cout << board;
 
-    int totalMovesMade = 0;
     while (true) {
-        std::cout << "here 0" << std::endl;
         if (!checkmate<WHITE>(board)) {
-            std::cout << "here 4" << std::endl;
             Move move = randomMove<WHITE>(board);
-            std::cout << "here 5" << std::endl;
             board.play<WHITE>(move);
-            totalMovesMade += 1;
-            std::cout << board << totalMovesMade << std::endl;
-        } else {break;}
-        std::cout << "here 1" << std::endl;
+            std::cout << board << std::endl;
+        } else { break; }
         if (!checkmate<BLACK>(board)) {
-            std::cout << "here 6" << std::endl;
             Move move = randomMove<BLACK>(board);
-            std::cout << "here 7" << std::endl;
             board.play<BLACK>(move);
-            totalMovesMade += 1;
-
-            std::cout << board << totalMovesMade << std::endl;
-        } else {break;}
-        std::cout << "here 10" << std::endl;
+            std::cout << board << std::endl;
+        } else { break; }
     }
-    std::cout << "COMPLETE" << std::endl;
 
     return 0;
-}
+}*/
 
 /*int main() {
     initialise_all_databases();
@@ -130,7 +116,8 @@ int main() {
     test_perft();
 }*/
 
-/*using namespace std;
+/*
+using namespace std;
 
 int main () {
     const Color team = WHITE;
@@ -165,14 +152,7 @@ int main () {
         } else if ( Line.substr( 0, 2 ) == "go" ) {
             // Received a command like: "go wtime 300000 btime 300000 winc 0 binc 0"
 
-            MoveList<team> moveList(p);
-            int moveListLength = sizeof(moveList.list) / sizeof(moveList.list[0]);
-
-            std::random_device dev;
-            std::mt19937 rng(dev());
-            std::uniform_int_distribution<std::mt19937::result_type> dist6(0,moveListLength);
-
-            Move randMove = moveList.list[dist6(rng)];
+            Move randMove = randomMove<team>(p);
             p.play<team>(randMove);
             cout << "bestmove " << randMove << endl;
             //Output like: "bestmove h7h5"
@@ -183,3 +163,11 @@ int main () {
     return 0;
 }
  */
+
+int main() {
+    initialise_all_databases();
+    zobrist::initialise_zobrist_keys();
+    Position p;
+    const std::string& startFen ="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" ;
+    Position::set(startFen, p);
+}

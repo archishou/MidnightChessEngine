@@ -74,7 +74,10 @@ private:
 	uint64_t hash;
 public:
 	//The history of non-recoverable information
-	UndoInfo history[256];
+    //Longest game in history was
+    //269 moves between Ivan Nikolic vs. Goran Arsovic, Belgrade, 1989.
+    //The game ended in a draw. 300 should be plenty!
+	UndoInfo history[300];
 	
 	//The bitboard of enemy pieces that are currently attacking the king, updated whenever generate_moves()
 	//is called
