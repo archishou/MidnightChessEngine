@@ -394,13 +394,13 @@ Move* Position::generate_legals(Move* list) {
 	//Checkers of each piece type are identified by:
 	//1. Projecting attacks FROM the king square
 	//2. Intersecting this bitboard with the enemy bitboard of that piece type
-	checkers = attacks<KNIGHT>(our_king, all) & bitboard_of(Them, KNIGHT)
-		| pawn_attacks<Us>(our_king) & bitboard_of(Them, PAWN);
+	checkers = (attacks<KNIGHT>(our_king, all) & bitboard_of(Them, KNIGHT))
+		| (pawn_attacks<Us>(our_king) & bitboard_of(Them, PAWN));
 	
 	//Here, we identify slider checkers and pinners simultaneously, and candidates for such pinners 
 	//and checkers are represented by the bitboard <candidates>
-	Bitboard candidates = attacks<ROOK>(our_king, them_bb) & their_orth_sliders
-		| attacks<BISHOP>(our_king, them_bb) & their_diag_sliders;
+	Bitboard candidates = (attacks<ROOK>(our_king, them_bb) & their_orth_sliders)
+		| (attacks<BISHOP>(our_king, them_bb) & their_diag_sliders);
 
 	pinned = 0;
 	while (candidates) {
@@ -667,7 +667,7 @@ public:
 	const Move* begin() const { return list; }
 	const Move* end() const { return last; }
 	size_t size() const { return last - list; }
-    Move list[218];
 private:
+    Move list[218];
 	Move *last;
 };
