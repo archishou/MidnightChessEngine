@@ -53,7 +53,6 @@ int main() {
     const std::string& Line = "c2c4 h7h5 d2d4 h8h7 c1f4 c7c5 d4c5 g7g6 g1h3 d8a5 b1c3 a5c3 d1d2 c3c1";
     for (int i = 0; i < Line.size(); i += 5) {
         Move nextMove(Line.substr(i, 4));
-        std::cout << nextMove << std::endl;
         if (p.turn() == BLACK) {
             std::cout << MoveList<BLACK>(p).size() << std::endl;
             p.play<BLACK>(nextMove);
@@ -62,6 +61,20 @@ int main() {
             std::cout << MoveList<WHITE>(p).size() << std::endl;
             p.play<WHITE>(nextMove);
         }
+    }
+    if (p.turn() == BLACK) {
+        std::cout << MoveList<BLACK>(p).size() << std::endl;
+    }
+    else {
+        std::cout << MoveList<WHITE>(p).size() << std::endl;
+    }
+    Position check;
+    Position::set(p.fen(), check);
+    if (check.turn() == BLACK) {
+        std::cout << MoveList<BLACK>(check).size() << std::endl;
+    }
+    else {
+        std::cout << MoveList<WHITE>(check).size() << std::endl;
     }
     return 0;
 }
@@ -123,8 +136,6 @@ int main () {
 
 /*
 int main () {
-
-
     initialise_all_databases();
     zobrist::initialise_zobrist_keys();
     Position p;
