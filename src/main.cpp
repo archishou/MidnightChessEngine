@@ -59,8 +59,8 @@ int main() {
 }
 */
 
+/*
 int main () {
-
     initialise_all_databases();
     zobrist::initialise_zobrist_keys();
     Position p;
@@ -74,9 +74,61 @@ int main () {
 
     ofstream myfile;
     myfile.open ("/Users/Archish/Documents/CodeProjects/C/ChessEngine/src/example.txt");
-    if (myfile.is_open()) {
-        std::cout << "FILE OPEN" << std::endl;
+    while( getline( cin, Line ) ) {
+        myfile << Line << std::endl;
+        if ( Line == "uci" ) {
+            cout << "id name Demo_engine" << endl;
+            cout << "id author XXX" << endl;
+            cout << "uciok" << endl;
+        } else if ( Line == "quit" ) {
+            cout << "Bye Bye" << endl;
+            break;
+        } else if ( Line == "isready" ) {
+            cout << "readyok" << endl;
+        } else if ( Line == "ucinewgame" ) {
+            ; // nothing to do
+        }
+
+        if ( Line.substr(0,23) == "position startpos moves") {
+        } else if ( Line == "stop" ) {
+            ; // nothing to do
+        } else if ( Line.substr( 0, 2 ) == "go" ) {
+            // Received a command like: "go wtime 300000 btime 300000 winc 0 binc 0"
+            Move move;
+            if (p.turn() == BLACK) {
+                move = bestMove<BLACK>(p);
+                p.play<BLACK>(move);
+            } else {
+                move = bestMove<WHITE>(p);
+                p.play<WHITE>(move);
+            }
+            myfile << "Predicted Best Move: " << move << ":" << p.ply() << std::endl;
+            cout << "bestmove " << move << endl;
+            //Output like: "bestmove h7h5"
+            flag++; //increase flag to move other pawn on next turn
+        }
     }
+    myfile.close();
+
+    return 0;
+}
+ */
+
+
+int main () {
+    initialise_all_databases();
+    zobrist::initialise_zobrist_keys();
+    Position p;
+    const std::string& startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    Position::set(startFen, p);
+
+    string Line; //to read the command given by the GUI
+    int flag = 2; //to change the value of chess squares from 'a' to 'h'
+
+    cout.setf (ios::unitbuf);// Make sure that the outputs are sent straight away to the GUI
+
+    ofstream myfile;
+    myfile.open ("/Users/Archish/Documents/CodeProjects/C/ChessEngine/src/example.txt");
     while( getline( cin, Line ) ) {
         myfile << Line << std::endl;
         if ( Line == "uci" ) {
@@ -95,28 +147,18 @@ int main () {
         if ( Line.substr(0,23) == "position startpos moves") {
             Position::set(startFen, p);
             for (int i = 24; i < Line.size(); i += 5) {
-                Move move = Move(Line.substr(i, 4));
-                if (p.turn() == BLACK) {
-                    p.play<BLACK>(move);
-                } else {
-                    p.play<WHITE>(move);
-                }
+                Move nextMove(Line.substr(i, 4));
+                if (p.turn() == BLACK) p.play<BLACK>(nextMove);
+                else p.play<WHITE>(nextMove);
             }
-            myfile << "Loaded Fen: " << p.fen() << std::endl;
         } else if ( Line == "stop" ) {
             ; // nothing to do
         } else if ( Line.substr( 0, 2 ) == "go" ) {
             // Received a command like: "go wtime 300000 btime 300000 winc 0 binc 0"
-
             Move move;
-            myfile << "Current Fen: " << p.fen() << std::endl;
-            myfile << "Current Turn: " << p.turn() << std::endl;
-            if (p.turn() == BLACK) {
-                move = bestMove<BLACK>(p);
-            } else {
-                move = bestMove<WHITE>(p);
-            }
-            myfile << "Predicted Best Move: " << move << std::endl;
+            if (p.turn() == BLACK) move = bestMove<BLACK>(p);
+            else move = bestMove<WHITE>(p);
+            myfile << "Predicted Best Move: " << move << ":" << p.ply() << std::endl;
             cout << "bestmove " << move << endl;
             //Output like: "bestmove h7h5"
             flag++; //increase flag to move other pawn on next turn
