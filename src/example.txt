@@ -3,121 +3,743 @@ ucinewgame
 isready
 position startpos
 go movetime 100
-Predicted Best Move: d2d3:0
-position startpos moves d2d3
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | q | k | b | n | r | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | p | p | p | p | p | p | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | . | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | . | . | . | . | . | . | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | . | . | . | . | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | . | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | P | P | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | N | B | Q | K | B | N | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -
+Hash: 0x2278897016d03aa6
+
+Possible Move: b1a3
+Possible Move: b1c3
+Possible Move: g1f3
+Possible Move: g1h3
+Possible Move: a2a3
+Possible Move: b2b3
+Possible Move: c2c3
+Possible Move: d2d3
+Possible Move: e2e3
+Possible Move: f2f3
+Possible Move: g2g3
+Possible Move: h2h3
+Possible Move: a2a4
+Possible Move: b2b4
+Possible Move: c2c4
+Possible Move: d2d4
+Possible Move: e2e4
+Possible Move: f2f4
+Possible Move: g2g4
+Possible Move: h2h4
+Predicted Best Move: c2c4:0
+position startpos moves c2c4
+Equal? 1
 go movetime 100
-Predicted Best Move: d7d5:1
-position startpos moves d2d3 d7d5
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | q | k | b | n | r | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | p | p | p | p | p | p | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | . | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | . | . | . | . | . | . | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | . | . | . | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | . | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | P | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | N | B | Q | K | B | N | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR b KQkq -
+Hash: 0x69f66d3bcba39ddd
+
+Possible Move: b8a6
+Possible Move: b8c6
+Possible Move: g8f6
+Possible Move: g8h6
+Possible Move: a7a6
+Possible Move: b7b6
+Possible Move: c7c6
+Possible Move: d7d6
+Possible Move: e7e6
+Possible Move: f7f6
+Possible Move: g7g6
+Possible Move: h7h6
+Possible Move: a7a5
+Possible Move: b7b5
+Possible Move: c7c5
+Possible Move: d7d5
+Possible Move: e7e5
+Possible Move: f7f5
+Possible Move: g7g5
+Possible Move: h7h5
+Predicted Best Move: h7h5:1
+position startpos moves c2c4 h7h5
+Equal? 1
 go movetime 100
-Predicted Best Move: c1g5:2
-position startpos moves d2d3 d7d5 c1g5
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | q | k | b | n | r | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | p | p | p | p | p | . | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | . | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | . | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | . | . | . | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | . | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | P | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | N | B | Q | K | B | N | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnbqkbnr/ppppppp1/8/7p/2P5/8/PP1PPPPP/RNBQKBNR w KQkq -
+Hash: 0x89e4b32e1ac7b99e
+
+Possible Move: b1a3
+Possible Move: b1c3
+Possible Move: g1f3
+Possible Move: g1h3
+Possible Move: d1c2
+Possible Move: d1b3
+Possible Move: d1a4
+Possible Move: a2a3
+Possible Move: b2b3
+Possible Move: d2d3
+Possible Move: e2e3
+Possible Move: f2f3
+Possible Move: g2g3
+Possible Move: h2h3
+Possible Move: c4c5
+Possible Move: a2a4
+Possible Move: b2b4
+Possible Move: d2d4
+Possible Move: e2e4
+Possible Move: f2f4
+Possible Move: g2g4
+Possible Move: h2h4
+Predicted Best Move: d2d4:2
+position startpos moves c2c4 h7h5 d2d4
+Equal? 1
 go movetime 100
-Predicted Best Move: d5d4:3
-position startpos moves d2d3 d7d5 c1g5 d5d4
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | q | k | b | n | r | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | p | p | p | p | p | . | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | . | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | . | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | P | . | . | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | . | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | . | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | N | B | Q | K | B | N | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnbqkbnr/ppppppp1/8/7p/2PP4/8/PP2PPPP/RNBQKBNR b KQkq -
+Hash: 0xd61cd870b5d54bcb
+
+Possible Move: b8a6
+Possible Move: b8c6
+Possible Move: g8f6
+Possible Move: g8h6
+Possible Move: h8h6
+Possible Move: h8h7
+Possible Move: h5h4
+Possible Move: a7a6
+Possible Move: b7b6
+Possible Move: c7c6
+Possible Move: d7d6
+Possible Move: e7e6
+Possible Move: f7f6
+Possible Move: g7g6
+Possible Move: a7a5
+Possible Move: b7b5
+Possible Move: c7c5
+Possible Move: d7d5
+Possible Move: e7e5
+Possible Move: f7f5
+Possible Move: g7g5
+Predicted Best Move: h8h7:3
+position startpos moves c2c4 h7h5 d2d4 h8h7
+Equal? 1
 go movetime 100
-Predicted Best Move: a2a4:4
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | q | k | b | n | . | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | p | p | p | p | p | r | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | . | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | . | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | P | . | . | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | . | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | . | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | N | B | Q | K | B | N | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnbqkbn1/pppppppr/8/7p/2PP4/8/PP2PPPP/RNBQKBNR w KQq-  -
+Hash: 0xabfd5264ac9a9818
+
+Possible Move: e1d2
+Possible Move: b1d2
+Possible Move: b1a3
+Possible Move: b1c3
+Possible Move: g1f3
+Possible Move: g1h3
+Possible Move: c1d2
+Possible Move: c1e3
+Possible Move: c1f4
+Possible Move: c1g5
+Possible Move: c1h6
+Possible Move: d1c2
+Possible Move: d1b3
+Possible Move: d1a4
+Possible Move: d1d2
+Possible Move: d1d3
+Possible Move: a2a3
+Possible Move: b2b3
+Possible Move: e2e3
+Possible Move: f2f3
+Possible Move: g2g3
+Possible Move: h2h3
+Possible Move: c4c5
+Possible Move: d4d5
+Possible Move: a2a4
+Possible Move: b2b4
+Possible Move: e2e4
+Possible Move: f2f4
+Possible Move: g2g4
+Possible Move: h2h4
+Predicted Best Move: c1f4:4
+position startpos moves c2c4 h7h5 d2d4 h8h7 c1f4
+Equal? 1
 go movetime 100
-Predicted Best Move: b8d7:5
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | q | k | b | n | . | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | p | p | p | p | p | r | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | . | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | . | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | P | . | B | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | . | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | . | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | N | . | Q | K | B | N | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnbqkbn1/pppppppr/8/7p/2PP1B2/8/PP2PPPP/RN1QKBNR b KQq-  -
+Hash: 0x28581a3bc8ec9899
+
+Possible Move: b8a6
+Possible Move: b8c6
+Possible Move: g8f6
+Possible Move: g8h6
+Possible Move: h7h6
+Possible Move: h7h8
+Possible Move: h5h4
+Possible Move: a7a6
+Possible Move: b7b6
+Possible Move: c7c6
+Possible Move: d7d6
+Possible Move: e7e6
+Possible Move: f7f6
+Possible Move: g7g6
+Possible Move: a7a5
+Possible Move: b7b5
+Possible Move: c7c5
+Possible Move: d7d5
+Possible Move: e7e5
+Possible Move: f7f5
+Possible Move: g7g5
+Predicted Best Move: c7c5:5
+position startpos moves c2c4 h7h5 d2d4 h8h7 c1f4 c7c5
+Equal? 1
 go movetime 100
-Predicted Best Move: g5e7 (capture):6
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | q | k | b | n | . | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | . | p | p | p | p | r | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | . | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | p | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | P | . | B | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | . | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | . | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | N | . | Q | K | B | N | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnbqkbn1/pp1ppppr/8/2p4p/2PP1B2/8/PP2PPPP/RN1QKBNR w KQq-  -
+Hash: 0xa053d2e0cdc17a02
+
+Possible Move: e1d2
+Possible Move: b1d2
+Possible Move: b1a3
+Possible Move: b1c3
+Possible Move: g1f3
+Possible Move: g1h3
+Possible Move: d1c2
+Possible Move: d1b3
+Possible Move: d1a4
+Possible Move: f4c1
+Possible Move: f4d2
+Possible Move: f4e3
+Possible Move: f4g3
+Possible Move: f4e5
+Possible Move: f4g5
+Possible Move: f4d6
+Possible Move: f4h6
+Possible Move: f4c7
+Possible Move: f4b8 (capture)
+Possible Move: d1c1
+Possible Move: d1d2
+Possible Move: d1d3
+Possible Move: a2a3
+Possible Move: b2b3
+Possible Move: e2e3
+Possible Move: f2f3
+Possible Move: g2g3
+Possible Move: h2h3
+Possible Move: d4d5
+Possible Move: a2a4
+Possible Move: b2b4
+Possible Move: e2e4
+Possible Move: g2g4
+Possible Move: h2h4
+Possible Move: d4c5 (capture)
+Predicted Best Move: d4c5 (capture):6
+position startpos moves c2c4 h7h5 d2d4 h8h7 c1f4 c7c5 d4c5
+Equal? 1
 go movetime 100
-Predicted Best Move: h7h5:7
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | q | k | b | n | . | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | . | p | p | p | p | r | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | . | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | P | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | . | . | B | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | . | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | . | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | N | . | Q | K | B | N | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnbqkbn1/pp1ppppr/8/2P4p/2P2B2/8/PP2PPPP/RN1QKBNR b KQq-  -
+Hash: 0xaef773701890b837
+
+Possible Move: b8a6
+Possible Move: b8c6
+Possible Move: g8f6
+Possible Move: g8h6
+Possible Move: d8a5
+Possible Move: d8b6
+Possible Move: d8c7
+Possible Move: h7h6
+Possible Move: h7h8
+Possible Move: h5h4
+Possible Move: a7a6
+Possible Move: b7b6
+Possible Move: d7d6
+Possible Move: e7e6
+Possible Move: f7f6
+Possible Move: g7g6
+Possible Move: a7a5
+Possible Move: b7b5
+Possible Move: d7d5
+Possible Move: e7e5
+Possible Move: f7f5
+Possible Move: g7g5
+Predicted Best Move: g7g6:7
+position startpos moves c2c4 h7h5 d2d4 h8h7 c1f4 c7c5 d4c5 g7g6
+Equal? 1
 go movetime 100
-Predicted Best Move: e7f8 (capture):8
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | q | k | b | n | . | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | . | p | p | p | . | r | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | p | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | P | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | . | . | B | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | . | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | . | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | N | . | Q | K | B | N | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnbqkbn1/pp1ppp1r/6p1/2P4p/2P2B2/8/PP2PPPP/RN1QKBNR w KQq-  -
+Hash: 0x866b890bc3cddc3e
+
+Possible Move: e1d2
+Possible Move: b1d2
+Possible Move: b1a3
+Possible Move: b1c3
+Possible Move: g1f3
+Possible Move: g1h3
+Possible Move: d1c2
+Possible Move: d1b3
+Possible Move: d1a4
+Possible Move: f4c1
+Possible Move: f4d2
+Possible Move: f4e3
+Possible Move: f4g3
+Possible Move: f4e5
+Possible Move: f4g5
+Possible Move: f4d6
+Possible Move: f4h6
+Possible Move: f4c7
+Possible Move: f4b8 (capture)
+Possible Move: d1c1
+Possible Move: d1d2
+Possible Move: d1d3
+Possible Move: d1d4
+Possible Move: d1d5
+Possible Move: d1d6
+Possible Move: d1d7 (capture)
+Possible Move: a2a3
+Possible Move: b2b3
+Possible Move: e2e3
+Possible Move: f2f3
+Possible Move: g2g3
+Possible Move: h2h3
+Possible Move: c5c6
+Possible Move: a2a4
+Possible Move: b2b4
+Possible Move: e2e4
+Possible Move: g2g4
+Possible Move: h2h4
+Predicted Best Move: g1h3:8
+position startpos moves c2c4 h7h5 d2d4 h8h7 c1f4 c7c5 d4c5 g7g6 g1h3
+Equal? 1
 go movetime 100
-Predicted Best Move: h5h4:9
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | q | k | b | n | . | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | . | p | p | p | . | r | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | p | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | P | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | . | . | B | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | N | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | . | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | N | . | Q | K | B | . | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnbqkbn1/pp1ppp1r/6p1/2P4p/2P2B2/7N/PP2PPPP/RN1QKB1R b KQq-  -
+Hash: 0xfd65b9195d3bc0b4
+
+Possible Move: b8a6
+Possible Move: b8c6
+Possible Move: g8f6
+Possible Move: g8h6
+Possible Move: d8a5
+Possible Move: d8b6
+Possible Move: d8c7
+Possible Move: f8h6
+Possible Move: f8g7
+Possible Move: h7h6
+Possible Move: h7g7
+Possible Move: h7h8
+Possible Move: h5h4
+Possible Move: g6g5
+Possible Move: a7a6
+Possible Move: b7b6
+Possible Move: d7d6
+Possible Move: e7e6
+Possible Move: f7f6
+Possible Move: a7a5
+Possible Move: b7b5
+Possible Move: d7d5
+Possible Move: e7e5
+Possible Move: f7f5
+Predicted Best Move: d8a5:9
+position startpos moves c2c4 h7h5 d2d4 h8h7 c1f4 c7c5 d4c5 g7g6 g1h3 d8a5
+Equal? 1
 go movetime 100
-Predicted Best Move: g1h3:10
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | . | k | b | n | . | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | . | p | p | p | . | r | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | p | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | q | . | P | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | . | . | B | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | N | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | . | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | N | . | Q | K | B | . | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnb1kbn1/pp1ppp1r/6p1/q1P4p/2P2B2/7N/PP2PPPP/RN1QKB1R w KQq-  -
+Hash: 0x58204d9645fd5d17
+
+Possible Move: b1d2
+Possible Move: b1c3
+Possible Move: f4d2
+Possible Move: d1d2
+Possible Move: b2b4
+Predicted Best Move: b1c3:10
+position startpos moves c2c4 h7h5 d2d4 h8h7 c1f4 c7c5 d4c5 g7g6 g1h3 d8a5 b1c3
+Equal? 1
 go movetime 100
-Predicted Best Move: g7g6:11
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | . | k | b | n | . | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | . | p | p | p | . | r | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | p | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | q | . | P | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | . | . | B | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | N | . | . | . | . | N | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | . | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | . | . | Q | K | B | . | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnb1kbn1/pp1ppp1r/6p1/q1P4p/2P2B2/2N4N/PP2PPPP/R2QKB1R b KQq-  -
+Hash: 0xdf65eab69e373901
+
+Possible Move: e8d8
+Possible Move: b8a6
+Possible Move: b8c6
+Possible Move: g8f6
+Possible Move: g8h6
+Possible Move: a5b4
+Possible Move: a5b6
+Possible Move: a5c7
+Possible Move: a5d8
+Possible Move: a5c3 (capture)
+Possible Move: f8h6
+Possible Move: f8g7
+Possible Move: a5a3
+Possible Move: a5a4
+Possible Move: a5b5
+Possible Move: a5a6
+Possible Move: a5a2 (capture)
+Possible Move: a5c5 (capture)
+Possible Move: h7h6
+Possible Move: h7g7
+Possible Move: h7h8
+Possible Move: h5h4
+Possible Move: g6g5
+Possible Move: a7a6
+Possible Move: b7b6
+Possible Move: d7d6
+Possible Move: e7e6
+Possible Move: f7f6
+Possible Move: b7b5
+Possible Move: d7d5
+Possible Move: e7e5
+Possible Move: f7f5
+Predicted Best Move: a5c3 (capture):11
+position startpos moves c2c4 h7h5 d2d4 h8h7 c1f4 c7c5 d4c5 g7g6 g1h3 d8a5 b1c3 a5c3
+Equal? 1
 go movetime 100
-Predicted Best Move: e2e3:12
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | . | k | b | n | . | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | . | p | p | p | . | r | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | p | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | P | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | . | . | B | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | q | . | . | . | . | N | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | . | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | . | . | Q | K | B | . | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnb1kbn1/pp1ppp1r/6p1/2P4p/2P2B2/2q4N/PP2PPPP/R2QKB1R w KQq-  -
+Hash: 0x6019f91ad16bc97b
+
+Possible Move: f4d2
+Possible Move: d1d2
+Possible Move: b2c3 (capture)
+Predicted Best Move: d1d2:12
+position startpos moves c2c4 h7h5 d2d4 h8h7 c1f4 c7c5 d4c5 g7g6 g1h3 d8a5 b1c3 a5c3 d1d2
+Equal? 1
 go movetime 100
-Predicted Best Move: h8h5:13
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | . | k | b | n | . | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | . | p | p | p | . | r | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | p | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | P | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | . | . | B | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | q | . | . | . | . | N | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | Q | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | . | . | . | K | B | . | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnb1kbn1/pp1ppp1r/6p1/2P4p/2P2B2/2q4N/PP1QPPPP/R3KB1R b KQq-  -
+Hash: 0x500df498f38c8a5
+
+Possible Move: e8d8
+Possible Move: b8a6
+Possible Move: b8c6
+Possible Move: g8f6
+Possible Move: g8h6
+Possible Move: c3b4
+Possible Move: c3d4
+Possible Move: c3a5
+Possible Move: c3e5
+Possible Move: c3f6
+Possible Move: c3g7
+Possible Move: c3h8
+Possible Move: c3b2 (capture)
+Possible Move: c3d2 (capture)
+Possible Move: f8h6
+Possible Move: f8g7
+Possible Move: c3c1
+Possible Move: c3c2
+Possible Move: c3a3
+Possible Move: c3b3
+Possible Move: c3d3
+Possible Move: c3e3
+Possible Move: c3f3
+Possible Move: c3g3
+Possible Move: c3h3 (capture)
+Possible Move: c3c4 (capture)
+Possible Move: h7h6
+Possible Move: h7g7
+Possible Move: h7h8
+Possible Move: h5h4
+Possible Move: g6g5
+Possible Move: a7a6
+Possible Move: b7b6
+Possible Move: d7d6
+Possible Move: e7e6
+Possible Move: f7f6
+Possible Move: a7a5
+Possible Move: b7b5
+Possible Move: d7d5
+Possible Move: e7e5
+Possible Move: f7f5
+Predicted Best Move: c3c1:13
+position startpos moves c2c4 h7h5 d2d4 h8h7 c1f4 c7c5 d4c5 g7g6 g1h3 d8a5 b1c3 a5c3 d1d2 c3c1
+Equal? 1
 go movetime 100
-Predicted Best Move: b2b3:14
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3
-go movetime 100
-Predicted Best Move: g8h6:15
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6
-go movetime 100
-Predicted Best Move: f8g7:16
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7
-go movetime 100
-Predicted Best Move: h5e5:17
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5
-go movetime 100
-Predicted Best Move: h3g5:18
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5
-go movetime 100
-Predicted Best Move: d7f6:19
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6
-go movetime 100
-Predicted Best Move: f2f4:20
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4
-go movetime 100
-Predicted Best Move: c8d7:21
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7
-go movetime 100
-Predicted Best Move: e1e2:22
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2
-go movetime 100
-Predicted Best Move: e5e6:23
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6
-go movetime 100
-Predicted Best Move: f4f5:24
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5
-go movetime 100
-Predicted Best Move: d4e3 (capture):25
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3
-go movetime 100
-Predicted Best Move: b1c3:26
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3
-go movetime 100
-Predicted Best Move: d8b8:27
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8
-go movetime 100
-Predicted Best Move: c3a2:28
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8 c3a2
-go movetime 100
-Predicted Best Move: c7c6:29
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8 c3a2 c7c6
-go movetime 100
-Predicted Best Move: g7f8 (capture):30
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8 c3a2 c7c6 g7f8
-go movetime 100
-Predicted Best Move: f6h7:31
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8 c3a2 c7c6 g7f8 f6h7
-go movetime 100
-Predicted Best Move: f8e7 (capture):32
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8 c3a2 c7c6 g7f8 f6h7 f8e7
-go movetime 100
-Predicted Best Move: h7g5 (capture):33
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8 c3a2 c7c6 g7f8 f6h7 f8e7 h7g5
-go movetime 100
-Predicted Best Move: d1d2:34
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8 c3a2 c7c6 g7f8 f6h7 f8e7 h7g5 d1d2
-go movetime 100
-Predicted Best Move: a7a6:35
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8 c3a2 c7c6 g7f8 f6h7 f8e7 h7g5 d1d2 a7a6
-go movetime 100
-Predicted Best Move: d3d4:36
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8 c3a2 c7c6 g7f8 f6h7 f8e7 h7g5 d1d2 a7a6 d3d4
-go movetime 100
-Predicted Best Move: b8f4:37
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8 c3a2 c7c6 g7f8 f6h7 f8e7 h7g5 d1d2 a7a6 d3d4 b8f4
-go movetime 100
-Predicted Best Move: e7f6:38
-position startpos moves d2d3 d7d5 c1g5 d5d4 a2a4 b8d7 g5e7 h7h5 e7f8 h5h4 g1h3 g7g6 e2e3 h8h5 b2b3 g8h6 f8g7 h5e5 h3g5 d7f6 f2f4 c8d7 e1e2 e5e6 f4f5 d4e3 b1c3 d8b8 c3a2 c7c6 g7f8 f6h7 f8e7 h7g5 d1d2 a7a6 d3d4 b8f4 e7f6
-go movetime 100
-Predicted Best Move: e8d8:39
+Board      A   B   C   D   E   F   G   H
+   +---+---+---+---+---+---+---+---+
+ 8 | r | n | b | . | k | b | n | . | 8
+   +---+---+---+---+---+---+---+---+
+ 7 | p | p | . | p | p | p | . | r | 7
+   +---+---+---+---+---+---+---+---+
+ 6 | . | . | . | . | . | . | p | . | 6
+   +---+---+---+---+---+---+---+---+
+ 5 | . | . | P | . | . | . | . | p | 5
+   +---+---+---+---+---+---+---+---+
+ 4 | . | . | P | . | . | B | . | . | 4
+   +---+---+---+---+---+---+---+---+
+ 3 | . | . | . | . | . | . | . | N | 3
+   +---+---+---+---+---+---+---+---+
+ 2 | P | P | . | Q | P | P | P | P | 2
+   +---+---+---+---+---+---+---+---+
+ 1 | R | . | q | . | K | B | . | R | 1
+   +---+---+---+---+---+---+---+---+
+     A   B   C   D   E   F   G   H
+
+FEN: rnb1kbn1/pp1ppp1r/6p1/2P4p/2P2B2/7N/PP1QPPPP/R1q1KB1R w KQq-  -
+Hash: 0x4ea140aedaddefaa
+
+Possible Move: c3d1
+Possible Move: d2c1 (capture)
+Possible Move: a1c1 (capture)
+Possible Move: d2d1
+Predicted Best Move: c3d1:14

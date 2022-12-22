@@ -90,13 +90,14 @@ public:
 	
 	Position() : piece_bb{ 0 }, side_to_play(WHITE), game_ply(0), board{}, 
 		hash(0), pinned(0), checkers(0) {
-		
+
 		//Sets all squares on the board as empty
 		for (int i = 0; i < 64; i++) board[i] = NO_PIECE;
 		history[0] = UndoInfo();
 	}
 
     void clear();
+    static bool equality(Position& p1, Position&p2);
 
     static void set(const std::string& fen, Position& p);
 	//Places a piece on a particular square and updates the hash. Placing a piece on a square that is

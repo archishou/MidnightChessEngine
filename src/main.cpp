@@ -43,24 +43,31 @@ void test_perft() {
               << std::chrono::duration_cast<std::chrono::microseconds>(diff).count() << " [microseconds]\n";
 }
 using namespace std;
-
-/*
 int main() {
-    Position unchanged, changed;
-    const std::string& startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1";
-    const std::string& randFen = "8/8/1k6/8/1N6/5K2/8/r7 b -  -";
-    Position::set(startFen, unchanged);
+    initialise_all_databases();
+    zobrist::initialise_zobrist_keys();
 
-    Position::set(startFen, changed);
-    Position::set("rnb2knr/p3p2p/3p2p1/3q1p2/p1p2B2/2PP1PPP/1P1KP1B1/RN2Q1NR b -  -", changed);
-    Position::set("rnb3nr/p3pk1p/3p2p1/3q1p2/p1p2B2/2PP1PPP/1P1KP1B1/RN1Q2NR b -  -", changed);
-    Position::set(randFen, changed);
-    Position::set(startFen, changed);
+    const std::string& startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    Position p;
+    Position::set(startFen, p);
+    const std::string& Line = "c2c4 h7h5 d2d4 h8h7 c1f4 c7c5 d4c5 g7g6 g1h3 d8a5 b1c3 a5c3 d1d2 c3c1";
+    for (int i = 0; i < Line.size(); i += 5) {
+        Move nextMove(Line.substr(i, 4));
+        std::cout << nextMove << std::endl;
+        if (p.turn() == BLACK) {
+            std::cout << MoveList<BLACK>(p).size() << std::endl;
+            p.play<BLACK>(nextMove);
+        }
+        else {
+            std::cout << MoveList<WHITE>(p).size() << std::endl;
+            p.play<WHITE>(nextMove);
+        }
+    }
+    return 0;
 }
-*/
-
 /*
 int main () {
+
     initialise_all_databases();
     zobrist::initialise_zobrist_keys();
     Position p;
@@ -112,10 +119,12 @@ int main () {
 
     return 0;
 }
- */
+*/
 
-
+/*
 int main () {
+
+
     initialise_all_databases();
     zobrist::initialise_zobrist_keys();
     Position p;
@@ -146,6 +155,9 @@ int main () {
 
         if ( Line.substr(0,23) == "position startpos moves") {
             Position::set(startFen, p);
+            Position checker;
+            Position::set(startFen, checker);
+            myfile << "Equal? " << Position::equality(p, checker) << std::endl;
             for (int i = 24; i < Line.size(); i += 5) {
                 Move nextMove(Line.substr(i, 4));
                 if (p.turn() == BLACK) p.play<BLACK>(nextMove);
@@ -155,9 +167,30 @@ int main () {
             ; // nothing to do
         } else if ( Line.substr( 0, 2 ) == "go" ) {
             // Received a command like: "go wtime 300000 btime 300000 winc 0 binc 0"
+
+            myfile << "Board " << p << std::endl;
             Move move;
-            if (p.turn() == BLACK) move = bestMove<BLACK>(p);
-            else move = bestMove<WHITE>(p);
+
+            if (p.turn() == BLACK) {
+                std::random_device dev;
+                std::mt19937 rng(dev());
+                MoveList<BLACK> moveList(p);
+                for (Move m : moveList) myfile << "Possible Move: " << m << std::endl;
+                std::uniform_int_distribution<std::mt19937::result_type> dist(0, moveList.size() - 1);
+                int idx = dist(rng);
+                move = *(moveList.begin() + idx);
+            }
+
+            else {
+                std::random_device dev;
+                std::mt19937 rng(dev());
+                MoveList<WHITE> moveList(p);
+                for (Move m : moveList) myfile << "Possible Move: " << m << std::endl;
+                std::uniform_int_distribution<std::mt19937::result_type> dist(0, moveList.size() - 1);
+                int idx = dist(rng);
+                move = *(moveList.begin() + idx);
+            }
+
             myfile << "Predicted Best Move: " << move << ":" << p.ply() << std::endl;
             cout << "bestmove " << move << endl;
             //Output like: "bestmove h7h5"
@@ -167,4 +200,4 @@ int main () {
     myfile.close();
 
     return 0;
-}
+}*/
