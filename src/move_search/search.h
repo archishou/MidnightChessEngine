@@ -1,8 +1,21 @@
 //
 // Created by Archishmaan on 12/21/22.
 //
+#include <vector>
+#include <random>
+#include "position.h"
 
-#ifndef CHESSENGINE_SEARCH_H
-#define CHESSENGINE_SEARCH_H
-
-#endif //CHESSENGINE_SEARCH_H
+template<Color color>
+Move bestMove(Position board) {
+    MoveList<color> moveList(board);
+    std::vector<Move> out;
+    size_t nelems = 1;
+    std::sample(
+            moveList.begin(),
+            moveList.end(),
+            std::back_inserter(out),
+            nelems,
+            std::mt19937{std::random_device{}()}
+    );
+    return out[0];
+}

@@ -1,12 +1,10 @@
-#include <iostream>
 #include <algorithm>
 #include <iostream>
-#include <random>
-#include <vector>
-#include <random>
+#include <fstream>
 #include "move_generation/tables.h"
 #include "move_generation/position.h"
 #include "move_generation/types.h"
+#include "move_search/search.h"
 
 template<Color Us>
 unsigned long long perft(Position& p, unsigned int depth) {
@@ -24,27 +22,6 @@ unsigned long long perft(Position& p, unsigned int depth) {
     }
 
     return nodes;
-}
-
-//A variant of perft, listing all moves and for each move, the perft of the decremented depth
-//It is used solely for debugging
-template<Color Us>
-void perftdiv(Position& p, unsigned int depth) {
-    unsigned long long nodes = 0, pf;
-
-    MoveList<Us> list(p);
-
-    for (Move move : list) {
-        std::cout << move;
-
-        p.play<Us>(move);
-        pf = perft<~Us>(p, depth - 1);
-        std::cout << ": " << pf << " moves\n";
-        nodes += pf;
-        p.undo<Us>(move);
-    }
-
-    std::cout << "\nTotal: " << nodes << " moves\n";
 }
 
 void test_perft() {
@@ -65,73 +42,43 @@ void test_perft() {
     std::cout << "Time difference = "
               << std::chrono::duration_cast<std::chrono::microseconds>(diff).count() << " [microseconds]\n";
 }
-
-template <Color color>
-Move randomMove(Position board) {
-    MoveList<color> moveList(board);
-    std::vector<Move> out;
-    size_t nelems = 1;
-    std::sample(
-            moveList.begin(),
-            moveList.end(),
-            std::back_inserter(out),
-            nelems,
-            std::mt19937{std::random_device{}()}
-    );
-    return out[0];
-}
-template <Color color>
-int checkmate(Position board) {
-    MoveList<color> moveList(board);
-    return moveList.size() == 0;
-}
-/*
-int main() {
-    initialise_all_databases();
-    zobrist::initialise_zobrist_keys();
-    const std::string& startFen ="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" ;
-    Position board;
-    Position::set(startFen, board);
-    std::cout << board;
-
-    while (true) {
-        if (!checkmate<WHITE>(board)) {
-            Move move = randomMove<WHITE>(board);
-            board.play<WHITE>(move);
-            std::cout << board << std::endl;
-        } else { break; }
-        if (!checkmate<BLACK>(board)) {
-            Move move = randomMove<BLACK>(board);
-            board.play<BLACK>(move);
-            std::cout << board << std::endl;
-        } else { break; }
-    }
-
-    return 0;
-}*/
-
-/*int main() {
-    initialise_all_databases();
-    zobrist::initialise_zobrist_keys();
-    test_perft();
-}*/
-
-/*
 using namespace std;
 
+/*
+int main() {
+    Position unchanged, changed;
+    const std::string& startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1";
+    const std::string& randFen = "8/8/1k6/8/1N6/5K2/8/r7 b -  -";
+    Position::set(startFen, unchanged);
+
+    Position::set(startFen, changed);
+    Position::set("rnb2knr/p3p2p/3p2p1/3q1p2/p1p2B2/2PP1PPP/1P1KP1B1/RN2Q1NR b -  -", changed);
+    Position::set("rnb3nr/p3pk1p/3p2p1/3q1p2/p1p2B2/2PP1PPP/1P1KP1B1/RN1Q2NR b -  -", changed);
+    Position::set(randFen, changed);
+    Position::set(startFen, changed);
+}
+*/
+
 int main () {
-    const Color team = WHITE;
+
     initialise_all_databases();
     zobrist::initialise_zobrist_keys();
     Position p;
-    Position::set("rnbqkbnr/pppppppp/8/8/8/8/PPPP1PPP/RNBQKBNR w KQkq -", p);
+    const std::string& startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    Position::set(startFen, p);
 
     string Line; //to read the command given by the GUI
     int flag = 2; //to change the value of chess squares from 'a' to 'h'
 
     cout.setf (ios::unitbuf);// Make sure that the outputs are sent straight away to the GUI
 
+    ofstream myfile;
+    myfile.open ("/Users/Archish/Documents/CodeProjects/C/ChessEngine/src/example.txt");
+    if (myfile.is_open()) {
+        std::cout << "FILE OPEN" << std::endl;
+    }
     while( getline( cin, Line ) ) {
+        myfile << Line << std::endl;
         if ( Line == "uci" ) {
             cout << "id name Demo_engine" << endl;
             cout << "id author XXX" << endl;
@@ -145,29 +92,37 @@ int main () {
             ; // nothing to do
         }
 
-        if ( Line.substr(0,23) == "position startpos moves " ) {
-            ; // nothing to do
+        if ( Line.substr(0,23) == "position startpos moves") {
+            Position::set(startFen, p);
+            for (int i = 24; i < Line.size(); i += 5) {
+                Move move = Move(Line.substr(i, 4));
+                if (p.turn() == BLACK) {
+                    p.play<BLACK>(move);
+                } else {
+                    p.play<WHITE>(move);
+                }
+            }
+            myfile << "Loaded Fen: " << p.fen() << std::endl;
         } else if ( Line == "stop" ) {
             ; // nothing to do
         } else if ( Line.substr( 0, 2 ) == "go" ) {
             // Received a command like: "go wtime 300000 btime 300000 winc 0 binc 0"
 
-            Move randMove = randomMove<team>(p);
-            p.play<team>(randMove);
-            cout << "bestmove " << randMove << endl;
+            Move move;
+            myfile << "Current Fen: " << p.fen() << std::endl;
+            myfile << "Current Turn: " << p.turn() << std::endl;
+            if (p.turn() == BLACK) {
+                move = bestMove<BLACK>(p);
+            } else {
+                move = bestMove<WHITE>(p);
+            }
+            myfile << "Predicted Best Move: " << move << std::endl;
+            cout << "bestmove " << move << endl;
             //Output like: "bestmove h7h5"
             flag++; //increase flag to move other pawn on next turn
         }
     }
+    myfile.close();
 
     return 0;
-}
- */
-
-int main() {
-    initialise_all_databases();
-    zobrist::initialise_zobrist_keys();
-    Position p;
-    const std::string& startFen ="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" ;
-    Position::set(startFen, p);
 }

@@ -68,6 +68,8 @@ std::string Position::fen() const {
 
 //Updates a position according to an FEN string
 void Position::set(const std::string& fen, Position& p) {
+    p.clear();
+
 	int square = a8;
 	for (char ch : fen.substr(0, fen.find(' '))) {
 		if (isdigit(ch))
@@ -121,6 +123,19 @@ void Position::move_piece_quiet(Square from, Square to) {
 	piece_bb[board[from]] ^= (SQUARE_BB[from] | SQUARE_BB[to]);
 	board[to] = board[from];
 	board[from] = NO_PIECE;
+}
+
+void Position::clear() {
+    side_to_play = WHITE;
+    game_ply = 0;
+    hash = 0;
+    pinned = 0;
+    checkers = 0;
+
+    for (int i = 0; i < 15; i++) piece_bb[i] = 0;
+    for (int i = 0; i < 64; i++) board[i] = NO_PIECE;
+    history[0] = UndoInfo();
+
 }
 
 

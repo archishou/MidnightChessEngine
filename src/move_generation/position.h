@@ -95,8 +95,11 @@ public:
 		for (int i = 0; i < 64; i++) board[i] = NO_PIECE;
 		history[0] = UndoInfo();
 	}
-	
-	//Places a piece on a particular square and updates the hash. Placing a piece on a square that is 
+
+    void clear();
+
+    static void set(const std::string& fen, Position& p);
+	//Places a piece on a particular square and updates the hash. Placing a piece on a square that is
 	//already occupied is an error
 	inline void put_piece(Piece pc, Square s) {
 		board[s] = pc;
@@ -116,7 +119,6 @@ public:
 
 
 	friend std::ostream& operator<<(std::ostream& os, const Position& p);
-	static void set(const std::string& fen, Position& p);
 	std::string fen() const;
 
 	Position& operator=(const Position&) = delete;
