@@ -1,7 +1,7 @@
 uci
 ucinewgame
 isready
-position startpos moves f2f4 b8a6 g1f3 e7e5 e2e4 f8c5 d1e2 c5d4 e2c4 f7f6 c4d4 f6f5 d4e5 e8f8 e5f5
+position startpos moves e2e4 d7d5 e4d5 b8c6 d5c6 e7e5 c6b7 c8g4 b7a8q g7g6 a8d8
 go movetime 100
-Predicted Best Move: f8e8:15
+Predicted Best Move: e8d8 (capture):11
 quit

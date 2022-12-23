@@ -38,7 +38,7 @@
               <div class="row">
                 <div class="col-5">
                   <!-- chess board view -->
-                  <div id="chess_board" class="mx-auto mb-2" style="width: 400px;"></div>
+                  <div id="chess_board" class="mx-auto mb-2" style="width: 800px;"></div>
               
                   <!-- game controls -->
                   <div class="row mx-auto mb-2" style="width: 400px;">
@@ -48,72 +48,11 @@
                     <!-- FEN -->
                     <div class="input-group mb-3">
                       <input id="fen" type="text" class="form-control">
-                      <div class="input-group-append">
-                        <button id="set_fen" class="btn btn-outline-success">Set FEN</button>
-                      </div>
-                    </div>
-                    
-                    <!-- strength controls -->
-
-                    <!-- -buttons -->
-                    <div class="btn-group">
-                      <button id="new_game" class="btn btn-outline-secondary">New game</button>
-                      <button id="make_move" class="btn btn-outline-secondary">Make move</button>
-                      <button id="take_back" class="btn btn-outline-secondary">Take back</button>
-                      <button id="flip_board" class="btn btn-outline-secondary">Flip board</button>
                     </div>
                     
                   </div>
                 </div>
                 <div class="col ml-4">
-                  <!-- engine info -->
-                  <div class="row mx-auto">    
-                    <div class="col"><img src="/static/LOGO.png"></img></div>
-                    <div class="col-8">  
-                      <p class="lead font-weight-normal mt-3">
-                      <strong>BBC 1.4 + Stockfish NNUE (FINAL RELEASE)</strong>
-                      <br>
-                      UCI chess engine by Code Monkey King
-                      </p>
-                      <small>Logo by Brendan J. Norman</small>
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <!-- info -->
-                  <div class="row mx-auto mt-2">
-                    <small class="mx-auto">
-                      NOTE: Online version has strength limitations due to poor performace of free hosting.<br>
-                      Please make sure to <a href="https://github.com/maksimKorzh/bbc/releases/tag/1.4">download UCI version of BBC chess engine</a> to get the most of it!
-                    </small>
-                  </div>
-                  
-                  <!-- game info -->
-                  <table class="table text-center mt-4">
-                    <thead>
-                      <tr>
-                        <th>Score</th>
-                        <th>Depth</th>
-                        <th>Time</th>
-                        <th>Nodes</th>
-                        <th>Knps</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><strong id="score" class="text-danger"></strong></td>
-                        <td id="depth"></td>
-                        <td id="time"></td>
-                        <td id="nodes"></td>
-                        <td id="knps"></td>
-                      <tr>
-                    </tbody>
-                  </table>
-                  
-                  <hr>
-                  
-                  <!-- PGN output -->
                   <div class="mt-2"><strong>PGN:</strong></div>
                   <div id="pgn"></div>
                   
@@ -123,14 +62,6 @@
                   <!-- download link -->
                   <a id="download_link" href="" download="" hidden>your pgn</a>
                 </div>
-              </div>
-            </div>
-            <div class="card-footer">
-              <!-- links -->
-              <div class="input-group mt-2 mb-3">
-                <a href="https://github.com/maksimKorzh/bbc" class="btn btn-primary mx-auto ml-2">BBC source code!</a>
-                <a href="mailto:freesoft.for.people@gmail.com" class="text-dark nav-link mx-auto"><strong class="ml-2 mt-1">freesoft.for.people@gmail.com</strong></a>
-                <a href="https://www.patreon.com/bePatron?u=29097253" class="btn btn-warning mx-auto">Become a Patron!</a>
               </div>
             </div>
           </div>
@@ -145,16 +76,16 @@
   function make_move() {
     // disable take back button
     $('#take_back').attr('disabled', true);
-    
+
     // make HTTP POST request to make move API
     $.post('/make_move',{
         'pgn': game.pgn(),
         'fixed_depth': $('#fixed_depth option:selected').val(),
-        'move_time': $('#move_time option:selected').val() 
+        'move_time': $('#move_time option:selected').val()
       }, function(data) {
         // load fen into the current board state
         game.move(data.best_move, { sloppy: true })
-        
+
         // update board position
         board.position(game.fen());
 
@@ -167,73 +98,12 @@
 
         // update game status
         updateStatus();
-        
+
         // re-enable take back button
         $('#take_back').attr('disabled', false);
     });
   }
 
-  // handle new game button click
-  $('#new_game').on('click', function() {
-    // reset board state
-    game.reset();
-    
-    // set initial board position
-    board.position('start');
-  });
-  
-  // handle make move button click
-  $('#make_move').on('click', function() {
-    // make computer move
-    make_move();
-  });
-  
-  // handle take back button click
-  $('#take_back').on('click', function() {
-    // take move back
-    game.undo();
-    game.undo();
-    
-    // update board position
-    board.position(game.fen());
-    
-    // update game status
-    updateStatus();
-  });
-  
-  // handle flip board button click
-  $('#flip_board').on('click', function() {
-    // flip board
-    board.flip();
-    
-  });
-  
-  // handle select move time option
-  $('#move_time').on('change', function() {
-    // disable fixed depth
-    $('#fixed_depth').val('0');
-  });
-  
-  // handle select fixed depth option
-  $('#fixed_depth').on('change', function() {
-    // disable fixed depth
-    $('#move_time').val('0');
-  });
-  
-  // handle set FEN button click
-  $('#set_fen').on('click', function() {
-    // set user FEN
-    
-    // FEN parsed
-    if (game.load($('#fen').val()))
-      // set board position
-      board.position(game.fen());
-    
-    // FEN is not parsed
-    else
-      alert('Illegal FEN!');
-  });
-  
   // handle download button click
   $('#download_button').on('click', function() {
     // init date
