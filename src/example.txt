@@ -1,7 +1,5 @@
 uci
 ucinewgame
 isready
-position startpos moves e2e4 d7d5 e4d5 b8c6 d5c6 e7e5 c6b7 c8g4 b7a8q g7g6 a8d8
+position startpos moves e2e4 f7f6 g1f3 a7a5 f1c4 b7b6 c4g8 h7h6 f3g5 h6h5 g5f3 g7g5 f3g1 c8a6 g1f3 a6b5 f3g5 e7e6 g5f3 b8a6 f3g1 f8c5 g1f3 d7d5 f3g5 e8f8 g5e6 f8g8 e6d8 b5f1 d8c6 c5f8 c6e5 c7c5 e5c6 h5h4 c6d8 f8g7 d8e6 a6b4 e6g5 f1e2 g5f7 a5a4 f7d6 b4d3 e1e2 g8f8 e2d3 h8h5 d3c3 a8c8 d6c8 h5h6 c8e7 h6g6 e7g6 f8f7 g6e5 f6e5 e4d5 g7f8 d5d6 f7g7 d6d7 g7h7 d7d8q h7h6 d8f8 h6h7 f8f5 h7g7 f5e5 g7h6 e5c5 b6c5 c3c4 h6g5 c4c5 h4h3 c5b5 g5f6 b5a4 f6g5 a4b3 g5g6 d1g4 g6h6 g4h3 h6g7 h3g3 g7f6 g3f3 f6e7 f3e4 e7f6 e4d4 f6g5 h2h4 g5f5 h4h5 f5e6 h5h6 e6e7 h6h7 e7f7 h7h8q f7e6 h8h5 e6e7 d4g4 e7f6 g4g6 f6e7 h5h7 e7d8 g6g8
 go movetime 100
-Predicted Best Move: e8d8 (capture):11
-quit
