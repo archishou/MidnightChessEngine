@@ -8,15 +8,14 @@ async def main() -> None:
 
     board = chess.Board()
     i = 0
-    while not board.is_game_over() and i < 15:
+    while not board.is_game_over() and i < 200:
         result = await engine.play(board, chess.engine.Limit(time=0.1))
         board.push(result.move)
         i += 1
-        print(board.fen(), i)
 
-    print(board)
     await engine.quit()
 
-for _ in range(100):
+for i in range(10000):
+    print(i / 10000, end='\r')
     asyncio.set_event_loop_policy(chess.engine.EventLoopPolicy())
     asyncio.run(main())
