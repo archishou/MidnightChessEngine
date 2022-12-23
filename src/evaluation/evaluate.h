@@ -2,7 +2,9 @@
 // Created by Archishmaan on 12/21/22.
 //
 
-#ifndef CHESSENGINE_EVALUATE_H
-#define CHESSENGINE_EVALUATE_H
+#include "position.h"
+template<Color color>
+Move evaluate(Position& board) {
 
-#endif //CHESSENGINE_EVALUATE_H
+	board.all_pieces<color>(board);
+}

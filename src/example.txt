@@ -1,5 +1,522 @@
 uci
 ucinewgame
 isready
-position startpos moves e2e4 f7f6 g1f3 a7a5 f1c4 b7b6 c4g8 h7h6 f3g5 h6h5 g5f3 g7g5 f3g1 c8a6 g1f3 a6b5 f3g5 e7e6 g5f3 b8a6 f3g1 f8c5 g1f3 d7d5 f3g5 e8f8 g5e6 f8g8 e6d8 b5f1 d8c6 c5f8 c6e5 c7c5 e5c6 h5h4 c6d8 f8g7 d8e6 a6b4 e6g5 f1e2 g5f7 a5a4 f7d6 b4d3 e1e2 g8f8 e2d3 h8h5 d3c3 a8c8 d6c8 h5h6 c8e7 h6g6 e7g6 f8f7 g6e5 f6e5 e4d5 g7f8 d5d6 f7g7 d6d7 g7h7 d7d8q h7h6 d8f8 h6h7 f8f5 h7g7 f5e5 g7h6 e5c5 b6c5 c3c4 h6g5 c4c5 h4h3 c5b5 g5f6 b5a4 f6g5 a4b3 g5g6 d1g4 g6h6 g4h3 h6g7 h3g3 g7f6 g3f3 f6e7 f3e4 e7f6 e4d4 f6g5 h2h4 g5f5 h4h5 f5e6 h5h6 e6e7 h6h7 e7f7 h7h8q f7e6 h8h5 e6e7 d4g4 e7f6 g4g6 f6e7 h5h7 e7d8 g6g8
+position startpos
 go movetime 100
+Predicted Best Move: c2c4:0
+position startpos moves c2c4
+go movetime 100
+Predicted Best Move: e7e6:1
+position startpos moves c2c4 e7e6
+go movetime 100
+Predicted Best Move: d1a4:2
+position startpos moves c2c4 e7e6 d1a4
+go movetime 100
+Predicted Best Move: b7b5:3
+position startpos moves c2c4 e7e6 d1a4 b7b5
+go movetime 100
+Predicted Best Move: a2a3:4
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3
+go movetime 100
+Predicted Best Move: a7a5:5
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5
+go movetime 100
+Predicted Best Move: e2e4:6
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4
+go movetime 100
+Predicted Best Move: d8e7:7
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7
+go movetime 100
+Predicted Best Move: g1e2:8
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2
+go movetime 100
+Predicted Best Move: e7b4:9
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4
+go movetime 100
+Predicted Best Move: a4b3:10
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3
+go movetime 100
+Predicted Best Move: d7d6:11
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6
+go movetime 100
+Predicted Best Move: h1g1:12
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1
+go movetime 100
+Predicted Best Move: b8c6:13
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6
+go movetime 100
+Predicted Best Move: b1c3:14
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3
+go movetime 100
+Predicted Best Move: f7f6:15
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6
+go movetime 100
+Predicted Best Move: e2g3:16
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3
+go movetime 100
+Predicted Best Move: c6d4:17
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4
+go movetime 100
+Predicted Best Move: d2d3:18
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3
+go movetime 100
+Predicted Best Move: c8d7:19
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7
+go movetime 100
+Predicted Best Move: g3e2:20
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2
+go movetime 100
+Predicted Best Move: b5c4 (capture):21
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4
+go movetime 100
+Predicted Best Move: e2d4 (capture):22
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4
+go movetime 100
+Predicted Best Move: a8b8:23
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8
+go movetime 100
+Predicted Best Move: a1a2:24
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2
+go movetime 100
+Predicted Best Move: c4b3 (capture):25
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3
+go movetime 100
+Predicted Best Move: a3b4 (capture):26
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4
+go movetime 100
+Predicted Best Move: e6e5:27
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5
+go movetime 100
+Predicted Best Move: c3d1:28
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1
+go movetime 100
+Predicted Best Move: d7b5:29
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5
+go movetime 100
+Predicted Best Move: h2h3:30
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3
+go movetime 100
+Predicted Best Move: e8f7:31
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7
+go movetime 100
+Predicted Best Move: a2a1:32
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1
+go movetime 100
+Predicted Best Move: d6d5:33
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5
+go movetime 100
+Predicted Best Move: d4e6:34
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6
+go movetime 100
+Predicted Best Move: g7g6:35
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6
+go movetime 100
+Predicted Best Move: g1h1:36
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1
+go movetime 100
+Predicted Best Move: f7e7:37
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7
+go movetime 100
+Predicted Best Move: e6f4:38
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4
+go movetime 100
+Predicted Best Move: a5a4:39
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4
+go movetime 100
+Predicted Best Move: f4e2:40
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2
+go movetime 100
+Predicted Best Move: g6g5:41
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5
+go movetime 100
+Predicted Best Move: a1a4 (capture):42
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4
+go movetime 100
+Predicted Best Move: b8d8:43
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8
+go movetime 100
+Predicted Best Move: c1f4:44
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4
+go movetime 100
+Predicted Best Move: d8d6:45
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6
+go movetime 100
+Predicted Best Move: f4g5 (capture):46
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5
+go movetime 100
+Predicted Best Move: e7e6:47
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6
+go movetime 100
+Predicted Best Move: e2f4:48
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4
+go movetime 100
+Predicted Best Move: e6f7:49
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7
+go movetime 100
+Predicted Best Move: g2g4:50
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4
+go movetime 100
+Predicted Best Move: h7h5:51
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5
+go movetime 100
+Predicted Best Move: a4a8:52
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8
+go movetime 100
+Predicted Best Move: b5e8:53
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8
+go movetime 100
+Predicted Best Move: a8a5:54
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5
+go movetime 100
+Predicted Best Move: d5d4:55
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4
+go movetime 100
+Predicted Best Move: a5a2:56
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2
+go movetime 100
+Predicted Best Move: e8a4:57
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4
+go movetime 100
+Predicted Best Move: d1c3:58
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3
+go movetime 100
+Predicted Best Move: b3a2 (capture):59
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2
+go movetime 100
+Predicted Best Move: f2f3:60
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3
+go movetime 100
+Predicted Best Move: a4e8:61
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8
+go movetime 100
+Predicted Best Move: g5h4:62
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4
+go movetime 100
+Predicted Best Move: g8e7:63
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7
+go movetime 100
+Predicted Best Move: c3b5:64
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5
+go movetime 100
+Predicted Best Move: a2a1B:65
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b
+go movetime 100
+Predicted Best Move: b5c7 (capture):66
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7
+go movetime 100
+Predicted Best Move: e7c6:67
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6
+go movetime 100
+Predicted Best Move: f4h5 (capture):68
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5
+go movetime 100
+Predicted Best Move: a1b2 (capture):69
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2
+go movetime 100
+Predicted Best Move: e1d1:70
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1
+go movetime 100
+Predicted Best Move: h8h5 (capture):71
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5
+go movetime 100
+Predicted Best Move: f1e2:72
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2
+go movetime 100
+Predicted Best Move: b2a1:73
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1
+go movetime 100
+Predicted Best Move: g4h5 (capture):74
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5
+go movetime 100
+Predicted Best Move: f7g7:75
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7
+go movetime 100
+Predicted Best Move: h4e1:76
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1
+go movetime 100
+Predicted Best Move: d6d8:77
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8
+go movetime 100
+Predicted Best Move: f3f4:78
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4
+go movetime 100
+Predicted Best Move: c6a5:79
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5
+go movetime 100
+Predicted Best Move: c7d5:80
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5
+go movetime 100
+Predicted Best Move: d8b8:81
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8
+go movetime 100
+Predicted Best Move: d1d2:82
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2
+go movetime 100
+Predicted Best Move: f6f5:83
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5
+go movetime 100
+Predicted Best Move: h1f1:84
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1
+go movetime 100
+Predicted Best Move: e8c6:85
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6
+go movetime 100
+Predicted Best Move: d5e7:86
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7
+go movetime 100
+Predicted Best Move: c6b5:87
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5
+go movetime 100
+Predicted Best Move: e1f2:88
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2
+go movetime 100
+Predicted Best Move: a1c3:89
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3
+go movetime 100
+Predicted Best Move: d2c2:90
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2
+go movetime 100
+Predicted Best Move: g7h6:91
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6
+go movetime 100
+Predicted Best Move: e2g4:92
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4
+go movetime 100
+Predicted Best Move: b8b6:93
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6
+go movetime 100
+Predicted Best Move: f1c1:94
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1
+go movetime 100
+Predicted Best Move: b6b7:95
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7
+go movetime 100
+Predicted Best Move: c2d1:96
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1
+go movetime 100
+Predicted Best Move: a5b3:97
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3
+go movetime 100
+Predicted Best Move: c1c2:98
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2
+go movetime 100
+Predicted Best Move: b5c6:99
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6
+go movetime 100
+Predicted Best Move: g4f5 (capture):100
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5
+go movetime 100
+Predicted Best Move: b3a5:101
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5
+go movetime 100
+Predicted Best Move: f5d7:102
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7
+go movetime 100
+Predicted Best Move: f8e7 (capture):103
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7
+go movetime 100
+Predicted Best Move: f2h4:104
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4
+go movetime 100
+Predicted Best Move: a5c4:105
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4
+go movetime 100
+Predicted Best Move: h4g3:106
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3
+go movetime 100
+Predicted Best Move: e7h4:107
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4
+go movetime 100
+Predicted Best Move: c2e2:108
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2
+go movetime 100
+Predicted Best Move: c6a4:109
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4
+go movetime 100
+Predicted Best Move: e2c2:110
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2
+go movetime 100
+Predicted Best Move: c4e3:111
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3
+go movetime 100
+Predicted Best Move: d1e2:112
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2
+go movetime 100
+Predicted Best Move: h4f6:113
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6
+go movetime 100
+Predicted Best Move: b4b5:114
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5
+go movetime 100
+Predicted Best Move: c3e1:115
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1
+go movetime 100
+Predicted Best Move: c2d2:116
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2
+go movetime 100
+Predicted Best Move: f6g5:117
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5
+go movetime 100
+Predicted Best Move: g3e1 (capture):118
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1
+go movetime 100
+Predicted Best Move: e3f1:119
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1
+go movetime 100
+Predicted Best Move: d7e8:120
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8
+go movetime 100
+Predicted Best Move: e5f4 (capture):121
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4
+go movetime 100
+Predicted Best Move: e8g6:122
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6
+go movetime 100
+Predicted Best Move: a4c2:123
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2
+go movetime 100
+Predicted Best Move: e2f3:124
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3
+go movetime 100
+Predicted Best Move: b7a7:125
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7
+go movetime 100
+Predicted Best Move: d2e2:126
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2
+go movetime 100
+Predicted Best Move: a7h7:127
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7
+go movetime 100
+Predicted Best Move: f3g2:128
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2
+go movetime 100
+Predicted Best Move: c2b1:129
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1
+go movetime 100
+Predicted Best Move: e2e3:130
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3
+go movetime 100
+Predicted Best Move: h7b7:131
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7
+go movetime 100
+Predicted Best Move: e4e5:132
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5
+go movetime 100
+Predicted Best Move: h6g7:133
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7
+go movetime 100
+Predicted Best Move: e5e6:134
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6
+go movetime 100
+Predicted Best Move: b1c2:135
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2
+go movetime 100
+Predicted Best Move: g2f3:136
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3
+go movetime 100
+Predicted Best Move: b7f7:137
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7
+go movetime 100
+Predicted Best Move: e6f7 (capture):138
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7
+go movetime 100
+Predicted Best Move: g7h6:139
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6
+go movetime 100
+Predicted Best Move: f7f8R:140
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r
+go movetime 100
+Predicted Best Move: g5e7:141
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7
+go movetime 100
+Predicted Best Move: e3e6:142
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6
+go movetime 100
+Predicted Best Move: e7f6:143
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6
+go movetime 100
+Predicted Best Move: e6e3:144
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3
+go movetime 100
+Predicted Best Move: c2b3:145
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3
+go movetime 100
+Predicted Best Move: f3g4:146
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4
+go movetime 100
+Predicted Best Move: b3g8:147
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8
+go movetime 100
+Predicted Best Move: f8c8:148
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8
+go movetime 100
+Predicted Best Move: f1d2:149
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2
+go movetime 100
+Predicted Best Move: g6f7:150
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7
+go movetime 100
+Predicted Best Move: f6h4:151
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4
+go movetime 100
+Predicted Best Move: f7c4:152
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4
+go movetime 100
+Predicted Best Move: h4f6:153
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6
+go movetime 100
+Predicted Best Move: e1d2 (capture):154
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2
+go movetime 100
+Predicted Best Move: g8d5:155
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5
+go movetime 100
+Predicted Best Move: c8a8:156
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8
+go movetime 100
+Predicted Best Move: f6g7:157
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7
+go movetime 100
+Predicted Best Move: b5b6:158
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6
+go movetime 100
+Predicted Best Move: f4e3 (capture):159
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3
+go movetime 100
+Predicted Best Move: a8a7:160
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7
+go movetime 100
+Predicted Best Move: d5h1:161
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7 d5h1
+go movetime 100
+Predicted Best Move: a7c7:162
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7 d5h1 a7c7
+go movetime 100
+Predicted Best Move: h1f3:163
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7 d5h1 a7c7 h1f3
+go movetime 100
+Predicted Best Move: g4f5:164
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7 d5h1 a7c7 h1f3 g4f5
+go movetime 100
+Predicted Best Move: f3h1:165
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7 d5h1 a7c7 h1f3 g4f5 f3h1
+go movetime 100
+Predicted Best Move: c4b5:166
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7 d5h1 a7c7 h1f3 g4f5 f3h1 c4b5
+go movetime 100
+Predicted Best Move: h1b7:167
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7 d5h1 a7c7 h1f3 g4f5 f3h1 c4b5 h1b7
+go movetime 100
+Predicted Best Move: d2a5:168
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7 d5h1 a7c7 h1f3 g4f5 f3h1 c4b5 h1b7 d2a5
+go movetime 100
+Predicted Best Move: h6h5 (capture):169
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7 d5h1 a7c7 h1f3 g4f5 f3h1 c4b5 h1b7 d2a5 h6h5
+go movetime 100
+Predicted Best Move: f5f4:170
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7 d5h1 a7c7 h1f3 g4f5 f3h1 c4b5 h1b7 d2a5 h6h5 f5f4
+go movetime 100
+Predicted Best Move: h5g6:171
+position startpos moves c2c4 e7e6 d1a4 b7b5 a2a3 a7a5 e2e4 d8e7 g1e2 e7b4 a4b3 d7d6 h1g1 b8c6 b1c3 f7f6 e2g3 c6d4 d2d3 c8d7 g3e2 b5c4 e2d4 a8b8 a1a2 c4b3 a3b4 e6e5 c3d1 d7b5 h2h3 e8f7 a2a1 d6d5 d4e6 g7g6 g1h1 f7e7 e6f4 a5a4 f4e2 g6g5 a1a4 b8d8 c1f4 d8d6 f4g5 e7e6 e2f4 e6f7 g2g4 h7h5 a4a8 b5e8 a8a5 d5d4 a5a2 e8a4 d1c3 b3a2 f2f3 a4e8 g5h4 g8e7 c3b5 a2a1b b5c7 e7c6 f4h5 a1b2 e1d1 h8h5 f1e2 b2a1 g4h5 f7g7 h4e1 d6d8 f3f4 c6a5 c7d5 d8b8 d1d2 f6f5 h1f1 e8c6 d5e7 c6b5 e1f2 a1c3 d2c2 g7h6 e2g4 b8b6 f1c1 b6b7 c2d1 a5b3 c1c2 b5c6 g4f5 b3a5 f5d7 f8e7 f2h4 a5c4 h4g3 e7h4 c2e2 c6a4 e2c2 c4e3 d1e2 h4f6 b4b5 c3e1 c2d2 f6g5 g3e1 e3f1 d7e8 e5f4 e8g6 a4c2 e2f3 b7a7 d2e2 a7h7 f3g2 c2b1 e2e3 h7b7 e4e5 h6g7 e5e6 b1c2 g2f3 b7f7 e6f7 g7h6 f7f8r g5e7 e3e6 e7f6 e6e3 c2b3 f3g4 b3g8 f8c8 f1d2 g6f7 f6h4 f7c4 h4f6 e1d2 g8d5 c8a8 f6g7 b5b6 f4e3 a8a7 d5h1 a7c7 h1f3 g4f5 f3h1 c4b5 h1b7 d2a5 h6h5 f5f4 h5g6
+go movetime 100
+Predicted Best Move: a5e1:172

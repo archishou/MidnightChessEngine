@@ -47,6 +47,14 @@ Move uciToMove(const std::string& moveStr, Position& position) {
     Move move = Move(moveStr.substr(0, 4));
     // Pawn Promotion
     if (moveStr.size() == 5) {
+		/*
+		Could be dangerous if order in enum is changed!
+		int promotionType = position.at(move.to()) == NO_PIECE ? PR_KNIGHT : PC_KNIGHT;
+		if (moveStr.at(4) == 'n') return Move(move.from(), move.to(), (MoveFlags) promotionType);
+		if (moveStr.at(4) == 'b') return Move(move.from(), move.to(), (MoveFlags) (promotionType + 1));
+		if (moveStr.at(4) == 'r') return Move(move.from(), move.to(), (MoveFlags) (promotionType + 2));
+		if (moveStr.at(4) == 'q') return Move(move.from(), move.to(), (MoveFlags) (promotionType + 3));
+		*/
         // Quiet Promotion
         if (position.at(move.to()) == NO_PIECE) {
             if (moveStr.at(4) == 'q') return Move(move.from(), move.to(), PR_QUEEN);
@@ -83,7 +91,7 @@ Move uciToMove(const std::string& moveStr, Position& position) {
 
     return {move.from(), move.to(), QUIET};
 }
-vector<string> split (const string& s, const string& delimiter) {
+vector<string> split(const string& s, const string& delimiter) {
 	size_t pos_start = 0, pos_end, delim_len = delimiter.length();
 	string token;
 	vector<string> res;
@@ -112,21 +120,21 @@ int main () {
 
     ofstream myfile;
     myfile.open ("/Users/Archish/Documents/CodeProjects/C/ChessEngine/src/example.txt");
-    while( getline( cin, Line ) ) {
+    while (getline(cin, Line)) {
         myfile << Line << std::endl;
-        if ( Line == "uci" ) {
+        if (Line == "uci") {
             cout << "id name Demo_engine" << endl;
             cout << "id author XXX" << endl;
             cout << "uciok" << endl;
-        } else if ( Line == "quit" ) {
+        } else if (Line == "quit") {
             cout << "Bye Bye" << endl;
             break;
-        } else if ( Line == "isready" ) {
+        } else if (Line == "isready") {
             cout << "readyok" << endl;
-        } else if ( Line == "ucinewgame" ) {
+        } else if (Line == "ucinewgame") {
             ; // nothing to do
         }
-        if ( Line.substr(0,23) == "position startpos moves") {
+        if (Line.substr(0,23) == "position startpos moves") {
             Position::set(startFen, p);
 			vector<string> uciMoves = split(Line.substr(24, Line.size() - 24), " ");
             for (const std::string& uciMove : uciMoves) {
@@ -134,9 +142,9 @@ int main () {
                 if (p.turn() == BLACK) p.play<BLACK>(nextMove);
                 else p.play<WHITE>(nextMove);
             }
-        } else if ( Line == "stop" ) {
+        } else if (Line == "stop") {
             ; // nothing to do
-        } else if ( Line.substr( 0, 2 ) == "go" ) {
+        } else if (Line.substr( 0, 2 ) == "go") {
             // Received a command like: "go wtime 300000 btime 300000 winc 0 binc 0"
             Move move;
             if (p.turn() == BLACK) move = bestMove<BLACK>(p);
@@ -148,6 +156,5 @@ int main () {
         }
     }
     myfile.close();
-
     return 0;
 }

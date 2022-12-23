@@ -5,9 +5,9 @@
 #include <vector>
 #include <random>
 #include "position.h"
-template<Color color>
 
-Move bestMove(Position board) {
+template<Color color>
+Move bestMove(Position& board) {
     std::random_device dev;
     std::mt19937 rng(dev());
     MoveList<color> moveList(board);
