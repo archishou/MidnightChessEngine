@@ -104,7 +104,6 @@ void Position::set(const std::string& fen, Position& p) {
 		}
 	}
 }
-	
 
 //Moves a piece to a (possibly empty) square on the board and updates the hash
 void Position::move_piece(Square from, Square to) {
@@ -135,22 +134,6 @@ void Position::clear() {
     for (int i = 0; i < 15; i++) piece_bb[i] = 0;
     for (int i = 0; i < 64; i++) board[i] = NO_PIECE;
     history[0] = UndoInfo();
-
-}
-
-bool Position::equality(Position& p1, Position& p2) {
-    if (p1.side_to_play != p2.side_to_play) return false;
-    if (p1.game_ply != p2.game_ply) return false;
-    if (p1.hash != p2.hash) return false;
-    if (p1.pinned != p2.pinned) return false;
-    if (p1.checkers != p2.checkers) return false;
-    for (int i = 0; i < 15; i++) {
-        if (p1.piece_bb[i] != p2.piece_bb[i]) return false;
-    }
-    for (int i = 0; i < 64; i++) {
-        if (p1.board[i] != p2.board[i]) return false;
-    }
-    return true;
 }
 
 

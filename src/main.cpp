@@ -106,6 +106,18 @@ vector<string> split(const string& s, const string& delimiter) {
 	return res;
 }
 
+/*
+int main() {
+    initialise_all_databases();
+    zobrist::initialise_zobrist_keys();
+	const std::string& testFen = "r1bqkb1r/1ppppppp/p6n/4P3/1n1P4/P1N2N2/1PP1QPPP/R1B1KB1R b KQkq -";
+	Position board;
+	Position::set(testFen, board);
+	std::cout << board << std::endl;
+	Move best = bestMove<BLACK>(board);
+	std::cout << best << std::endl;
+}
+*/
 int main () {
     initialise_all_databases();
     zobrist::initialise_zobrist_keys();
