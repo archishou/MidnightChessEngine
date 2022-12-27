@@ -5,6 +5,7 @@
 #include "position.h"
 template<Color color>
 int evaluate(Position& board) {
+	// TODO: better ways to handle mate, this is not ideal and can result in mis-evaluations of a position.
 	int usPawns = pop_count(board.bitboard_of(color, PAWN));
 	int usKnight = pop_count(board.bitboard_of(color, KNIGHT));
 	int usBishop = pop_count(board.bitboard_of(color, BISHOP));
