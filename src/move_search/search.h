@@ -11,6 +11,9 @@ const int POS_INF_CHESS = 1000000;
 const int NEG_INF_CHESS = -POS_INF_CHESS;
 
 template<Color color>
+int checkTranspositionTable(){}
+
+template<Color color>
 int alphaBeta(Position &board, int depth, int alpha, int beta) {
 	if (depth == 0) return evaluate<color>(board);
 	MoveList<color> allLegalMoves(board);
