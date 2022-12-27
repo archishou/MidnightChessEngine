@@ -105,17 +105,32 @@ vector<string> split(const string& s, const string& delimiter) {
 	res.push_back (s.substr (pos_start));
 	return res;
 }
-
 /*
 int main() {
     initialise_all_databases();
     zobrist::initialise_zobrist_keys();
-	const std::string& testFen = "r1bqkb1r/1ppppppp/p6n/4P3/1n1P4/P1N2N2/1PP1QPPP/R1B1KB1R b KQkq -";
+	const std::string& testFen = "r1bqkb1r/1ppppppp/p7/3PP3/5Bn1/2NQ1N2/PPP2PPP/R3K2R b KQkq -";
 	Position board;
 	Position::set(testFen, board);
+
 	std::cout << board << std::endl;
 	Move best = bestMove<BLACK>(board);
 	std::cout << best << std::endl;
+
+	const Color startTeam = BLACK;
+	int depth = 6;
+	int i  = 0;
+	while (i < depth) {
+		Move ourBest = alphaBetaRoot<startTeam>(board, depth - i);
+		std::cout << ourBest << std::endl;
+		board.play<startTeam>(ourBest);
+		i += 1;
+		Move thierBest = alphaBetaRoot<~startTeam>(board, depth - i);
+		std::cout << thierBest << std::endl;
+		board.play<~startTeam>(thierBest);
+		i += 1;
+	}
+
 }
 */
 int main () {
