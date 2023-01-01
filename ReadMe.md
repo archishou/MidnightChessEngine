@@ -1,8 +1,4 @@
-
-
 # ChessEngine
-asdfas
-asfas
 
 Build Chess Engine in src/
 
