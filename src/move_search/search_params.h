@@ -5,5 +5,5 @@
 const int POS_INF_CHESS = 1000000;
 const int NEG_INF_CHESS = -POS_INF_CHESS;
 const int DEPTH = 6;
-const int MAX_TIME = 100;
+const int MAX_TIME = 500;
 
