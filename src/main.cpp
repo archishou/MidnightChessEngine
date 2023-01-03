@@ -146,7 +146,7 @@ int main () {
     cout.setf (ios::unitbuf);// Make sure that the outputs are sent straight away to the GUI
 
     ofstream myfile;
-    myfile.open ("/Users/Archish/Documents/CodeProjects/C/ChessEngine/src/example.txt");
+    myfile.open ("/Users/archishmaan/Documents/CodeProjects/C/ChessEngine/src/example.txt");
     while (getline(cin, Line)) {
         myfile << Line << std::endl;
         if (Line == "uci") {
@@ -173,11 +173,12 @@ int main () {
             ; // nothing to do
         } else if (Line.substr( 0, 2 ) == "go") {
             // Received a command like: "go wtime 300000 btime 300000 winc 0 binc 0"
-            Move move;
-            if (p.turn() == BLACK) move = bestMove<BLACK>(p);
-            else move = bestMove<WHITE>(p);
-            myfile << "Predicted Best Move: " << move << ":" << p.ply() << std::endl;
-            cout << "bestmove " << move << endl;
+            IDResults results;
+            if (p.turn() == BLACK) results = iterativeDeepening<BLACK>(p, MAX_TIME);
+            else results = iterativeDeepening<WHITE>(p, MAX_TIME);
+            myfile << "Predicted Best Move: " << results.bestMove << ":" << results.depthSearched << std::endl;
+            myfile << "Time Searched: " << results.timeSearched << std::endl;
+            cout << "bestmove " << results.bestMove << endl;
             //Output like: "bestmove h7h5"
             flag++; //increase flag to move other pawn on next turn
         }
