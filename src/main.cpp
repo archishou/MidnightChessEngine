@@ -114,7 +114,7 @@ int main() {
 	Position::set(testFen, board);
 
 	std::cout << board << std::endl;
-	Move best = bestMove<BLACK>(board);
+	Move best = best_move<BLACK>(board);
 	std::cout << best << std::endl;
 
 	const Color startTeam = BLACK;
