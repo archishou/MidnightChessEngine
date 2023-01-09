@@ -26,7 +26,7 @@ IDResults iterative_deepening(Position& board, int maxTimeMilliseconds) {
 
     for (int subDepth = 1; subDepth <= DEPTH; subDepth++) {
         struct AlphaBetaResults ab_results =
-				alpha_beta_root<color, std::chrono::system_clock>(board, subDepth, target_end_time);
+				alpha_beta_root<color>(board, subDepth, target_end_time);
         if (ab_results.search_completed) {
 			id_results.bestMove = ab_results.best_move;
 			id_results.depthSearched = subDepth;
