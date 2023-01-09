@@ -176,9 +176,9 @@ int main () {
             BestMoveSearchResults results;
             if (p.turn() == BLACK) results = best_move<BLACK>(p);
             else results = best_move<WHITE>(p);
-            myfile << "Predicted Best Move: " << results.bestMove << ":" << results.depthSearched << std::endl;
-            myfile << "Time Searched: " << results.timeSearched << std::endl;
-            cout << "bestmove " << results.bestMove << endl;
+            myfile << "Predicted Best Move: " << results.best_move << ":" << results.depth_searched << std::endl;
+            myfile << "Time Searched: " << results.time_searched << std::endl;
+            cout << "bestmove " << results.best_move << endl;
             //Output like: "bestmove h7h5"
             flag++; //increase flag to move other pawn on next turn
         }

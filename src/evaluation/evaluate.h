@@ -12,7 +12,7 @@ const int QUEEN_VALUE = 8;
 const int CHECK_PENALTY = -1;
 
 template<Color color>
-int evaluateOneSide(Position& board) {
+int evaluate_one_side(Position& board) {
 	// TODO: better ways to handle mate, this is not ideal and can result in mis-evaluations of a position.
 	int usPawns = pop_count(board.bitboard_of(color, PAWN));
 	int usKnight = pop_count(board.bitboard_of(color, KNIGHT));
@@ -27,5 +27,5 @@ int evaluateOneSide(Position& board) {
 
 template<Color color>
 int evaluate(Position& board) {
-	return evaluateOneSide<color>(board) - evaluateOneSide<~color>(board);
+	return evaluate_one_side<color>(board) - evaluate_one_side<~color>(board);
 }

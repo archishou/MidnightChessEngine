@@ -10,9 +10,9 @@
 #include "alphabeta.h"
 
 struct IDResults {
-    Move bestMove;
-    int depthSearched;
-    double timeSearched;
+    Move best_move;
+    int depth_searched;
+    double time_searched;
 };
 
 template<Color color>
@@ -28,11 +28,11 @@ IDResults iterative_deepening(Position& board, int maxTimeMilliseconds) {
         struct AlphaBetaResults ab_results =
 				alpha_beta_root<color>(board, subDepth, target_end_time);
         if (ab_results.search_completed) {
-			id_results.bestMove = ab_results.best_move;
-			id_results.depthSearched = subDepth;
+			id_results.best_move = ab_results.best_move;
+			id_results.depth_searched = subDepth;
         }
     }
 
-	id_results.timeSearched = (std::clock() - start ) / (double) CLOCKS_PER_SEC;
+	id_results.time_searched = (std::clock() - start ) / (double) CLOCKS_PER_SEC;
     return id_results;
 }
