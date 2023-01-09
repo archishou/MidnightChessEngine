@@ -144,11 +144,11 @@ constexpr Direction relative_dir(Direction d) {
 }
 
 //The type of the move
-enum MoveFlags : int {
+enum MoveFlag : int {
 	QUIET = 0b0000, DOUBLE_PUSH = 0b0001,
 	OO = 0b0010, OOO = 0b0011,
 	CAPTURE = 0b1000,
-	CAPTURES = 0b1111, // Deprecated ?
+	CAPTURES = 0b1111,
 	EN_PASSANT = 0b1010,
 	PROMOTIONS = 0b0111,
 	PROMOTION_CAPTURES = 0b1100,
@@ -171,7 +171,7 @@ public:
 		move = (from << 6) | to;
 	}
 
-	inline Move(Square from, Square to, MoveFlags flags) : move(0) {
+	inline Move(Square from, Square to, MoveFlag flags) : move(0) {
 		move = (flags << 12) | (from << 6) | to;
 	}
 
@@ -183,10 +183,17 @@ public:
 	inline Square to() const { return Square(move & 0x3f); }
 	inline Square from() const { return Square((move >> 6) & 0x3f); }
 	inline int to_from() const { return move & 0xffff; }
-	inline MoveFlags flags() const { return MoveFlags((move >> 12) & 0xf); }
+	inline MoveFlag flag() const { return MoveFlag((move >> 12) & 0xf); }
 
 	inline bool is_capture() const {
 		return (move >> 12) & CAPTURES;
+	}
+
+	inline bool is_promotion() const {
+		MoveFlag flag = this->flag();
+		// Be explicit to avoid breaking if values of PR_X, PC_X change.
+		return flag == PR_KNIGHT || flag == PR_BISHOP || flag == PR_ROOK || flag == PR_QUEEN ||
+			flag == PC_KNIGHT || flag == PC_BISHOP || flag == PC_ROOK || flag == PC_QUEEN;
 	}
 
 	void operator=(Move m) { move = m.move; }
@@ -195,7 +202,7 @@ public:
 };
 
 //Adds, to the move pointer all moves of the form (from, s), where s is a square in the bitboard to
-template<MoveFlags F = QUIET>
+template<MoveFlag F = QUIET>
 inline Move *make(Square from, Bitboard to, Move *list) {
 	while (to) *list++ = Move(from, pop_lsb(&to), F);
 	return list;

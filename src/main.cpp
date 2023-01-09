@@ -50,10 +50,10 @@ Move uciToMove(const std::string& moveStr, Position& position) {
 		/*
 		Could be dangerous if order in enum is changed!
 		int promotionType = position.at(move.to()) == NO_PIECE ? PR_KNIGHT : PC_KNIGHT;
-		if (moveStr.at(4) == 'n') return Move(move.from(), move.to(), (MoveFlags) promotionType);
-		if (moveStr.at(4) == 'b') return Move(move.from(), move.to(), (MoveFlags) (promotionType + 1));
-		if (moveStr.at(4) == 'r') return Move(move.from(), move.to(), (MoveFlags) (promotionType + 2));
-		if (moveStr.at(4) == 'q') return Move(move.from(), move.to(), (MoveFlags) (promotionType + 3));
+		if (moveStr.at(4) == 'n') return Move(move.from(), move.to(), (MoveFlag) promotionType);
+		if (moveStr.at(4) == 'b') return Move(move.from(), move.to(), (MoveFlag) (promotionType + 1));
+		if (moveStr.at(4) == 'r') return Move(move.from(), move.to(), (MoveFlag) (promotionType + 2));
+		if (moveStr.at(4) == 'q') return Move(move.from(), move.to(), (MoveFlag) (promotionType + 3));
 		*/
         // Quiet Promotion
         if (position.at(move.to()) == NO_PIECE) {
@@ -125,7 +125,7 @@ int main() {
 		std::cout << ourBest << std::endl;
 		board.play<startTeam>(ourBest);
 		i += 1;
-		Move thierBest = alphaBetaRoot<~startTeam>(board, depth - i);
+		Move thierBest = alpha_beta_root<~startTeam>(board, depth - i);
 		std::cout << thierBest << std::endl;
 		board.play<~startTeam>(thierBest);
 		i += 1;
@@ -173,9 +173,9 @@ int main () {
             ; // nothing to do
         } else if (Line.substr( 0, 2 ) == "go") {
             // Received a command like: "go wtime 300000 btime 300000 winc 0 binc 0"
-            IDResults results;
-            if (p.turn() == BLACK) results = iterativeDeepening<BLACK>(p, MAX_TIME);
-            else results = iterativeDeepening<WHITE>(p, MAX_TIME);
+            BestMoveSearchResults results;
+            if (p.turn() == BLACK) results = best_move<BLACK>(p);
+            else results = best_move<WHITE>(p);
             myfile << "Predicted Best Move: " << results.bestMove << ":" << results.depthSearched << std::endl;
             myfile << "Time Searched: " << results.timeSearched << std::endl;
             cout << "bestmove " << results.bestMove << endl;

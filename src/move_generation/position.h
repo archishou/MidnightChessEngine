@@ -193,7 +193,7 @@ void Position::play(const Move m) {
 	++game_ply;
 	history[game_ply] = UndoInfo(history[game_ply - 1]);
 
-	MoveFlags type = m.flags();
+	MoveFlag type = m.flag();
 	history[game_ply].entry |= SQUARE_BB[m.to()] | SQUARE_BB[m.from()];
 
 	switch (type) {
@@ -285,7 +285,7 @@ void Position::play(const Move m) {
 //Undos a move in the current position, rolling it back to the previous position
 template<Color C>
 void Position::undo(const Move m) {
-	MoveFlags type = m.flags();
+	MoveFlag type = m.flag();
 	switch (type) {
 	case QUIET:
 		move_piece_quiet(m.to(), m.from());

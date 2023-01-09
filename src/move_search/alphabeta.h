@@ -10,6 +10,8 @@ struct AlphaBetaResults {
     bool searchCompleted;
 };
 
+typename std::chrono::system_clock sys_clock;
+
 template<typename Clock>
 bool exceededTime(std::chrono::time_point<Clock> endTime) {
     return std::chrono::system_clock::now() > endTime;
@@ -34,7 +36,7 @@ int alphaBeta(Position &board, int depth, int alpha, int beta, std::chrono::time
 }
 
 template<Color color, typename Clock>
-AlphaBetaResults alphaBetaRoot(Position &board, int depth, std::chrono::time_point<Clock> endTime) {
+AlphaBetaResults alpha_beta_root(Position &board, int depth, std::chrono::time_point<Clock> end_time) {
     struct AlphaBetaResults results;
     int alpha = NEG_INF_CHESS, beta = POS_INF_CHESS, maxValue = NEG_INF_CHESS;
     MoveList<color> allLegalMoves(board);
@@ -43,9 +45,9 @@ AlphaBetaResults alphaBetaRoot(Position &board, int depth, std::chrono::time_poi
     results.bestMove = *allLegalMoves.begin();
 
     for (Move legalMove : allLegalMoves)  {
-        if (exceededTime(endTime)) return results;
+        if (exceededTime(end_time)) return results;
         board.play<color>(legalMove);
-        int value = -alphaBeta<~color, std::chrono::system_clock>(board, depth - 1, -beta, -alpha, endTime);
+        int value = -alphaBeta<~color, std::chrono::system_clock>(board, depth - 1, -beta, -alpha, end_time);
         board.undo<color>(legalMove);
         if (value > maxValue) {
             results.bestMove = legalMove;

@@ -135,6 +135,6 @@ const char* MOVE_TYPESTR[16] = {
 //Prints the move
 //For example: e5d6 (capture); a7a8R; O-O
 std::ostream& operator<<(std::ostream& os, const Move& m) {
-	os << SQSTR[m.from()] << SQSTR[m.to()] << MOVE_TYPESTR[m.flags()];
+	os << SQSTR[m.from()] << SQSTR[m.to()] << MOVE_TYPESTR[m.flag()];
 	return os;
 }
