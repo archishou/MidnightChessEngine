@@ -13,6 +13,10 @@ typedef std::vector<ScoredMove> ScoredMoves;
 
 const int CAPTURED_PIECE_VALUE_MULTIPLIER = 10;
 
+bool compare_moves(ScoredMove const& lhs, ScoredMove const& rhs) {
+	return lhs.score < rhs.score;
+}
+
 int get_piece_value(PieceType piece_type) {
 	switch (piece_type) {
 		case PieceType::PAWN: return PAWN_VALUE;
@@ -24,8 +28,25 @@ int get_piece_value(PieceType piece_type) {
 	}
 }
 
-bool compare_moves(ScoredMove const& lhs, ScoredMove const& rhs) {
-	return lhs.score < rhs.score;
+int capture_move_score(Move move, Position& board) {
+	PieceType to_type = type_of(board.at(move.to()));
+	PieceType from_type = type_of(board.at(move.from()));
+
+	if (move.is_capture()) {
+		return CAPTURED_PIECE_VALUE_MULTIPLIER * get_piece_value(to_type) - get_piece_value(from_type);
+	}
+	return 0;
+}
+
+int promotion_move_score(Move move, Position& board) {
+	if (move.is_promotion()) {
+		MoveFlag flag = move.flag();
+		if (flag == PC_QUEEN || flag == PR_QUEEN) return QUEEN_VALUE;
+		else if (flag == PC_ROOK || flag == PR_ROOK) return ROOK_VALUE;
+		else if (flag == PC_BISHOP || flag == PR_BISHOP) return BISHOP_VALUE;
+		else if (flag == PC_KNIGHT || flag == PR_KNIGHT) return KNIGHT_VALUE;
+	}
+	return 0;
 }
 
 template<Color color>
@@ -35,21 +56,8 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board) {
 		struct ScoredMove scored_move;
 		scored_move.move = move;
 		int score = 0; //Higher score is likely a better move.
-		PieceType to_type = type_of(board.at(move.to()));
-		PieceType from_type = type_of(board.at(move.from()));
-
-		if (move.is_capture()) {
-			score += CAPTURED_PIECE_VALUE_MULTIPLIER * get_piece_value(to_type) - get_piece_value(from_type);
-		}
-
-		if (move.is_promotion()) {
-			MoveFlag flag = move.flag();
-			if (flag == PC_QUEEN || flag == PR_QUEEN) score += QUEEN_VALUE;
-			else if (flag == PC_ROOK || flag == PR_ROOK) score += ROOK_VALUE;
-			else if (flag == PC_BISHOP || flag == PR_BISHOP) score += BISHOP_VALUE;
-			else if (flag == PC_KNIGHT || flag == PR_KNIGHT) score += KNIGHT_VALUE;
-		}
-
+		score += capture_move_score(move, board);
+		score += promotion_move_score(move, board);
 		// Score negated for sorting. We want to evaluate high scoring moves first.
 		scored_move.score = -score;
 		scored_moves.push_back(scored_move);
