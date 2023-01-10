@@ -3,7 +3,7 @@ add_subdirectory(lib)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 
-add_executable(ChessEngine_tests_run ConverterTests.cpp AbsoluteDateTest.cpp)
+add_executable(ChessEngine_tests_run MoveGenerationTests/MoveGenerationPerftDefaultFenTest.cpp)
 
 target_link_libraries(ChessEngine_tests_run ChessEngine_lib)
 

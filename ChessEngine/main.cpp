@@ -22,12 +22,12 @@ unsigned long long perft(Position& p, unsigned int depth) {
 
 void test_perft() {
     Position p;
-    const std::string& fen = "8/8/1k6/8/1N6/5K2/8/r7 b -  -";
+    const std::string& fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     Position::set(fen, p);
     std::cout << p;
 
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    auto n = perft<WHITE>(p, 1);
+    auto n = perft<WHITE>(p, 4);
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     auto diff = end - begin;
 
@@ -39,5 +39,8 @@ void test_perft() {
               << std::chrono::duration_cast<std::chrono::microseconds>(diff).count() << " [microseconds]\n";
 }
 int main () {
-	read_uci("/Users/archishmaan/Documents/CodeProjects/C/ChessEngine/src/engine_uci_inputs_diagnostics.txt");
+	initialise_all_databases();
+	zobrist::initialise_zobrist_keys();
+	test_perft();
+	//read_uci("/Users/archishmaan/Documents/CodeProjects/C/ChessEngine/src/engine_uci_inputs_diagnostics.txt");
 }
