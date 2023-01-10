@@ -1,7 +1,0 @@
-uci
-ucinewgame
-isready
-position startpos moves e2e4 c7c5 f2f3 b8c6 d1e2 c6d4 e2a6
-go movetime 50000
-Predicted Best Move: b7a6 (capture):6
-Time Searched: 1.05928

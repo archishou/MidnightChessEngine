@@ -3,6 +3,7 @@
 //
 #include "position.h"
 #include "evaluate.h"
+#include "tables.h"
 
 struct ScoredMove {
 	Move move;
@@ -12,6 +13,7 @@ struct ScoredMove {
 typedef std::vector<ScoredMove> ScoredMoves;
 
 const int CAPTURED_PIECE_VALUE_MULTIPLIER = 10;
+const int IN_OPP_PAWN_TERRITORY_PENALTY = -350;
 
 bool compare_moves(ScoredMove const& lhs, ScoredMove const& rhs) {
 	return lhs.score < rhs.score;
@@ -46,6 +48,13 @@ int promotion_move_score(Move move, Position& board) {
 		else if (flag == PC_BISHOP || flag == PR_BISHOP) return BISHOP_VALUE;
 		else if (flag == PC_KNIGHT || flag == PR_KNIGHT) return KNIGHT_VALUE;
 	}
+	return 0;
+}
+
+template<Color color>
+int in_opponent_pawn_territory(Move move, Position& board) {
+	Bitboard opp_pawn_attacks = pawn_attacks<~color>(board.bitboard_of(WHITE_PAWN));
+	if ((move.to() & opp_pawn_attacks) != 0) return IN_OPP_PAWN_TERRITORY_PENALTY;
 	return 0;
 }
 

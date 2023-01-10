@@ -1,0 +1,8 @@
+uci
+ucinewgame
+isready
+position startpos moves e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 d2d4 e5d4 f3d4 c6a5 b2b3 a5c4 b3c4 f6g8 d4f5 g8f6 e4e5 f6g8 d1d5 c7c6 d5d4 d7d5 e5d6 c8f5 d4e5 f5e6 d6d7 e8d7 e5d4 d7c8 d4d8 c8d8 e1g1 e6c4 f1d1 d8c7 b1a3 f8a3 c1a3
+go movetime 50000
+Predicted Best Move: c7c8:6
+Time Searched: 1.22996
+quit
