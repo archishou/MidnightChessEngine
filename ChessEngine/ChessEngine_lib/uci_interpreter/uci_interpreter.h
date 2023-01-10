@@ -114,8 +114,7 @@ void read_uci(const string& diagnostics_file_path) {
 			break;
 		} else if (input_line == "isready") {
 			cout << "readyok" << endl;
-		} else if (input_line == "ucinewgame") {
-		}
+		} else if (input_line == "ucinewgame") {}
 		if (input_line.substr(0, 23) == "position startpos moves") {
 			uci_position_startpos_moves(p, input_line);
 		} else if (input_line == "stop") {
