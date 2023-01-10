@@ -16,6 +16,7 @@ protected:
 	}
 	const std::string initial_position_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	const std::string kiwipete_fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
+	const std::string talkchess_fen = "rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R w KQ - 1 8";
 };
 
 template<Color Us>
@@ -82,4 +83,24 @@ TEST_F(MoveGenerationFixture, PerftDepthFourKiwipete){
 
 TEST_F(MoveGenerationFixture, PerftDepthFiveKiwipete){
 	EXPECT_EQ(test_perft(kiwipete_fen, 5), 193690690);
+}
+
+TEST_F(MoveGenerationFixture, PerftDepthOneTalkchess){
+	EXPECT_EQ(test_perft(talkchess_fen, 1), 44);
+}
+
+TEST_F(MoveGenerationFixture, PerftDepthTwoTalkchess){
+	EXPECT_EQ(test_perft(talkchess_fen, 2), 1486);
+}
+
+TEST_F(MoveGenerationFixture, PerftDepthThreeTalkchess){
+	EXPECT_EQ(test_perft(talkchess_fen, 3), 62379);
+}
+
+TEST_F(MoveGenerationFixture, PerftDepthFourTalkchess){
+	EXPECT_EQ(test_perft(talkchess_fen, 4), 2103487);
+}
+
+TEST_F(MoveGenerationFixture, PerftDepthFiveTalkchess){
+	EXPECT_EQ(test_perft(talkchess_fen, 5), 89941194);
 }
