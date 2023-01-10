@@ -10,18 +10,10 @@
 
 
 using namespace std;
-Move uciToMove(const std::string& moveStr, Position& position) {
+Move uci_to_move(const std::string& moveStr, Position& position) {
 	Move move = Move(moveStr.substr(0, 4));
 	// Pawn Promotion
 	if (moveStr.size() == 5) {
-		/*
-		Could be dangerous if order in enum is changed!
-		int promotionType = position.at(move.to()) == NO_PIECE ? PR_KNIGHT : PC_KNIGHT;
-		if (moveStr.at(4) == 'n') return Move(move.from(), move.to(), (MoveFlag) promotionType);
-		if (moveStr.at(4) == 'b') return Move(move.from(), move.to(), (MoveFlag) (promotionType + 1));
-		if (moveStr.at(4) == 'r') return Move(move.from(), move.to(), (MoveFlag) (promotionType + 2));
-		if (moveStr.at(4) == 'q') return Move(move.from(), move.to(), (MoveFlag) (promotionType + 3));
-		*/
 		// Quiet Promotion
 		if (position.at(move.to()) == NO_PIECE) {
 			if (moveStr.at(4) == 'q') return Move(move.from(), move.to(), PR_QUEEN);
@@ -58,6 +50,7 @@ Move uciToMove(const std::string& moveStr, Position& position) {
 
 	return {move.from(), move.to(), QUIET};
 }
+
 vector<string> split(const string& s, const string& delimiter) {
 	size_t pos_start = 0, pos_end, delim_len = delimiter.length();
 	string token;
@@ -73,19 +66,43 @@ vector<string> split(const string& s, const string& delimiter) {
 	return res;
 }
 
-void read_uci(const string& diagnostics_file_path) {
+const std::string& initial_board_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
+void initialize_uci(Position& p) {
 	initialise_all_databases();
 	zobrist::initialise_zobrist_keys();
+	Position::set(initial_board_fen, p);
+}
+
+void uci_go(Position& p, ofstream& diagnostics_file) {
+	BestMoveSearchResults results;
+	if (p.turn() == BLACK) results = best_move<BLACK>(p);
+	else results = best_move<WHITE>(p);
+	diagnostics_file << "Predicted Best Move: " << results.best_move << ":" << results.depth_searched << std::endl;
+	diagnostics_file << "Time Searched: " << results.time_searched << std::endl;
+	cout << "bestmove " << results.best_move << endl;
+}
+
+void uci_position_startpos_moves(Position& p, string input_line) {
+	Position::set(initial_board_fen, p);
+	vector<string> uciMoves = split(input_line.substr(24, input_line.size() - 24), " ");
+	for (const std::string& uciMove : uciMoves) {
+		Move nextMove = uci_to_move(uciMove, p);
+		if (p.turn() == BLACK) p.play<BLACK>(nextMove);
+		else p.play<WHITE>(nextMove);
+	}
+}
+
+void read_uci(const string& diagnostics_file_path) {
 	Position p;
-	const std::string& default_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-	Position::set(default_fen, p);
+	initialize_uci(p);
 
 	string input_line; //to read the command given by the GUI
 
 	cout.setf(ios::unitbuf);// Make sure that the outputs are sent straight away to the GUI
-
 	ofstream diagnostics_file;
 	diagnostics_file.open(diagnostics_file_path);
+
 	while (getline(cin, input_line)) {
 		diagnostics_file << input_line << std::endl;
 		if (input_line == "uci") {
@@ -98,27 +115,12 @@ void read_uci(const string& diagnostics_file_path) {
 		} else if (input_line == "isready") {
 			cout << "readyok" << endl;
 		} else if (input_line == "ucinewgame") {
-			; // nothing to do
 		}
 		if (input_line.substr(0, 23) == "position startpos moves") {
-			Position::set(default_fen, p);
-			vector<string> uciMoves = split(input_line.substr(24, input_line.size() - 24), " ");
-			for (const std::string& uciMove : uciMoves) {
-				Move nextMove = uciToMove(uciMove, p);
-				if (p.turn() == BLACK) p.play<BLACK>(nextMove);
-				else p.play<WHITE>(nextMove);
-			}
+			uci_position_startpos_moves(p, input_line);
 		} else if (input_line == "stop") {
-			; // nothing to do
 		} else if (input_line.substr(0, 2 ) == "go") {
-			// Received a command like: "go wtime 300000 btime 300000 winc 0 binc 0"
-			BestMoveSearchResults results;
-			if (p.turn() == BLACK) results = best_move<BLACK>(p);
-			else results = best_move<WHITE>(p);
-			diagnostics_file << "Predicted Best Move: " << results.best_move << ":" << results.depth_searched << std::endl;
-			diagnostics_file << "Time Searched: " << results.time_searched << std::endl;
-			cout << "bestmove " << results.best_move << endl;
-			//Output like: "bestmove h7h5"
+			uci_go(p, diagnostics_file);
 		}
 	}
 	diagnostics_file.close();
