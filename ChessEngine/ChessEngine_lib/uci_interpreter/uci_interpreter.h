@@ -78,12 +78,13 @@ void uci_go(Position& p, ofstream& diagnostics_file) {
 	BestMoveSearchResults results;
 	if (p.turn() == BLACK) results = best_move<BLACK>(p);
 	else results = best_move<WHITE>(p);
+	diagnostics_file << "Position FEN : " << p.fen() << std::endl;
 	diagnostics_file << "Predicted Best Move: " << results.best_move << ":" << results.depth_searched << std::endl;
 	diagnostics_file << "Time Searched: " << results.time_searched << std::endl;
 	cout << "bestmove " << results.best_move << endl;
 }
 
-void uci_position_startpos_moves(Position& p, string input_line) {
+void uci_position_startpos_moves(Position& p, const string& input_line) {
 	Position::set(initial_board_fen, p);
 	vector<string> uciMoves = split(input_line.substr(24, input_line.size() - 24), " ");
 	for (const std::string& uciMove : uciMoves) {
