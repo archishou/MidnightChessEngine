@@ -14,7 +14,8 @@ protected:
 
 	virtual void TearDown() {
 	}
-	std::string initial_position_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+	const std::string initial_position_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+	const std::string kiwipete_fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
 };
 
 template<Color Us>
@@ -32,9 +33,10 @@ unsigned long long perft(Position& p, unsigned int depth) {
 	return nodes;
 }
 
-unsigned long long test_perft(const std::string& initial_fen, int depth) {
+unsigned long long test_perft(const std::string& fen, int depth) {
 	Position p;
-	Position::set(initial_fen, p);
+	std::cout << fen;
+	Position::set(fen, p);
 	return perft<WHITE>(p, depth);
 }
 
@@ -60,4 +62,24 @@ TEST_F(MoveGenerationFixture, PerftDepthFiveDefaultFen){
 
 TEST_F(MoveGenerationFixture, PerftDepthSixDefaultFen){
 	EXPECT_EQ(test_perft(initial_position_fen, 6), 119060324);
+}
+
+TEST_F(MoveGenerationFixture, PerftDepthOneKiwipete){
+	EXPECT_EQ(test_perft(kiwipete_fen, 1), 48);
+}
+
+TEST_F(MoveGenerationFixture, PerftDepthTwoKiwipete){
+	EXPECT_EQ(test_perft(kiwipete_fen, 2), 2039);
+}
+
+TEST_F(MoveGenerationFixture, PerftDepthThreeKiwipete){
+	EXPECT_EQ(test_perft(kiwipete_fen, 3), 97862);
+}
+
+TEST_F(MoveGenerationFixture, PerftDepthFourKiwipete){
+	EXPECT_EQ(test_perft(kiwipete_fen, 4), 4085603);
+}
+
+TEST_F(MoveGenerationFixture, PerftDepthFiveKiwipete){
+	EXPECT_EQ(test_perft(kiwipete_fen, 5), 193690690);
 }
