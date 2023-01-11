@@ -3,7 +3,6 @@
 //
 #include <iostream>
 #include <unistd.h>
-#include <signal.h>
 #include <sys/time.h>
 
 #include "move_generation/position.h"
@@ -13,7 +12,14 @@ struct IDResults {
     Move best_move;
     int depth_searched;
     double time_searched;
+	int value;
 };
+
+void update_id_results(IDResults& id_results, AlphaBetaResults& ab_results, int sub_depth) {
+	id_results.value = ab_results.value;
+	id_results.best_move = ab_results.best_move;
+	id_results.depth_searched = sub_depth;
+}
 
 template<Color color>
 IDResults iterative_deepening(Position& board, int maxTimeMilliseconds) {
@@ -24,12 +30,11 @@ IDResults iterative_deepening(Position& board, int maxTimeMilliseconds) {
     std::clock_t start;
     start = std::clock();
 
-    for (int subDepth = 1; subDepth <= DEPTH; subDepth++) {
+    for (int sub_depth = 1; sub_depth <= DEPTH; sub_depth++) {
         struct AlphaBetaResults ab_results =
-				alpha_beta_root<color>(board, subDepth, target_end_time);
+				alpha_beta_root<color>(board, sub_depth, target_end_time);
         if (ab_results.search_completed) {
-			id_results.best_move = ab_results.best_move;
-			id_results.depth_searched = subDepth;
+			update_id_results(id_results, ab_results, sub_depth);
         }
     }
 

@@ -8,6 +8,7 @@
 struct AlphaBetaResults {
     Move best_move;
     bool search_completed;
+	int value;
 };
 
 typedef std::chrono::time_point<std::chrono::system_clock> TimePoint;
@@ -58,5 +59,6 @@ AlphaBetaResults alpha_beta_root(Position &board, int depth, TimePoint end_time)
         }
     }
     results.search_completed = true;
+	results.value = max_value;
     return results;
 }
