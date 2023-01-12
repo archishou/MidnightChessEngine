@@ -80,6 +80,9 @@ private:
 	//make/unmake
 	uint64_t hash;
 
+	template<Color Us>
+	Move *generate_captures(Move *list);
+
 public:
 	//The history of non-recoverable information
     //Longest game in history was
@@ -351,6 +354,7 @@ void Position::undo(const Move m) {
 }
 
 //Generates all legal moves in a position for the given side. Advances the move pointer and returns it.
+//TODO: seperate logic out for each MoveGenerationOption
 template<Color Us>
 Move* Position::generate_legals(Move* list, const MoveGenerationOptions &options) {
 	constexpr Color Them = ~Us;

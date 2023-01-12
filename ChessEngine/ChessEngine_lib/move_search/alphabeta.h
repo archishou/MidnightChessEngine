@@ -27,6 +27,38 @@ bool position_is_draw(Position &board) {
 	return false;
 }
 
+// TODO: Very Temporary !!!!
+template<Color color>
+Move* generate_captures(Position &board, MoveList<color> &move_list) {
+	std::vector<Move> capture_moves;
+	for (Move move: move_list) {
+		if (move.flag() == CAPTURE) capture_moves.push_back(move);
+	}
+	Move* capture_moves_arr = &capture_moves[0];
+	return capture_moves_arr;
+}
+
+template<Color color>
+int q_search(Position& board, int alpha, int beta, TimePoint endTime) {
+	if (position_is_draw(board)) return 0;
+	MoveList<color> all_legal_moves(board);
+	Move* capture_moves = generate_captures(board, all_legal_moves);
+	ScoredMoves scored_moves = order_moves<color>(capture_moves, board);
+	if (scored_moves.empty()) return evaluate<color>(board);
+	int value = NEG_INF_CHESS;
+	for (ScoredMove scored_move : scored_moves) {
+		Move legal_move = scored_move.move;
+		if (exceededTime(endTime)) return value;
+		board.play<color>(legal_move);
+		int v = -q_search<~color>(board,  -beta, -alpha, endTime);
+		board.undo<color>(legal_move);
+		value = std::max(value, v);
+		alpha = std::max(alpha, value);
+		if (alpha >= beta) break;
+	}
+	return value;
+}
+
 template<Color color>
 int alpha_beta(Position &board, int depth, int alpha, int beta, TimePoint endTime) {
 	if (position_is_draw(board)) return 0;
@@ -60,8 +92,6 @@ AlphaBetaResults alpha_beta_root(Position &board, int depth, TimePoint end_time)
 
     results.search_completed = false;
     results.best_move = scored_moves.begin()->move;
-
-	std::cout << "DIV" << std::endl;
 
     for (ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
