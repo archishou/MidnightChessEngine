@@ -36,10 +36,10 @@ namespace zobrist {
 }
 
 struct MoveGenerationOptions {
-	bool generate_captures = true;
-	bool generate_checks = true;
-	bool generate_promotion = true;
-	bool generate_quiet = true;
+	bool generate_captures;
+	bool generate_checks;
+	bool generate_promotion;
+	bool generate_quiet;
 };
 
 //Stores position information which cannot be recovered on undo-ing a move
@@ -154,7 +154,7 @@ public:
 	template<Color C> void undo(Move m);
 
 	template<Color Us>
-	Move *generate_legals(Move *list, MoveGenerationOptions options);
+	Move *generate_legals(Move *list, const MoveGenerationOptions &options);
 };
 
 //Returns the bitboard of all bishops and queens of a given color
@@ -352,7 +352,7 @@ void Position::undo(const Move m) {
 
 //Generates all legal moves in a position for the given side. Advances the move pointer and returns it.
 template<Color Us>
-Move* Position::generate_legals(Move* list, MoveGenerationOptions options) {
+Move* Position::generate_legals(Move* list, const MoveGenerationOptions &options) {
 	constexpr Color Them = ~Us;
 
 	const Bitboard us_bb = all_pieces<Us>();
@@ -677,7 +677,13 @@ Move* Position::generate_legals(Move* list, MoveGenerationOptions options) {
 template<Color Us>
 class MoveList {
 public:
-	explicit MoveList(Position& p) : last(p.generate_legals<Us>(list, MoveGenerationOptions())) {}
+	const MoveGenerationOptions DefaultMoveGenerationOptions = {
+		.generate_captures = true,
+		.generate_checks = true,
+		.generate_promotion = true,
+		.generate_quiet = true,
+	};
+	explicit MoveList(Position& p) : last(p.generate_legals<Us>(list, DefaultMoveGenerationOptions)) {}
 	explicit MoveList(Position& p, MoveGenerationOptions& options) : last(p.generate_legals<Us>(list, options)) {}
 
 	const Move* begin() const { return list; }
