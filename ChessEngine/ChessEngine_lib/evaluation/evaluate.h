@@ -13,6 +13,7 @@ const int BISHOP_VALUE = 330;
 const int ROOK_VALUE = 500;
 const int QUEEN_VALUE = 900;
 const int CHECK_PENALTY = -100;
+//const int OPP_CHECK_BONUS = 100;
 
 template<Color color>
 int evaluate_material(Position& board) {

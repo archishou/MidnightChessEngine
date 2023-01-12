@@ -7,5 +7,7 @@
 
 # Todo 
 
+- (HIGH IMPORTANCE) Detect draws
+- (HIGH IMPORTANCE) Q search, mis-evaluating many positions.
 - Implement Kind end game pstq
 - Tests for evaluation on more pstq positions

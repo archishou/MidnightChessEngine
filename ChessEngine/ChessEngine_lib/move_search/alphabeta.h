@@ -19,11 +19,20 @@ bool exceededTime(TimePoint endTime) {
 
 template<Color color>
 int alpha_beta(Position &board, int depth, int alpha, int beta, TimePoint endTime) {
-    if (depth == 0) return evaluate<color>(board);
+    if (depth == 0) {
+		//std::cout << board << std::endl;
+		return evaluate<color>(board);
+	}
     MoveList<color> all_legal_moves(board);
 	ScoredMoves scored_moves = order_moves(all_legal_moves, board);
     int value = NEG_INF_CHESS;
     // Auto handles checkmate, no legal moves, return -inf!
+	if (scored_moves.size() == 0) {
+		//std::cout << "NO MOVES!" << std::endl;
+		//std::cout << board << std::endl;
+		//std::cout << board.fen() << std::endl;
+		//std::cout << color << WHITE << std::endl;
+	}
     for (ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
         if (exceededTime(endTime)) return value;
@@ -47,13 +56,16 @@ AlphaBetaResults alpha_beta_root(Position &board, int depth, TimePoint end_time)
     results.search_completed = false;
     results.best_move = scored_moves.begin()->move;
 
+	std::cout << "DIV" << std::endl;
+
     for (ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
-        if (exceededTime(end_time)) return results;
+		if (exceededTime(end_time)) return results;
         board.play<color>(legal_move);
         int value = -alpha_beta<~color>(board, depth - 1, -beta, -alpha, end_time);
         board.undo<color>(legal_move);
         if (value > max_value) {
+			//std::cout << legal_move << std::endl;
             results.best_move = legal_move;
 			max_value = value;
         }
