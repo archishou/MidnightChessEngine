@@ -72,6 +72,7 @@ private:
 	//The zobrist hash of the position, which can be incrementally updated and rolled back after each
 	//make/unmake
 	uint64_t hash;
+
 public:
 	//The history of non-recoverable information
     //Longest game in history was
@@ -86,8 +87,9 @@ public:
 	//The bitboard of pieces that are currently pinned to the king by enemy sliders, updated whenever 
 	//generate_moves() is called
 	Bitboard pinned;
-	
-	
+
+	std::vector<uint64_t> hash_history;
+
 	Position() : piece_bb{ 0 }, side_to_play(WHITE), game_ply(0), board{}, 
 		hash(0), pinned(0), checkers(0) {
 
@@ -280,6 +282,7 @@ void Position::play(const Move m) {
 		
 		break;
 	}
+	hash_history.push_back(hash);
 }
 
 //Undos a move in the current position, rolling it back to the previous position
@@ -335,7 +338,7 @@ void Position::undo(const Move m) {
 		put_piece(history[game_ply].captured, m.to());
 		break;
 	}
-
+	hash_history.pop_back();
 	side_to_play = ~side_to_play;
 	--game_ply;
 }

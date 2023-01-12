@@ -17,8 +17,19 @@ bool exceededTime(TimePoint endTime) {
     return std::chrono::system_clock::now() > endTime;
 }
 
+bool position_is_draw(Position &board) {
+	uint64_t current_hash = board.get_hash();
+	int count = 0;
+	for (uint64_t hash : board.hash_history) {
+		if (hash == current_hash) count += 1;
+		if (count >= 3) return true;
+	}
+	return false;
+}
+
 template<Color color>
 int alpha_beta(Position &board, int depth, int alpha, int beta, TimePoint endTime) {
+	if (position_is_draw(board)) return 0;
     if (depth == 0) {
 		//std::cout << board << std::endl;
 		return evaluate<color>(board);
@@ -27,12 +38,6 @@ int alpha_beta(Position &board, int depth, int alpha, int beta, TimePoint endTim
 	ScoredMoves scored_moves = order_moves(all_legal_moves, board);
     int value = NEG_INF_CHESS;
     // Auto handles checkmate, no legal moves, return -inf!
-	if (scored_moves.size() == 0) {
-		//std::cout << "NO MOVES!" << std::endl;
-		//std::cout << board << std::endl;
-		//std::cout << board.fen() << std::endl;
-		//std::cout << color << WHITE << std::endl;
-	}
     for (ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
         if (exceededTime(endTime)) return value;

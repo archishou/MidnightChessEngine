@@ -1,10 +1,10 @@
 uci
 ucinewgame
 isready
-position startpos moves e2e4 c7c5 g1f3 b8c6 f1c4 g8f6 d2d3 b7b5 c4b5 d8a5 b1c3 c6d4 e1g1 d4b5 c3b5
+position startpos moves e2e4 c7c5 g1f3 d7d6 f1c4 g8f6 d2d3 b8c6 c1g5 c8g4 h2h3 g4f3 d1f3 c6d4 f3e3 d4c2 e1e2 c2e3 e2e3 d8b6 b1a3 b6b2 c4b5 e8d8 a3c4 b2b5 g5f6 e7f6 c4d6 f8d6 a1b1 b5a6 b1b3 a6a2 b3c3 a2b2 h1c1 f6f5 e4f5 h8e8 e3f3
 go movetime 50000
-Position FEN : r1b1kb1r/p2ppppp/5n2/qNp5/4P3/3P1N2/PPP2PPP/R1BQ1RK1 b kq-  -
-Predicted Best Move: a5b5 (capture):5
-Time Searched: 0.999522
-Value: 225
+Position FEN : r2kr3/pp3ppp/3b4/2p2P2/8/2RP1K1P/1q3PP1/2R5 b -  -
+Predicted Best Move: b2e2:5
+Time Searched: 0.842492
+Value: 1000000
 quit
