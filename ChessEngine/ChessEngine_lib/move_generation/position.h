@@ -35,6 +35,13 @@ namespace zobrist {
 	extern void initialise_zobrist_keys();
 }
 
+struct MoveGenerationOptions {
+	bool generate_captures = true;
+	bool generate_checks = true;
+	bool generate_promotion = true;
+	bool generate_quiet = true;
+};
+
 //Stores position information which cannot be recovered on undo-ing a move
 struct UndoInfo {
 	//The bitboard of squares on which pieces have either moved from, or have been moved to. Used for castling
@@ -147,7 +154,7 @@ public:
 	template<Color C> void undo(Move m);
 
 	template<Color Us>
-	Move *generate_legals(Move* list);
+	Move *generate_legals(Move *list, MoveGenerationOptions options);
 };
 
 //Returns the bitboard of all bishops and queens of a given color
@@ -343,10 +350,9 @@ void Position::undo(const Move m) {
 	--game_ply;
 }
 
-
 //Generates all legal moves in a position for the given side. Advances the move pointer and returns it.
 template<Color Us>
-Move* Position::generate_legals(Move* list) {
+Move* Position::generate_legals(Move* list, MoveGenerationOptions options) {
 	constexpr Color Them = ~Us;
 
 	const Bitboard us_bb = all_pieces<Us>();
@@ -671,7 +677,8 @@ Move* Position::generate_legals(Move* list) {
 template<Color Us>
 class MoveList {
 public:
-	explicit MoveList(Position& p) : last(p.generate_legals<Us>(list)) {}
+	explicit MoveList(Position& p) : last(p.generate_legals<Us>(list, MoveGenerationOptions())) {}
+	explicit MoveList(Position& p, MoveGenerationOptions& options) : last(p.generate_legals<Us>(list, options)) {}
 
 	const Move* begin() const { return list; }
 	const Move* end() const { return last; }
