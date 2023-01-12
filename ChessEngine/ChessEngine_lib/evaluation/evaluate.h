@@ -38,8 +38,7 @@ int evaluate_piece_position(Position& board, PieceType piece_type) {
 	int pstq_score = 0;
 	Bitboard piece_bitboard = board.bitboard_of(color, piece_type);
 	while (piece_bitboard != 0) {
-		Square square = (Square) __builtin_ctzll(piece_bitboard);
-		piece_bitboard &= ~(1ULL << square);
+		Square square = pop_lsb(&piece_bitboard);
 		pstq_score += read_pstq<color>(piece_type, square);
 	}
 	return pstq_score;
