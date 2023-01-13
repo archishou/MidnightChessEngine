@@ -8,7 +8,8 @@
 # Todo 
 
 - (HIGH IMPORTANCE) Detect draws (completed I think)
-- History might not be reset correctly in board object
+- (HIGH IMPORTANCE) Transposition Table to extract principal variation.
 - (HIGH IMPORTANCE) Q search, mis-evaluating many positions.
+- History might not be reset correctly in board object
 - Implement Kind end game pstq
 - Tests for evaluation on more pstq positions

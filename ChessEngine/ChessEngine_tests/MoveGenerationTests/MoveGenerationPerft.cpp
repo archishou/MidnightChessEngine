@@ -104,3 +104,6 @@ TEST_F(MoveGenerationFixture, PerftDepthFourTalkchess){
 TEST_F(MoveGenerationFixture, PerftDepthFiveTalkchess){
 	EXPECT_EQ(test_perft(talkchess_fen, 5), 89941194);
 }
+TEST_F(MoveGenerationFixture, PerftTestPosition){
+	EXPECT_EQ(test_perft("rn2kbnr/pp2pppp/2p5/8/5B2/N2P1B1P/PP3PP1/R4RK1 w kq - 0 13", 5), 18292958);
+}

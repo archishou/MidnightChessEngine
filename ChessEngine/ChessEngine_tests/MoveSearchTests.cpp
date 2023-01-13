@@ -62,3 +62,17 @@ TEST_F(MoveSearchFixture, TestFen2){
 
 	EXPECT_EQ(1, 1);
 }
+
+TEST_F(MoveSearchFixture, PawnMove){
+	Position p;
+	const std::string& fen = "rn2kbnr/pp2pppp/2p5/8/5B2/N2P1B1P/PP3PP1/R4RK1 b kq - 0 13";
+	Position::set(fen, p);
+
+	BestMoveSearchResults results;
+	results = best_move<BLACK>(p);
+	std::cout << results.best_move << std::endl;
+	std::cout << results.depth_searched << std::endl;
+	std::cout << results.time_searched << std::endl;
+
+	EXPECT_EQ(1, 1);
+}
