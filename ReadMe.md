@@ -7,8 +7,8 @@
 
 # Todo 
 
-- (HIGH IMPORTANCE) Avoid king shuffling, encourage checkmate.
-- (HIGH IMPORTANCE) Q search, mis-evaluating many positions.
+- (HIGH IMPORTANCE) Avoid king shuffling, encourage checkmate without check penalty in eval
 - History might not be reset correctly in board object
 - Implement Kind end game pstq
 - Tests for evaluation on more pstq positions
+- [Completed!] (HIGH IMPORTANCE) Q search, mis-evaluating many positions.
