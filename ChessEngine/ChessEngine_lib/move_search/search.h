@@ -14,16 +14,6 @@ struct BestMoveSearchResults {
 	int value;
 };
 
-struct BestMoveSearchParameters {
-	int depth;
-	int time_limit;
-};
-
-const struct BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
-	.depth = 6,
-	.time_limit = 1000
-};
-
 template<Color color>
 BestMoveSearchResults best_move(Position& board) {
 	return best_move<color>(board, DEFAULT_BEST_MOVE_SEARCH_PARAMS);

@@ -9,16 +9,19 @@ struct AlphaBetaResults {
     Move best_move;
     bool search_completed;
 	int value;
-	int nodes_searched;
+};
+
+struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
+	.generate_captures = true,
+	.generate_checks = false,
+	.generate_promotion = false,
+	.generate_quiet = false,
 };
 
 typedef std::chrono::time_point<std::chrono::system_clock> TimePoint;
 
 bool exceededTime(AlphaBetaResults& results, TimePoint endTime) {
-	if (results.nodes_searched % 1024 == 0) {
-		return std::chrono::system_clock::now() > endTime;
-	}
-	return false;
+	return std::chrono::system_clock::now() > endTime;
 }
 
 bool position_is_draw(Position &board) {
@@ -34,8 +37,7 @@ bool position_is_draw(Position &board) {
 template<Color color>
 int q_search(Position& board, int alpha, int beta, AlphaBetaResults& ab_results, TimePoint end_time) {
 	if (position_is_draw(board)) return 0;
-	MoveList<color> all_legal_moves(board);
-	std::vector<Move> capture_moves = filter_moves_only_captures(board, all_legal_moves);
+	MoveList<color> capture_moves(board, QSearchMoveGenerationsOptions);
 	ScoredMoves scored_moves = order_moves<color>(capture_moves, board);
 	if (scored_moves.empty()) { return evaluate<color>(board); }
 	int value = NEG_INF_CHESS;
@@ -43,7 +45,7 @@ int q_search(Position& board, int alpha, int beta, AlphaBetaResults& ab_results,
 		Move legal_move = scored_move.move;
 		if (exceededTime(ab_results, end_time)) return value;
 		board.play<color>(legal_move);
-		int v = -q_search<~color>(board, -beta, -alpha, end_time);
+		int v = -q_search<~color>(board, -beta, -alpha, ab_results, end_time);
 		board.undo<color>(legal_move);
 		value = std::max(value, v);
 		alpha = std::max(alpha, value);
@@ -57,6 +59,7 @@ int alpha_beta(Position &board, int depth, int alpha, int beta, AlphaBetaResults
 	if (position_is_draw(board)) return 0;
     if (depth == 0) {
 		return evaluate<color>(board);
+		//return q_search<color>(board, alpha, beta, ab_results, end_time);
 	}
     MoveList<color> all_legal_moves(board);
 	ScoredMoves scored_moves = order_moves(all_legal_moves, board);
@@ -68,7 +71,6 @@ int alpha_beta(Position &board, int depth, int alpha, int beta, AlphaBetaResults
         board.play<color>(legal_move);
         int v = -alpha_beta<~color>(board, depth - 1, -beta, -alpha, ab_results, end_time);
         board.undo<color>(legal_move);
-		ab_results.nodes_searched += 1;
         value = std::max(value, v);
         alpha = std::max(alpha, value);
         if (alpha >= beta) break;

@@ -1,10 +1,6 @@
-uci
-ucinewgame
-isready
-position startpos moves e2e4 c7c5 b1c3 b8c6 g1f3 d8a5 a2a3 e7e5 c3b5 d7d6 c2c4 a7a6 b5c3 c8g4 f1e2 g4f3 e2f3 c6d4 e1g1 g8f6 f1e1 d6d5 e4d5 f8d6 d2d3 e8g8 c1e3
-go movetime 50000
-Position FEN : r4rk1/1p3ppp/p2b1n2/q1pPp3/2Pn4/P1NPBB2/1P3PPP/R2QR1K1 b -  -
-Predicted Best Move: d4f5:5
-Time Searched: 0.999773
-Value: 103
-quit
+position startpos moves e2e4 c7c5 g1f3 b8c6 f1c4 e7e5 d2d3 h7h5 c1g5 d8c7 e1g1 g8e7 d3d4 e5d4 c2c3 c7b6 e4e5
+go movetime 500000
+Position FEN : r1b1kb1r/pp1pnpp1/1qn5/2p1P1Bp/2Bp4/2P2N2/PP3PPP/RN1Q1RK1 b kq-  -
+Predicted Best Move: b6b2 (capture):6
+Time Searched: 4.34812
+Value: -40
