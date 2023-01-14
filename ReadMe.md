@@ -7,8 +7,7 @@
 
 # Todo 
 
-- (HIGH IMPORTANCE) Detect draws (completed I think)
-- (HIGH IMPORTANCE) Transposition Table to extract principal variation.
+- (HIGH IMPORTANCE) Avoid king shuffling, encourage checkmate.
 - (HIGH IMPORTANCE) Q search, mis-evaluating many positions.
 - History might not be reset correctly in board object
 - Implement Kind end game pstq

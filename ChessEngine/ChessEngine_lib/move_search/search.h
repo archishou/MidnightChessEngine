@@ -14,10 +14,26 @@ struct BestMoveSearchResults {
 	int value;
 };
 
+struct BestMoveSearchParameters {
+	int depth;
+	int time_limit;
+};
+
+const struct BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
+	.depth = 6,
+	.time_limit = 1000
+};
+
 template<Color color>
 BestMoveSearchResults best_move(Position& board) {
+	return best_move<color>(board, DEFAULT_BEST_MOVE_SEARCH_PARAMS);
+}
+
+template<Color color>
+BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters& parameters) {
 	struct BestMoveSearchResults results;
-	struct IDResults id_results = iterative_deepening<color>(board, MAX_TIME);
+	struct IDResults id_results = iterative_deepening<color>(board,
+			parameters.time_limit, parameters.depth);
 	results.best_move = id_results.best_move;
 	results.depth_searched = id_results.depth_searched;
 	results.time_searched = id_results.time_searched;

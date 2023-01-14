@@ -12,7 +12,8 @@ const int KNIGHT_VALUE = 320;
 const int BISHOP_VALUE = 330;
 const int ROOK_VALUE = 500;
 const int QUEEN_VALUE = 900;
-const int CHECK_PENALTY = -100;
+const int CHECK_PENALTY_MIDDLE = -100;
+const int CHECK_PENALTY_END = -200;
 //const int OPP_CHECK_BONUS = 100;
 
 template<Color color>
@@ -30,7 +31,15 @@ int evaluate_material(Position& board) {
 
 template<Color color>
 int evaluate_king(Position& board) {
-	return board.in_check<color>() ? CHECK_PENALTY: 0;
+	/*
+	bool in_check = board.in_check<color>();
+	if (in_check) {
+		if (board.ply() >= 30) return CHECK_PENALTY_END;
+		return CHECK_PENALTY_MIDDLE;
+	}
+	return 0;
+	 */
+	return board.in_check<color>() ? CHECK_PENALTY_MIDDLE: 0;
 }
 
 template<Color color>

@@ -9,12 +9,16 @@ struct AlphaBetaResults {
     Move best_move;
     bool search_completed;
 	int value;
+	int nodes_searched;
 };
 
 typedef std::chrono::time_point<std::chrono::system_clock> TimePoint;
 
-bool exceededTime(TimePoint endTime) {
-    return std::chrono::system_clock::now() > endTime;
+bool exceededTime(AlphaBetaResults& results, TimePoint endTime) {
+	if (results.nodes_searched % 1024 == 0) {
+		return std::chrono::system_clock::now() > endTime;
+	}
+	return false;
 }
 
 bool position_is_draw(Position &board) {
@@ -27,30 +31,19 @@ bool position_is_draw(Position &board) {
 	return false;
 }
 
-// TODO: Very Temporary !!!!
 template<Color color>
-Move* generate_captures(Position &board, MoveList<color> &move_list) {
-	std::vector<Move> capture_moves;
-	for (Move move: move_list) {
-		if (move.flag() == CAPTURE) capture_moves.push_back(move);
-	}
-	Move* capture_moves_arr = &capture_moves[0];
-	return capture_moves_arr;
-}
-
-template<Color color>
-int q_search(Position& board, int alpha, int beta, TimePoint endTime) {
+int q_search(Position& board, int alpha, int beta, AlphaBetaResults& ab_results, TimePoint end_time) {
 	if (position_is_draw(board)) return 0;
 	MoveList<color> all_legal_moves(board);
-	Move* capture_moves = generate_captures(board, all_legal_moves);
+	std::vector<Move> capture_moves = filter_moves_only_captures(board, all_legal_moves);
 	ScoredMoves scored_moves = order_moves<color>(capture_moves, board);
-	if (scored_moves.empty()) return evaluate<color>(board);
+	if (scored_moves.empty()) { return evaluate<color>(board); }
 	int value = NEG_INF_CHESS;
 	for (ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
-		if (exceededTime(endTime)) return value;
+		if (exceededTime(ab_results, end_time)) return value;
 		board.play<color>(legal_move);
-		int v = -q_search<~color>(board,  -beta, -alpha, endTime);
+		int v = -q_search<~color>(board, -beta, -alpha, end_time);
 		board.undo<color>(legal_move);
 		value = std::max(value, v);
 		alpha = std::max(alpha, value);
@@ -60,10 +53,9 @@ int q_search(Position& board, int alpha, int beta, TimePoint endTime) {
 }
 
 template<Color color>
-int alpha_beta(Position &board, int depth, int alpha, int beta, TimePoint endTime) {
+int alpha_beta(Position &board, int depth, int alpha, int beta, AlphaBetaResults& ab_results, TimePoint end_time) {
 	if (position_is_draw(board)) return 0;
     if (depth == 0) {
-		//std::cout << board << std::endl;
 		return evaluate<color>(board);
 	}
     MoveList<color> all_legal_moves(board);
@@ -72,10 +64,11 @@ int alpha_beta(Position &board, int depth, int alpha, int beta, TimePoint endTim
     // Auto handles checkmate, no legal moves, return -inf!
     for (ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
-        if (exceededTime(endTime)) return value;
+        if (exceededTime(ab_results, end_time)) return value;
         board.play<color>(legal_move);
-        int v = -alpha_beta<~color>(board, depth - 1, -beta, -alpha, endTime);
+        int v = -alpha_beta<~color>(board, depth - 1, -beta, -alpha, ab_results, end_time);
         board.undo<color>(legal_move);
+		ab_results.nodes_searched += 1;
         value = std::max(value, v);
         alpha = std::max(alpha, value);
         if (alpha >= beta) break;
@@ -85,27 +78,26 @@ int alpha_beta(Position &board, int depth, int alpha, int beta, TimePoint endTim
 
 template<Color color>
 AlphaBetaResults alpha_beta_root(Position &board, int depth, TimePoint end_time) {
-    struct AlphaBetaResults results;
+    struct AlphaBetaResults ab_results;
     int alpha = NEG_INF_CHESS, beta = POS_INF_CHESS, max_value = NEG_INF_CHESS;
     MoveList<color> all_legal_moves(board);
 	ScoredMoves scored_moves = order_moves(all_legal_moves, board);
 
-    results.search_completed = false;
-    results.best_move = scored_moves.begin()->move;
+	ab_results.search_completed = false;
+	ab_results.best_move = scored_moves.begin()->move;
 
     for (ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
-		if (exceededTime(end_time)) return results;
+		if (exceededTime(ab_results, end_time)) return ab_results;
         board.play<color>(legal_move);
-        int value = -alpha_beta<~color>(board, depth - 1, -beta, -alpha, end_time);
+        int value = -alpha_beta<~color>(board, depth - 1, -beta, -alpha, ab_results, end_time);
         board.undo<color>(legal_move);
         if (value > max_value) {
-			//std::cout << legal_move << std::endl;
-            results.best_move = legal_move;
+            ab_results.best_move = legal_move;
 			max_value = value;
         }
     }
-    results.search_completed = true;
-	results.value = max_value;
-    return results;
+	ab_results.search_completed = true;
+	ab_results.value = max_value;
+    return ab_results;
 }

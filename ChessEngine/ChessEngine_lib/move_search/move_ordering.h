@@ -75,3 +75,22 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board) {
 	std::sort(scored_moves.begin(), scored_moves.end(), &compare_moves);
 	return scored_moves;
 }
+
+// TODO: REMOVE TEMPORARY HACK
+template<Color color>
+ScoredMoves order_moves(std::vector<Move> &move_list, Position& board) {
+	ScoredMoves scored_moves;
+	for (Move move : move_list) {
+		struct ScoredMove scored_move;
+		scored_move.move = move;
+		int score = 0; //Higher score is likely a better move.
+		score += capture_move_score(move, board);
+		score += promotion_move_score(move, board);
+		score += in_opponent_pawn_territory<color>(move, board);
+		// Score negated for sorting. We want to evaluate high scoring moves first.
+		scored_move.score = -score;
+		scored_moves.push_back(scored_move);
+	}
+	std::sort(scored_moves.begin(), scored_moves.end(), &compare_moves);
+	return scored_moves;
+}
