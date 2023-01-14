@@ -29,7 +29,7 @@ bool position_is_draw(Position &board) {
 	int count = 0;
 	for (uint64_t hash : board.hash_history) {
 		if (hash == current_hash) count += 1;
-		if (count >= 3) return true;
+		if (count >= 2) return true;
 	}
 	return false;
 }
@@ -37,15 +37,21 @@ bool position_is_draw(Position &board) {
 template<Color color>
 int q_search(Position& board, int alpha, int beta, AlphaBetaResults& ab_results, TimePoint end_time) {
 	if (position_is_draw(board)) return 0;
+	int value = NEG_INF_CHESS;
+
+	int v = evaluate<color>(board);
+	value = std::max(value, v);
+	alpha = std::max(alpha, value);
+	if (alpha >= beta) return v;
+
 	MoveList<color> capture_moves(board, QSearchMoveGenerationsOptions);
 	ScoredMoves scored_moves = order_moves<color>(capture_moves, board);
-	if (scored_moves.empty()) { return evaluate<color>(board); }
-	int value = NEG_INF_CHESS;
+	if (scored_moves.empty()) { return v; }
 	for (ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
 		if (exceededTime(ab_results, end_time)) return value;
 		board.play<color>(legal_move);
-		int v = -q_search<~color>(board, -beta, -alpha, ab_results, end_time);
+		v = -q_search<~color>(board, -beta, -alpha, ab_results, end_time);
 		board.undo<color>(legal_move);
 		value = std::max(value, v);
 		alpha = std::max(alpha, value);
@@ -58,8 +64,8 @@ template<Color color>
 int alpha_beta(Position &board, int depth, int alpha, int beta, AlphaBetaResults& ab_results, TimePoint end_time) {
 	if (position_is_draw(board)) return 0;
     if (depth == 0) {
-		return evaluate<color>(board);
-		//return q_search<color>(board, alpha, beta, ab_results, end_time);
+		//return evaluate<color>(board);
+		return q_search<color>(board, alpha, beta, ab_results, end_time);
 	}
     MoveList<color> all_legal_moves(board);
 	ScoredMoves scored_moves = order_moves(all_legal_moves, board);
