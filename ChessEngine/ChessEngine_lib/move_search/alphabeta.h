@@ -64,7 +64,6 @@ template<Color color>
 int alpha_beta(Position &board, int depth, int alpha, int beta, AlphaBetaResults& ab_results, TimePoint end_time) {
 	if (position_is_draw(board)) return 0;
     if (depth == 0) {
-		//return evaluate<color>(board);
 		return q_search<color>(board, alpha, beta, ab_results, end_time);
 	}
     MoveList<color> all_legal_moves(board);

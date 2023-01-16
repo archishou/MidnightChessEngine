@@ -35,6 +35,7 @@ namespace zobrist {
 	extern void initialise_zobrist_keys();
 }
 
+
 struct MoveGenerationOptions {
 	bool generate_captures;
 	bool generate_checks;
@@ -78,7 +79,7 @@ private:
 	
 	//The zobrist hash of the position, which can be incrementally updated and rolled back after each
 	//make/unmake
-	uint64_t hash;
+	zobrist_hash hash;
 
 	template<Color Us>
 	Move *generate_captures(Move *list);
@@ -98,7 +99,7 @@ public:
 	//generate_moves() is called
 	Bitboard pinned;
 
-	std::vector<uint64_t> hash_history;
+	std::vector<zobrist_hash> hash_history;
 
 	Position() : piece_bb{ 0 }, side_to_play(WHITE), game_ply(0), board{}, 
 		hash(0), pinned(0), checkers(0) {
@@ -142,7 +143,7 @@ public:
 	inline Piece at(Square sq) const { return board[sq]; }
 	inline Color turn() const { return side_to_play; }
 	inline int ply() const { return game_ply; }
-	inline uint64_t get_hash() const { return hash; }
+	inline zobrist_hash get_hash() const { return hash; }
 
 	template<Color C> inline Bitboard diagonal_sliders() const;
 	template<Color C> inline Bitboard orthogonal_sliders() const;

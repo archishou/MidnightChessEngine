@@ -24,6 +24,8 @@ enum Direction : int {
 	NORTH_NORTH = 16, SOUTH_SOUTH = -16
 };
 
+typedef uint64_t zobrist_hash;
+
 const size_t NPIECE_TYPES = 6;
 enum PieceType : int {
 	PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
