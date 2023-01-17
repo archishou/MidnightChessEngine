@@ -90,3 +90,17 @@ TEST_F(MoveSearchFixture, QueenMove){
 
 	EXPECT_EQ(1, 1);
 }
+
+TEST_F(MoveSearchFixture, TestEndgame){
+	Position p;
+	const std::string& fen = "8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1";
+	Position::set(fen, p);
+
+	BestMoveSearchResults results;
+	results = best_move<WHITE>(p);
+	std::cout << "Best Move: " << results.best_move << std::endl;
+	std::cout << results.depth_searched << std::endl;
+	std::cout << results.time_searched << std::endl;
+
+	EXPECT_EQ(1, 1);
+}

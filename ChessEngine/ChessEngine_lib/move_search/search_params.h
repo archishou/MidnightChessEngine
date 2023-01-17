@@ -11,6 +11,6 @@ struct BestMoveSearchParameters {
 };
 
 const struct BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
-	.depth = 6,
+	.depth = 100,
 	.time_limit = 1000
 };

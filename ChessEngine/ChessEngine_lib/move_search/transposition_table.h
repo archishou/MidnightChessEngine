@@ -16,8 +16,9 @@ struct TranspositionTableEntry {
 	uint64_t zobrist_hash;
 	int depth;
 	int value;
-	Move best_move;
 	TranspositionTableEntryNodeType node_type;
+	// Used ?
+	Move best_move;
 };
 
 struct TranspositionTableSearchResults {
@@ -28,8 +29,9 @@ struct TranspositionTableSearchResults {
 // More to learn from here: https://github.com/kobolabs/stockfish/blob/master/tt.cpp
 class TranspositionTable {
 public:
-	void put(zobrist_hash hash, int depth, int score, TranspositionTableEntryNodeType node_type, Move best_move);
-	TranspositionTableSearchResults probe(zobrist_hash hash, int depth, int alpha, int beta);
+	TranspositionTableEntryNodeType get_node_type(const int &alpha_initial, const int &beta, const int &value);
+	void put(zobrist_hash hash, int depth, int score, TranspositionTableEntryNodeType node_type);
+	TranspositionTableSearchResults probe(zobrist_hash hash, int depth);
 	explicit TranspositionTable(uint64_t size = 64000);
 	~TranspositionTable();
 

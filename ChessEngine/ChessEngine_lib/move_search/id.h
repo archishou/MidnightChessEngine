@@ -30,9 +30,11 @@ IDResults iterative_deepening(Position& board, int time_limit, int depth) {
     std::clock_t start;
     start = std::clock();
 
+	TranspositionTable t_table = TranspositionTable();
+
     for (int sub_depth = 1; sub_depth <= depth; sub_depth++) {
         struct AlphaBetaResults ab_results =
-				alpha_beta_root<color>(board, sub_depth, target_end_time);
+				alpha_beta_root<color>(board, sub_depth, target_end_time, t_table);
         if (ab_results.search_completed) {
 			update_id_results(id_results, ab_results, sub_depth);
         }

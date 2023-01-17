@@ -4,6 +4,7 @@
 #include "search_params.h"
 #include "move_generation/position.h"
 #include "move_ordering.h"
+#include "transposition_table.h"
 
 struct AlphaBetaResults {
     Move best_move;
@@ -34,6 +35,11 @@ bool position_is_draw(Position &board) {
 	return false;
 }
 
+// Todo update node type, global value etc in here. Code is getting long in main loop.
+void update_alpha_beta_state() {
+
+}
+
 template<Color color>
 int q_search(Position& board, int alpha, int beta, AlphaBetaResults& ab_results, TimePoint end_time) {
 	if (position_is_draw(board)) return 0;
@@ -61,30 +67,49 @@ int q_search(Position& board, int alpha, int beta, AlphaBetaResults& ab_results,
 }
 
 template<Color color>
-int alpha_beta(Position &board, int depth, int alpha, int beta, AlphaBetaResults& ab_results, TimePoint end_time) {
+int alpha_beta(Position &board, int depth, int alpha, int beta, AlphaBetaResults& ab_results, TimePoint end_time,
+			   TranspositionTable& t_table) {
+	const int alpha_initial = alpha;
 	if (position_is_draw(board)) return 0;
     if (depth == 0) {
 		return q_search<color>(board, alpha, beta, ab_results, end_time);
 	}
+
+	TranspositionTableSearchResults probe_results = t_table.probe(board.get_hash(), depth, alpha, beta);
+	if (probe_results.entry_found) {
+		TranspositionTableEntry tt_entry = probe_results.entry;
+		if (tt_entry.node_type == EXACT) {
+			return tt_entry.value;
+		} else if (tt_entry.node_type == LOWER_NODE) {
+			alpha = std::max(alpha, tt_entry.value);
+		} else if (tt_entry.node_type == UPPER_NODE) {
+			beta = std::max(beta, tt_entry.value);
+		}
+		if (alpha >= beta) return tt_entry.value;
+	}
+
     MoveList<color> all_legal_moves(board);
 	ScoredMoves scored_moves = order_moves(all_legal_moves, board);
     int value = NEG_INF_CHESS;
-    // Auto handles checkmate, no legal moves, return -inf!
-    for (ScoredMove scored_move : scored_moves) {
+    // No legal moves, return -inf!
+    for (const ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
         if (exceededTime(ab_results, end_time)) return value;
         board.play<color>(legal_move);
-        int v = -alpha_beta<~color>(board, depth - 1, -beta, -alpha, ab_results, end_time);
+        const int v = -alpha_beta<~color>(board, depth - 1, -beta, -alpha, ab_results, end_time, t_table);
         board.undo<color>(legal_move);
         value = std::max(value, v);
         alpha = std::max(alpha, value);
         if (alpha >= beta) break;
     }
+
+	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
+	t_table.put(board.get_hash(), depth, value, node_type);
     return value;
 }
 
 template<Color color>
-AlphaBetaResults alpha_beta_root(Position &board, int depth, TimePoint end_time) {
+AlphaBetaResults alpha_beta_root(Position &board, int depth, TimePoint end_time, TranspositionTable& t_table) {
     struct AlphaBetaResults ab_results;
     int alpha = NEG_INF_CHESS, beta = POS_INF_CHESS, max_value = NEG_INF_CHESS;
     MoveList<color> all_legal_moves(board);
@@ -97,7 +122,8 @@ AlphaBetaResults alpha_beta_root(Position &board, int depth, TimePoint end_time)
 		Move legal_move = scored_move.move;
 		if (exceededTime(ab_results, end_time)) return ab_results;
         board.play<color>(legal_move);
-        int value = -alpha_beta<~color>(board, depth - 1, -beta, -alpha, ab_results, end_time);
+        int value = -alpha_beta<~color>(board, depth - 1, -beta, -alpha, ab_results,
+										end_time, t_table);
         board.undo<color>(legal_move);
         if (value > max_value) {
             ab_results.best_move = legal_move;
