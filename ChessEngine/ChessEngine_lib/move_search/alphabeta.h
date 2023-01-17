@@ -75,7 +75,7 @@ int alpha_beta(Position &board, int depth, int alpha, int beta, AlphaBetaResults
 		return q_search<color>(board, alpha, beta, ab_results, end_time);
 	}
 
-	TranspositionTableSearchResults probe_results = t_table.probe(board.get_hash(), depth, alpha, beta);
+	TranspositionTableSearchResults probe_results = t_table.probe(board.get_hash(), depth);
 	if (probe_results.entry_found) {
 		TranspositionTableEntry tt_entry = probe_results.entry;
 		if (tt_entry.node_type == EXACT) {
