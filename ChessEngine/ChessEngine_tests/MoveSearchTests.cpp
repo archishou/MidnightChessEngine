@@ -19,88 +19,61 @@ protected:
 	}
 };
 
-TEST_F(MoveSearchFixture, TestFen1){
+TEST_F(MoveSearchFixture, MateInOneTest1){
 	Position p;
-	const std::string& fen = "r1b1k1nr/pppp1pp1/2n4p/4p3/2B1P3/2PP1N2/PP1K1BqP/RN1Q3R b kq - 0 1";
-	Position::set(fen, p);
-	BestMoveSearchResults results;
-	results = best_move<BLACK>(p);
-	// Should be g2f2
-	std::cout << results.best_move << std::endl;
-	std::cout << results.time_searched << std::endl;
-	std::cout << results.depth_searched << std::endl;
-
-	EXPECT_EQ(1, 1);
-}
-
-TEST_F(MoveSearchFixture, TestFen3){
-	Position p;
-	const std::string& fen = "r1bqkb1r/pp1ppppp/2n2n2/2p5/2B1P3/3P1N2/PPP2PPP/RNBQK2R b KQkq - 0 1";
-	Position::set(fen, p);
-	BestMoveSearchResults results;
-	results = best_move<BLACK>(p);
-	// Should be g2f2
-	std::cout << results.best_move << std::endl;
-	std::cout << results.time_searched << std::endl;
-	std::cout << results.depth_searched << std::endl;
-	std::cout << results.value << std::endl;
-
-	EXPECT_EQ(1, 1);
-}
-
-TEST_F(MoveSearchFixture, TestFen2){
-	Position p;
-	const std::string& fen = "8/5p2/pb3p1K/8/8/8/6q1/1k6 w - - 17 64";
-	Position::set(fen, p);
-	BestMoveSearchResults results;
-	results = best_move<BLACK>(p);
-	// Should be g2f2
-	std::cout << results.best_move << std::endl;
-	std::cout << results.time_searched << std::endl;
-	std::cout << results.depth_searched << std::endl;
-	std::cout << results.value << std::endl;
-
-	EXPECT_EQ(1, 1);
-}
-
-TEST_F(MoveSearchFixture, PawnMove){
-	Position p;
-	const std::string& fen = "rn2kbnr/pp2pppp/2p5/8/5B2/N2P1B1P/PP3PP1/R4RK1 b kq - 0 13";
-	Position::set(fen, p);
-
-	BestMoveSearchResults results;
-	results = best_move<BLACK>(p);
-	std::cout << results.best_move << std::endl;
-	std::cout << results.depth_searched << std::endl;
-	std::cout << results.time_searched << std::endl;
-
-	EXPECT_EQ(1, 1);
-}
-
-TEST_F(MoveSearchFixture, QueenMove){
-	Position p;
-	const std::string& fen = "r3kbnr/pp6/3p1p1p/2p1pq2/2P3P1/2B2P2/PPP5/R2Q1RK1 b kq - 0 18";
-	Position::set(fen, p);
-
-	BestMoveSearchResults results;
-	results = best_move<BLACK>(p);
-	std::cout << "Best Move: " << results.best_move << std::endl;
-	std::cout << results.depth_searched << std::endl;
-	std::cout << results.time_searched << std::endl;
-
-	EXPECT_EQ(1, 1);
-}
-
-TEST_F(MoveSearchFixture, TestEndgame){
-	Position p;
-	const std::string& fen = "8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1";
+	const std::string& fen = "2R5/8/8/5K1k/8/3R4/8/8 w - - 0 1";
 	Position::set(fen, p);
 
 	BestMoveSearchResults results;
 	results = best_move<WHITE>(p);
-	std::cout << "Best Move: " << results.best_move << std::endl;
-	std::cout << results.depth_searched << std::endl;
-	std::cout << results.time_searched << std::endl;
+	Move mate_h8 = Move(c8, h8, QUIET);
+	Move mate_h3 = Move(d3, h3, QUIET);
+	ASSERT_TRUE(results.depth_searched >= 2);
+	EXPECT_TRUE(results.best_move == mate_h3 || results.best_move == mate_h8);
+}
 
-	EXPECT_EQ(1, 1);
+TEST_F(MoveSearchFixture, MateInOneTest2){
+	Position p;
+	const std::string& fen = "5qk1/3R4/6pP/6K1/8/8/1B6/8 w - - 0 1";
+	Position::set(fen, p);
+
+	BestMoveSearchResults results;
+	results = best_move<WHITE>(p);
+	Move mate_h7 = Move(h6, h7, QUIET);
+	ASSERT_TRUE(results.depth_searched >= 2);
+	EXPECT_TRUE(results.best_move == mate_h7);
+}
+
+TEST_F(MoveSearchFixture, MateInOneTest3){
+	Position p;
+	const std::string& fen = "r3rqkb/pp1b1pnp/2p1p1p1/4P1B1/2B1N1P1/5N1P/PPP2P2/2KR3R w - - 0 1";
+	Position::set(fen, p);
+
+	BestMoveSearchResults results;
+	results = best_move<WHITE>(p);
+	Move mate_move = Move(e4, f6, QUIET);
+	ASSERT_TRUE(results.depth_searched >= 2);
+	EXPECT_TRUE(results.best_move == mate_move);
+}
+
+TEST_F(MoveSearchFixture, MateInTwoTest1){
+	Position p;
+	const std::string& fen = "3q4/4b3/2p4p/pk1p1B2/N4P2/P1Q3P1/1P5P/7K w - - 0 1";
+	Position::set(fen, p);
+
+	BestMoveSearchResults results_m1, results_m2, results_m3;
+	results_m1 = best_move<WHITE>(p);
+	p.play<WHITE>(results_m1.best_move);
+	results_m2 = best_move<BLACK>(p);
+	p.play<BLACK>(results_m2.best_move);
+	results_m3 = best_move<WHITE>(p);
+	Move mate_move_m1 = Move(f5, d3, QUIET);
+	Move mate_move_m2 = Move(b5, a4, CAPTURE);
+	Move mate_move_m3 = Move(c3, c2, QUIET);
+	ASSERT_TRUE(results_m1.depth_searched >= 3);
+	ASSERT_TRUE(results_m2.depth_searched >= 3);
+	ASSERT_TRUE(results_m3.depth_searched >= 3);
+	EXPECT_TRUE(results_m1.best_move == mate_move_m1);
+	EXPECT_TRUE(results_m2.best_move == mate_move_m2);
+	EXPECT_TRUE(results_m3.best_move == mate_move_m3);
 }

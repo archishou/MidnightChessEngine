@@ -4,6 +4,8 @@
 
 const int POS_INF_CHESS = 1000000;
 const int NEG_INF_CHESS = -POS_INF_CHESS;
+const int MATE_SCORE = POS_INF_CHESS / 10;
+const int MAX_DEPTH = 100;
 
 struct BestMoveSearchParameters {
 	int depth;
@@ -11,6 +13,6 @@ struct BestMoveSearchParameters {
 };
 
 const struct BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
-	.depth = 100,
+	.depth = MAX_DEPTH,
 	.time_limit = 1000
 };

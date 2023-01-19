@@ -15,7 +15,7 @@ struct IDResults {
 	int value;
 };
 
-void update_id_results(IDResults& id_results, AlphaBetaResults& ab_results, int sub_depth) {
+void update_id_results(IDResults& id_results, AlphaBetaData& ab_results, int sub_depth) {
 	id_results.value = ab_results.value;
 	id_results.best_move = ab_results.best_move;
 	id_results.depth_searched = sub_depth;
@@ -33,8 +33,8 @@ IDResults iterative_deepening(Position& board, int time_limit, int depth) {
 	TranspositionTable t_table = TranspositionTable();
 
     for (int sub_depth = 1; sub_depth <= depth; sub_depth++) {
-        struct AlphaBetaResults ab_results =
-				alpha_beta_root<color>(board, sub_depth, target_end_time, t_table);
+        struct AlphaBetaData ab_results =
+				alpha_beta_root<color>(board, sub_depth, target_end_time);
         if (ab_results.search_completed) {
 			update_id_results(id_results, ab_results, sub_depth);
         }
