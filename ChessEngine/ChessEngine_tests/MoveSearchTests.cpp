@@ -19,6 +19,14 @@ protected:
 	}
 };
 
+const std::string& ASSERTION_ERR_SEARCH_DEPTH = "Test not completed, did not search deep enough";
+
+void compare_lines(Line& expected, Line& results_line) {
+	for (int i = 0; i < LINE_SIZE; ++i) {
+		EXPECT_EQ(expected[i], results_line[i]) << "Expected Line and results differ at index " << i;
+	}
+}
+
 TEST_F(MoveSearchFixture, MateInOneTest1){
 	Position p;
 	const std::string& fen = "2R5/8/8/5K1k/8/3R4/8/8 w - - 0 1";
@@ -28,7 +36,7 @@ TEST_F(MoveSearchFixture, MateInOneTest1){
 	results = best_move<WHITE>(p);
 	Move mate_h8 = Move(c8, h8, QUIET);
 	Move mate_h3 = Move(d3, h3, QUIET);
-	ASSERT_TRUE(results.depth_searched >= 2);
+	ASSERT_TRUE(results.depth_searched >= 2) << ASSERTION_ERR_SEARCH_DEPTH;
 	EXPECT_TRUE(results.best_move == mate_h3 || results.best_move == mate_h8);
 }
 
@@ -40,7 +48,7 @@ TEST_F(MoveSearchFixture, MateInOneTest2){
 	BestMoveSearchResults results;
 	results = best_move<WHITE>(p);
 	Move mate_h7 = Move(h6, h7, QUIET);
-	ASSERT_TRUE(results.depth_searched >= 2);
+	ASSERT_TRUE(results.depth_searched >= 2) << ASSERTION_ERR_SEARCH_DEPTH;
 	EXPECT_TRUE(results.best_move == mate_h7);
 }
 
@@ -52,28 +60,64 @@ TEST_F(MoveSearchFixture, MateInOneTest3){
 	BestMoveSearchResults results;
 	results = best_move<WHITE>(p);
 	Move mate_move = Move(e4, f6, QUIET);
+	ASSERT_TRUE(results.depth_searched >= 2) << ASSERTION_ERR_SEARCH_DEPTH;
+	EXPECT_TRUE(results.best_move == mate_move);
+}
+
+TEST_F(MoveSearchFixture, MateInOneTest4){
+	Position p;
+	const std::string& fen = "7k/6pp/8/8/2R4q/8/8/K7 w - - 0 1";
+	Position::set(fen, p);
+
+	BestMoveSearchResults results;
+	results = best_move<WHITE>(p);
+	Move mate_move = Move(c4, c8, QUIET);
 	ASSERT_TRUE(results.depth_searched >= 2);
 	EXPECT_TRUE(results.best_move == mate_move);
 }
 
-TEST_F(MoveSearchFixture, MateInTwoTest1){
+TEST_F(MoveSearchFixture, MateInTwoTest2){
 	Position p;
 	const std::string& fen = "3q4/4b3/2p4p/pk1p1B2/N4P2/P1Q3P1/1P5P/7K w - - 0 1";
 	Position::set(fen, p);
 
-	BestMoveSearchResults results_m1, results_m2, results_m3;
-	results_m1 = best_move<WHITE>(p);
-	p.play<WHITE>(results_m1.best_move);
-	results_m2 = best_move<BLACK>(p);
-	p.play<BLACK>(results_m2.best_move);
-	results_m3 = best_move<WHITE>(p);
-	Move mate_move_m1 = Move(f5, d3, QUIET);
-	Move mate_move_m2 = Move(b5, a4, CAPTURE);
-	Move mate_move_m3 = Move(c3, c2, QUIET);
-	ASSERT_TRUE(results_m1.depth_searched >= 3);
-	ASSERT_TRUE(results_m2.depth_searched >= 3);
-	ASSERT_TRUE(results_m3.depth_searched >= 3);
-	EXPECT_TRUE(results_m1.best_move == mate_move_m1);
-	EXPECT_TRUE(results_m2.best_move == mate_move_m2);
-	EXPECT_TRUE(results_m3.best_move == mate_move_m3);
+	BestMoveSearchResults results;
+	results = best_move<WHITE>(p);
+	ASSERT_TRUE(results.depth_searched >= 3) << ASSERTION_ERR_SEARCH_DEPTH;
+	Line expected_line;
+	expected_line[0] = Move(f5, d3, QUIET);
+	expected_line[1] = Move(b5, a4, CAPTURE);
+	expected_line[2] = Move(c3, c2, QUIET);
+	compare_lines(expected_line, results.pv);
+}
+
+TEST_F(MoveSearchFixture, MateInTwoTest3){
+	Position p;
+	const std::string& fen = "r3qk1r/p5pp/3pQpb1/2n5/2B2B2/8/P4PPP/4R1K1 w - - 0 1";
+
+	Position::set(fen, p);
+
+	BestMoveSearchResults results;
+	results = best_move<WHITE>(p);
+	ASSERT_TRUE(results.depth_searched >= 3) << ASSERTION_ERR_SEARCH_DEPTH;
+	Line expected_line;
+	expected_line[0] = Move(f4, d6, CAPTURE);
+	expected_line[1] = Move(e8, e7, QUIET);
+	expected_line[2] = Move(e6, e7, CAPTURE);
+	compare_lines(expected_line, results.pv);
+}
+
+TEST_F(MoveSearchFixture, QSearchTest1){
+	Position p;
+	const std::string& fen = "3k2r1/6p1/8/7N/3K4/8/8/8 w - - 0 1";
+	Position::set(fen, p);
+
+	BestMoveSearchParameters search_parameters{};
+	search_parameters.depth = 1;
+	search_parameters.time_limit = 1000;
+	BestMoveSearchResults results;
+	results = best_move<WHITE>(p, search_parameters);
+	Move horizon_effected_capture = Move(h5, g7, CAPTURE);
+	ASSERT_TRUE(results.depth_searched == 1) << ASSERTION_ERR_SEARCH_DEPTH;
+	EXPECT_TRUE(results.best_move != horizon_effected_capture);
 }

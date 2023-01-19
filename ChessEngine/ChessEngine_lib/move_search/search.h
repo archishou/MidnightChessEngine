@@ -9,6 +9,7 @@
 
 struct BestMoveSearchResults {
 	Move best_move;
+	Line pv;
 	int depth_searched;
 	double time_searched;
 	int value;
@@ -28,5 +29,6 @@ BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters&
 	results.depth_searched = id_results.depth_searched;
 	results.time_searched = id_results.time_searched;
 	results.value = id_results.value;
+	std::copy(std::begin(id_results.pv), std::end(id_results.pv), std::begin(results.pv));
 	return results;
 }

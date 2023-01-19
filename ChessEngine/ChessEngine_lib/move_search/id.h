@@ -8,8 +8,20 @@
 #include "move_generation/position.h"
 #include "alphabeta.h"
 
+typedef Move Line[MAX_DEPTH];
+const int LINE_SIZE = MAX_DEPTH;
+
+std::ostream& operator<<(std::ostream& os, const Line& line) {
+	for(const Move & i : line) {
+		if (i == 0) break;
+		os << i << " ";
+	}
+	return os;
+}
+
 struct IDResults {
     Move best_move;
+	Line pv;
     int depth_searched;
     double time_searched;
 	int value;
@@ -19,6 +31,9 @@ void update_id_results(IDResults& id_results, AlphaBetaData& ab_results, int sub
 	id_results.value = ab_results.value;
 	id_results.best_move = ab_results.best_move;
 	id_results.depth_searched = sub_depth;
+	for (int i = 0; i < ab_results.pv.length[0]; i++) {
+		id_results.pv[i] = ab_results.pv.table[0][i];
+	}
 }
 
 template<Color color>

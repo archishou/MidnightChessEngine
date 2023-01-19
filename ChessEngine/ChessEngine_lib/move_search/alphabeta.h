@@ -5,11 +5,14 @@
 #include "move_generation/position.h"
 #include "move_ordering.h"
 #include "transposition_table.h"
+#include "pv_table.h"
 
 struct AlphaBetaData {
     Move best_move;
     bool search_completed;
 	int value;
+	// triangular-table-table
+	PV pv;
 };
 
 struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
@@ -38,23 +41,17 @@ bool position_is_draw(Position &board) {
 template<Color color>
 int q_search(Position& board, int alpha, int beta, AlphaBetaData& data, TimePoint end_time) {
 	data.search_completed = true;
-	if (position_is_draw(board)) {
-		return 0;
-	}
+	if (position_is_draw(board)) return 0;
 	int value = NEG_INF_CHESS;
 
 	int v = evaluate<color>(board);
 	value = std::max(value, v);
 	alpha = std::max(alpha, value);
-	if (alpha >= beta) {
-		return v;
-	}
+	if (alpha >= beta) return v;
 
 	MoveList<color> capture_moves(board, QSearchMoveGenerationsOptions);
 	ScoredMoves scored_moves = order_moves<color>(capture_moves, board);
-	if (scored_moves.empty()) {
-		return v;
-	}
+	if (scored_moves.empty()) return v;
 	for (ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
 		if (exceededTime(end_time)) {
@@ -74,6 +71,7 @@ int q_search(Position& board, int alpha, int beta, AlphaBetaData& data, TimePoin
 template<Color color>
 int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBetaData& data, TimePoint end_time) {
 	data.search_completed = true;
+	init_pv(data.pv, ply);
 	if (ply > 0) {
 		if (position_is_draw(board)) { return 0; }
 		alpha = std::max(alpha, -MATE_SCORE + ply);
@@ -95,7 +93,6 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 
 	Move best_move = scored_moves.begin()->move;
 	int value = NEG_INF_CHESS;
-	// No legal moves, return -inf!
 	for (const ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
 		if (exceededTime(end_time)) {
@@ -106,11 +103,11 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		const int v = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, data, end_time);
 		board.undo<color>(legal_move);
 		if (v > value) best_move = legal_move;
+		if (v > alpha) update_pv(data.pv, ply, best_move);
 		value = std::max(value, v);
 		alpha = std::max(alpha, value);
 		if (alpha >= beta) break;
 	}
-	if (ply == 0) data.best_move = best_move;
 	return value;
 }
 
@@ -118,5 +115,6 @@ template<Color color>
 AlphaBetaData alpha_beta_root(Position& board, int depth, TimePoint end_time) {
 	AlphaBetaData data;
 	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, data, end_time);
+	data.best_move = data.pv.table[0][0];
 	return data;
 }

@@ -86,7 +86,9 @@ void uci_create_position_from_moves(Position& board, const string& input_line) {
 
 void uci_go_diagnostics_output(Position& board, BestMoveSearchResults& results, ofstream& diagnostics_file)  {
 	diagnostics_file << "Position FEN : " << board.fen() << std::endl;
-	diagnostics_file << "Predicted Best Move: " << results.best_move << ":" << results.depth_searched << std::endl;
+	diagnostics_file << "Predicted Best Move: " << results.best_move << std::endl;
+	diagnostics_file << "Principal Variation " << results.pv << ":" << std::endl;
+	diagnostics_file << "Depth Searched: " << results.depth_searched << std::endl;
 	diagnostics_file << "Time Searched: " << results.time_searched << std::endl;
 	diagnostics_file << "Value: " << results.value << std::endl;
 }
