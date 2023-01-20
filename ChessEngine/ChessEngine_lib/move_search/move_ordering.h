@@ -4,6 +4,7 @@
 #include "move_generation/position.h"
 #include "move_generation/tables.h"
 #include "evaluation/evaluate.h"
+#include "transposition_table.h"
 
 struct ScoredMove {
 	Move move;
@@ -59,8 +60,11 @@ int in_opponent_pawn_territory(Move move, Position& board) {
 }
 
 template<Color color>
-ScoredMoves order_moves(MoveList<color>& move_list, Position& board) {
+ScoredMoves order_moves(MoveList<color>& move_list, Position& board, TranspositionTable& t_table) {
 	ScoredMoves scored_moves;
+	Move previous_best_move = Move();
+	TranspositionTableSearchResults entry = t_table.probe(board.get_hash());
+	if (entry.entry_found) {previous_best_move = entry.entry.best_move;}
 	for (Move move : move_list) {
 		struct ScoredMove scored_move;
 		scored_move.move = move;
@@ -68,6 +72,7 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board) {
 		score += capture_move_score(move, board);
 		score += promotion_move_score(move, board);
 		score += in_opponent_pawn_territory<color>(move, board);
+		if (move == previous_best_move) score += 10000;
 		// Score negated for sorting. We want to evaluate high scoring moves first.
 		scored_move.score = -score;
 		scored_moves.push_back(scored_move);

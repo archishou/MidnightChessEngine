@@ -30,8 +30,9 @@ struct TranspositionTableSearchResults {
 class TranspositionTable {
 public:
 	TranspositionTableEntryNodeType get_node_type(const int &alpha_initial, const int &beta, const int &value);
-	void put(zobrist_hash hash, int depth, int score, TranspositionTableEntryNodeType node_type);
+	void put(zobrist_hash hash, int depth, int score, Move best_move, TranspositionTableEntryNodeType node_type);
 	TranspositionTableSearchResults probe(zobrist_hash hash, int depth);
+	TranspositionTableSearchResults probe(zobrist_hash hash);
 	explicit TranspositionTable(uint64_t size = 64000);
 	~TranspositionTable();
 

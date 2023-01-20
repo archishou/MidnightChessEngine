@@ -12,13 +12,25 @@ TranspositionTable::~TranspositionTable() {
 	delete [] transposition_table;
 }
 
-void TranspositionTable::put(zobrist_hash hash, int depth, int score, TranspositionTableEntryNodeType node_type) {
+void TranspositionTable::put(zobrist_hash hash, int depth, int score, Move best_move, TranspositionTableEntryNodeType node_type) {
 	TranspositionTableEntry entry;
 	entry.zobrist_hash = hash;
 	entry.depth = depth;
 	entry.value = score;
 	entry.node_type = node_type;
+	entry.best_move = best_move;
 	transposition_table[get_index(hash)] = entry;
+}
+
+TranspositionTableSearchResults
+TranspositionTable::probe(zobrist_hash hash) {
+	TranspositionTableEntry entry = transposition_table[get_index(hash)];
+	TranspositionTableSearchResults results;
+	results.entry_found = false;
+	if (entry.zobrist_hash == hash) {
+		results.entry = entry;
+	}
+	return results;
 }
 
 TranspositionTableSearchResults

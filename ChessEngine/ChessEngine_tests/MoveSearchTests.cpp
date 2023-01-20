@@ -121,3 +121,12 @@ TEST_F(MoveSearchFixture, QSearchTest1){
 	ASSERT_TRUE(results.depth_searched == 1) << ASSERTION_ERR_SEARCH_DEPTH;
 	EXPECT_TRUE(results.best_move != horizon_effected_capture);
 }
+
+TEST_F(MoveSearchFixture, T){
+	Position p;
+	const std::string& fen = "8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1";
+	Position::set(fen, p);
+
+	BestMoveSearchResults best_white = best_move<WHITE>(p);
+	std::cout << best_white << std::endl;
+}
