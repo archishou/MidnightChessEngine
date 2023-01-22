@@ -58,7 +58,7 @@ int promotion_move_score(Move move, Position& board) {
 template<Color color>
 int in_opponent_pawn_territory(Move move, Position& board) {
 	Bitboard opp_pawn_attacks = pawn_attacks<~color>(board.bitboard_of(~color, PAWN));
-	if (move.to() & opp_pawn_attacks) return IN_OPP_PAWN_TERRITORY_PENALTY;
+	if ((1ULL << move.to()) & opp_pawn_attacks) return IN_OPP_PAWN_TERRITORY_PENALTY;
 	return 0;
 }
 

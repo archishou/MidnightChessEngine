@@ -188,7 +188,7 @@ public:
 	inline MoveFlag flag() const { return MoveFlag((move >> 12) & 0xf); }
 
 	inline bool is_capture() const {
-		return (move >> 12) & CAPTURES;
+		return (move >> 12) & CAPTURE;
 	}
 
 	inline bool is_promotion() const {
