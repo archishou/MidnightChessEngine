@@ -13,8 +13,11 @@ struct ScoredMove {
 
 typedef std::vector<ScoredMove> ScoredMoves;
 
-const int CAPTURED_PIECE_VALUE_MULTIPLIER = 10;
+//const int CAPTURED_PIECE_VALUE_MULTIPLIER = 10;
 const int IN_OPP_PAWN_TERRITORY_PENALTY = -350;
+const int PREVIOUS_BEST_MOVE_BONUS = 100000;
+const int PROMOTION_BONUS = PREVIOUS_BEST_MOVE_BONUS / 10;
+const int MVV_LVA_BONUS = PROMOTION_BONUS / 10;
 
 bool compare_moves(ScoredMove const& lhs, ScoredMove const& rhs) {
 	return lhs.score < rhs.score;
@@ -36,7 +39,7 @@ int capture_move_score(Move move, Position& board) {
 	PieceType from_type = type_of(board.at(move.from()));
 
 	if (move.is_capture()) {
-		return CAPTURED_PIECE_VALUE_MULTIPLIER * get_piece_value(to_type) - get_piece_value(from_type);
+		return MVV_LVA_BONUS + get_piece_value(to_type);// + std::abs(get_piece_value(to_type) - get_piece_value(from_type));
 	}
 	return 0;
 }
@@ -44,10 +47,10 @@ int capture_move_score(Move move, Position& board) {
 int promotion_move_score(Move move, Position& board) {
 	if (move.is_promotion()) {
 		MoveFlag flag = move.flag();
-		if (flag == PC_QUEEN || flag == PR_QUEEN) return QUEEN_VALUE;
-		else if (flag == PC_ROOK || flag == PR_ROOK) return ROOK_VALUE;
-		else if (flag == PC_BISHOP || flag == PR_BISHOP) return BISHOP_VALUE;
-		else if (flag == PC_KNIGHT || flag == PR_KNIGHT) return KNIGHT_VALUE;
+		if (flag == PC_QUEEN || flag == PR_QUEEN) return QUEEN_VALUE + PROMOTION_BONUS;
+		else if (flag == PC_ROOK || flag == PR_ROOK) return ROOK_VALUE + PROMOTION_BONUS;
+		else if (flag == PC_BISHOP || flag == PR_BISHOP) return BISHOP_VALUE + PROMOTION_BONUS;
+		else if (flag == PC_KNIGHT || flag == PR_KNIGHT) return KNIGHT_VALUE + PROMOTION_BONUS;
 	}
 	return 0;
 }
@@ -72,7 +75,7 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board, Transpositi
 		score += capture_move_score(move, board);
 		score += promotion_move_score(move, board);
 		score += in_opponent_pawn_territory<color>(move, board);
-		if (move == previous_best_move) score += 100000;
+		if (move == previous_best_move) score += PREVIOUS_BEST_MOVE_BONUS;
 		// Score negated for sorting. We want to evaluate high scoring moves first.
 		scored_move.score = -score;
 		scored_moves.push_back(scored_move);

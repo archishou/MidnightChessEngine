@@ -13,11 +13,10 @@ enum TranspositionTableEntrySearchType {
 };
 
 struct TranspositionTableEntry {
-	uint64_t zobrist_hash;
+	zobrist_hash zobrist_hash;
 	int depth;
 	int value;
 	TranspositionTableEntryNodeType node_type;
-	// Used ?
 	Move best_move;
 };
 

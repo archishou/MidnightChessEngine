@@ -4,7 +4,7 @@
 #include "transposition_table.h"
 #include "search_params.h"
 
-#define sign(x) (x >= 0? 1 : -1)
+#define sign(x) (x >= 0 ? 1 : -1)
 
 TranspositionTable::TranspositionTable(uint64_t size) {
 	table_size = size;
