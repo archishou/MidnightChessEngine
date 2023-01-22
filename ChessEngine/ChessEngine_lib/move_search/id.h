@@ -34,7 +34,7 @@ void update_id_results(IDResults& id_results, AlphaBetaData& ab_results, int sub
 	id_results.value = ab_results.value;
 	id_results.best_move = ab_results.best_move;
 	id_results.depth_searched = sub_depth;
-	id_results.nodes_searched = ab_results.nodes_searched;
+	id_results.nodes_searched += ab_results.nodes_searched;
 	for (int i = 0; i < ab_results.pv.length[0]; i++) {
 		id_results.pv[i] = ab_results.pv.table[0][i];
 	}

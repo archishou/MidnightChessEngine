@@ -2,13 +2,13 @@ uci
 ucinewgame
 isready
 position fen k7/8/3p4/p2P1p2/P2P1P2/8/8/K7 b - - 0 1 moves a8a7
-go movetime 50000
+go movetime 5000000
 Position FEN : 8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w -  -
 Predicted Best Move: a1b1
-Principal Variation a1b1 a7b6 b1c2 b6c7 c2d2 c7d7 d2e1 d7c7 e1d2 b6a6 f1g1 a6b6 g1h1 b6a6 h1g2 :
-Depth Searched: 20
-Time Searched: 1.0024
-Time Searched: 3.87714e+07
-Time Searched: 38864404
+Principal Variation a1b1 a7a6 b1c1 a6b6 c1d1 b6b7 d1e1 b7c7 e1f1 c7b6 f1g1 b6a6 g1h1 a6b6 h1g2 b6a6 :
+Depth Searched: 16
+Time Searched: 9.99229
+Nodes Searched: 1322629920
+NPS: 1.32365e+08
 Value: 0
 quit

@@ -107,8 +107,8 @@ void uci_go_diagnostics_output(Position& board, BestMoveSearchResults& results, 
 	diagnostics_file << "Principal Variation " << results.pv << ":" << std::endl;
 	diagnostics_file << "Depth Searched: " << results.depth_searched << std::endl;
 	diagnostics_file << "Time Searched: " << results.time_searched << std::endl;
-	diagnostics_file << "Time Searched: " << results.nodes_per_second << std::endl;
-	diagnostics_file << "Time Searched: " << results.nodes_searched << std::endl;
+	diagnostics_file << "Nodes Searched: " << results.nodes_searched << std::endl;
+	diagnostics_file << "NPS: " << results.nodes_per_second << std::endl;
 	diagnostics_file << "Value: " << results.value << std::endl;
 }
 
