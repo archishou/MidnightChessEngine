@@ -74,13 +74,32 @@ vector<string> split(const string& s, const string& delimiter) {
 	return res;
 }
 
-void uci_create_position_from_moves(Position& board, const string& input_line) {
-	Position::set(initial_board_fen, board);
-	vector<string> uciMoves = split(input_line.substr(24, input_line.size() - 24), " ");
-	for (const std::string& uciMove : uciMoves) {
-		Move nextMove = uci_to_move(uciMove, board);
+
+void uci_create_position_from_moves(Position& board, const string& board_fen, const vector<string>& uci_moves) {
+	Position::set(board_fen, board);
+	for (const std::string& uci_move : uci_moves) {
+		Move nextMove = uci_to_move(uci_move, board);
 		if (board.turn() == BLACK) board.play<BLACK>(nextMove);
 		else board.play<WHITE>(nextMove);
+	}
+}
+
+void uci_position(Position& board, const string& input_line) {
+	if (input_line.substr(0, 23) == "position startpos moves") {
+		vector<string> split_string = split(input_line, " ");
+		split_string.erase(split_string.begin(), split_string.begin() + 3);
+		uci_create_position_from_moves(board, initial_board_fen, split_string);
+	} else {
+		int fen_start = input_line.find("position ") + 9;
+		int fen_end = input_line.find(" moves");
+		int moves_start = fen_end + 6;
+		int fen_size = fen_end - fen_start;
+		const string& fen = input_line.substr(fen_start, fen_size);
+		const string& moves = input_line.substr(moves_start + 1, input_line.size() - moves_start);
+		vector<string> uci_moves = split(moves, " ");
+		std::cout << "FEN:" << fen << ":" << std::endl;
+		std::cout << "Moves:" << moves << ":" << std::endl;
+		uci_create_position_from_moves(board, fen, uci_moves);
 	}
 }
 
@@ -123,8 +142,8 @@ void read_uci(const string& diagnostics_file_path) {
 		} else if (input_line == "isready") {
 			cout << "readyok" << endl;
 		} else if (input_line == "ucinewgame") {}
-		if (input_line.substr(0, 23) == "position startpos moves") {
-			uci_create_position_from_moves(board, input_line);
+		if (input_line.substr(0, 8) == "position") {
+			uci_position(board, input_line);
 		} else if (input_line == "stop") {
 		} else if (input_line.substr(0, 2 ) == "go") {
 			uci_go(board, diagnostics_file);

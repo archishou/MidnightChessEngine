@@ -81,6 +81,7 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		}
 	}
 
+	/*
 	TranspositionTableSearchResults probe_results = t_table.probe(board.get_hash(), depth);
 	if (probe_results.entry_found) {
 		TranspositionTableEntry tt_entry = probe_results.entry;
@@ -93,6 +94,7 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		}
 		if (alpha >= beta) return tt_entry.value;
 	}
+	 */
 
 	if (depth == 0) {
 		return q_search<color>(board, alpha, beta, data, end_time, t_table);
@@ -122,8 +124,8 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		alpha = std::max(alpha, value);
 		if (alpha >= beta) break;
 	}
-	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
-	t_table.put(board.get_hash(), depth, value, best_move, node_type);
+	//TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
+	//t_table.put(board.get_hash(), depth, value, best_move, node_type);
 	return value;
 }
 

@@ -1,10 +1,8 @@
-uci
-ucinewgame
-isready
-position startpos moves e2e4 c7c5 b1c3 b8c6 g1f3
-go movetime 50000
-Position FEN : r1bqkbnr/pp1ppppp/2n5/2p5/4P3/2N2N2/PPPP1PPP/R1BQKB1R b KQkq -
-Predicted Best Move: e7e5:4
-Time Searched: 0.999752
-Value: -75
-quit
+position 3r4/3r4/3k4/8/3K4/8/8/8 b - - 0 1 moves d6c6
+go
+Position FEN : 3r4/3r4/2k5/8/3K4/8/8/8 w -  -
+Predicted Best Move: d4e3
+Principal Variation d4e3 d7d2 e3f3 c6b7 f3g3 b7b8 g3h3 :
+Depth Searched: 7
+Time Searched: 1.00233
+Value: 0

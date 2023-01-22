@@ -100,6 +100,7 @@ def make_move():
 
     # read game moves from PGN
     game = chess.pgn.read_game(io.StringIO(pgn))
+    game.setup('rnbqkbnr/ppppp1pp/8/5p2/5P2/6P1/PPPPP2P/RNBQKBNR w KQkq - 0 1')
 
     # init board
     board = game.board()
