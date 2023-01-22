@@ -70,6 +70,7 @@ TranspositionTable::probe_for_search(zobrist_hash hash, int depth, int ply) {
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
 	if (entry.zobrist_hash == hash && entry.depth >= depth) {
+		results.entry_found = true;
 		results.entry = entry;
 		results.entry.value = correct_mate_for_retrieval(results.entry.value, ply);
 	}

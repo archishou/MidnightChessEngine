@@ -12,9 +12,6 @@ struct AlphaBetaData {
 	int value;
 	// triangular-table-table
 	PV pv;
-	int nodes;
-	int pruned_nodes;
-	int transpositions;
 };
 
 struct MoveGenerationOptions QSearchMoveGenerationsOptions = {

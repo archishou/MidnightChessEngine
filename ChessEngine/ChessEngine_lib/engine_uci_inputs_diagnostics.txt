@@ -1,12 +1,12 @@
 uci
 ucinewgame
 isready
-position fen k7/8/3p4/p2P1p2/P2P1P2/8/8/K7 b - - 0 1 moves a8b7 a1b1 b7c7 b1c1 c7d7 c1d1 d7e7 d1e1 e7f6 e1f1 f6g6 f1f2 g6h5
+position fen k7/8/3p4/p2P1p2/P2P1P2/8/8/K7 b - - 0 1 moves a8a7 a1b1 a7b7 b1c1 b7c7 c1d1 c7d7 d1e2 d7e7 e2d3 e7f6 d3e3 f6g6 e3d2 g6h5 d2c3 h5h4 c3d3 h4g3 d3e3 g3g2 e3e2 g2g3 e2d3 g3f3 d3c4 f3f4 c4d3 f4g5 d3e2 f5f4 e2d2 g5g4 d2e2 f4f3 e2e3 g4g3 e3d3 f3f2 d3e2 g3g2 e2d3 f2f1q d3c3 f1f3 c3c4 g2g3 c4b5 f3d3 b5c6 d3d4 c6d6 d4f4 d6d7 f4e5 d5d6 e5d4 d7e6 d4d1 d6d7 d1d4 e6e7 g3f4 d7d8q d4d8 e7d8 f4e4 d8c7 e4d4 c7b6 d4c4 b6a5 c4b3 a5b5 b3a3 a4a5 a3b3 a5a6 b3c3 a6a7 c3d4 a7a8q d4e5 a8f3 e5e6 b5b4 e6e5 f3f7 e5e4 f7f6 e4e3 f6f5 e3d2 f5e4 d2c1 b4c3 c1d1 e4e5 d1c1
 go movetime 50000
-Position FEN : 8/8/3p4/p2P1p1k/P2P1P2/8/5K2/8 w -  -
-Predicted Best Move: f2g3
-Principal Variation f2g3 h5g6 g3g2 g6h5 g2f3 h5h4 f3e2 h4g3 e2d2 g3f4 (capture) d2c3 f4e3 c3c4 :
-Depth Searched: 13
-Time Searched: 1.00273
+Position FEN : 8/8/8/4Q3/8/2K5/8/2k5 w -  -
+Predicted Best Move: e5e1
+Principal Variation e5e1 :
+Depth Searched: 100
+Time Searched: 0.007103
 Value: 0
 quit
