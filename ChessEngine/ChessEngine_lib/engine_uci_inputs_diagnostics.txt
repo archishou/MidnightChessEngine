@@ -1,8 +1,12 @@
-position 3r4/3r4/3k4/8/3K4/8/8/8 b - - 0 1 moves d6c6
-go
-Position FEN : 3r4/3r4/2k5/8/3K4/8/8/8 w -  -
-Predicted Best Move: d4e3
-Principal Variation d4e3 d7d2 e3f3 c6b7 f3g3 b7b8 g3h3 :
-Depth Searched: 7
-Time Searched: 1.00233
+uci
+ucinewgame
+isready
+position fen 3r4/3r4/3k4/8/3K4/8/8/8 w - - 0 1 moves d4c4 d6c6 c4c3 d7d2 c3b3 c6b5 b3a3
+go movetime 50000
+Position FEN : 3r4/8/8/1k6/8/K7/3r4/8 b -  -
+Predicted Best Move: d8d3
+Principal Variation d8d3 :
+Depth Searched: 10
+Time Searched: 1.00273
 Value: 0
+quit

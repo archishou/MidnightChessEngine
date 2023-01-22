@@ -90,15 +90,13 @@ void uci_position(Position& board, const string& input_line) {
 		split_string.erase(split_string.begin(), split_string.begin() + 3);
 		uci_create_position_from_moves(board, initial_board_fen, split_string);
 	} else {
-		int fen_start = input_line.find("position ") + 9;
+		int fen_start = input_line.find("position fen ") + 13;
 		int fen_end = input_line.find(" moves");
 		int moves_start = fen_end + 6;
 		int fen_size = fen_end - fen_start;
 		const string& fen = input_line.substr(fen_start, fen_size);
 		const string& moves = input_line.substr(moves_start + 1, input_line.size() - moves_start);
 		vector<string> uci_moves = split(moves, " ");
-		std::cout << "FEN:" << fen << ":" << std::endl;
-		std::cout << "Moves:" << moves << ":" << std::endl;
 		uci_create_position_from_moves(board, fen, uci_moves);
 	}
 }
