@@ -12,6 +12,9 @@ struct AlphaBetaData {
 	int value;
 	// triangular-table-table
 	PV pv;
+	int nodes;
+	int pruned_nodes;
+	int transpositions;
 };
 
 struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
@@ -72,17 +75,15 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 	data.search_completed = true;
 	int alpha_initial = alpha;
 	init_pv(data.pv, ply);
+
 	if (ply > 0) {
-		if (position_is_draw(board)) { return 0; }
+		if (position_is_draw(board)) return 0;
 		alpha = std::max(alpha, -MATE_SCORE + ply);
 		beta = std::min(beta, MATE_SCORE - ply);
-		if (alpha >= beta) {
-			return alpha;
-		}
+		if (alpha >= beta) return alpha;
 	}
 
-	/*
-	TranspositionTableSearchResults probe_results = t_table.probe(board.get_hash(), depth);
+	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), depth, ply);
 	if (probe_results.entry_found) {
 		TranspositionTableEntry tt_entry = probe_results.entry;
 		if (tt_entry.node_type == EXACT) {
@@ -92,9 +93,10 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		} else if (tt_entry.node_type == UPPER_NODE) {
 			beta = std::max(beta, tt_entry.value);
 		}
-		if (alpha >= beta) return tt_entry.value;
+		if (alpha >= beta) {
+			return tt_entry.value;
+		}
 	}
-	 */
 
 	if (depth == 0) {
 		return q_search<color>(board, alpha, beta, data, end_time, t_table);
@@ -124,8 +126,8 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		alpha = std::max(alpha, value);
 		if (alpha >= beta) break;
 	}
-	//TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
-	//t_table.put(board.get_hash(), depth, value, best_move, node_type);
+	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
+	t_table.put(board.get_hash(), depth, value, ply, best_move, node_type);
 	return value;
 }
 

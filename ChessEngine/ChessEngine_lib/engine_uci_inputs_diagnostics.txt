@@ -1,12 +1,12 @@
 uci
 ucinewgame
 isready
-position fen 3r4/3r4/3k4/8/3K4/8/8/8 w - - 0 1 moves d4c4 d6c6 c4c3 d7d2 c3b3 c6b5 b3a3
+position fen k7/8/3p4/p2P1p2/P2P1P2/8/8/K7 b - - 0 1 moves a8b7 a1b1 b7c7 b1c1 c7d7 c1d1 d7e7 d1e1 e7f6 e1f1 f6g6 f1f2 g6h5
 go movetime 50000
-Position FEN : 3r4/8/8/1k6/8/K7/3r4/8 b -  -
-Predicted Best Move: d8d3
-Principal Variation d8d3 :
-Depth Searched: 10
+Position FEN : 8/8/3p4/p2P1p1k/P2P1P2/8/5K2/8 w -  -
+Predicted Best Move: f2g3
+Principal Variation f2g3 h5g6 g3g2 g6h5 g2f3 h5h4 f3e2 h4g3 e2d2 g3f4 (capture) d2c3 f4e3 c3c4 :
+Depth Searched: 13
 Time Searched: 1.00273
 Value: 0
 quit
