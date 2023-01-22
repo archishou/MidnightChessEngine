@@ -25,12 +25,16 @@ struct IDResults {
     int depth_searched;
     double time_searched;
 	int value;
+
+	int nodes_searched;
+	double nodes_per_second;
 };
 
 void update_id_results(IDResults& id_results, AlphaBetaData& ab_results, int sub_depth) {
 	id_results.value = ab_results.value;
 	id_results.best_move = ab_results.best_move;
 	id_results.depth_searched = sub_depth;
+	id_results.nodes_searched = ab_results.nodes_searched;
 	for (int i = 0; i < ab_results.pv.length[0]; i++) {
 		id_results.pv[i] = ab_results.pv.table[0][i];
 	}
@@ -56,5 +60,6 @@ IDResults iterative_deepening(Position& board, int time_limit, int depth) {
     }
 
 	id_results.time_searched = (std::clock() - start ) / (double) CLOCKS_PER_SEC;
+	id_results.nodes_per_second = id_results.nodes_searched / id_results.time_searched;
     return id_results;
 }

@@ -13,6 +13,9 @@ struct BestMoveSearchResults {
 	int depth_searched;
 	double time_searched;
 	int value;
+
+	int nodes_searched;
+	double nodes_per_second;
 };
 
 template<Color color>
@@ -29,6 +32,9 @@ BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters&
 	results.depth_searched = id_results.depth_searched;
 	results.time_searched = id_results.time_searched;
 	results.value = id_results.value;
+
+	results.nodes_searched = id_results.nodes_searched;
+	results.nodes_per_second = id_results.nodes_per_second;
 	std::copy(std::begin(id_results.pv), std::end(id_results.pv), std::begin(results.pv));
 	return results;
 }

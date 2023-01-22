@@ -12,6 +12,7 @@ struct AlphaBetaData {
 	int value;
 	// triangular-table-table
 	PV pv;
+	int nodes_searched;
 };
 
 struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
@@ -117,6 +118,7 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		board.play<color>(legal_move);
 		const int v = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, data, end_time, t_table);
 		board.undo<color>(legal_move);
+		data.nodes_searched += 1;
 		if (v > value) best_move = legal_move;
 		if (v > alpha) update_pv(data.pv, ply, best_move);
 		value = std::max(value, v);
