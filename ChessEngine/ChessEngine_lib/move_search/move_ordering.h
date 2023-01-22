@@ -71,6 +71,7 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board, Transpositi
 	for (Move move : move_list) {
 		struct ScoredMove scored_move;
 		scored_move.move = move;
+		/*
 		int score = 0; //Higher score is likely a better move.
 		score += capture_move_score(move, board);
 		score += promotion_move_score(move, board);
@@ -78,9 +79,10 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board, Transpositi
 		if (move == previous_best_move) score += PREVIOUS_BEST_MOVE_BONUS;
 		// Score negated for sorting. We want to evaluate high scoring moves first.
 		scored_move.score = -score;
+		 */
 		scored_moves.push_back(scored_move);
 	}
-	std::sort(scored_moves.begin(), scored_moves.end(), &compare_moves);
+	//std::sort(scored_moves.begin(), scored_moves.end(), &compare_moves);
 	return scored_moves;
 }
 

@@ -17,6 +17,7 @@ protected:
 	virtual void TearDown() {
 
 	}
+	const std::string kiwipete_fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
 };
 
 const std::string& ASSERTION_ERR_SEARCH_DEPTH = "Test not completed, did not search deep enough";
@@ -122,13 +123,22 @@ TEST_F(MoveSearchFixture, QSearchTest1){
 	EXPECT_TRUE(results.best_move != horizon_effected_capture);
 }
 
-/*
 TEST_F(MoveSearchFixture, T){
 	Position p;
 	const std::string& fen = "8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1";
 	Position::set(fen, p);
+	p.play<BLACK>(Move(a8, a7, QUIET));
 
 	BestMoveSearchResults best_white = best_move<WHITE>(p);
+	std::cout << best_white.depth_searched << std::endl;
 	//std::cout << best_white << std::endl;
 }
-*/
+
+TEST_F(MoveSearchFixture, KiwipeteTestaf){
+	Position p;
+	const std::string& fen = kiwipete_fen;
+	Position::set(fen, p);
+
+	BestMoveSearchResults best_white = best_move<WHITE>(p);
+	std::cout << best_white.depth_searched << std::endl;
+}

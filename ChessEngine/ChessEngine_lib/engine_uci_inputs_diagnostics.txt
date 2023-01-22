@@ -5,10 +5,10 @@ position fen k7/8/3p4/p2P1p2/P2P1P2/8/8/K7 b - - 0 1 moves a8a7
 go movetime 50000
 Position FEN : 8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w -  -
 Predicted Best Move: a1b1
-Principal Variation a1b1 a7b6 b1c2 b6c7 c2d2 c7d7 d2e1 d7c7 e1d2 b6a6 f1g1 a6b6 g1h1 b6a6 h1g2 :
-Depth Searched: 20
-Time Searched: 1.0023
-Nodes Searched: 1380431339
-NPS: 1.37727e+09
+Principal Variation a1b1 a7a6 b1a1 a6b6 a1b1 b6a6 :
+Depth Searched: 21
+Time Searched: 1.00175
+Nodes Searched: 1007652493
+NPS: 1.00589e+09
 Value: 0
 quit

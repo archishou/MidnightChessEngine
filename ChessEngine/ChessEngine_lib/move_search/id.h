@@ -26,7 +26,8 @@ struct IDResults {
     double time_searched;
 	int value;
 
-	int nodes_searched;
+	uint64_t nodes_searched;
+	uint64_t q_nodes_searched;
 	double nodes_per_second;
 };
 
@@ -35,6 +36,7 @@ void update_id_results(IDResults& id_results, AlphaBetaData& ab_results, int sub
 	id_results.best_move = ab_results.best_move;
 	id_results.depth_searched = sub_depth;
 	id_results.nodes_searched += ab_results.nodes_searched;
+	id_results.q_nodes_searched += ab_results.q_nodes_searched;
 	for (int i = 0; i < ab_results.pv.length[0]; i++) {
 		id_results.pv[i] = ab_results.pv.table[0][i];
 	}
@@ -43,6 +45,8 @@ void update_id_results(IDResults& id_results, AlphaBetaData& ab_results, int sub
 template<Color color>
 IDResults iterative_deepening(Position& board, int time_limit, int depth) {
     struct IDResults id_results;
+	id_results.nodes_searched = 0;
+	id_results.q_nodes_searched = 0;
     std::chrono::time_point target_end_time = std::chrono::system_clock::now() +
 			std::chrono::milliseconds(time_limit);
 
@@ -56,6 +60,12 @@ IDResults iterative_deepening(Position& board, int time_limit, int depth) {
 				alpha_beta_root<color>(board, sub_depth, target_end_time, t_table);
         if (ab_results.search_completed) {
 			update_id_results(id_results, ab_results, sub_depth);
+			std::cout << "DEPTH: " << sub_depth << std::endl;
+			std::cout << "AB NODES: " << ab_results.nodes_searched << std::endl;
+			std::cout << "AB Q NODES: " << ab_results.q_nodes_searched << std::endl;
+			std::cout << "NODES: " << id_results.nodes_searched <<  std::endl;
+			std::cout << "Q NODES: " << id_results.q_nodes_searched <<  std::endl;
+			std::cout << " TIME SPENT SO FAR: " << (std::clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
         }
     }
 

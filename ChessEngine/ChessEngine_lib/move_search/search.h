@@ -14,7 +14,7 @@ struct BestMoveSearchResults {
 	double time_searched;
 	int value;
 
-	int nodes_searched;
+	uint64_t nodes_searched;
 	double nodes_per_second;
 };
 
