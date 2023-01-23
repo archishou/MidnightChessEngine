@@ -56,6 +56,7 @@ IDResults iterative_deepening(Position& board, int time_limit, int depth) {
 	TranspositionTable t_table = TranspositionTable();
 
     for (int sub_depth = 1; sub_depth <= depth; sub_depth++) {
+		if (exceeded_time(target_end_time)) break;
         struct AlphaBetaData ab_results =
 				alpha_beta_root<color>(board, sub_depth, target_end_time, t_table);
         if (ab_results.search_completed) {

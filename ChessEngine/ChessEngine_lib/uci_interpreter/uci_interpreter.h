@@ -80,7 +80,6 @@ void uci_create_position_from_moves(Position& board, const string& board_fen, co
 	vector<string> uci_moves = split(uci_move_string, " ");
 	for (const std::string& uci_move : uci_moves) {
 		if (uci_move.empty()) return;
-		std::cout << uci_move << std::endl;
 		Move nextMove = uci_to_move(uci_move, board);
 		if (board.turn() == BLACK) board.play<BLACK>(nextMove);
 		else board.play<WHITE>(nextMove);
@@ -88,8 +87,9 @@ void uci_create_position_from_moves(Position& board, const string& board_fen, co
 }
 
 void uci_position(Position& board, const string& input_line) {
-	if (input_line.substr(0, 23) == "position startpos moves") {
-		const string& uci_moves = input_line.substr(24, input_line.size() - 24);
+	if (input_line.substr(0, 17) == "position startpos") {
+		std::string uci_moves;
+		if (input_line.size() > 17) uci_moves = input_line.substr(24, input_line.size() - 24);
 		uci_create_position_from_moves(board, initial_board_fen, uci_moves);
 	} else {
 		int fen_start = input_line.find("position fen ") + 13;

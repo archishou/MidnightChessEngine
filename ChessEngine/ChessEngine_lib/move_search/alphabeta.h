@@ -26,7 +26,7 @@ struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
 
 typedef std::chrono::time_point<std::chrono::system_clock> TimePoint;
 
-bool exceededTime(TimePoint endTime) {
+bool exceeded_time(TimePoint endTime) {
 	return std::chrono::system_clock::now() > endTime;
 }
 
@@ -52,7 +52,7 @@ int q_search(Position& board, int alpha, const int beta, AlphaBetaData& data, co
 	ScoredMoves scored_moves = order_moves<color>(capture_moves, board, t_table);
 	for (const ScoredMove& scored_move : scored_moves) {
 		const Move legal_move = scored_move.move;
-		if (exceededTime(end_time)) {
+		if (exceeded_time(end_time)) {
 			data.search_completed = false;
 			return alpha;
 		}
@@ -109,7 +109,7 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 	int value = NEG_INF_CHESS;
 	for (const ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
-		if (exceededTime(end_time)) {
+		if (exceeded_time(end_time)) {
 			data.search_completed = false;
 			return value;
 		}
@@ -137,5 +137,6 @@ AlphaBetaData alpha_beta_root(Position& board, int depth, TimePoint end_time, Tr
 	data.seldepth = 0;
 	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, data, end_time, t_table);
 	data.best_move = data.pv.table[0][0];
+	std::cout << "HELLO: " << data.best_move << " SEARCH FINISHED? " << data.search_completed << std::endl;
 	return data;
 }
