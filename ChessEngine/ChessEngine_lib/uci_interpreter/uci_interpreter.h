@@ -75,9 +75,12 @@ vector<string> split(const string& s, const string& delimiter) {
 }
 
 
-void uci_create_position_from_moves(Position& board, const string& board_fen, const vector<string>& uci_moves) {
+void uci_create_position_from_moves(Position& board, const string& board_fen, const string& uci_move_string) {
 	Position::set(board_fen, board);
+	vector<string> uci_moves = split(uci_move_string, " ");
 	for (const std::string& uci_move : uci_moves) {
+		if (uci_move.empty()) return;
+		std::cout << uci_move << std::endl;
 		Move nextMove = uci_to_move(uci_move, board);
 		if (board.turn() == BLACK) board.play<BLACK>(nextMove);
 		else board.play<WHITE>(nextMove);
@@ -86,19 +89,28 @@ void uci_create_position_from_moves(Position& board, const string& board_fen, co
 
 void uci_position(Position& board, const string& input_line) {
 	if (input_line.substr(0, 23) == "position startpos moves") {
-		vector<string> split_string = split(input_line, " ");
-		split_string.erase(split_string.begin(), split_string.begin() + 3);
-		uci_create_position_from_moves(board, initial_board_fen, split_string);
+		const string& uci_moves = input_line.substr(24, input_line.size() - 24);
+		uci_create_position_from_moves(board, initial_board_fen, uci_moves);
 	} else {
 		int fen_start = input_line.find("position fen ") + 13;
 		int fen_end = input_line.find(" moves");
 		int moves_start = fen_end + 6;
 		int fen_size = fen_end - fen_start;
 		const string& fen = input_line.substr(fen_start, fen_size);
-		const string& moves = input_line.substr(moves_start + 1, input_line.size() - moves_start);
-		vector<string> uci_moves = split(moves, " ");
-		uci_create_position_from_moves(board, fen, uci_moves);
+		std::string moves;
+		if (fen_end != std::string::npos) {
+			moves = input_line.substr(moves_start + 1, input_line.size() - moves_start);
+		}
+		std::cout << "ParsedFEN:" << fen << ":" << std::endl;
+		std::cout << "ParsedMoves:" << moves << ":" << std::endl;
+		uci_create_position_from_moves(board, fen, moves);
+		std::cout << "FINAL PARSED " << std::endl;
+		std::cout << board << std::endl;
 	}
+	std::cout << "EXPECTED " << std::endl;
+	Position p;
+	Position::set("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ", p);
+	std::cout << p << std::endl;
 }
 
 void uci_go_diagnostics_output(Position& board, BestMoveSearchResults& results, ofstream& diagnostics_file)  {

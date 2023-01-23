@@ -1,14 +1,1 @@
-uci
-ucinewgame
-isready
-position fen k7/8/3p4/p2P1p2/P2P1P2/8/8/K7 b - - 0 1 moves a8a7
-go movetime 50000
-Position FEN : 8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w -  -
-Predicted Best Move: a1b1
-Principal Variation a1b1 a7a6 b1a1 a6b6 a1b1 b6a6 :
-Depth Searched: 21
-Time Searched: 1.00175
-Nodes Searched: 1007652493
-NPS: 1.00589e+09
-Value: 0
-quit
+position fen r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 

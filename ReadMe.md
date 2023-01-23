@@ -8,6 +8,7 @@
 # Todo 
 
 - (HIGH IMPORTANCE) Avoid king shuffling, encourage checkmate without check penalty in eval
+- (Medium Importance) extern in types.h needed?
 - (Medium Importance) Try to use something other than std::vector or at least pre-define memory requirements so we don't resize array every time.
 - History might not be reset correctly in board object
 - Implement Kind end game pstq

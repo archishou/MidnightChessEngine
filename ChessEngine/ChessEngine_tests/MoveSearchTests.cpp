@@ -142,3 +142,12 @@ TEST_F(MoveSearchFixture, KiwipeteTestaf){
 	BestMoveSearchResults best_white = best_move<WHITE>(p);
 	std::cout << best_white.depth_searched << std::endl;
 }
+
+TEST_F(MoveSearchFixture, ate){
+	Position p;
+	const std::string& fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+	Position::set(fen, p);
+
+	BestMoveSearchResults best_white = best_move<WHITE>(p);
+	std::cout << best_white.depth_searched << std::endl;
+}
