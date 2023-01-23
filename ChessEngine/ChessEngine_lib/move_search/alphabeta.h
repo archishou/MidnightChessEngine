@@ -41,37 +41,33 @@ bool position_is_draw(Position &board) {
 }
 
 template<Color color>
-int q_search(Position& board, int alpha, int beta, AlphaBetaData& data, TimePoint end_time, TranspositionTable& t_table, int ply) {
-	int value = NEG_INF_CHESS;
+int q_search(Position& board, int alpha, const int beta, AlphaBetaData& data, const TimePoint end_time, TranspositionTable& t_table, const int ply) {
 	data.seldepth = std::max(data.seldepth, ply);
 
-	int v = evaluate<color>(board);
-	value = std::max(value, v);
-	alpha = std::max(alpha, value);
-	if (alpha >= beta) return v;
+	const int stand_pat = evaluate<color>(board);
+	if (stand_pat >= beta) return beta;
+	if (alpha < stand_pat) alpha = stand_pat;
 
 	MoveList<color> capture_moves(board, QSearchMoveGenerationsOptions);
 	ScoredMoves scored_moves = order_moves<color>(capture_moves, board, t_table);
-	if (scored_moves.empty()) return v;
-	for (ScoredMove scored_move : scored_moves) {
-		Move legal_move = scored_move.move;
+	for (const ScoredMove& scored_move : scored_moves) {
+		const Move legal_move = scored_move.move;
 		if (exceededTime(end_time)) {
 			data.search_completed = false;
-			return value;
+			return alpha;
 		}
 		board.play<color>(legal_move);
-		v = -q_search<~color>(board, -beta, -alpha, data, end_time, t_table, ply + 1);
+		const int score = -q_search<~color>(board, -beta, -alpha, data, end_time, t_table, ply + 1);
 		board.undo<color>(legal_move);
 		data.q_nodes_searched += 1;
-		value = std::max(value, v);
-		alpha = std::max(alpha, value);
-		if (alpha >= beta) break;
+		if (score >= beta) return beta;
+		if (score > alpha) alpha = score;
 	}
-	return value;
+	return alpha;
 }
 
 template<Color color>
-int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBetaData& data, TimePoint end_time, TranspositionTable& t_table) {
+int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBetaData& data, const TimePoint end_time, TranspositionTable& t_table) {
 	int alpha_initial = alpha;
 	init_pv(data.pv, ply);
 
@@ -83,7 +79,6 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 	}
 
 	if (depth == 0) {
-		//return evaluate<color>(board);
 		return q_search<color>(board, alpha, beta, data, end_time, t_table, ply);
 	}
 
@@ -142,6 +137,5 @@ AlphaBetaData alpha_beta_root(Position& board, int depth, TimePoint end_time, Tr
 	data.seldepth = 0;
 	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, data, end_time, t_table);
 	data.best_move = data.pv.table[0][0];
-	std::cout << "Seldepth " << data.seldepth << std::endl;
 	return data;
 }

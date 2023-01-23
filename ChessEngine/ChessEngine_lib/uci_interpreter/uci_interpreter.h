@@ -101,16 +101,8 @@ void uci_position(Position& board, const string& input_line) {
 		if (fen_end != std::string::npos) {
 			moves = input_line.substr(moves_start + 1, input_line.size() - moves_start);
 		}
-		std::cout << "ParsedFEN:" << fen << ":" << std::endl;
-		std::cout << "ParsedMoves:" << moves << ":" << std::endl;
 		uci_create_position_from_moves(board, fen, moves);
-		std::cout << "FINAL PARSED " << std::endl;
-		std::cout << board << std::endl;
 	}
-	std::cout << "EXPECTED " << std::endl;
-	Position p;
-	Position::set("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ", p);
-	std::cout << p << std::endl;
 }
 
 void uci_go_diagnostics_output(Position& board, BestMoveSearchResults& results, ofstream& diagnostics_file)  {

@@ -102,9 +102,9 @@ TEST_F(MoveSearchFixture, MateInTwoTest3){
 	results = best_move<WHITE>(p);
 	ASSERT_TRUE(results.depth_searched >= 3) << ASSERTION_ERR_SEARCH_DEPTH;
 	Line expected_line;
-	expected_line[0] = Move(f4, d6, CAPTURE);
+	expected_line[0] = Move(e6, d6, CAPTURE);
 	expected_line[1] = Move(e8, e7, QUIET);
-	expected_line[2] = Move(e6, e7, CAPTURE);
+	expected_line[2] = Move(d6, e7, CAPTURE);
 	compare_lines(expected_line, results.pv);
 }
 
@@ -125,7 +125,7 @@ TEST_F(MoveSearchFixture, QSearchTest1){
 
 TEST_F(MoveSearchFixture, T){
 	Position p;
-	const std::string& fen = "8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1";
+	const std::string& fen = "8/3r4/p2r4/1p1p2k1/1P6/P3P3/2R1K3/3R4 b - - 0 1";
 	Position::set(fen, p);
 	p.play<BLACK>(Move(a8, a7, QUIET));
 

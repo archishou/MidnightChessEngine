@@ -60,12 +60,6 @@ IDResults iterative_deepening(Position& board, int time_limit, int depth) {
 				alpha_beta_root<color>(board, sub_depth, target_end_time, t_table);
         if (ab_results.search_completed) {
 			update_id_results(id_results, ab_results, sub_depth);
-			std::cout << "DEPTH: " << sub_depth << std::endl;
-			std::cout << "AB NODES: " << ab_results.nodes_searched << std::endl;
-			std::cout << "AB Q NODES: " << ab_results.q_nodes_searched << std::endl;
-			std::cout << "NODES: " << id_results.nodes_searched <<  std::endl;
-			std::cout << "Q NODES: " << id_results.q_nodes_searched <<  std::endl;
-			std::cout << " TIME SPENT SO FAR: " << (std::clock() - start) / (double) CLOCKS_PER_SEC << std::endl;
         }
     }
 

@@ -31,6 +31,7 @@ int get_piece_value(PieceType piece_type) {
 		case PieceType::BISHOP: return BISHOP_VALUE;
 		case PieceType::ROOK: return ROOK_VALUE;
 		case PieceType::QUEEN: return QUEEN_VALUE;
+		case PieceType::KING: return KING_VALUE;
 		default: return 0;
 	}
 }
