@@ -18,21 +18,28 @@ void initialize_uci(Position& p) {
 	Position::set(initial_board_fen, p);
 }
 
+char promotion_character(std::string uci_move) {
+	char promotion_piece = uci_move.at(4);
+	char lower_case = std::tolower(promotion_piece, std::locale());
+	return lower_case;
+}
+
 Move uci_to_move(const std::string& moveStr, Position& position) {
 	Move move = Move(moveStr.substr(0, 4));
 	// Pawn Promotion
 	if (moveStr.size() == 5) {
 		// Quiet Promotion
+		char p_char = promotion_character(moveStr);
 		if (position.at(move.to()) == NO_PIECE) {
-			if (moveStr.at(4) == 'q') return Move(move.from(), move.to(), PR_QUEEN);
-			if (moveStr.at(4) == 'b') return Move(move.from(), move.to(), PR_BISHOP);
-			if (moveStr.at(4) == 'n') return Move(move.from(), move.to(), PR_KNIGHT);
-			if (moveStr.at(4) == 'r') return Move(move.from(), move.to(), PR_ROOK);
+			if (p_char == 'q') return Move(move.from(), move.to(), PR_QUEEN);
+			if (p_char == 'b') return Move(move.from(), move.to(), PR_BISHOP);
+			if (p_char == 'n') return Move(move.from(), move.to(), PR_KNIGHT);
+			if (p_char == 'r') return Move(move.from(), move.to(), PR_ROOK);
 		}
-		if (moveStr.at(4) == 'q') return Move(move.from(), move.to(), PC_QUEEN);
-		if (moveStr.at(4) == 'b') return Move(move.from(), move.to(), PC_BISHOP);
-		if (moveStr.at(4) == 'n') return Move(move.from(), move.to(), PC_KNIGHT);
-		if (moveStr.at(4) == 'r') return Move(move.from(), move.to(), PC_ROOK);
+		if (p_char == 'q') return Move(move.from(), move.to(), PC_QUEEN);
+		if (p_char == 'b') return Move(move.from(), move.to(), PC_BISHOP);
+		if (p_char == 'n') return Move(move.from(), move.to(), PC_KNIGHT);
+		if (p_char == 'r') return Move(move.from(), move.to(), PC_ROOK);
 	}
 
 	// En Passant
@@ -73,7 +80,6 @@ vector<string> split(const string& s, const string& delimiter) {
 	res.push_back (s.substr (pos_start));
 	return res;
 }
-
 
 void uci_create_position_from_moves(Position& board, const string& board_fen, const string& uci_move_string) {
 	Position::set(board_fen, board);
