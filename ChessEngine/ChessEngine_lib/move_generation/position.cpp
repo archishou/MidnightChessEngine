@@ -134,7 +134,8 @@ void Position::clear() {
     for (int i = 0; i < 15; i++) piece_bb[i] = 0;
     for (int i = 0; i < 64; i++) board[i] = NO_PIECE;
 	// TODO: possible mistake.
-    history[0] = UndoInfo();
+	for (int i = 0; i < 300; i++) history[i] = UndoInfo();
+	hash_history.clear();
 }
 
 

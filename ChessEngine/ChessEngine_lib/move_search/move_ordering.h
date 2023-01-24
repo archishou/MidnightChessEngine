@@ -68,8 +68,8 @@ template<Color color>
 ScoredMoves order_moves(MoveList<color>& move_list, Position& board, TranspositionTable& t_table) {
 	ScoredMoves scored_moves;
 	Move previous_best_move = Move();
-	TranspositionTableSearchResults search_results = t_table.probe(board.get_hash());
-	if (search_results.entry_found) previous_best_move = search_results.entry.best_move;
+	//TranspositionTableSearchResults search_results = t_table.probe(board.get_hash());
+	//if (search_results.entry_found) previous_best_move = search_results.entry.best_move;
 	for (Move move : move_list) {
 		struct ScoredMove scored_move;
 		scored_move.move = move;
