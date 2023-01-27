@@ -22,10 +22,13 @@ protected:
 
 const std::string& ASSERTION_ERR_SEARCH_DEPTH = "Test not completed, did not search deep enough";
 
-void compare_lines(Line& expected, Line& results_line) {
+bool lines_equal(Line& expected, Line& results_line) {
 	for (int i = 0; i < LINE_SIZE; ++i) {
-		EXPECT_EQ(expected[i], results_line[i]) << "Expected Line and results differ at index " << i;
+		if (expected[i] != results_line[i]) {
+			return false;
+		}
 	}
+	return true;
 }
 
 TEST_F(MoveSearchFixture, MateInOneTest1){
@@ -77,7 +80,7 @@ TEST_F(MoveSearchFixture, MateInOneTest4){
 	EXPECT_TRUE(results.best_move == mate_move);
 }
 
-TEST_F(MoveSearchFixture, MateInTwoTest2){
+TEST_F(MoveSearchFixture, MateInTwoTest1){
 	Position p;
 	const std::string& fen = "3q4/4b3/2p4p/pk1p1B2/N4P2/P1Q3P1/1P5P/7K w - - 0 1";
 	Position::set(fen, p);
@@ -89,10 +92,10 @@ TEST_F(MoveSearchFixture, MateInTwoTest2){
 	expected_line[0] = Move(f5, d3, QUIET);
 	expected_line[1] = Move(b5, a4, CAPTURE);
 	expected_line[2] = Move(c3, c2, QUIET);
-	compare_lines(expected_line, results.pv);
+	EXPECT_TRUE(lines_equal(expected_line, results.pv));
 }
 
-TEST_F(MoveSearchFixture, MateInTwoTest3){
+TEST_F(MoveSearchFixture, MateInTwoTest2){
 	Position p;
 	const std::string& fen = "r3qk1r/p5pp/3pQpb1/2n5/2B2B2/8/P4PPP/4R1K1 w - - 0 1";
 
@@ -101,11 +104,16 @@ TEST_F(MoveSearchFixture, MateInTwoTest3){
 	BestMoveSearchResults results;
 	results = best_move<WHITE>(p);
 	ASSERT_TRUE(results.depth_searched >= 3) << ASSERTION_ERR_SEARCH_DEPTH;
-	Line expected_line;
-	expected_line[0] = Move(e6, d6, CAPTURE);
-	expected_line[1] = Move(e8, e7, QUIET);
-	expected_line[2] = Move(d6, e7, CAPTURE);
-	compare_lines(expected_line, results.pv);
+	Line expected_line_1;
+	expected_line_1[0] = Move(e6, d6, CAPTURE);
+	expected_line_1[1] = Move(e8, e7, QUIET);
+	expected_line_1[2] = Move(d6, e7, CAPTURE);
+
+	Line expected_line_2;
+	expected_line_2[0] = Move(f4, d6, CAPTURE);
+	expected_line_2[1] = Move(e8, e7, QUIET);
+	expected_line_2[2] = Move(e6, e7, CAPTURE);
+	EXPECT_TRUE(lines_equal(expected_line_1, results.pv) || lines_equal(expected_line_2, results.pv));
 }
 
 TEST_F(MoveSearchFixture, QSearchTest1){
@@ -123,33 +131,16 @@ TEST_F(MoveSearchFixture, QSearchTest1){
 	EXPECT_TRUE(results.best_move != horizon_effected_capture);
 }
 
-TEST_F(MoveSearchFixture, T){
+TEST_F(MoveSearchFixture, ImportantFENToAnalyze){
 	Position p;
-	const std::string& fen = "8/3r4/p2r4/1p1p2k1/1P6/P3P3/2R1K3/3R4 b - - 0 1";
+	const std::string& fen = "8/1k6/p3R3/1p6/1P1p4/P1b1N3/r4PP1/6K1 w - - 0 1";
 	Position::set(fen, p);
-	p.play<BLACK>(Move(a8, a7, QUIET));
+	std::cout << p << std::endl;
+	BestMoveSearchResults mov = best_move<WHITE>(p);
+	std::cout << mov.pv << std::endl;
+	p.play<WHITE>(Move(e3, d1, QUIET));
+	p.play<BLACK>(Move(a2, a1, QUIET));
+	BestMoveSearchResults best_white = best_move<WHITE>(p, {4, 1000});
 
-	BestMoveSearchResults best_white = best_move<WHITE>(p);
-	std::cout << best_white.depth_searched << std::endl;
-	//std::cout << best_white << std::endl;
-}
-
-TEST_F(MoveSearchFixture, KiwipeteTestaf){
-	Position p;
-	const std::string& fen = kiwipete_fen;
-	Position::set(fen, p);
-
-	BestMoveSearchResults best_white = best_move<WHITE>(p);
-	std::cout << best_white.depth_searched << std::endl;
-}
-
-TEST_F(MoveSearchFixture, ate){
-	Position p;
-	const std::string& fen = "4Q3/4P3/8/8/2P5/P4Q2/1P1k4/1K6 w - - 0 1";
-	Position::set(fen, p);
-	p.play<WHITE>(Move(f3, e4, QUIET));
-	p.play<BLACK>(Move(d1, d2, QUIET));
-
-	BestMoveSearchResults best_white = best_move<WHITE>(p);
 	std::cout << best_white.pv << std::endl;
 }

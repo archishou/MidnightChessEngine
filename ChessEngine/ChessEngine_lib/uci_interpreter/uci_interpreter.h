@@ -109,9 +109,13 @@ void uci_position(Position& board, const string& input_line) {
 		}
 		uci_create_position_from_moves(board, fen, moves);
 	}
+	std::cout << board << std::endl;
 }
 
 void uci_go_diagnostics_output(Position& board, BestMoveSearchResults& results, ofstream& diagnostics_file)  {
+	diagnostics_file << "bestmove " << results.best_move << endl;
+
+	/*
 	diagnostics_file << "Position FEN : " << board.fen() << std::endl;
 	diagnostics_file << "Predicted Best Move: " << results.best_move << std::endl;
 	diagnostics_file << "Principal Variation " << results.pv << ":" << std::endl;
@@ -119,7 +123,13 @@ void uci_go_diagnostics_output(Position& board, BestMoveSearchResults& results, 
 	diagnostics_file << "Time Searched: " << results.time_searched << std::endl;
 	diagnostics_file << "Nodes Searched: " << results.nodes_searched << std::endl;
 	diagnostics_file << "NPS: " << results.nodes_per_second << std::endl;
-	diagnostics_file << "Value: " << results.value << std::endl;
+	 */
+	//diagnostics_file << "Value: " << results.value << std::endl;
+}
+
+BestMoveSearchResults go(Position& board, BestMoveSearchParameters params) {
+	if (board.turn() == BLACK) return best_move<BLACK>(board, params);
+	return best_move<WHITE>(board, params);
 }
 
 void uci_go(Position& board, ofstream& diagnostics_file) {
@@ -138,18 +148,23 @@ void read_uci(const string& diagnostics_file_path) {
 
 	cout.setf(ios::unitbuf);// Make sure that the outputs are sent straight away to the GUI
 	ofstream diagnostics_file;
-	diagnostics_file.open(diagnostics_file_path);
+	diagnostics_file.open(diagnostics_file_path, std::ios_base::app);
 
 	while (getline(cin, input_line)) {
 		diagnostics_file << input_line << std::endl;
 		if (input_line == "uci") {
+			diagnostics_file << "id name MidnightChessEngine" << std::endl;
+			diagnostics_file << "id author Archishmaan Peyyety" << std::endl;
+			diagnostics_file << "uciok" << std::endl;
 			cout << "id name MidnightChessEngine" << endl;
 			cout << "id author Archishmaan Peyyety" << endl;
 			cout << "uciok" << endl;
 		} else if (input_line == "quit") {
+			diagnostics_file << "Bye Bye" << std::endl;
 			cout << "Bye Bye" << endl;
 			break;
 		} else if (input_line == "isready") {
+			diagnostics_file << "readyok" << std::endl;
 			cout << "readyok" << endl;
 		} else if (input_line == "ucinewgame") {}
 		if (input_line.substr(0, 8) == "position") {
@@ -160,4 +175,36 @@ void read_uci(const string& diagnostics_file_path) {
 		}
 	}
 	diagnostics_file.close();
+}
+
+void read_uci_from_file(const string& input_file_path, const string& output_file_path) {
+	Position board;
+	initialize_uci(board);
+
+	std::ifstream input_file(input_file_path);
+	std::string input_line;
+
+	ofstream output_file;
+	output_file.open(output_file_path);
+
+	while (std::getline(input_file, input_line)) {
+		output_file << input_line << std::endl;
+		if (input_line == "uci") {
+			output_file << "id name MidnightChessEngine" << endl;
+			output_file << "id author Archishmaan Peyyety" << endl;
+			output_file << "uciok" << endl;
+		} else if (input_line == "quit") {
+			output_file << "Bye Bye" << endl;
+			break;
+		} else if (input_line == "isready") {
+			output_file << "readyok" << endl;
+		} else if (input_line == "ucinewgame") {}
+		if (input_line.substr(0, 8) == "position") {
+			uci_position(board, input_line);
+		} else if (input_line == "stop") {
+		} else if (input_line.substr(0, 2 ) == "go") {
+			uci_go(board, output_file);
+		}
+	}
+	input_file.close();
 }

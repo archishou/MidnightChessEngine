@@ -142,6 +142,5 @@ AlphaBetaData alpha_beta_root(Position& board, int depth, TimePoint end_time, Tr
 	data.seldepth = 0;
 	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, data, end_time, t_table);
 	data.best_move = data.pv.table[0][0];
-	std::cout << "HELLO: " << data.best_move << " SEARCH FINISHED? " << data.search_completed << std::endl;
 	return data;
 }

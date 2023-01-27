@@ -137,5 +137,3 @@ void Position::clear() {
 	for (int i = 0; i < 300; i++) history[i] = UndoInfo();
 	hash_history.clear();
 }
-
-
