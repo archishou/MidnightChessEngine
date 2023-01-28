@@ -109,7 +109,6 @@ void uci_position(Position& board, const string& input_line) {
 		}
 		uci_create_position_from_moves(board, fen, moves);
 	}
-	std::cout << board << std::endl;
 }
 
 void uci_go_diagnostics_output(Position& board, BestMoveSearchResults& results, ofstream& diagnostics_file)  {
@@ -137,6 +136,7 @@ void uci_go(Position& board, ofstream& diagnostics_file) {
 	if (board.turn() == BLACK) results = best_move<BLACK>(board);
 	else results = best_move<WHITE>(board);
 	uci_go_diagnostics_output(board, results, diagnostics_file);
+	cout << "score cp " << results.value << endl;
 	cout << "bestmove " << results.best_move << endl;
 }
 

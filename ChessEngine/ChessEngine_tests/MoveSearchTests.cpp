@@ -131,16 +131,20 @@ TEST_F(MoveSearchFixture, QSearchTest1){
 	EXPECT_TRUE(results.best_move != horizon_effected_capture);
 }
 
-TEST_F(MoveSearchFixture, ImportantFENToAnalyze){
+TEST_F(MoveSearchFixture, Dumb3Fold){
 	Position p;
-	const std::string& fen = "8/1k6/p3R3/1p6/1P1p4/P1b1N3/r4PP1/6K1 w - - 0 1";
+	const std::string& fen = "7k/3RRR2/8/8/8/5PPP/7K/5q2 b - - 0 1";
 	Position::set(fen, p);
-	std::cout << p << std::endl;
-	BestMoveSearchResults mov = best_move<WHITE>(p);
+	BestMoveSearchResults mov = best_move<BLACK>(p);
 	std::cout << mov.pv << std::endl;
-	p.play<WHITE>(Move(e3, d1, QUIET));
-	p.play<BLACK>(Move(a2, a1, QUIET));
-	BestMoveSearchResults best_white = best_move<WHITE>(p, {4, 1000});
+	std::cout << mov.value << std::endl;
+}
 
+TEST_F(MoveSearchFixture, SpecialEndgamFEN){
+	Position p;
+	const std::string& fen = "8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1";
+	Position::set(fen, p);
+	BestMoveSearchResults best_white = best_move<WHITE>(p);
 	std::cout << best_white.pv << std::endl;
+	std::cout << best_white.depth_searched << std::endl;
 }

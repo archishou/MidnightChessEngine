@@ -120,11 +120,15 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		board.undo<color>(legal_move);
 		data.nodes_searched += 1;
 		if (v > value) best_move = legal_move;
-		if (v > alpha) update_pv(data.pv, ply, best_move);
+		if (v > alpha) {
+			if (ply == 0) data.value = v;
+			update_pv(data.pv, ply, best_move);
+		}
 		value = std::max(value, v);
 		alpha = std::max(alpha, value);
 		if (alpha >= beta) break;
 	}
+
 	/*
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
 	t_table.put(board.get_hash(), depth, value, ply, best_move, node_type);
