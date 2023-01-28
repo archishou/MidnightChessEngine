@@ -131,10 +131,16 @@ BestMoveSearchResults go(Position& board, BestMoveSearchParameters params) {
 	return best_move<WHITE>(board, params);
 }
 
-void uci_go(Position& board, ofstream& diagnostics_file) {
+void uci_go(Position& board, ofstream& diagnostics_file, const string& input_line) {
 	BestMoveSearchResults results;
-	if (board.turn() == BLACK) results = best_move<BLACK>(board);
-	else results = best_move<WHITE>(board);
+	string move_time_s = split(input_line," ")[2];
+	int move_time = stoi(move_time_s);
+	const BestMoveSearchParameters params = BestMoveSearchParameters {
+		.depth = MAX_DEPTH,
+		.time_limit = move_time,
+	};
+	if (board.turn() == BLACK) results = best_move<BLACK>(board, params);
+	else results = best_move<WHITE>(board, params);
 	uci_go_diagnostics_output(board, results, diagnostics_file);
 	cout << "score cp " << results.value << endl;
 	cout << "bestmove " << results.best_move << endl;
@@ -171,7 +177,7 @@ void read_uci(const string& diagnostics_file_path) {
 			uci_position(board, input_line);
 		} else if (input_line == "stop") {
 		} else if (input_line.substr(0, 2 ) == "go") {
-			uci_go(board, diagnostics_file);
+			uci_go(board, diagnostics_file, input_line);
 		}
 	}
 	diagnostics_file.close();
@@ -203,7 +209,7 @@ void read_uci_from_file(const string& input_file_path, const string& output_file
 			uci_position(board, input_line);
 		} else if (input_line == "stop") {
 		} else if (input_line.substr(0, 2 ) == "go") {
-			uci_go(board, output_file);
+			uci_go(board, output_file, input_line);
 		}
 	}
 	input_file.close();
