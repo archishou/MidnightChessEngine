@@ -142,7 +142,7 @@ void uci_go(Position& board, ofstream& diagnostics_file, const string& input_lin
 	if (board.turn() == BLACK) results = best_move<BLACK>(board, params);
 	else results = best_move<WHITE>(board, params);
 	uci_go_diagnostics_output(board, results, diagnostics_file);
-	cout << "score cp " << results.value << endl;
+	cout << "info score cp " << results.value << endl;
 	cout << "bestmove " << results.best_move << endl;
 }
 
