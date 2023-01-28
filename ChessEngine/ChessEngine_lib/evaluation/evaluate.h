@@ -21,13 +21,13 @@ const int center_dist[64] = {
 	3, 3, 3, 3, 3, 3, 3, 3
 };
 
-int manhattan_dist(Square s1, Square s2) {
+static int manhattan_dist(Square s1, Square s2) {
 	int rank_dist = abs(rank_of(s1) - rank_of(s2));
 	int file_dist = abs(file_of(s1) - file_of(s2));
 	return rank_dist + file_dist;
 }
 
-double endgame_weight(int material_wo_pawns) {
+static double endgame_weight(int material_wo_pawns) {
 	const double multiplier = 1.0 / ENDGAME_MATERIAL_THRESHOLD;
 	return 1 - std::min(1.0, material_wo_pawns * multiplier);
 }
@@ -74,13 +74,13 @@ int evaluate_all_piece_positions(Position& board, double endgame_weight) {
 	for (PieceType piece_type : {PAWN, KNIGHT, BISHOP, ROOK, QUEEN}) {
 		pstq_score += evaluate_piece_position<color>(board, piece_type);
 	}
-	pstq_score += evaluate_piece_position<color>(board, KING) * (1 - endgame_weight);
+	pstq_score += (evaluate_piece_position<color>(board, KING) * (1 - endgame_weight));
 	return pstq_score;
 }
 
 template<Color color>
 int evaluate_all_piece_positions(Position& board) {
-	evaluate_all_piece_positions<color>(board, 1);
+	return evaluate_all_piece_positions<color>(board, 0);
 }
 
 template<Color color>

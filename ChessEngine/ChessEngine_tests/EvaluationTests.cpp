@@ -1,7 +1,6 @@
 //
 // Created by Archishmaan Peyyety on 1/10/23.
 //
-/*
 #include "gtest/gtest.h"
 #include "move_generation/position.h"
 #include "evaluation/evaluate.h"
@@ -79,4 +78,3 @@ TEST_F(EvaluationTestsFixture, KingEndgamePSTQ){
 	expected_pstq += king_middle[b8];
 	EXPECT_EQ(pstq, expected_pstq);
 }
-*/

@@ -131,15 +131,6 @@ TEST_F(MoveSearchFixture, QSearchTest1){
 	EXPECT_TRUE(results.best_move != horizon_effected_capture);
 }
 
-TEST_F(MoveSearchFixture, Dumb3Fold){
-	Position p;
-	const std::string& fen = "7k/3RRR2/8/8/8/5PPP/7K/5q2 b - - 0 1";
-	Position::set(fen, p);
-	BestMoveSearchResults mov = best_move<BLACK>(p);
-	std::cout << mov.pv << std::endl;
-	std::cout << mov.value << std::endl;
-}
-
 TEST_F(MoveSearchFixture, SpecialEndgamFEN){
 	Position p;
 	const std::string& fen = "8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1";
