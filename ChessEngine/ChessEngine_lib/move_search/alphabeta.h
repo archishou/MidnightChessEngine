@@ -91,7 +91,7 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		} else if (tt_entry.node_type == LOWER_NODE) {
 			alpha = std::max(alpha, tt_entry.value);
 		} else if (tt_entry.node_type == UPPER_NODE) {
-			beta = std::max(beta, tt_entry.value);
+			beta = std::min(beta, tt_entry.value);
 		}
 		if (alpha >= beta) {
 			if (ply == 0) update_pv(data.pv, 0, tt_entry.best_move);
@@ -131,6 +131,13 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
 	t_table.put(board.get_hash(), depth, value, ply, best_move, node_type);
+	TranspositionTableSearchResults table_search_results = t_table.probe_for_search(board.get_hash(), depth, ply);
+	assert(table_search_results.entry_found);
+	assert(table_search_results.entry.value == value);
+	assert(table_search_results.entry.zobrist_hash == board.get_hash());
+	assert(table_search_results.entry.depth == depth);
+	assert(table_search_results.entry.best_move == best_move);
+	assert(table_search_results.entry.node_type == node_type);
 
 	return value;
 }
