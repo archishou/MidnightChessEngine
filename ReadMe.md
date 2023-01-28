@@ -1,3 +1,6 @@
+# Elo History
+- Midnight Rating: 1356.2 - 1438.6 | 1397.4 (1/27/23)
+
 # File structure
 
 - /ChessEngine contains the C++ chess engine. It produces moves in uci format.
