@@ -15,10 +15,10 @@ struct ScoredMove {
 typedef std::vector<ScoredMove> ScoredMoves;
 
 //const int CAPTURED_PIECE_VALUE_MULTIPLIER = 10;
-const int IN_OPP_PAWN_TERRITORY_PENALTY = -350;
 const int PREVIOUS_BEST_MOVE_BONUS = 1000000;
 const int PROMOTION_BONUS = PREVIOUS_BEST_MOVE_BONUS / 10;
 const int MVV_LVA_BONUS = PROMOTION_BONUS / 10;
+const int IN_OPP_PAWN_TERRITORY_PENALTY = -350;
 
 bool compare_moves(ScoredMove const& lhs, ScoredMove const& rhs) {
 	return lhs.score < rhs.score;
@@ -68,8 +68,8 @@ template<Color color>
 ScoredMoves order_moves(MoveList<color>& move_list, Position& board, TranspositionTable& t_table) {
 	ScoredMoves scored_moves;
 	Move previous_best_move = Move();
-	//TranspositionTableSearchResults search_results = t_table.probe(board.get_hash());
-	//if (search_results.entry_found) previous_best_move = search_results.entry.best_move;
+	TranspositionTableSearchResults search_results = t_table.probe(board.get_hash());
+	if (search_results.entry_found) previous_best_move = search_results.entry.best_move;
 	for (Move move : move_list) {
 		struct ScoredMove scored_move;
 		scored_move.move = move;

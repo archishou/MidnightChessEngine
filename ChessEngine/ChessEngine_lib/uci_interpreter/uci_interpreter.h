@@ -112,7 +112,7 @@ void uci_position(Position& board, const string& input_line) {
 }
 
 void uci_go_diagnostics_output(Position& board, BestMoveSearchResults& results, ofstream& diagnostics_file)  {
-	////diagnostics_file << "bestmove " << results.best_move << endl;
+	diagnostics_file << "bestmove " << results.best_move << endl;
 
 	/*
 	//diagnostics_file << "Position FEN : " << board.fen() << std::endl;

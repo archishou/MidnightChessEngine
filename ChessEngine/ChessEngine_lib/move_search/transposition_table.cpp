@@ -9,6 +9,16 @@
 TranspositionTable::TranspositionTable(uint64_t size) {
 	table_size = size;
 	transposition_table = new TranspositionTableEntry[table_size];
+
+	TranspositionTableEntry default_entry = TranspositionTableEntry();
+	default_entry.value = 0;
+	default_entry.zobrist_hash = 0;
+	default_entry.depth = 0;
+	default_entry.best_move = 0;
+	default_entry.node_type = EXACT;
+	for (int i = 0; i < table_size; i++) {
+		transposition_table[i] = default_entry;
+	}
 }
 
 TranspositionTable::~TranspositionTable() {

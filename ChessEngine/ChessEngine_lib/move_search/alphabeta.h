@@ -82,11 +82,11 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		return q_search<color>(board, alpha, beta, data, end_time, t_table, ply);
 	}
 
-	/*
 	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), depth, ply);
 	if (probe_results.entry_found) {
 		TranspositionTableEntry tt_entry = probe_results.entry;
 		if (tt_entry.node_type == EXACT) {
+			if (ply == 0) update_pv(data.pv, 0, tt_entry.best_move);
 			return tt_entry.value;
 		} else if (tt_entry.node_type == LOWER_NODE) {
 			alpha = std::max(alpha, tt_entry.value);
@@ -94,10 +94,10 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 			beta = std::max(beta, tt_entry.value);
 		}
 		if (alpha >= beta) {
+			if (ply == 0) update_pv(data.pv, 0, tt_entry.best_move);
 			return tt_entry.value;
 		}
 	}
-	*/
 
 	MoveList<color> all_legal_moves(board);
 	ScoredMoves scored_moves = order_moves(all_legal_moves, board, t_table);
@@ -129,10 +129,8 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		if (alpha >= beta) break;
 	}
 
-	/*
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
 	t_table.put(board.get_hash(), depth, value, ply, best_move, node_type);
-	*/
 
 	return value;
 }
