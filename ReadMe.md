@@ -13,6 +13,7 @@
 
 # Todo 
 
+- Zobrist hash side to move, castling, en passant
 - Restructure and implement time control in UCI Protocol
 - Remove search.h versus id.h unneeded complication doesn't improve anything.
 - (Medium Importance) extern in types.h needed?

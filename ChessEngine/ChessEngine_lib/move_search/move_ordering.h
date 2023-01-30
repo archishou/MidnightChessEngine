@@ -68,7 +68,8 @@ template<Color color>
 ScoredMoves order_moves(MoveList<color>& move_list, Position& board, TranspositionTable& t_table) {
 	ScoredMoves scored_moves;
 	Move previous_best_move = Move();
-	TranspositionTableSearchResults search_results = t_table.probe(board.get_hash());
+	TranspositionTableSearchResults search_results = t_table.probe_for_move_ordering(board.get_hash());
+	bool previous_best_move_in_move_list = false;
 	if (search_results.entry_found) previous_best_move = search_results.entry.best_move;
 	for (Move move : move_list) {
 		struct ScoredMove scored_move;
@@ -78,6 +79,7 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board, Transpositi
 		score += promotion_move_score(move, board);
 		score += in_opponent_pawn_territory<color>(move, board);
 		if (move == previous_best_move) {
+			previous_best_move_in_move_list = true;
 			score += PREVIOUS_BEST_MOVE_BONUS;
 		}
 		// Score negated for sorting. We want to evaluate high scoring moves first.
@@ -85,5 +87,8 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board, Transpositi
 		scored_moves.push_back(scored_move);
 	}
 	std::sort(scored_moves.begin(), scored_moves.end(), &compare_moves);
+	if (search_results.entry_found && previous_best_move_in_move_list) {
+		assert(scored_moves.begin()->move == previous_best_move);
+	}
 	return scored_moves;
 }

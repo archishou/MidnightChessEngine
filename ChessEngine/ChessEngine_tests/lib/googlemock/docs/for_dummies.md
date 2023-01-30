@@ -82,7 +82,7 @@ We encourage you to use gMock as
 
 *   a *design* tool, for it lets you experiment with your interface design early
     and often. More iterations lead to better designs!
-*   a *testing* tool to cut your tests' outbound dependencies and probe the
+*   a *testing* tool to cut your tests' outbound dependencies and probe_for_move_ordering the
     interaction between your module and its collaborators.
 
 ## Getting Started

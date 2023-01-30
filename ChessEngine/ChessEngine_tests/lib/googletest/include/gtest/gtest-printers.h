@@ -201,7 +201,7 @@ Sentinel* operator<<(::std::basic_ostream<Char, CharTraits>& os, const T& x);
 // Check if the user has a user-defined operator<< for their type.
 //
 // We put this in its own namespace to inject a custom operator<< that allows us
-// to probe the type's operator.
+// to probe_for_move_ordering the type's operator.
 //
 // Note that this operator<< takes a generic std::basic_ostream<Char,
 // CharTraits> type instead of the more restricted std::ostream.  If

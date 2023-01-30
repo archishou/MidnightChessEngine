@@ -145,6 +145,9 @@ TEST_F(MoveSearchFixture, SpecialEndgamFEN){
 	const std::string& fen = "8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1";
 	Position::set(fen, p);
 	BestMoveSearchResults best_white = best_move<WHITE>(p );
-	std::cout << best_white.pv << std::endl;
-	std::cout << best_white.depth_searched << std::endl;
+	std::cout << "PV: " << best_white.pv << std::endl;
+	std::cout << "Depth Searched: " << best_white.depth_searched << std::endl;
+	std::cout << "Nodes Searched: " << best_white.nodes_searched << std::endl;
+	std::cout << "NPS: " << best_white.nodes_per_second << std::endl;
+	std::cout << "Seldepth: " << best_white.seldepth << std::endl;
 }

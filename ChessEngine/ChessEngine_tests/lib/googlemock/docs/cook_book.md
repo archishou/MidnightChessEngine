@@ -1298,7 +1298,7 @@ Also, did we tell you that `Pointee()` works with both raw pointers **and**
 smart pointers (`std::unique_ptr`, `std::shared_ptr`, etc)?
 
 What if you have a pointer to pointer? You guessed it - you can use nested
-`Pointee()` to probe deeper inside the value. For example,
+`Pointee()` to probe_for_move_ordering deeper inside the value. For example,
 `Pointee(Pointee(Lt(3)))` matches a pointer that points to a pointer that points
 to a number less than 3 (what a mouthful...).
 

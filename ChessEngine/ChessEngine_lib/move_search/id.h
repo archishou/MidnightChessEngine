@@ -29,6 +29,10 @@ struct IDResults {
 	uint64_t nodes_searched;
 	uint64_t q_nodes_searched;
 	double nodes_per_second;
+	int seldepth;
+
+	int tt_key_collisions;
+	int nodes_in_transposition_table;
 };
 
 void update_id_results(IDResults& id_results, AlphaBetaData& ab_results, int sub_depth) {
@@ -37,6 +41,9 @@ void update_id_results(IDResults& id_results, AlphaBetaData& ab_results, int sub
 	id_results.depth_searched = sub_depth;
 	id_results.nodes_searched += ab_results.nodes_searched;
 	id_results.q_nodes_searched += ab_results.q_nodes_searched;
+	id_results.seldepth = ab_results.seldepth;
+	id_results.tt_key_collisions = ab_results.tt_key_collisions;
+	id_results.nodes_in_transposition_table = ab_results.nodes_in_transposition_table;
 	for (int i = 0; i < ab_results.pv.length[0]; i++) {
 		id_results.pv[i] = ab_results.pv.table[0][i];
 	}
@@ -66,5 +73,8 @@ IDResults iterative_deepening(Position& board, int time_limit, int depth) {
 
 	id_results.time_searched = (std::clock() - start ) / (double) CLOCKS_PER_SEC;
 	id_results.nodes_per_second = id_results.nodes_searched / id_results.time_searched;
+	std::cout << "TT Collisions: " << id_results.tt_key_collisions << std::endl;
+	std::cout << "TT Number Nodes: " << t_table.count_entries() << std::endl;
+
     return id_results;
 }
