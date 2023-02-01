@@ -40,6 +40,8 @@ const std::string DEFAULT_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w K
 //The Kiwipete position, used for perft debugging
 const std::string KIWIPETE = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -";
 
+//Number of combinations for castling rights.
+const size_t NCASTLING_RIGHTS = 16;
 
 const size_t NPIECES = 15;
 enum Piece : int {
@@ -83,10 +85,12 @@ constexpr Square operator-(Square s, Direction d) { return Square(int(s) - int(d
 inline Square& operator+=(Square& s, Direction d) { return s = s + d; }
 inline Square& operator-=(Square& s, Direction d) { return s = s - d; }
 
+const size_t NFILES = 8;
 enum File : int {
 	AFILE, BFILE, CFILE, DFILE, EFILE, FFILE, GFILE, HFILE
 };	
 
+const size_t NRANKS = 8;
 enum Rank : int {
 	RANK1, RANK2, RANK3, RANK4, RANK5, RANK6, RANK7, RANK8
 };

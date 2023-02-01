@@ -54,7 +54,7 @@ TranspositionTable::get_node_type(const int &alpha_initial, const int &beta, con
 	return node_type;
 }
 
-void TranspositionTable::put(zobrist_hash hash, int depth, int score, int ply, Move best_move, TranspositionTableEntryNodeType node_type) {
+void TranspositionTable::put(zobrist_hash hash, short depth, int score, int ply, Move best_move, TranspositionTableEntryNodeType node_type) {
 	TranspositionTableEntry entry;
 	entry.zobrist_hash = hash;
 	entry.depth = depth;

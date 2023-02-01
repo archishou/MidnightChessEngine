@@ -5,14 +5,16 @@
 #include "clock.h"
 
 void reset_clock() {
-	start_time = std::clock();
+	start_time = std::chrono::high_resolution_clock::now();
 }
 
 int get_elapsed_time(TimeResolution resolution) {
-	double time_seconds = (std::clock() - start_time) / (double) CLOCKS_PER_SEC;
-	return int(time_seconds * resolution);
+	auto current_time = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> diff = current_time - start_time;
+	double seconds_elapsed = diff.count();
+	return int(seconds_elapsed * resolution);
 }
 
-bool time_elapsed_exceeds(TimeResolution resolution, int magnitude) {
-	return get_elapsed_time(resolution) > magnitude;
+bool time_elapsed_exceeds(int magnitude, TimeResolution resolution) {
+	return get_elapsed_time(resolution) >= magnitude;
 }

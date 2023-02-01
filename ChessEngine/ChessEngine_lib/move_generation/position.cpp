@@ -6,7 +6,9 @@
 //Zobrist keys for each piece and each square
 //Used to incrementally update the hash key of a position
 uint64_t zobrist::zobrist_piece_table[NPIECES][NSQUARES];
-uint64_t zobrist::zobrist_side_to_play[NCOLORS];
+uint64_t zobrist::zobrist_ep_file_table[NFILES + 1];
+uint64_t zobrist::zobrist_castling_rights_table[NCASTLING_RIGHTS];
+uint64_t zobrist::zobrist_color_key;
 
 //Initializes the zobrist table with random 64-bit numbers
 void zobrist::initialise_zobrist_keys() {
@@ -14,8 +16,13 @@ void zobrist::initialise_zobrist_keys() {
 	for (int i = 0; i < NPIECES; i++)
 		for (int j = 0; j < NSQUARES; j++)
 			zobrist::zobrist_piece_table[i][j] = rng.rand<uint64_t>();
-	zobrist::zobrist_side_to_play[WHITE] = rng.rand<uint64_t>();
-	zobrist::zobrist_side_to_play[BLACK] = zobrist_side_to_play[WHITE];
+	for (int i = 0; i < NCASTLING_RIGHTS; i++) {
+		zobrist::zobrist_castling_rights_table[i] = rng.rand<uint64_t>();
+	}
+	for (int i = 0; i < NFILES + 1; i++) {
+		zobrist::zobrist_ep_file_table[i] = rng.rand<uint64_t>();
+	}
+	zobrist_color_key = rng.rand<uint64_t>();
 }
 
 //Pretty-prints the position (including FEN and hash key)
@@ -75,6 +82,58 @@ std::string Position::fen() const {
 void Position::set(const std::string& fen, Position& p) {
     p.clear();
 
+	std::vector<std::string> fen_components = split(fen, " ");
+	std::string position = fen_components[0];
+	std::string side_to_play = fen_components[1];
+	std::string castling_rights = fen_components[2];
+	std::string ep_square = fen_components[3];
+
+	std::string half_move_clock = "0";
+	std::string full_move_clock = "1";
+
+	if (fen_components.size() > 5) {
+		half_move_clock = fen_components[4];
+		full_move_clock = fen_components[5];
+	}
+
+	int square = a8;
+	for (char ch : position) {
+		if (isdigit(ch)) square += (ch - '0') * EAST;
+		else if (ch == '/') square += 2 * SOUTH;
+		else p.put_piece(Piece(PIECE_STR.find(ch)), Square(square++));
+	}
+
+	p.side_to_play = side_to_play == "w" ? WHITE : BLACK;
+	p.history[p.game_ply].entry = ALL_CASTLING_MASK;
+
+	for (char token : castling_rights) {
+		switch (token) {
+			case 'K':
+				p.history[p.game_ply].entry &= ~WHITE_OO_MASK;
+				break;
+			case 'Q':
+				p.history[p.game_ply].entry &= ~WHITE_OOO_MASK;
+				break;
+			case 'k':
+				p.history[p.game_ply].entry &= ~BLACK_OO_MASK;
+				break;
+			case 'q':
+				p.history[p.game_ply].entry &= ~BLACK_OOO_MASK;
+				break;
+		}
+	}
+
+	if (ep_square != "-") {
+		p.history[p.game_ply].epsq = create_square(File(ep_square[0] - 'a'), Rank(ep_square[1] - '1'));
+	} else {
+		p.history[p.game_ply].epsq = NO_SQUARE;
+	}
+
+	p.half_move_clock = std::stoi(half_move_clock);
+	p.full_move_clock = std::stoi(full_move_clock);
+
+
+	/*
 	int square = a8;
 	for (char ch : fen.substr(0, fen.find(' '))) {
 		if (isdigit(ch))
@@ -108,6 +167,8 @@ void Position::set(const std::string& fen, Position& p) {
 			break;
 		}
 	}
+	 */
+	p.update_hash_board_features();
 }
 
 //Moves a piece to a (possibly empty) square on the board and updates the hash
@@ -127,6 +188,14 @@ void Position::move_piece_quiet(Square from, Square to) {
 	piece_bb[board[from]] ^= (SQUARE_BB[from] | SQUARE_BB[to]);
 	board[to] = board[from];
 	board[from] = NO_PIECE;
+}
+
+void Position::update_hash_board_features() {
+	hash ^= zobrist::zobrist_color_key;
+	hash ^= zobrist::zobrist_castling_rights_table[castling_state()];
+	int ep_file = NFILES;
+	if (ep_square() != NO_SQUARE) ep_file = file_of(ep_square());
+	hash ^= zobrist::zobrist_ep_file_table[ep_file];
 }
 
 void Position::clear() {

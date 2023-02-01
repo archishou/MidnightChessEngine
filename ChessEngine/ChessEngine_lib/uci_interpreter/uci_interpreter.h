@@ -67,7 +67,6 @@ Move uci_to_move(const std::string& moveStr, Position& position) {
 	return {move.from(), move.to(), QUIET};
 }
 
-
 void uci_create_position_from_moves(Position& board, const string& board_fen, const string& uci_move_string) {
 	Position::set(board_fen, board);
 	vector<string> uci_moves = split(uci_move_string, " ");
@@ -119,6 +118,9 @@ BestMoveSearchResults go(Position& board, BestMoveSearchParameters params) {
 }
 
 void uci_go(Position& board, ofstream& diagnostics_file, const string& input_line) {
+
+	auto t_start = std::chrono::high_resolution_clock::now();
+
 	BestMoveSearchResults results;
 	string move_time_s = split(input_line," ")[2];
 	int move_time = stoi(move_time_s);
@@ -126,9 +128,13 @@ void uci_go(Position& board, ofstream& diagnostics_file, const string& input_lin
 		.depth = MAX_DEPTH,
 		.time_limit = move_time,
 	};
-	if (board.turn() == BLACK) results = best_move<BLACK>(board, params);
-	else results = best_move<WHITE>(board, params);
+	results = best_move(board, params);
 	uci_go_diagnostics_output(board, results, diagnostics_file);
+
+	auto t_end = std::chrono::high_resolution_clock::now();
+	auto millis = std::chrono::duration<double, std::milli>(t_end-t_start).count();
+
+	std::cout << "OVERALL TIME: " << millis << std::endl;
 	cout << "info score cp " << results.value << endl;
 	cout << "bestmove " << results.best_move << endl;
 }
@@ -144,7 +150,7 @@ void read_uci(const string& diagnostics_file_path) {
 	diagnostics_file.open(diagnostics_file_path);
 
 	while (getline(cin, input_line)) {
-		//diagnostics_file << input_line << std::endl;
+		diagnostics_file << input_line << std::endl;
 		if (input_line == "uci") {
 			//diagnostics_file << "id name MidnightChessEngine" << std::endl;
 			//diagnostics_file << "id author Archishmaan Peyyety" << std::endl;

@@ -5,6 +5,7 @@
 #include "move_generation/position.h"
 #include "move_ordering.h"
 #include "pv_table.h"
+#include "clock.h"
 
 struct AlphaBetaData {
     Move best_move;
@@ -26,12 +27,6 @@ struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
 	.generate_quiet = false,
 };
 
-typedef std::chrono::time_point<std::chrono::system_clock> TimePoint;
-
-bool exceeded_time(TimePoint end_time) {
-	return std::chrono::system_clock::now() > end_time;
-}
-
 bool position_is_draw(Position &board) {
 	uint64_t current_hash = board.get_hash();
 	int count = 0;
@@ -43,7 +38,7 @@ bool position_is_draw(Position &board) {
 }
 
 template<Color color>
-int q_search(Position& board, int alpha, const int beta, AlphaBetaData& data, const TimePoint end_time, TranspositionTable& t_table, const int ply) {
+int q_search(Position& board, int alpha, const int beta, AlphaBetaData& data, const int time_limit, TranspositionTable& t_table, const int ply) {
 	data.seldepth = std::max(data.seldepth, ply);
 
 	const int stand_pat = evaluate<color>(board);
@@ -54,12 +49,12 @@ int q_search(Position& board, int alpha, const int beta, AlphaBetaData& data, co
 	ScoredMoves scored_moves = order_moves<color>(capture_moves, board, t_table);
 	for (const ScoredMove& scored_move : scored_moves) {
 		const Move legal_move = scored_move.move;
-		if (exceeded_time(end_time)) {
+		if (time_elapsed_exceeds(time_limit, Milliseconds)) {
 			data.search_completed = false;
 			return alpha;
 		}
 		board.play<color>(legal_move);
-		const int score = -q_search<~color>(board, -beta, -alpha, data, end_time, t_table, ply + 1);
+		const int score = -q_search<~color>(board, -beta, -alpha, data, time_limit, t_table, ply + 1);
 		board.undo<color>(legal_move);
 		data.q_nodes_searched += 1;
 		if (score >= beta) return beta;
@@ -69,7 +64,7 @@ int q_search(Position& board, int alpha, const int beta, AlphaBetaData& data, co
 }
 
 template<Color color>
-int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBetaData& data, const TimePoint end_time, TranspositionTable& t_table) {
+int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, AlphaBetaData& data, const int time_limit, TranspositionTable& t_table) {
 	int alpha_initial = alpha;
 	init_pv(data.pv, ply);
 
@@ -81,7 +76,7 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 	}
 
 	if (depth == 0) {
-		return q_search<color>(board, alpha, beta, data, end_time, t_table, ply);
+		return q_search<color>(board, alpha, beta, data, time_limit, t_table, ply);
 	}
 
 	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), depth, ply);
@@ -116,13 +111,15 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 	int value = NEG_INF_CHESS;
 	for (const ScoredMove scored_move : scored_moves) {
 		Move legal_move = scored_move.move;
-		if (exceeded_time(end_time)) {
+		if (time_elapsed_exceeds(time_limit, Milliseconds)) {
 			data.search_completed = false;
 			return value;
 		}
+		zobrist_hash initial_hash = board.get_hash();
 		board.play<color>(legal_move);
-		const int v = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, data, end_time, t_table);
+		const int v = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, data, time_limit, t_table);
 		board.undo<color>(legal_move);
+		assert(initial_hash == board.get_hash());
 		data.nodes_searched += 1;
 		if (v > value) best_move = legal_move;
 		if (v > alpha) {
@@ -135,7 +132,7 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 	}
 
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
-	t_table.put(board.get_hash(), depth, value, ply, best_move, /*"",/*board.fen(), */node_type);
+	t_table.put(board.get_hash(), depth, value, ply, best_move, node_type);
 
 	/*
 	if (ply != 0) {
@@ -154,7 +151,7 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 }
 
 template<Color color>
-AlphaBetaData alpha_beta_root(Position& board, int depth, TimePoint end_time, TranspositionTable& t_table) {
+AlphaBetaData alpha_beta_root(Position& board, short depth, int time_limit, TranspositionTable& t_table) {
 	AlphaBetaData data;
 	data.nodes_searched = 0;
 	data.q_nodes_searched = 0;
@@ -162,7 +159,7 @@ AlphaBetaData alpha_beta_root(Position& board, int depth, TimePoint end_time, Tr
 	data.seldepth = 0;
 	data.tt_key_collisions = 0;
 	data.nodes_in_transposition_table = 0;
-	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, data, end_time, t_table);
+	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, data, time_limit, t_table);
 	data.best_move = data.pv.table[0][0];
 	return data;
 }

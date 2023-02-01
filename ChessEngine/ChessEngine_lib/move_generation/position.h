@@ -32,10 +32,11 @@ public:
 
 namespace zobrist {
 	extern uint64_t zobrist_piece_table[NPIECES][NSQUARES];
-	extern uint64_t zobrist_side_to_play[NCOLORS]; // One for white one for black.
+	extern uint64_t zobrist_castling_rights_table[NCASTLING_RIGHTS];
+	extern uint64_t zobrist_ep_file_table[NFILES + 1];
+	extern uint64_t zobrist_color_key;
 	extern void initialise_zobrist_keys();
 }
-
 
 struct MoveGenerationOptions {
 	bool generate_captures;
@@ -142,13 +143,25 @@ public:
 	Position& operator=(const Position&) = delete;
 	inline bool operator==(const Position& other) const { return hash == other.hash; }
 
+	Bitboard castling_state() {
+		Bitboard entry = history[game_ply].entry;
+		int white_oo = !((bool) (entry & WHITE_OO_MASK)) << 3;
+		int white_ooo = !((bool) (entry & WHITE_OOO_MASK)) << 2;
+		int black_oo = !((bool) (entry & BLACK_OO_MASK)) << 1;
+		int black_ooo = !((bool) (entry & BLACK_OOO_MASK));
+		return white_ooo | black_oo | white_oo | black_ooo;
+	}
+
 	inline Bitboard bitboard_of(Piece pc) const { return piece_bb[pc]; }
 	inline Bitboard bitboard_of(Color c, PieceType pt) const { return piece_bb[make_piece(c, pt)]; }
 	inline Piece at(Square sq) const { return board[sq]; }
 	inline Color turn() const { return side_to_play; }
 	inline int ply() const { return game_ply; }
+
+	inline Square ep_square() const { return history[game_ply].epsq; }
+
+	void update_hash_board_features();
 	inline zobrist_hash get_hash() const { return hash; }
-	inline Square epsq() const { return history[game_ply].epsq; }
 
 	template<Color C> inline Bitboard diagonal_sliders() const;
 	template<Color C> inline Bitboard orthogonal_sliders() const;
@@ -299,7 +312,7 @@ void Position::play(const Move m) {
 		
 		break;
 	}
-	hash ^= zobrist::zobrist_side_to_play[side_to_play];
+	update_hash_board_features();
 	hash_history.push_back(hash);
 }
 
@@ -358,7 +371,7 @@ void Position::undo(const Move m) {
 	}
 	hash_history.pop_back();
 	side_to_play = ~side_to_play;
-	hash ^= zobrist::zobrist_side_to_play[side_to_play];
+	update_hash_board_features();
 	--game_ply;
 }
 
