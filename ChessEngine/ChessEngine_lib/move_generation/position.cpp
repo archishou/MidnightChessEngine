@@ -1,17 +1,21 @@
 #include "position.h"
 #include "tables.h"
+#include "helpers.h"
 #include <sstream>
 
 //Zobrist keys for each piece and each square
 //Used to incrementally update the hash key of a position
-uint64_t zobrist::zobrist_table[NPIECES][NSQUARES];
+uint64_t zobrist::zobrist_piece_table[NPIECES][NSQUARES];
+uint64_t zobrist::zobrist_side_to_play[NCOLORS];
 
 //Initializes the zobrist table with random 64-bit numbers
 void zobrist::initialise_zobrist_keys() {
 	PRNG rng(70026072);
 	for (int i = 0; i < NPIECES; i++)
 		for (int j = 0; j < NSQUARES; j++)
-			zobrist::zobrist_table[i][j] = rng.rand<uint64_t>();
+			zobrist::zobrist_piece_table[i][j] = rng.rand<uint64_t>();
+	zobrist::zobrist_side_to_play[WHITE] = rng.rand<uint64_t>();
+	zobrist::zobrist_side_to_play[BLACK] = zobrist_side_to_play[WHITE];
 }
 
 //Pretty-prints the position (including FEN and hash key)
@@ -60,8 +64,9 @@ std::string Position::fen() const {
 		<< (history[game_ply].entry & WHITE_OOO_MASK ? "" : "Q")
 		<< (history[game_ply].entry & BLACK_OO_MASK ? "" : "k")
 		<< (history[game_ply].entry & BLACK_OOO_MASK ? "" : "q")
-		<< (history[game_ply].entry & ALL_CASTLING_MASK ? "- " : "")
-		<< (history[game_ply].epsq == NO_SQUARE ? " -" : SQSTR[history[game_ply].epsq]);
+		<< (history[game_ply].entry & ALL_CASTLING_MASK ? "-" : "")
+		<< (history[game_ply].epsq == NO_SQUARE ? " -" : " " + std::string(SQSTR[history[game_ply].epsq]))
+		<< " 0 1";
 
 	return fen.str();
 }
@@ -107,8 +112,8 @@ void Position::set(const std::string& fen, Position& p) {
 
 //Moves a piece to a (possibly empty) square on the board and updates the hash
 void Position::move_piece(Square from, Square to) {
-	hash ^= zobrist::zobrist_table[board[from]][from] ^ zobrist::zobrist_table[board[from]][to]
-		^ zobrist::zobrist_table[board[to]][to];
+	hash ^= zobrist::zobrist_piece_table[board[from]][from] ^ zobrist::zobrist_piece_table[board[from]][to]
+			^ zobrist::zobrist_piece_table[board[to]][to];
 	Bitboard mask = SQUARE_BB[from] | SQUARE_BB[to];
 	piece_bb[board[from]] ^= mask;
 	piece_bb[board[to]] &= ~mask;
@@ -118,7 +123,7 @@ void Position::move_piece(Square from, Square to) {
 
 //Moves a piece to an empty square. Note that it is an error if the <to> square contains a piece
 void Position::move_piece_quiet(Square from, Square to) {
-	hash ^= zobrist::zobrist_table[board[from]][from] ^ zobrist::zobrist_table[board[from]][to];
+	hash ^= zobrist::zobrist_piece_table[board[from]][from] ^ zobrist::zobrist_piece_table[board[from]][to];
 	piece_bb[board[from]] ^= (SQUARE_BB[from] | SQUARE_BB[to]);
 	board[to] = board[from];
 	board[from] = NO_PIECE;
@@ -133,7 +138,6 @@ void Position::clear() {
 
     for (int i = 0; i < 15; i++) piece_bb[i] = 0;
     for (int i = 0; i < 64; i++) board[i] = NO_PIECE;
-	// TODO: possible mistake.
 	for (int i = 0; i < 300; i++) history[i] = UndoInfo();
 	hash_history.clear();
 }

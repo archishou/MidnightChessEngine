@@ -1,0 +1,202 @@
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100
+position startpos moves e2e4
+go movetime 100

@@ -1,0 +1,2 @@
+bestmove d1d2 (capture)
+bestmove a1a1

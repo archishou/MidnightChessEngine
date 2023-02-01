@@ -14,5 +14,5 @@ set(SOURCE_FILES
         move_generation/types.cpp
         move_generation/types.h
         evaluation/evaluate.h
-        evaluation/piece_square_tables.h move_search/transposition_table.h move_search/transposition_table.cpp move_search/pv_table.h move_search/types.h)
+        evaluation/piece_square_tables.h move_search/transposition_table.h move_search/transposition_table.cpp move_search/pv_table.h helpers.cpp helpers.h clock.cpp clock.h)
 add_library(ChessEngine_lib STATIC ${SOURCE_FILES})

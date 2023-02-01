@@ -28,8 +28,8 @@ struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
 
 typedef std::chrono::time_point<std::chrono::system_clock> TimePoint;
 
-bool exceeded_time(TimePoint endTime) {
-	return std::chrono::system_clock::now() > endTime;
+bool exceeded_time(TimePoint end_time) {
+	return std::chrono::system_clock::now() > end_time;
 }
 
 bool position_is_draw(Position &board) {
@@ -86,10 +86,11 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 
 	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), depth, ply);
 	if (probe_results.entry_found) {
+		/*
 		if (probe_results.entry.fen != board.fen()) {
-			//std::cout << board.fen() << probe_results.entry.fen << std::endl;
 			data.tt_key_collisions += 1;
 		}
+		 */
 		TranspositionTableEntry tt_entry = probe_results.entry;
 		if (tt_entry.node_type == EXACT) {
 			return tt_entry.value;
@@ -133,12 +134,10 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		if (alpha >= beta) break;
 	}
 
-	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, alpha, beta, value);
-	if (!t_table.key_in_table(board.get_hash())) {
-		data.nodes_in_transposition_table += 1;
-	}
-	t_table.put(board.get_hash(), depth, value, ply, best_move, board.fen(), node_type);
+	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
+	t_table.put(board.get_hash(), depth, value, ply, best_move, /*"",/*board.fen(), */node_type);
 
+	/*
 	if (ply != 0) {
 		TranspositionTableSearchResults table_search_results = t_table.probe_for_search(board.get_hash(), depth, ply);
 		assert(table_search_results.entry_found);
@@ -149,6 +148,7 @@ int alpha_beta(Position& board, int depth, int ply, int alpha, int beta, AlphaBe
 		assert(table_search_results.entry.best_move == best_move);
 		assert(table_search_results.entry.node_type == node_type);
 	}
+	 */
 
 	return value;
 }

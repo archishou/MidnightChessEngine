@@ -26,6 +26,7 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 '''
 
+
 # probe book move
 def probe_book(pgn):
     # open book file
@@ -97,7 +98,6 @@ def make_move():
             'best_move': book_response,
         }
 
-
     # read game moves from PGN
     game = chess.pgn.read_game(io.StringIO(pgn))
 
@@ -110,10 +110,12 @@ def make_move():
         board.push(move)
 
     # create chess engine instance
-    engine_location = '/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests' \
-                      '/cutechess_tests/latest_master/master'
-    engine = chess.engine.SimpleEngine.popen_uci(engine_location)
-    result = engine.play(board, chess.engine.Limit(time=1))
+    engine_master = '/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests' \
+                    '/cutechess_tests/latest_master/master'
+    engine_testing = '/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug' \
+                     '/ChessEngine_run'
+    engine = chess.engine.SimpleEngine.popen_uci(engine_testing)
+    result = engine.play(board, chess.engine.Limit(time=0.1))
     best_move = result.move
     board.push(result.move)
     # terminate engine process

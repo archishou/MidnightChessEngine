@@ -7,6 +7,7 @@
 #include "move_generation/position.h"
 #include "move_generation/types.h"
 #include "move_search/search.h"
+#include "helpers.h"
 
 using namespace std;
 
@@ -66,20 +67,6 @@ Move uci_to_move(const std::string& moveStr, Position& position) {
 	return {move.from(), move.to(), QUIET};
 }
 
-vector<string> split(const string& s, const string& delimiter) {
-	size_t pos_start = 0, pos_end, delim_len = delimiter.length();
-	string token;
-	vector<string> res;
-
-	while ((pos_end = s.find (delimiter, pos_start)) != string::npos) {
-		token = s.substr (pos_start, pos_end - pos_start);
-		pos_start = pos_end + delim_len;
-		res.push_back (token);
-	}
-
-	res.push_back (s.substr (pos_start));
-	return res;
-}
 
 void uci_create_position_from_moves(Position& board, const string& board_fen, const string& uci_move_string) {
 	Position::set(board_fen, board);
@@ -112,7 +99,7 @@ void uci_position(Position& board, const string& input_line) {
 }
 
 void uci_go_diagnostics_output(Position& board, BestMoveSearchResults& results, ofstream& diagnostics_file)  {
-	//diagnostics_file << "bestmove " << results.best_move << endl;
+	diagnostics_file << "bestmove " << results.best_move << endl;
 
 	/*
 	//diagnostics_file << "Position FEN : " << board.fen() << std::endl;

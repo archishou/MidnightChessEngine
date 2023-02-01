@@ -46,34 +46,21 @@ uint64_t TranspositionTable::get_index(uint64_t zobrist_hash) {
 }
 
 TranspositionTableEntryNodeType
-TranspositionTable::get_node_type(const int &alpha_initial, const int &alpha, const int &beta, const int &value) {
+TranspositionTable::get_node_type(const int &alpha_initial, const int &beta, const int &value) {
 	TranspositionTableEntryNodeType node_type;
-	if (value >= beta) {
-		node_type = LOWER_NODE;
-	} else {
-		if (alpha != alpha_initial) {
-			node_type = EXACT;
-		} else {
-			node_type = UPPER_NODE;
-		}
-	}
-	return node_type;
-	/*
 	if (value <= alpha_initial) node_type = UPPER_NODE;
 	else if (value >= beta) node_type = LOWER_NODE;
 	else node_type = EXACT;
 	return node_type;
-	 */
 }
 
-void TranspositionTable::put(zobrist_hash hash, int depth, int score, int ply, Move best_move, const std::string fen, TranspositionTableEntryNodeType node_type) {
+void TranspositionTable::put(zobrist_hash hash, int depth, int score, int ply, Move best_move, TranspositionTableEntryNodeType node_type) {
 	TranspositionTableEntry entry;
 	entry.zobrist_hash = hash;
 	entry.depth = depth;
 	entry.value = correct_mate_for_storage(score, ply);
 	entry.node_type = node_type;
 	entry.best_move = best_move;
-	entry.fen = fen;
 	transposition_table[get_index(hash)] = entry;
 }
 

@@ -31,7 +31,8 @@ public:
 
 
 namespace zobrist {
-	extern uint64_t zobrist_table[NPIECES][NSQUARES];
+	extern uint64_t zobrist_piece_table[NPIECES][NSQUARES];
+	extern uint64_t zobrist_side_to_play[NCOLORS]; // One for white one for black.
 	extern void initialise_zobrist_keys();
 }
 
@@ -76,6 +77,9 @@ private:
 	
 	//The current game ply (depth), incremented after each move 
 	int game_ply;
+
+	int half_move_clock;
+	int full_move_clock;
 	
 	//The zobrist hash of the position, which can be incrementally updated and rolled back after each
 	//make/unmake
@@ -101,7 +105,7 @@ public:
 
 	std::vector<zobrist_hash> hash_history;
 
-	Position() : piece_bb{ 0 }, side_to_play(WHITE), game_ply(0), board{}, 
+	Position() : piece_bb{ 0 }, side_to_play(WHITE), game_ply(0), half_move_clock(0), full_move_clock(0), board{},
 		hash(0), pinned(0), checkers(0) {
 
 		//Sets all squares on the board as empty
@@ -118,12 +122,12 @@ public:
 	inline void put_piece(Piece pc, Square s) {
 		board[s] = pc;
 		piece_bb[pc] |= SQUARE_BB[s];
-		hash ^= zobrist::zobrist_table[pc][s];
+		hash ^= zobrist::zobrist_piece_table[pc][s];
 	}
 
 	//Removes a piece from a particular square and updates the hash. 
 	inline void remove_piece(Square s) {
-		hash ^= zobrist::zobrist_table[board[s]][s];
+		hash ^= zobrist::zobrist_piece_table[board[s]][s];
 		piece_bb[board[s]] &= ~SQUARE_BB[s];
 		board[s] = NO_PIECE;
 	}
@@ -144,12 +148,14 @@ public:
 	inline Color turn() const { return side_to_play; }
 	inline int ply() const { return game_ply; }
 	inline zobrist_hash get_hash() const { return hash; }
+	inline Square epsq() const { return history[game_ply].epsq; }
 
 	template<Color C> inline Bitboard diagonal_sliders() const;
 	template<Color C> inline Bitboard orthogonal_sliders() const;
 	template<Color C> inline Bitboard all_pieces() const;
 	template<Color C> inline Bitboard attackers_from(Square s, Bitboard occ) const;
 
+	// TODO: FIX????
 	template<Color C> inline bool in_check() const {
 		return attackers_from<~C>(bsf(bitboard_of(C, KING)), all_pieces<WHITE>() | all_pieces<BLACK>());
 	}
@@ -293,6 +299,7 @@ void Position::play(const Move m) {
 		
 		break;
 	}
+	hash ^= zobrist::zobrist_side_to_play[side_to_play];
 	hash_history.push_back(hash);
 }
 
@@ -351,6 +358,7 @@ void Position::undo(const Move m) {
 	}
 	hash_history.pop_back();
 	side_to_play = ~side_to_play;
+	hash ^= zobrist::zobrist_side_to_play[side_to_play];
 	--game_ply;
 }
 
