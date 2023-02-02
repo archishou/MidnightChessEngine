@@ -3,6 +3,8 @@
   - AlphaBeta pruning
   - Move ordering: MVV-LVA, opponent pawn control, promotions
   - Evaluation: Material, PSTQ, Mopup for endgame
+- Midnight Rating + 170.7
+  - Added transposition table.
 
 # File structure
 
@@ -13,9 +15,7 @@
 
 # Todo 
 
-- Zobrist hash side to move, castling, en passant
 - Restructure and implement time control in UCI Protocol
-- Remove search.h versus id.h unneeded complication doesn't improve anything.
 - (Medium Importance) extern in types.h needed?
 - (Medium Importance) Try to use something other than std::vector or at least pre-define memory requirements so we don't resize array every time.
 - Implement Kind end game pstq
