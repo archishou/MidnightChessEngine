@@ -8,6 +8,7 @@
 
 #include "move_generation/position.h"
 #include "alphabeta.h"
+#include "constants.h"
 
 typedef Move Line[MAX_DEPTH];
 const int LINE_SIZE = MAX_DEPTH;
@@ -58,7 +59,7 @@ std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results)
 	return os;
 }
 
-void update_best_move_results(BestMoveSearchResults& search_results, AlphaBetaData& ab_results, int sub_depth) {
+void update_best_move_results(BestMoveSearchResults& search_results, AlphaBetaData& ab_results, int sub_depth, bool debug) {
 	search_results.value = ab_results.value;
 	search_results.best_move = ab_results.best_move;
 	search_results.depth_searched = sub_depth;
@@ -67,8 +68,13 @@ void update_best_move_results(BestMoveSearchResults& search_results, AlphaBetaDa
 	search_results.seldepth = ab_results.seldepth;
 	search_results.tt_key_collisions = ab_results.tt_key_collisions;
 	search_results.nodes_in_transposition_table = ab_results.nodes_in_transposition_table;
+	search_results.time_searched = get_elapsed_time(Milliseconds);
 	for (int i = 0; i < ab_results.pv.length[0]; i++) {
 		search_results.pv[i] = ab_results.pv.table[0][i];
+	}
+	if (debug) {
+		std::cout << "info depth " << sub_depth << " score cp " << search_results.value << " time " <<
+		search_results.time_searched << " nodes " << search_results.nodes_searched << " pv " << search_results.pv << std::endl;
 	}
 }
 
@@ -79,7 +85,7 @@ BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short
 	reset_clock();
 	TranspositionTable t_table = TranspositionTable();
 	if (debug) {
-		std::cout << "Time to initialize transposition table: " << get_elapsed_time(Milliseconds) << std::endl;
+		std::cout << UCI_DEBUG_STRING << "Time to initialize transposition table: " << get_elapsed_time(Milliseconds) << std::endl;
 	}
 	reset_clock();
 
@@ -89,7 +95,7 @@ BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short
 		}
 		struct AlphaBetaData ab_results = alpha_beta_root<color>(board, sub_depth, time_limit, t_table);
 		if (ab_results.search_completed) {
-			update_best_move_results(search_results, ab_results, sub_depth);
+			update_best_move_results(search_results, ab_results, sub_depth, debug);
 		}
 	}
 
