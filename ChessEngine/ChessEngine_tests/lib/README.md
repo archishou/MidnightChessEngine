@@ -100,10 +100,10 @@ runs tests from your binary in parallel to provide significant speed-up.
 
 [GoogleTest Adapter](https://marketplace.visualstudio.com/items?itemName=DavidSchuldenfrei.gtest-adapter)
 is a VS Code extension allowing to view Google Tests in a tree view, and
-run/debug your tests.
+run/debug_diagnostics_file your tests.
 
 [C++ TestMate](https://github.com/matepek/vscode-catch2-test-adapter) is a VS
-Code extension allowing to view Google Tests in a tree view, and run/debug your
+Code extension allowing to view Google Tests in a tree view, and run/debug_diagnostics_file your
 tests.
 
 [Cornichon](https://pypi.org/project/cornichon/) is a small Gherkin DSL parser

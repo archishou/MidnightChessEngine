@@ -1511,7 +1511,7 @@ them, only to see them broken again the next time the implementation is changed.
 Keep in mind that one doesn't have to verify more than one property in one test.
 In fact, **it's a good style to verify only one thing in one test.** If you do
 that, a bug will likely break only one or two tests instead of dozens (which
-case would you rather debug?). If you are also in the habit of giving tests
+case would you rather debug_diagnostics_file?). If you are also in the habit of giving tests
 descriptive names that tell what they verify, you can often easily guess what's
 wrong just from the test log itself.
 
@@ -2700,7 +2700,7 @@ safely exit.
 
 Note: this example has a downside: namely, if the expectation is not satisfied,
 our test will run forever. It will eventually time-out and fail, but it will
-take longer and be slightly harder to debug. To alleviate this problem, you can
+take longer and be slightly harder to debug_diagnostics_file. To alleviate this problem, you can
 use `WaitForNotificationWithTimeout(ms)` instead of `WaitForNotification()`.
 
 ## Misc Recipes on Using gMock
@@ -4197,7 +4197,7 @@ class MockFoo : public Foo {
 ### Teaching gMock How to Print Your Values
 
 When an uninteresting or unexpected call occurs, gMock prints the argument
-values and the stack trace to help you debug. Assertion macros like
+values and the stack trace to help you debug_diagnostics_file. Assertion macros like
 `EXPECT_THAT` and `EXPECT_EQ` also print the values in question when the
 assertion fails. gMock and googletest do this using googletest's user-extensible
 value printer.

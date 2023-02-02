@@ -1000,7 +1000,7 @@ inline void FlushInfoLog() { fflush(nullptr); }
 //    it prints message about the condition violation, including the
 //    condition itself, plus additional message streamed into it, if any,
 //    and then it aborts the program. It aborts the program irrespective of
-//    whether it is built in the debug mode or not.
+//    whether it is built in the debug_diagnostics_file mode or not.
 # define GTEST_CHECK_(condition) \
     GTEST_AMBIGUOUS_ELSE_BLOCKER_ \
     if (::testing::internal::IsTrue(condition)) \
@@ -1068,10 +1068,10 @@ inline To ImplicitCast_(To x) { return x; }
 // type Foo to type SubclassOfFoo), static_cast<> isn't safe, because
 // how do you know the pointer is really of type SubclassOfFoo?  It
 // could be a bare Foo, or of type DifferentSubclassOfFoo.  Thus,
-// when you downcast, you should use this macro.  In debug mode, we
+// when you downcast, you should use this macro.  In debug_diagnostics_file mode, we
 // use dynamic_cast<> to double-check the downcast is legal (we die
 // if it's not).  In normal mode, we do the efficient static_cast<>
-// instead.  Thus, it's important to test in debug mode to make sure
+// instead.  Thus, it's important to test in debug_diagnostics_file mode to make sure
 // the cast is legal!
 //    This is the only place in the code we should use dynamic_cast<>.
 // In particular, you SHOULDN'T be using dynamic_cast<> in order to
@@ -1097,7 +1097,7 @@ inline To DownCast_(From* f) {  // so we only accept pointers
   }
 
 #if GTEST_HAS_RTTI
-  // RTTI: debug mode only!
+  // RTTI: debug_diagnostics_file mode only!
   GTEST_CHECK_(f == nullptr || dynamic_cast<To>(f) != nullptr);
 #endif
   return static_cast<To>(f);

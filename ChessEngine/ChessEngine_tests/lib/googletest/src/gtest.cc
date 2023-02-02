@@ -5210,7 +5210,7 @@ void UnitTest::AddTestPartResult(
 #if GTEST_HAS_EXCEPTIONS
       throw internal::GoogleTestFailureException(result);
 #else
-      // We cannot call abort() as it generates a pop-up in debug mode
+      // We cannot call abort() as it generates a pop-up in debug_diagnostics_file mode
       // that cannot be suppressed in VC 7.1 or below.
       exit(1);
 #endif
@@ -5287,8 +5287,8 @@ int UnitTest::Run() {
 # endif
 
 # if defined(_MSC_VER) && !GTEST_OS_WINDOWS_MOBILE
-    // In the debug version, Visual Studio pops up a separate dialog
-    // offering a choice to debug the aborted program. We need to suppress
+    // In the debug_diagnostics_file version, Visual Studio pops up a separate dialog
+    // offering a choice to debug_diagnostics_file the aborted program. We need to suppress
     // this dialog or it will pop up for every EXPECT/ASSERT_DEATH statement
     // executed. Google Test will notify the user of any unexpected
     // failure via stderr.
@@ -5297,7 +5297,7 @@ int UnitTest::Run() {
           0x0,                                    // Clear the following flags:
           _WRITE_ABORT_MSG | _CALL_REPORTFAULT);  // pop-up window, core dump.
 
-    // In debug mode, the Windows CRT can crash with an assertion over invalid
+    // In debug_diagnostics_file mode, the Windows CRT can crash with an assertion over invalid
     // input (e.g. passing an invalid file descriptor).  The default handling
     // for these assertions is to pop up a dialog and wait for user input.
     // Instead ask the CRT to dump such assertions to stderr non-interactively.

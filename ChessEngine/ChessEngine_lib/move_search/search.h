@@ -101,7 +101,7 @@ BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short
 
 template<Color color>
 BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters& parameters) {
-	return iterative_deepening<color>(board, parameters.time_limit, parameters.depth, parameters.debug);
+	return iterative_deepening<color>(board, parameters.time_limit, parameters.depth, parameters.debug_info);
 }
 
 template<Color color>

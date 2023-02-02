@@ -1,79 +1,92 @@
 //
 // Created by Archishmaan Peyyety on 1/9/23.
 //
-#include <algorithm>
-#include <iostream>
-#include "move_generation/tables.h"
-#include "move_generation/position.h"
-#include "move_generation/types.h"
 #include "move_search/search.h"
+#include "parse_uci_move.h"
 #include "helpers.h"
 #include "constants.h"
+#include "sstream"
 
 using namespace std;
+
+struct ReadUCIParameters {
+	std::string diagnostic_file_path;
+	std::string uci_file_input_path;
+	std::string uci_file_output_path;
+	bool read_from_file = false;
+	bool output_diagnostic_file = false;
+};
+
+struct UCIStreams {
+	std::ifstream input_file;
+	ofstream diagnostics_file;
+	ofstream output_file;
+};
+
+enum OutputLocations {
+	UCIOutputFile,
+	DiagnosticFile,
+	StdOut,
+};
+
+bool using_diagnostic_file(ReadUCIParameters& parameters) {
+	return !parameters.diagnostic_file_path.empty() && parameters.output_diagnostic_file;
+}
+
+bool using_file_io(ReadUCIParameters& parameters) {
+	return (!parameters.uci_file_input_path.empty() && !parameters.uci_file_output_path.empty()
+		&& parameters.read_from_file);
+}
+
+void initialize_uci_streams(UCIStreams& streams, ReadUCIParameters& parameters) {
+	if (using_diagnostic_file(parameters)) {
+		streams.diagnostics_file.open(parameters.diagnostic_file_path);
+	}
+	if (using_file_io(parameters)) {
+		streams.input_file = std::ifstream(parameters.uci_file_input_path);
+		streams.output_file.open(parameters.uci_file_output_path);
+	}
+}
+
+void close_streams(UCIStreams& streams, ReadUCIParameters& parameters) {
+	if (using_diagnostic_file(parameters)) {
+		streams.diagnostics_file.close();
+		streams.diagnostics_file.open(parameters.diagnostic_file_path);
+	}
+	if (using_file_io(parameters)) {
+		streams.input_file.close();
+		streams.output_file.close();
+	}
+}
+
+bool get_input(std::string &input_line, UCIStreams &streams, ReadUCIParameters &parameters) {
+	if (using_file_io(parameters)) {
+		if (std::getline(streams.input_file, input_line)) return true;
+	} else {
+		if (std::getline(cin, input_line)) return true;
+	}
+	return false;
+}
+
+void send_output(const std::string& message, UCIStreams& streams, ReadUCIParameters& parameters, bool send_to_std) {
+	if (send_to_std) std::cout << message << std::endl;
+	if (using_diagnostic_file(parameters)) {
+		streams.diagnostics_file << message << std::endl;
+	}
+	if (using_file_io(parameters)) {
+		streams.output_file << message << std::endl;
+	}
+}
+
+
+void send_output(const std::string& message, UCIStreams& streams, ReadUCIParameters& parameters) {
+	send_output(message, streams, parameters, true);
+}
 
 void initialize_uci(Position& p) {
 	initialise_all_databases();
 	zobrist::initialise_zobrist_keys();
 	Position::set(INITIAL_BOARD_FEN, p);
-}
-
-char promotion_character(std::string uci_move) {
-	char promotion_piece = uci_move.at(4);
-	char lower_case = std::tolower(promotion_piece, std::locale());
-	return lower_case;
-}
-
-Move uci_to_move(const std::string& moveStr, Position& position) {
-	Move move = Move(moveStr.substr(0, 4));
-	// Pawn Promotion
-	if (moveStr.size() == 5) {
-		// Quiet Promotion
-		char p_char = promotion_character(moveStr);
-		if (position.at(move.to()) == NO_PIECE) {
-			if (p_char == 'q') return Move(move.from(), move.to(), PR_QUEEN);
-			if (p_char == 'b') return Move(move.from(), move.to(), PR_BISHOP);
-			if (p_char == 'n') return Move(move.from(), move.to(), PR_KNIGHT);
-			if (p_char == 'r') return Move(move.from(), move.to(), PR_ROOK);
-		}
-		if (p_char == 'q') return Move(move.from(), move.to(), PC_QUEEN);
-		if (p_char == 'b') return Move(move.from(), move.to(), PC_BISHOP);
-		if (p_char == 'n') return Move(move.from(), move.to(), PC_KNIGHT);
-		if (p_char == 'r') return Move(move.from(), move.to(), PC_ROOK);
-	}
-
-	// En Passant
-	if (position.at(move.to()) == NO_PIECE && type_of(position.at(move.from())) == PAWN &&
-		file_of(move.to()) != file_of(move.from())) {
-		return Move(move.from(), move.to(), EN_PASSANT);
-	}
-
-	if (type_of(position.at(move.from())) == PAWN && rank_of(move.to()) - rank_of(move.from()) == 2) {
-		return Move(move.from(), move.to(), DOUBLE_PUSH);
-	}
-
-	// Castle
-	if (type_of(position.at(move.from())) == KING) {
-		if (moveStr == "e1g1" || moveStr == "e8g8") return Move(move.from(), move.to(), OO);
-		if (moveStr == "e1c1" || moveStr == "e8c8") return Move(move.from(), move.to(), OOO);
-	}
-
-	// Capture
-	if (position.at(move.to()) != NO_PIECE) {
-		return Move(move.from(), move.to(), CAPTURE);
-	}
-
-	return {move.from(), move.to(), QUIET};
-}
-
-void uci_update_position_from_moves(Position& board, const string& uci_move_string) {
-	vector<string> uci_moves = split(uci_move_string, " ");
-	for (const std::string& uci_move : uci_moves) {
-		if (uci_move.empty()) return;
-		Move nextMove = uci_to_move(uci_move, board);
-		if (board.turn() == BLACK) board.play<BLACK>(nextMove);
-		else board.play<WHITE>(nextMove);
-	}
 }
 
 void uci_position(Position& board, const string& input_line) {
@@ -98,23 +111,7 @@ void uci_position(Position& board, const string& input_line) {
 	}
 }
 
-void uci_go_diagnostics_output(Position& board, BestMoveSearchResults& results, ofstream& diagnostics_file)  {
-	diagnostics_file << "bestmove " << results.best_move << endl;
-
-	/*
-	//diagnostics_file << "Position FEN : " << board.fen() << std::endl;
-	//diagnostics_file << "Predicted Best Move: " << results.best_move << std::endl;
-	//diagnostics_file << "Principal Variation " << results.pv << ":" << std::endl;
-	//diagnostics_file << "Depth Searched: " << results.depth_searched << std::endl;
-	//diagnostics_file << "Time Searched: " << results.time_searched << std::endl;
-	//diagnostics_file << "Nodes Searched: " << results.nodes_searched << std::endl;
-	//diagnostics_file << "NPS: " << results.nodes_per_second << std::endl;
-	 */
-	////diagnostics_file << "Value: " << results.value << std::endl;
-}
-
-void uci_go(Position& board, ofstream& diagnostics_file, const string& input_line) {
-
+void uci_go(Position& board, const string& input_line, UCIStreams& streams, ReadUCIParameters& parameters) {
 	auto t_start = std::chrono::high_resolution_clock::now();
 
 	BestMoveSearchResults results;
@@ -123,83 +120,41 @@ void uci_go(Position& board, ofstream& diagnostics_file, const string& input_lin
 	const BestMoveSearchParameters params = BestMoveSearchParameters {
 		.depth = MAX_DEPTH,
 		.time_limit = move_time,
+		.debug_info = parameters.output_diagnostic_file
 	};
 	results = best_move(board, params);
-	uci_go_diagnostics_output(board, results, diagnostics_file);
-
-	auto t_end = std::chrono::high_resolution_clock::now();
-	auto millis = std::chrono::duration<double, std::milli>(t_end-t_start).count();
-
-	std::cout << "OVERALL TIME: " << millis << std::endl;
-	cout << "info score cp " << results.value << endl;
-	cout << "bestmove " << results.best_move << endl;
+	std::cout << "bestmove " << results.best_move << std::endl;
 }
 
-void read_uci(const string& diagnostics_file_path) {
+void read_uci(ReadUCIParameters& parameters) {
 	Position board;
+	UCIStreams streams;
+
+	initialize_uci_streams(streams, parameters);
 	initialize_uci(board);
 
 	string input_line; //to read the command given by the GUI
 
 	cout.setf(ios::unitbuf);// Make sure that the outputs are sent straight away to the GUI
-	ofstream diagnostics_file;
-	diagnostics_file.open(diagnostics_file_path);
 
-	while (getline(cin, input_line)) {
-		diagnostics_file << input_line << std::endl;
+	while (get_input(input_line, streams, parameters)) {
+		send_output(input_line, streams, parameters, false);
 		if (input_line == "uci") {
-			//diagnostics_file << "id name MidnightChessEngine" << std::endl;
-			//diagnostics_file << "id author Archishmaan Peyyety" << std::endl;
-			//diagnostics_file << "uciok" << std::endl;
-			cout << "id name MidnightChessEngine" << endl;
-			cout << "id author Archishmaan Peyyety" << endl;
-			cout << "uciok" << endl;
+			send_output("id name Midnight", streams, parameters);
+			send_output("id author Archishmaan Peyyety", streams, parameters);
+			send_output("uciok", streams, parameters);
 		} else if (input_line == "quit") {
-			//diagnostics_file << "Bye Bye" << std::endl;
-			cout << "Bye Bye" << endl;
+			send_output("Bye Bye", streams, parameters);
 			break;
 		} else if (input_line == "isready") {
-			//diagnostics_file << "readyok" << std::endl;
-			cout << "readyok" << endl;
+			send_output("readyok", streams, parameters);
 		} else if (input_line == "ucinewgame") {}
 		if (input_line.substr(0, 8) == "position") {
 			uci_position(board, input_line);
 		} else if (input_line == "stop") {
 		} else if (input_line.substr(0, 2 ) == "go") {
-			uci_go(board, diagnostics_file, input_line);
+			uci_go(board, input_line, streams, parameters);
 		}
 	}
-	diagnostics_file.close();
-}
-
-void read_uci_from_file(const string& input_file_path, const string& output_file_path) {
-	Position board;
-	initialize_uci(board);
-
-	std::ifstream input_file(input_file_path);
-	std::string input_line;
-
-	ofstream output_file;
-	output_file.open(output_file_path);
-
-	while (std::getline(input_file, input_line)) {
-		output_file << input_line << std::endl;
-		if (input_line == "uci") {
-			output_file << "id name MidnightChessEngine" << endl;
-			output_file << "id author Archishmaan Peyyety" << endl;
-			output_file << "uciok" << endl;
-		} else if (input_line == "quit") {
-			output_file << "Bye Bye" << endl;
-			break;
-		} else if (input_line == "isready") {
-			output_file << "readyok" << endl;
-		} else if (input_line == "ucinewgame") {}
-		if (input_line.substr(0, 8) == "position") {
-			uci_position(board, input_line);
-		} else if (input_line == "stop") {
-		} else if (input_line.substr(0, 2 ) == "go") {
-			uci_go(board, output_file, input_line);
-		}
-	}
-	input_file.close();
+	close_streams(streams, parameters);
 }

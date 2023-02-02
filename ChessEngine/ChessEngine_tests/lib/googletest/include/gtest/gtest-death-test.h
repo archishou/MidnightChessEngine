@@ -210,10 +210,10 @@ class GTEST_API_ KilledBySignal {
 };
 # endif  // !GTEST_OS_WINDOWS
 
-// EXPECT_DEBUG_DEATH asserts that the given statements die in debug mode.
+// EXPECT_DEBUG_DEATH asserts that the given statements die in debug_diagnostics_file mode.
 // The death testing framework causes this to have interesting semantics,
 // since the sideeffects of the call are only visible in opt mode, and not
-// in debug mode.
+// in debug_diagnostics_file mode.
 //
 // In practice, this can be used to test functions that utilize the
 // LOG(DFATAL) macro using the following style:
@@ -240,7 +240,7 @@ class GTEST_API_ KilledBySignal {
 // #endif
 // }
 //
-// This will assert that DieInDebugReturn12InOpt() crashes in debug
+// This will assert that DieInDebugReturn12InOpt() crashes in debug_diagnostics_file
 // mode, usually due to a DCHECK or LOG(DFATAL), but returns the
 // appropriate fallback value (12 in this case) in opt mode. If you
 // need to test that a function has appropriate side-effects in opt
@@ -249,7 +249,7 @@ class GTEST_API_ KilledBySignal {
 //
 // EXPECT_DEBUG_DEATH({
 //   // Side-effects here will have an effect after this statement in
-//   // opt mode, but none in debug mode.
+//   // opt mode, but none in debug_diagnostics_file mode.
 //   EXPECT_EQ(12, DieInDebugOr12(&sideeffect));
 // }, "death");
 //

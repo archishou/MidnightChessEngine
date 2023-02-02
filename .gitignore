@@ -1,4 +1,4 @@
 /.idea
 
-cmake-build-debug/
+cmake-build-debug_diagnostics_file/
 .DS_Store

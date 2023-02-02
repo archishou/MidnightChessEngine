@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libChessEngine_lib.a CMakeFiles/ChessEngine_lib.dir/move_generation/position.cpp.o CMakeFiles/ChessEngine_lib.dir/move_generation/tables.cpp.o CMakeFiles/ChessEngine_lib.dir/move_generation/types.cpp.o CMakeFiles/ChessEngine_lib.dir/move_search/transposition_table.cpp.o CMakeFiles/ChessEngine_lib.dir/helpers.cpp.o CMakeFiles/ChessEngine_lib.dir/clock.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libChessEngine_lib.a

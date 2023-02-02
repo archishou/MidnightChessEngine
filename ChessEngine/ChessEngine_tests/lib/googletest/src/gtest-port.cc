@@ -385,7 +385,7 @@ namespace {
 #ifdef _MSC_VER
 // Use the RAII idiom to flag mem allocs that are intentionally never
 // deallocated. The motivation is to silence the false positive mem leaks
-// that are reported by the debug version of MS's CRT which can only detect
+// that are reported by the debug_diagnostics_file version of MS's CRT which can only detect
 // if an alloc is missing a matching deallocation.
 // Example:
 //    MemoryIsNotDeallocated memory_is_not_deallocated;
@@ -396,7 +396,7 @@ class MemoryIsNotDeallocated
  public:
   MemoryIsNotDeallocated() : old_crtdbg_flag_(0) {
     old_crtdbg_flag_ = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
-    // Set heap allocation block type to _IGNORE_BLOCK so that MS debug CRT
+    // Set heap allocation block type to _IGNORE_BLOCK so that MS debug_diagnostics_file CRT
     // doesn't report mem leak if there's no matching deallocation.
     _CrtSetDbgFlag(old_crtdbg_flag_ & ~_CRTDBG_ALLOC_MEM_DF);
   }

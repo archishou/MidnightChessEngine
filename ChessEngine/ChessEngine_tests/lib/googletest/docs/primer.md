@@ -11,7 +11,7 @@ supports *any* kind of tests, not just unit tests.
 
 So what makes a good test, and how does googletest fit in? We believe:
 
-1.  Tests should be *independent* and *repeatable*. It's a pain to debug a test
+1.  Tests should be *independent* and *repeatable*. It's a pain to debug_diagnostics_file a test
     that succeeds or fails as a result of other tests. googletest isolates the
     tests by running each of them on a different object. When a test fails,
     googletest allows you to run it in isolation for quick debugging.

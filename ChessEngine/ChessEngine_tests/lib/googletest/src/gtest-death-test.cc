@@ -520,7 +520,7 @@ void DeathTestImpl::Abort(AbortReason reason) {
   // when built as Windows DLL), destructors of global objects will still
   // run after calling _exit(). On such systems, write_fd_ will be
   // indirectly closed from the destructor of UnitTestImpl, causing double
-  // close if it is also closed here. On debug configurations, double close
+  // close if it is also closed here. On debug_diagnostics_file configurations, double close
   // may assert. As there are no in-process buffers to flush here, we are
   // relying on the OS to close the descriptor after the process terminates
   // when the destructors are not run.

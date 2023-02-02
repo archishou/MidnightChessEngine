@@ -50,7 +50,7 @@ This is done by making the GoogleTest source code available to the main build
 and adding it using CMake's `add_subdirectory()` command. This has the
 significant advantage that the same compiler and linker settings are used
 between gtest and the rest of your project, so issues associated with using
-incompatible libraries (eg debug/release), etc. are avoided. This is
+incompatible libraries (eg debug_diagnostics_file/release), etc. are avoided. This is
 particularly useful on Windows. Making GoogleTest's source code available to the
 main build can be done a few different ways:
 

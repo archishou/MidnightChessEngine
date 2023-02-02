@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="gtest"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\ChessEngine_lib\;CMake Files\ChessEngine_tests\;CMake Files\ChessEngine_tests\lib\;CMake Files\ChessEngine_tests\lib\googlemock\;CMake Files\ChessEngine_tests\lib\googlemock\cmake\;CMake Files\ChessEngine_tests\lib\googletest\;CMake Files\ChessEngine_tests\lib\googletest\cmake\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest">
+				<Option output="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_lib"/>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest/include"/>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 gtest"/>
+					<CompileFile command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest/fast">
+				<Option output="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/lib/libgtestd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_lib"/>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest/include"/>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 gtest/fast"/>
+					<CompileFile command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main">
+				<Option output="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_lib"/>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest/include"/>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 gtest_main"/>
+					<CompileFile command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main/fast">
+				<Option output="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/lib/libgtest_maind.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_lib"/>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest/include"/>
+					<Add directory="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 gtest_main/fast"/>
+					<CompileFile command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j10 -f &quot;/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_tests/lib/googletest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest/src/gtest-all.cc">
+			<Option target="gtest"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest/src/gtest_main.cc">
+			<Option target="gtest_main"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_lib/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ChessEngine_lib\"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ChessEngine_tests\"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ChessEngine_tests\lib\"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googlemock/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ChessEngine_tests\lib\googlemock\"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googlemock/cmake/gmock.pc.in">
+			<Option virtualFolder="CMake Files\ChessEngine_tests\lib\googlemock\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googlemock/cmake/gmock_main.pc.in">
+			<Option virtualFolder="CMake Files\ChessEngine_tests\lib\googlemock\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ChessEngine_tests\lib\googletest\"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest/cmake/Config.cmake.in">
+			<Option virtualFolder="CMake Files\ChessEngine_tests\lib\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest/cmake/gtest.pc.in">
+			<Option virtualFolder="CMake Files\ChessEngine_tests\lib\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest/cmake/gtest_main.pc.in">
+			<Option virtualFolder="CMake Files\ChessEngine_tests\lib\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests/lib/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\ChessEngine_tests\lib\googletest\cmake\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

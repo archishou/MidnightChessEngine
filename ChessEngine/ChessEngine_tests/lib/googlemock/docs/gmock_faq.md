@@ -131,7 +131,7 @@ using ::testing::_;
 ### I have a failed test where gMock tells me TWICE that a particular expectation is not satisfied. Isn't this redundant?
 
 When gMock detects a failure, it prints relevant information (the mock function
-arguments, the state of relevant expectations, and etc) to help the user debug.
+arguments, the state of relevant expectations, and etc) to help the user debug_diagnostics_file.
 If another failure is detected, gMock will do the same, including printing the
 state of relevant expectations.
 

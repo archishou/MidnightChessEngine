@@ -49,7 +49,7 @@
 // unless foo::PrintTo(const T&, ostream*) is defined. Note that
 // operator<<() is ignored for container types.
 //
-// If none of the above is defined, it will print the debug string of
+// If none of the above is defined, it will print the debug_diagnostics_file string of
 // the value if it is a protocol buffer, or print the raw bytes in the
 // value otherwise.
 //

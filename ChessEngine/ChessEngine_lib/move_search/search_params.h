@@ -11,11 +11,11 @@ const int MAX_MATE_DEPTH = 10 * MAX_DEPTH;
 struct BestMoveSearchParameters {
 	short depth;
 	int time_limit;
-	bool debug;
+	bool debug_info;
 };
 
 const struct BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
 	.depth = MAX_DEPTH,
 	.time_limit = 1000,
-	.debug = false
+	.debug_info = false
 };

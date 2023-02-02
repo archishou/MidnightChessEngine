@@ -677,7 +677,7 @@ the heap, the Visual C++ memory leak detector will report memory leaks at the
 end of the program run. The easiest way to avoid this is to use the
 `_CrtMemCheckpoint` and `_CrtMemDumpAllObjectsSince` calls to not report any
 statically initialized heap objects. See MSDN for more details and additional
-heap check/debug routines.
+heap check/debug_diagnostics_file routines.
 
 ## How can my code detect if it is running in a test?
 

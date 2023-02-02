@@ -250,7 +250,7 @@ inline Matcher<const ::std::string&> MakeDeathTestMatcher(
 // NDEBUG mode. In this case we need the statements to be executed and the macro
 // must accept a streamed message even though the message is never printed.
 // The regex object is not evaluated, but it is used to prevent "unused"
-// warnings and to avoid an expression that doesn't compile in debug mode.
+// warnings and to avoid an expression that doesn't compile in debug_diagnostics_file mode.
 #define GTEST_EXECUTE_STATEMENT_(statement, regex_or_matcher)    \
   GTEST_AMBIGUOUS_ELSE_BLOCKER_                                  \
   if (::testing::internal::AlwaysTrue()) {                       \

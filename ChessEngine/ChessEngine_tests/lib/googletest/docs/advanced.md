@@ -533,7 +533,7 @@ partially-destructed state! You almost certainly want to `abort` or use
 ## Teaching googletest How to Print Your Values
 
 When a test assertion such as `EXPECT_EQ` fails, googletest prints the argument
-values to help you debug. It does this using a user-extensible value printer.
+values to help you debug_diagnostics_file. It does this using a user-extensible value printer.
 
 This printer knows how to print built-in C++ types, native arrays, STL
 containers, and any type that supports the `<<` operator. For other types, it
@@ -638,7 +638,7 @@ Fatal assertion                                  | Nonfatal assertion           
 ------------------------------------------------ | ------------------------------------------------ | --------
 `ASSERT_DEATH(statement, matcher);`              | `EXPECT_DEATH(statement, matcher);`              | `statement` crashes with the given error
 `ASSERT_DEATH_IF_SUPPORTED(statement, matcher);` | `EXPECT_DEATH_IF_SUPPORTED(statement, matcher);` | if death tests are supported, verifies that `statement` crashes with the given error; otherwise verifies nothing
-`ASSERT_DEBUG_DEATH(statement, matcher);`        | `EXPECT_DEBUG_DEATH(statement, matcher);`        | `statement` crashes with the given error **in debug mode**. When not in debug (i.e. `NDEBUG` is defined), this just executes `statement`
+`ASSERT_DEBUG_DEATH(statement, matcher);`        | `EXPECT_DEBUG_DEATH(statement, matcher);`        | `statement` crashes with the given error **in debug_diagnostics_file mode**. When not in debug_diagnostics_file (i.e. `NDEBUG` is defined), this just executes `statement`
 `ASSERT_EXIT(statement, predicate, matcher);`    | `EXPECT_EXIT(statement, predicate, matcher);`    | `statement` exits with the given error, and its exit code matches `predicate`
 
 where `statement` is a statement that is expected to cause the process to die,
@@ -1148,7 +1148,7 @@ will output XML like this:
 ## Sharing Resources Between Tests in the Same Test Suite
 
 googletest creates a new test fixture object for each test in order to make
-tests independent and easier to debug. However, sometimes tests use resources
+tests independent and easier to debug_diagnostics_file. However, sometimes tests use resources
 that are expensive to set up, making the one-copy-per-test model prohibitively
 expensive.
 
@@ -2169,7 +2169,7 @@ a debugger. This can be a major source of frustration.
 
 The `--gtest_repeat` flag allows you to repeat all (or selected) test methods in
 a program many times. Hopefully, a flaky test will eventually fail and give you
-a chance to debug. Here's how to use it:
+a chance to debug_diagnostics_file. Here's how to use it:
 
 ```none
 $ foo_test --gtest_repeat=1000

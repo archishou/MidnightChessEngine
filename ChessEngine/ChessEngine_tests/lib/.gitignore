@@ -1,7 +1,7 @@
 # Ignore CI build directory
 build/
 xcuserdata
-cmake-build-debug/
+cmake-build-debug_diagnostics_file/
 .idea/
 bazel-bin
 bazel-genfiles
