@@ -112,11 +112,6 @@ void uci_go_diagnostics_output(Position& board, BestMoveSearchResults& results, 
 	////diagnostics_file << "Value: " << results.value << std::endl;
 }
 
-BestMoveSearchResults go(Position& board, BestMoveSearchParameters params) {
-	if (board.turn() == BLACK) return best_move<BLACK>(board, params);
-	return best_move<WHITE>(board, params);
-}
-
 void uci_go(Position& board, ofstream& diagnostics_file, const string& input_line) {
 
 	auto t_start = std::chrono::high_resolution_clock::now();

@@ -81,11 +81,6 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, Alpha
 
 	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), depth, ply);
 	if (probe_results.entry_found) {
-		/*
-		if (probe_results.entry.fen != board.fen()) {
-			data.tt_key_collisions += 1;
-		}
-		 */
 		TranspositionTableEntry tt_entry = probe_results.entry;
 		if (tt_entry.node_type == EXACT) {
 			return tt_entry.value;
@@ -133,20 +128,15 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, Alpha
 
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
 	t_table.put(board.get_hash(), depth, value, ply, best_move, node_type);
-
-	/*
 	if (ply != 0) {
 		TranspositionTableSearchResults table_search_results = t_table.probe_for_search(board.get_hash(), depth, ply);
 		assert(table_search_results.entry_found);
-		assert(table_search_results.entry.fen == board.fen());
 		assert(table_search_results.entry.value == value);
 		assert(table_search_results.entry.zobrist_hash == board.get_hash());
 		assert(table_search_results.entry.depth == depth);
 		assert(table_search_results.entry.best_move == best_move);
 		assert(table_search_results.entry.node_type == node_type);
 	}
-	 */
-
 	return value;
 }
 

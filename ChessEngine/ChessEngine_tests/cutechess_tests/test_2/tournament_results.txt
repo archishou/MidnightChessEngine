@@ -1,0 +1,37 @@
+Score of midnight-dev vs midnight-master: 733 - 214 - 193 [0.728]
+...      midnight-dev playing White: 333 - 117 - 120  [0.689] 570
+...      midnight-dev playing Black: 400 - 97 - 73  [0.766] 570
+...      White vs Black: 430 - 517 - 193  [0.462] 1140
+Elo difference: 170.7 +/- 20.1, LOS: 100.0 %, DrawRatio: 16.9 %
+1150 of 2000 games finished.
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 115
+   "Draw by fifty moves rule": 49
+   "Draw by insufficient mating material": 26
+   "Draw by stalemate": 2
+   "Draw by timeout": 1
+   "Loss: Black loses on time": 5
+   "Loss: Black mates": 114
+   "Loss: White loses on time": 3
+   "Loss: White mates": 92
+   "No result": 10
+   "Win: Black loses on time": 2
+   "Win: Black mates": 398
+   "Win: White loses on time": 2
+   "Win: White mates": 331
+Player: midnight-master
+   "Draw by 3-fold repetition": 115
+   "Draw by fifty moves rule": 49
+   "Draw by insufficient mating material": 26
+   "Draw by stalemate": 2
+   "Draw by timeout": 1
+   "Loss: Black loses on time": 2
+   "Loss: Black mates": 398
+   "Loss: White loses on time": 2
+   "Loss: White mates": 331
+   "No result": 10
+   "Win: Black loses on time": 5
+   "Win: Black mates": 114
+   "Win: White loses on time": 3
+   "Win: White mates": 92

@@ -6,6 +6,7 @@
 #include "gtest/gtest.h"
 #include "move_generation/position.h"
 #include "move_search/search.h"
+#include "constants.h"
 
 class MoveSearchFixture : public ::testing::Test {
 protected:
@@ -15,21 +16,8 @@ protected:
 	}
 
 	virtual void TearDown() {
-
 	}
-	const std::string kiwipete_fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
 };
-
-const std::string& ASSERTION_ERR_SEARCH_DEPTH = "Test not completed, did not search deep enough";
-
-bool lines_equal(Line& expected, Line& results_line) {
-	for (int i = 0; i < LINE_SIZE; ++i) {
-		if (expected[i] != results_line[i]) {
-			return false;
-		}
-	}
-	return true;
-}
 
 TEST_F(MoveSearchFixture, MateInOneTest1){
 	Position p;

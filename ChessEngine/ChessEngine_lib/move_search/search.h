@@ -12,6 +12,23 @@
 typedef Move Line[MAX_DEPTH];
 const int LINE_SIZE = MAX_DEPTH;
 
+struct BestMoveSearchResults {
+	Move best_move = Move();
+	Line pv;
+	int depth_searched = 0;
+	int seldepth = 0;
+
+	double time_searched = 0;
+	int value = 0;
+
+	uint64_t q_nodes_searched = 0;
+	uint64_t nodes_searched = 0;
+	double nodes_per_second = 0;
+
+	int tt_key_collisions = 0;
+	int nodes_in_transposition_table = 0;
+};
+
 std::ostream& operator<<(std::ostream& os, const Line& line) {
 	for(const Move & i : line) {
 		if (i == 0) break;
@@ -20,21 +37,27 @@ std::ostream& operator<<(std::ostream& os, const Line& line) {
 	return os;
 }
 
-struct BestMoveSearchResults {
-	Move best_move = Move();
-	Line pv;
-	int depth_searched = 0;
-	double time_searched = 0;
-	int value = 0;
+bool lines_equal(Line& line_1, Line& line_2) {
+	for (int i = 0; i < LINE_SIZE; ++i) {
+		if (line_1[i] != line_2[i]) {
+			return false;
+		}
+	}
+	return true;
+}
 
-	uint64_t q_nodes_searched = 0;
-	uint64_t nodes_searched = 0;
-	double nodes_per_second = 0;
-	int seldepth = 0;
-
-	int tt_key_collisions = 0;
-	int nodes_in_transposition_table = 0;
-};
+std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results) {
+	std::cout << "Best Move: " << results.best_move << std::endl;
+	std::cout << "Principal Variation: " << results.pv << std::endl;
+	std::cout << "Depth Searched: " << results.depth_searched << std::endl;
+	std::cout << "Seldepth: " << results.seldepth << std::endl;
+	std::cout << "Evaluation: " << results.value << std::endl;
+	std::cout << "Time Searched: " << results.time_searched << std::endl;
+	std::cout << "Nodes Searched: " << results.nodes_searched << std::endl;
+	std::cout << "Node / Second: " << results.nodes_per_second << std::endl;
+	std::cout << "Q Nodes Searched: " << results.q_nodes_searched << std::endl;
+	std::cout << "Transpositions: " << results.nodes_in_transposition_table << std::endl;
+}
 
 void update_best_move_results(BestMoveSearchResults& search_results, AlphaBetaData& ab_results, int sub_depth) {
 	search_results.value = ab_results.value;
@@ -51,12 +74,14 @@ void update_best_move_results(BestMoveSearchResults& search_results, AlphaBetaDa
 }
 
 template<Color color>
-BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short depth) {
+BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short depth, bool debug) {
 	struct BestMoveSearchResults search_results;
 
 	reset_clock();
 	TranspositionTable t_table = TranspositionTable();
-	std::cout << "TT Time Elapsed: " << get_elapsed_time(Milliseconds) << std::endl;
+	if (debug) {
+		std::cout << "Time to initialize transposition table: " << get_elapsed_time(Milliseconds) << std::endl;
+	}
 	reset_clock();
 
 	for (int sub_depth = 1; sub_depth <= depth; sub_depth++) {
@@ -77,7 +102,7 @@ BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short
 
 template<Color color>
 BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters& parameters) {
-	return iterative_deepening<color>(board, parameters.time_limit, parameters.depth);
+	return iterative_deepening<color>(board, parameters.time_limit, parameters.depth, parameters.debug);
 }
 
 template<Color color>

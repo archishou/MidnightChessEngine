@@ -132,42 +132,6 @@ void Position::set(const std::string& fen, Position& p) {
 	p.half_move_clock = std::stoi(half_move_clock);
 	p.full_move_clock = std::stoi(full_move_clock);
 
-
-	/*
-	int square = a8;
-	for (char ch : fen.substr(0, fen.find(' '))) {
-		if (isdigit(ch))
-			square += (ch - '0') * EAST;
-		else if (ch == '/')
-			square += 2 * SOUTH;
-		else
-			p.put_piece(Piece(PIECE_STR.find(ch)), Square(square++));
-	}
-
-	std::istringstream ss(fen.substr(fen.find(' ')));
-	unsigned char token;
-
-	ss >> token;
-	p.side_to_play = token == 'w' ? WHITE : BLACK;
-
-	p.history[p.game_ply].entry = ALL_CASTLING_MASK;
-	while (ss >> token && !isspace(token)) {
-		switch (token) {
-		case 'K':
-			p.history[p.game_ply].entry &= ~WHITE_OO_MASK;
-			break;
-		case 'Q':
-			p.history[p.game_ply].entry &= ~WHITE_OOO_MASK;
-			break;
-		case 'k':
-			p.history[p.game_ply].entry &= ~BLACK_OO_MASK;
-			break;
-		case 'q':
-			p.history[p.game_ply].entry &= ~BLACK_OOO_MASK;
-			break;
-		}
-	}
-	 */
 	p.update_hash_board_features();
 }
 

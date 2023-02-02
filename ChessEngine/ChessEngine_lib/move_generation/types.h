@@ -37,7 +37,7 @@ const std::string PIECE_STR = "PNBRQK~>pnbrqk.";
 //The FEN of the starting position
 const std::string DEFAULT_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
 
-//The Kiwipete position, used for perft debugging
+//The Kiwipete position, used for perft_node_count debugging
 const std::string KIWIPETE = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -";
 
 //Number of combinations for castling rights.

@@ -3,6 +3,7 @@
 //
 
 #include "gtest/gtest.h"
+#include "constants.h"
 #include "bitset"
 #include "move_generation/position.h"
 
@@ -15,9 +16,6 @@ protected:
 	}
 
 	virtual void TearDown() {}
-	const std::string initial_position_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-	const std::string kiwipete_fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1";
-	const std::string talkchess_fen = "rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R w KQ - 1 8";
 };
 
 template<Color Us>
@@ -42,7 +40,6 @@ void test_perft_hash(const std::string& fen, int depth) {
 
 TEST_F(MoveGenerationZobristHashTests, TestCastlingState){
 	Position board;
-	Position::set(initial_position_fen, board);
 
 	for (int i = 15; i >= 0; i--) {
 		std::string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w ";
@@ -59,11 +56,11 @@ TEST_F(MoveGenerationZobristHashTests, TestCastlingState){
 	}
 }
 TEST_F(MoveGenerationZobristHashTests, TestConsitentHashInitialFen){
-	test_perft_hash(initial_position_fen, 6);
+	test_perft_hash(INITIAL_BOARD_FEN, 6);
 }
 TEST_F(MoveGenerationZobristHashTests, TestConsitentHashKiwiPete){
-	test_perft_hash(kiwipete_fen, 5);
+	test_perft_hash(KIWIPETE_FEN, 5);
 }
 TEST_F(MoveGenerationZobristHashTests, TestConsitentHashTalkchess){
-	test_perft_hash(talkchess_fen, 5);
+	test_perft_hash(TALKCHESS_FEN, 5);
 }
