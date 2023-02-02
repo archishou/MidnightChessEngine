@@ -39,24 +39,23 @@ std::ostream& operator<<(std::ostream& os, const Line& line) {
 
 bool lines_equal(Line& line_1, Line& line_2) {
 	for (int i = 0; i < LINE_SIZE; ++i) {
-		if (line_1[i] != line_2[i]) {
-			return false;
-		}
+		if (line_1[i] != line_2[i]) return false;
 	}
 	return true;
 }
 
 std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results) {
-	std::cout << "Best Move: " << results.best_move << std::endl;
-	std::cout << "Principal Variation: " << results.pv << std::endl;
-	std::cout << "Depth Searched: " << results.depth_searched << std::endl;
-	std::cout << "Seldepth: " << results.seldepth << std::endl;
-	std::cout << "Evaluation: " << results.value << std::endl;
-	std::cout << "Time Searched: " << results.time_searched << std::endl;
-	std::cout << "Nodes Searched: " << results.nodes_searched << std::endl;
-	std::cout << "Node / Second: " << results.nodes_per_second << std::endl;
-	std::cout << "Q Nodes Searched: " << results.q_nodes_searched << std::endl;
-	std::cout << "Transpositions: " << results.nodes_in_transposition_table << std::endl;
+	os << "Best Move: " << results.best_move << std::endl;
+	os << "Principal Variation: " << results.pv << std::endl;
+	os << "Depth Searched: " << results.depth_searched << std::endl;
+	os << "Seldepth: " << results.seldepth << std::endl;
+	os << "Evaluation: " << results.value << std::endl;
+	os << "Time Searched: " << results.time_searched << std::endl;
+	os << "Nodes Searched: " << results.nodes_searched << std::endl;
+	os << "Node / Second: " << results.nodes_per_second << std::endl;
+	os << "Q Nodes Searched: " << results.q_nodes_searched << std::endl;
+	os << "Transpositions: " << results.nodes_in_transposition_table << std::endl;
+	return os;
 }
 
 void update_best_move_results(BestMoveSearchResults& search_results, AlphaBetaData& ab_results, int sub_depth) {

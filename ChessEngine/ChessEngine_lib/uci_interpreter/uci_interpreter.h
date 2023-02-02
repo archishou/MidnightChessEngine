@@ -8,15 +8,14 @@
 #include "move_generation/types.h"
 #include "move_search/search.h"
 #include "helpers.h"
+#include "constants.h"
 
 using namespace std;
-
-const std::string& initial_board_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 void initialize_uci(Position& p) {
 	initialise_all_databases();
 	zobrist::initialise_zobrist_keys();
-	Position::set(initial_board_fen, p);
+	Position::set(INITIAL_BOARD_FEN, p);
 }
 
 char promotion_character(std::string uci_move) {
@@ -67,8 +66,7 @@ Move uci_to_move(const std::string& moveStr, Position& position) {
 	return {move.from(), move.to(), QUIET};
 }
 
-void uci_create_position_from_moves(Position& board, const string& board_fen, const string& uci_move_string) {
-	Position::set(board_fen, board);
+void uci_update_position_from_moves(Position& board, const string& uci_move_string) {
 	vector<string> uci_moves = split(uci_move_string, " ");
 	for (const std::string& uci_move : uci_moves) {
 		if (uci_move.empty()) return;
@@ -82,7 +80,8 @@ void uci_position(Position& board, const string& input_line) {
 	if (input_line.substr(0, 17) == "position startpos") {
 		std::string uci_moves;
 		if (input_line.size() > 17) uci_moves = input_line.substr(24, input_line.size() - 24);
-		uci_create_position_from_moves(board, initial_board_fen, uci_moves);
+		Position::set(INITIAL_BOARD_FEN, board);
+		uci_update_position_from_moves(board,  uci_moves);
 	} else {
 		int fen_start = input_line.find("position fen ") + 13;
 		int fen_end = input_line.find(" moves");
@@ -93,7 +92,9 @@ void uci_position(Position& board, const string& input_line) {
 		if (fen_end != std::string::npos) {
 			moves = input_line.substr(moves_start + 1, input_line.size() - moves_start);
 		}
-		uci_create_position_from_moves(board, fen, moves);
+
+		Position::set(fen, board);
+		uci_update_position_from_moves(board, moves);
 	}
 }
 

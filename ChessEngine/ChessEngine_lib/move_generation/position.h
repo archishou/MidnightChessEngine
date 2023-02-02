@@ -168,7 +168,6 @@ public:
 	template<Color C> inline Bitboard all_pieces() const;
 	template<Color C> inline Bitboard attackers_from(Square s, Bitboard occ) const;
 
-	// TODO: FIX????
 	template<Color C> inline bool in_check() const {
 		return attackers_from<~C>(bsf(bitboard_of(C, KING)), all_pieces<WHITE>() | all_pieces<BLACK>());
 	}

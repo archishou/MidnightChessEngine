@@ -12,9 +12,7 @@ protected:
 		zobrist::initialise_zobrist_keys();
 	}
 
-	virtual void TearDown() {
-
-	}
+	virtual void TearDown() {}
 	// Different from position.h/Square, 0th square is a8. Used for PSTQ testing.
 	// Black squares are manually reflected across mid-line. Should be automatically done in PSTQ method.
 	enum AbsoluteBoardSquare : int {
@@ -37,9 +35,7 @@ TEST_F(EvaluationTestsFixture, DefaultFenPSTQWhite){
 	int pstq = evaluate_all_piece_positions<WHITE>(p);
 	int expected_pstq = 0;
 	// Add Pawns
-	for (int i = a2; i <= h2; i++) {
-		expected_pstq += pawn_pstq[i];
-	}
+	for (int i = a2; i <= h2; i++) expected_pstq += pawn_pstq[i];
 	expected_pstq += rook_pstq[a1] + rook_pstq[h1];
 	expected_pstq += knight_pstq[b1] + knight_pstq[g1];
 	expected_pstq += bishop_pstq[c1] + bishop_pstq[f1];
@@ -54,9 +50,7 @@ TEST_F(EvaluationTestsFixture, DefaultFenPSTQBlack){
 	int pstq = evaluate_all_piece_positions<BLACK>(p);
 	int expected_pstq = 0;
 	// Add Pawns
-	for (int i = a2; i <= h2; i++) {
-		expected_pstq += pawn_pstq[i];
-	}
+	for (int i = a2; i <= h2; i++) expected_pstq += pawn_pstq[i];
 	expected_pstq += rook_pstq[a1] + rook_pstq[h1];
 	expected_pstq += knight_pstq[b1] + knight_pstq[g1];
 	expected_pstq += bishop_pstq[c1] + bishop_pstq[f1];
@@ -77,4 +71,19 @@ TEST_F(EvaluationTestsFixture, KingEndgamePSTQ){
 	expected_pstq += queen_psqt[g7];
 	expected_pstq += king_middle[b8];
 	EXPECT_EQ(pstq, expected_pstq);
+}
+
+TEST_F(EvaluationTestsFixture, PositionInCheck) {
+	Position p;
+	Position::set("rnbqkbnr/ppppp1pp/8/5p1Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 0 1", p);
+	EXPECT_TRUE(p.in_check<BLACK>());
+	EXPECT_FALSE(p.in_check<WHITE>());
+
+	Position::set("rnb1kbnr/ppppp2p/6p1/5p1Q/4P3/4q3/PPPP1PPP/RNB1KBNR w KQkq - 0 1", p);
+	EXPECT_TRUE(p.in_check<WHITE>());
+	EXPECT_FALSE(p.in_check<BLACK>());
+
+	Position::set("rnb1kbnr/ppppp2p/6p1/5p1Q/4P3/4q3/PPPPBPPP/RNB1K1NR b KQkq - 0 1", p);
+	EXPECT_FALSE(p.in_check<WHITE>());
+	EXPECT_FALSE(p.in_check<BLACK>());
 }

@@ -15,6 +15,6 @@ std::vector<std::string> split(const std::string& s, const std::string& delimite
 		res.push_back (token);
 	}
 
-	res.push_back (s.substr (pos_start));
+	res.push_back(s.substr (pos_start));
 	return res;
 }
