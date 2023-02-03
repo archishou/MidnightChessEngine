@@ -29,7 +29,9 @@ struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
 
 bool position_is_draw(Position &board) {
 	uint64_t current_hash = board.get_hash();
-	if (board.half_move_clock >= 100) return true;
+	if (board.half_move_clock() >= 100) {
+		return true;
+	}
 	int count = 0;
 	for (uint64_t hash : board.hash_history) {
 		if (hash == current_hash) count += 1;
@@ -111,11 +113,9 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, Alpha
 			data.search_completed = false;
 			return value;
 		}
-		zobrist_hash initial_hash = board.get_hash();
 		board.play<color>(legal_move);
 		const int v = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, data, time_limit, t_table);
 		board.undo<color>(legal_move);
-		assert(initial_hash == board.get_hash());
 		data.nodes_searched += 1;
 		if (v > value) best_move = legal_move;
 		if (v > alpha) {

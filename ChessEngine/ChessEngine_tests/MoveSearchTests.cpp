@@ -1,11 +1,9 @@
 //
 // Created by Archishmaan Peyyety on 1/10/23.
-//
-// Created by Archishmaan Peyyety on 1/10/23.
-//
 #include "gtest/gtest.h"
 #include "move_generation/position.h"
 #include "move_search/search.h"
+#include "uci_interpreter/parse_uci_move.h"
 
 class MoveSearchFixture : public ::testing::Test {
 protected:
@@ -137,4 +135,31 @@ TEST_F(MoveSearchFixture, SpecialEndgamFEN){
 	std::cout << "Nodes Searched: " << best_white.nodes_searched << std::endl;
 	std::cout << "NPS: " << best_white.nodes_per_second << std::endl;
 	std::cout << "Seldepth: " << best_white.seldepth << std::endl;
+}
+
+TEST_F(MoveSearchFixture, DrawTest1){
+	std::string uci_moves = "e2e4 c7c5 g1f3 d7d6 d2d4 g8f6 d4c5 f6e4 c5d6 e4d6 c1f4 b8c6 b1c3 d8b6 c3d5 b6a5 d1d2 "
+							"a5d2 f4d2 e8d7 d2f4 e7e6 d5c3 f7f6 f4g3 d6f5 e1c1 d7e7 g3c7 e6e5 f1c4 e7e8 c3e4 c8d7 "
+							"h1e1 a8c8 e4d6 f5d6 c7d6 c6e7 b2b3 b7b5 c4e2 d7c6 d6a3 e7f5 a3b2 f8b4 c2c3 c6f3 g2f3 "
+							"a7a6 c1c2 e8f8 a2a4 f5d4 c2d3 d4e2 c3b4 e2f4 d3d2 f4d5 a4b5 a6b5 e1e4 f8g8 h2h4 d5f4 "
+							"d2e3 f4g6 e3d3 f6f5 e4e1 c8e8 h4h5 g6f4 d3c2 e5e4 f3e4 f5e4 e1e4 e8e4 d1d8 g8f7 d8h8 "
+							"f4h5 c2d3 e4b4 h8h7 b4h4 b3b4 h5f4 d3e4 h4h7 e4f4 h7h4 f4e5 h4b4 b2d4 f7g8 f2f4 b4b1 "
+							"e5f5 b5b4 f5g6 b4b3 d4e5 b1g1 g6f5 g1g2 f5e4 b3b2 e5b2 g2b2 f4f5 g8f7 e4d5 f7f6 d5e4 "
+							"f6g5 f5f6 g5f6 e4d5 f6e7 d5d4 e7d7 d4d5 b2d2 d5e4 d7e6 e4e3 d2g2 e3e4 e6f6 e4f4 g2b2 "
+							"f4e4 f6e6 e4d4 b2e2 d4d3 e2f2 d3e4 e6e7 e4d4 e7e8 d4d5 f2e2 d5d4 e8d7 d4c4 e2f2 c4d5 "
+							"f2f4 d5e5 f4g4 e5d5 d7d8 d5e5 d8e7 e5d5 e7d7 d5e5 d7d8 e5d5 d8c8 d5d6 g4g5 d6e6 c8b7 "
+							"e6d6 b7a7 d6d7 g5g6 d7c7 g6b6 c7d8 a7b8 d8d7 b6f6 d7d8 f6f7 d8e8 f7f2 e8e7 b8c7 e7e6 "
+							"c7d8 e6d5 f2d2 d5e5 d8e8 e5e4 e8e7 e4f4 d2b2 f4e5 b2b4 e5d5 b4f4 d5e5 f4c4 e5d5 c4a4 "
+							"d5e5 a4a2 e5d4 e7d7 d4d5 a2a4 d5e5 a4b4 e5f5 d7e8 f5e5 e8f7 e5d5 f7g8 d5e5 b4c4 e5d5";
+							//"c4c1";
+	Position p;
+	Position::set(INITIAL_BOARD_FEN, p);
+	BestMoveSearchParameters parameters = {
+			.depth = MAX_DEPTH,
+			.time_limit = 100,
+			.debug_info = true
+	};
+	uci_update_position_from_moves(p, uci_moves);
+	BestMoveSearchResults results = best_move(p, parameters);
+	EXPECT_TRUE(p.at(results.best_move.from()) == BLACK_PAWN);
 }

@@ -77,7 +77,9 @@ std::string Position::fen() const {
 	fen << (side_to_play == WHITE ? " w " : " b ")
 		<< castling_rights
 		<< (history[game_ply].epsq == NO_SQUARE ? " -" : " " + std::string(SQSTR[history[game_ply].epsq]))
-		<< " 0 1";
+		<< " "
+		<< half_move_clock() << " "
+		<< full_move_clock;
 
 	return fen.str();
 }
@@ -133,7 +135,7 @@ void Position::set(const std::string& fen, Position& p) {
 		p.history[p.game_ply].epsq = NO_SQUARE;
 	}
 
-	p.half_move_clock = std::stoi(half_move_clock);
+	p.history[p.game_ply].half_move_clock = std::stoi(half_move_clock);
 	p.full_move_clock = std::stoi(full_move_clock);
 
 	if (p.side_to_play == BLACK) p.hash ^= zobrist::zobrist_color_key;

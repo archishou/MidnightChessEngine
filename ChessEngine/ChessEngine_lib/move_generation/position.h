@@ -50,7 +50,7 @@ struct UndoInfo {
 	//The bitboard of squares on which pieces have either moved from, or have been moved to. Used for castling
 	//legality checks
 	Bitboard entry;
-	
+
 	//The piece that was captured on the last move
 	Piece captured;
 	
@@ -58,11 +58,13 @@ struct UndoInfo {
 	//double pushed on the previous move
 	Square epsq;
 
-	constexpr UndoInfo() : entry(0), captured(NO_PIECE), epsq(NO_SQUARE) {}
+	short half_move_clock;
+
+	constexpr UndoInfo() : entry(0), captured(NO_PIECE), epsq(NO_SQUARE), half_move_clock(0) {}
 	
 	//This preserves the entry bitboard across moves
 	UndoInfo(const UndoInfo& prev) : 
-		entry(prev.entry), captured(NO_PIECE), epsq(NO_SQUARE) {}
+		entry(prev.entry), captured(NO_PIECE), epsq(NO_SQUARE), half_move_clock(prev.half_move_clock) {}
 };
 
 class Position {
@@ -79,8 +81,6 @@ private:
 	//The current game ply (depth), incremented after each move 
 	int game_ply;
 
-	int full_move_clock;
-	
 	//The zobrist hash of the position, which can be incrementally updated and rolled back after each
 	//make/unmake
 	zobrist_hash hash;
@@ -105,7 +105,7 @@ public:
 
 	std::vector<zobrist_hash> hash_history;
 
-	Position() : piece_bb{ 0 }, side_to_play(WHITE), game_ply(0), half_move_clock(0), full_move_clock(0), board{},
+	Position() : piece_bb{ 0 }, side_to_play(WHITE), game_ply(0), full_move_clock(0), board{},
 		hash(0), pinned(0), checkers(0) {
 
 		//Sets all squares on the board as empty
@@ -177,7 +177,8 @@ public:
 	template<Color Us>
 	Move *generate_legals(Move *list, const MoveGenerationOptions &options);
 
-	int half_move_clock;
+	int half_move_clock() const { return history[game_ply].half_move_clock; }
+	int full_move_clock;
 };
 
 //Returns the bitboard of all bishops and queens of a given color
@@ -221,17 +222,20 @@ inline Bitboard Position::attackers_from(Square s, Bitboard occ) const {
 //Plays a move in the position
 template<Color C>
 void Position::play(const Move m) {
-	side_to_play = ~side_to_play;
 	Bitboard original_castle_state = castling_state();
 	int original_ep_file = ep_file();
 	++game_ply;
 	history[game_ply] = UndoInfo(history[game_ply - 1]);
 
 	MoveFlag type = m.flag();
-	half_move_clock += 1;
+	history[game_ply].half_move_clock += 1;
 	if (type == CAPTURE || type_of(at(m.from())) == PAWN) {
-		half_move_clock = 0;
+		history[game_ply].half_move_clock = 0;
 	}
+	if (side_to_play == BLACK) {
+		full_move_clock += 1;
+	}
+	side_to_play = ~side_to_play;
 	history[game_ply].entry |= SQUARE_BB[m.to()] | SQUARE_BB[m.from()];
 
 	switch (type) {
@@ -378,8 +382,8 @@ void Position::undo(const Move m) {
 		break;
 	}
 	hash_history.pop_back();
+	if (side_to_play == BLACK) full_move_clock -= 1;
 	side_to_play = ~side_to_play;
-	half_move_clock -= 1;
 	--game_ply;
 	update_hash_board_features(current_castling_state, current_ep_file);
 }
