@@ -29,6 +29,7 @@ struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
 
 bool position_is_draw(Position &board) {
 	uint64_t current_hash = board.get_hash();
+	if (board.half_move_clock >= 100) return true;
 	int count = 0;
 	for (uint64_t hash : board.hash_history) {
 		if (hash == current_hash) count += 1;

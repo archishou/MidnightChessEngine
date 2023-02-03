@@ -79,7 +79,6 @@ private:
 	//The current game ply (depth), incremented after each move 
 	int game_ply;
 
-	int half_move_clock;
 	int full_move_clock;
 	
 	//The zobrist hash of the position, which can be incrementally updated and rolled back after each
@@ -177,6 +176,8 @@ public:
 
 	template<Color Us>
 	Move *generate_legals(Move *list, const MoveGenerationOptions &options);
+
+	int half_move_clock;
 };
 
 //Returns the bitboard of all bishops and queens of a given color
@@ -227,6 +228,10 @@ void Position::play(const Move m) {
 	history[game_ply] = UndoInfo(history[game_ply - 1]);
 
 	MoveFlag type = m.flag();
+	half_move_clock += 1;
+	if (type == CAPTURE || type_of(at(m.from())) == PAWN) {
+		half_move_clock = 0;
+	}
 	history[game_ply].entry |= SQUARE_BB[m.to()] | SQUARE_BB[m.from()];
 
 	switch (type) {
@@ -374,6 +379,7 @@ void Position::undo(const Move m) {
 	}
 	hash_history.pop_back();
 	side_to_play = ~side_to_play;
+	half_move_clock -= 1;
 	--game_ply;
 	update_hash_board_features(current_castling_state, current_ep_file);
 }
