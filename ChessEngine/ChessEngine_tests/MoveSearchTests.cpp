@@ -154,12 +154,7 @@ TEST_F(MoveSearchFixture, DrawTest1){
 							//"c4c1";
 	Position p;
 	Position::set(INITIAL_BOARD_FEN, p);
-	BestMoveSearchParameters parameters = {
-			.depth = MAX_DEPTH,
-			.time_limit = 100,
-			.debug_info = true
-	};
 	uci_update_position_from_moves(p, uci_moves);
-	BestMoveSearchResults results = best_move(p, parameters);
+	BestMoveSearchResults results = best_move(p);
 	EXPECT_TRUE(p.at(results.best_move.from()) == BLACK_PAWN);
 }
