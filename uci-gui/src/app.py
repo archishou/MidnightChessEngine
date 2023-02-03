@@ -110,11 +110,10 @@ def make_move():
         board.push(move)
 
     # create chess engine instance
-    engine_master = '/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/ChessEngine_tests' \
-                    '/cutechess_tests/latest_master/master'
+    engine_master = '/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/releases/vlatest/master'
     engine_testing = '/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug' \
                      '/ChessEngine_run'
-    engine = chess.engine.SimpleEngine.popen_uci(engine_testing)
+    engine = chess.engine.SimpleEngine.popen_uci(engine_master)
     result = engine.play(board, chess.engine.Limit(time=0.1))
     best_move = result.move
     board.push(result.move)
