@@ -136,14 +136,13 @@ public:
 	void move_piece(Square from, Square to);
 	void move_piece_quiet(Square from, Square to);
 
-
 	friend std::ostream& operator<<(std::ostream& os, const Position& p);
 	std::string fen() const;
 
 	Position& operator=(const Position&) = delete;
 	inline bool operator==(const Position& other) const { return hash == other.hash; }
 
-	Bitboard castling_state() {
+	const Bitboard castling_state() const {
 		Bitboard entry = history[game_ply].entry;
 		int white_oo = !((bool) (entry & WHITE_OO_MASK)) << 3;
 		int white_ooo = !((bool) (entry & WHITE_OOO_MASK)) << 2;
@@ -159,8 +158,9 @@ public:
 	inline int ply() const { return game_ply; }
 
 	inline Square ep_square() const { return history[game_ply].epsq; }
+	short ep_file() const { return ep_square() == NO_SQUARE ? NFILES : file_of(ep_square()); }
 
-	void update_hash_board_features();
+	void update_hash_board_features(Bitboard original_castle_state, int original_ep_file);
 	inline zobrist_hash get_hash() const { return hash; }
 
 	template<Color C> inline Bitboard diagonal_sliders() const;
@@ -221,6 +221,8 @@ inline Bitboard Position::attackers_from(Square s, Bitboard occ) const {
 template<Color C>
 void Position::play(const Move m) {
 	side_to_play = ~side_to_play;
+	Bitboard original_castle_state = castling_state();
+	int original_ep_file = ep_file();
 	++game_ply;
 	history[game_ply] = UndoInfo(history[game_ply - 1]);
 
@@ -311,7 +313,7 @@ void Position::play(const Move m) {
 		
 		break;
 	}
-	update_hash_board_features();
+	update_hash_board_features(original_castle_state, original_ep_file);
 	hash_history.push_back(hash);
 }
 
@@ -319,6 +321,8 @@ void Position::play(const Move m) {
 template<Color C>
 void Position::undo(const Move m) {
 	MoveFlag type = m.flag();
+	Bitboard current_castling_state = castling_state();
+	int current_ep_file = ep_file();
 	switch (type) {
 	case QUIET:
 		move_piece_quiet(m.to(), m.from());
@@ -370,8 +374,8 @@ void Position::undo(const Move m) {
 	}
 	hash_history.pop_back();
 	side_to_play = ~side_to_play;
-	update_hash_board_features();
 	--game_ply;
+	update_hash_board_features(current_castling_state, current_ep_file);
 }
 
 template<Color Us>

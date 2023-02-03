@@ -9,7 +9,7 @@
 using namespace std;
 
 struct ReadUCIParameters {
-	bool debug_info;
+	bool debug_info = true;
 };
 
 void initialize_uci(Position& p) {

@@ -66,12 +66,16 @@ std::string Position::fen() const {
 		if (i > 0) fen << '/';
 	}
 
+	std::string castling_rights;
+	const Bitboard set_castling_state = castling_state();
+	if ((set_castling_state >> 3) & 0b1) castling_rights += "K";
+	if ((set_castling_state >> 2) & 0b1) castling_rights += "Q";
+	if ((set_castling_state >> 1) & 0b1) castling_rights += "k";
+	if (set_castling_state & 0b1) castling_rights += "q";
+	if (set_castling_state == 0) castling_rights = "-";
+
 	fen << (side_to_play == WHITE ? " w " : " b ")
-		<< (history[game_ply].entry & WHITE_OO_MASK ? "" : "K")
-		<< (history[game_ply].entry & WHITE_OOO_MASK ? "" : "Q")
-		<< (history[game_ply].entry & BLACK_OO_MASK ? "" : "k")
-		<< (history[game_ply].entry & BLACK_OOO_MASK ? "" : "q")
-		<< (history[game_ply].entry & ALL_CASTLING_MASK ? "-" : "")
+		<< castling_rights
 		<< (history[game_ply].epsq == NO_SQUARE ? " -" : " " + std::string(SQSTR[history[game_ply].epsq]))
 		<< " 0 1";
 
@@ -132,7 +136,9 @@ void Position::set(const std::string& fen, Position& p) {
 	p.half_move_clock = std::stoi(half_move_clock);
 	p.full_move_clock = std::stoi(full_move_clock);
 
-	p.update_hash_board_features();
+	if (p.side_to_play == BLACK) p.hash ^= zobrist::zobrist_color_key;
+	p.hash ^= zobrist::zobrist_castling_rights_table[p.castling_state()];
+	p.hash ^= zobrist::zobrist_ep_file_table[p.ep_file()];
 }
 
 //Moves a piece to a (possibly empty) square on the board and updates the hash
@@ -154,12 +160,18 @@ void Position::move_piece_quiet(Square from, Square to) {
 	board[from] = NO_PIECE;
 }
 
-void Position::update_hash_board_features() {
+void Position::update_hash_board_features(Bitboard original_castle_state, int original_ep_file) {
 	hash ^= zobrist::zobrist_color_key;
-	hash ^= zobrist::zobrist_castling_rights_table[castling_state()];
-	int ep_file = NFILES;
-	if (ep_square() != NO_SQUARE) ep_file = file_of(ep_square());
-	hash ^= zobrist::zobrist_ep_file_table[ep_file];
+	Bitboard new_castling_state = castling_state();
+	if (new_castling_state != original_castle_state) {
+		hash ^= zobrist::zobrist_castling_rights_table[original_castle_state];
+		hash ^= zobrist::zobrist_castling_rights_table[new_castling_state];
+	}
+	int new_ep_file = ep_file();
+	if (original_ep_file != new_ep_file) {
+		hash ^= zobrist::zobrist_ep_file_table[original_ep_file];
+		hash ^= zobrist::zobrist_ep_file_table[new_ep_file];
+	}
 }
 
 void Position::clear() {

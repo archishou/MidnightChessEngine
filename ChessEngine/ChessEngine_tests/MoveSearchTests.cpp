@@ -6,7 +6,6 @@
 #include "gtest/gtest.h"
 #include "move_generation/position.h"
 #include "move_search/search.h"
-#include "constants.h"
 
 class MoveSearchFixture : public ::testing::Test {
 protected:
