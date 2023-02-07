@@ -1,10 +1,9 @@
 # Elo History
-- Midnight Rating: 1356.2 - 1438.6 | 1397.4 (1/27/23)
+- Midnight Rating 1500 | 1479/1517: 
   - AlphaBeta pruning
   - Move ordering: MVV-LVA, opponent pawn control, promotions
   - Evaluation: Material, PSTQ, Mopup for endgame
-- Midnight Rating + 170.7
-  - Added transposition table.
+  - Transposition table
 
 # File structure
 
