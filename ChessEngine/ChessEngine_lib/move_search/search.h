@@ -90,6 +90,7 @@ BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short
 	reset_clock();
 
 	for (int sub_depth = 1; sub_depth <= depth; sub_depth++) {
+		std::memset(search_results.pv, 0, sizeof(search_results.pv));
 		if (time_elapsed_exceeds(time_limit, Milliseconds)) {
 			break;
 		}

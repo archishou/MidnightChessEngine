@@ -132,9 +132,14 @@ const char* MOVE_TYPESTR[16] = {
 	"N", "B", "R", "Q"
 };
 
+const char* MOVE_TYPESTR_UCI[16] = {
+		"", "", "", "", "N", "B", "R", "Q", "", "", "", "",
+		"N", "B", "R", "Q"
+};
+
 //Prints the move
 //For example: e5d6 (capture); a7a8R; O-O
 std::ostream& operator<<(std::ostream& os, const Move& m) {
-	os << SQSTR[m.from()] << SQSTR[m.to()] << MOVE_TYPESTR[m.flag()];
+	os << SQSTR[m.from()] << SQSTR[m.to()] << MOVE_TYPESTR_UCI[m.flag()];
 	return os;
 }
