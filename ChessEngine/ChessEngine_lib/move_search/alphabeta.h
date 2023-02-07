@@ -29,7 +29,7 @@ struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
 
 bool position_is_draw(Position &board) {
 	uint64_t current_hash = board.get_hash();
-	if (board.half_move_clock() >= 100) {
+	if (board.fifty_mr_clock() >= 100) {
 		return true;
 	}
 	int count = 0;
@@ -41,7 +41,7 @@ bool position_is_draw(Position &board) {
 }
 
 template<Color color>
-int q_search(Position& board, int alpha, const int beta, AlphaBetaData& data, const int time_limit, TranspositionTable& t_table, const int ply) {
+int q_search(Position &board, const int ply, int alpha, const int beta, AlphaBetaData &data, const int time_limit, TranspositionTable &t_table) {
 	data.seldepth = std::max(data.seldepth, ply);
 
 	const int stand_pat = evaluate<color>(board);
@@ -57,7 +57,7 @@ int q_search(Position& board, int alpha, const int beta, AlphaBetaData& data, co
 			return alpha;
 		}
 		board.play<color>(legal_move);
-		const int score = -q_search<~color>(board, -beta, -alpha, data, time_limit, t_table, ply + 1);
+		const int score = -q_search<~color>(board, ply + 1, -beta, -alpha, data, time_limit, t_table);
 		board.undo<color>(legal_move);
 		data.q_nodes_searched += 1;
 		if (score >= beta) return beta;
@@ -79,7 +79,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, Alpha
 	}
 
 	if (depth == 0) {
-		return q_search<color>(board, alpha, beta, data, time_limit, t_table, ply);
+		return q_search<color>(board, ply, alpha, beta, data, time_limit, t_table);
 	}
 
 	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), depth, ply);
@@ -114,15 +114,14 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, Alpha
 			return value;
 		}
 		board.play<color>(legal_move);
-		const int v = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, data, time_limit, t_table);
+		value = std::max(value, -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, data, time_limit, t_table));
 		board.undo<color>(legal_move);
 		data.nodes_searched += 1;
-		if (v > value) best_move = legal_move;
-		if (v > alpha) {
-			if (ply == 0) data.value = v;
-			update_pv(data.pv, ply, best_move);
+		if (value > alpha) {
+			if (ply == 0) data.value = value;
+			update_pv(data.pv, ply, legal_move);
+			best_move = legal_move;
 		}
-		value = std::max(value, v);
 		alpha = std::max(alpha, value);
 		if (alpha >= beta) break;
 	}

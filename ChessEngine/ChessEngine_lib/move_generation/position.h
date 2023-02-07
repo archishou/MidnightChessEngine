@@ -58,13 +58,13 @@ struct UndoInfo {
 	//double pushed on the previous move
 	Square epsq;
 
-	short half_move_clock;
+	short fifty_mr_clock;
 
-	constexpr UndoInfo() : entry(0), captured(NO_PIECE), epsq(NO_SQUARE), half_move_clock(0) {}
+	constexpr UndoInfo() : entry(0), captured(NO_PIECE), epsq(NO_SQUARE), fifty_mr_clock(0) {}
 	
 	//This preserves the entry bitboard across moves
-	UndoInfo(const UndoInfo& prev) : 
-		entry(prev.entry), captured(NO_PIECE), epsq(NO_SQUARE), half_move_clock(prev.half_move_clock) {}
+	UndoInfo(const UndoInfo& prev) :
+			entry(prev.entry), captured(NO_PIECE), epsq(NO_SQUARE), fifty_mr_clock(prev.fifty_mr_clock) {}
 };
 
 class Position {
@@ -105,8 +105,8 @@ public:
 
 	std::vector<zobrist_hash> hash_history;
 
-	Position() : piece_bb{ 0 }, side_to_play(WHITE), game_ply(0), full_move_clock(0), board{},
-		hash(0), pinned(0), checkers(0) {
+	Position() : piece_bb{ 0 }, side_to_play(WHITE), game_ply(0), half_move_clock(1), board{},
+				 hash(0), pinned(0), checkers(0) {
 
 		//Sets all squares on the board as empty
 		for (int i = 0; i < 64; i++) board[i] = NO_PIECE;
@@ -177,8 +177,8 @@ public:
 	template<Color Us>
 	Move *generate_legals(Move *list, const MoveGenerationOptions &options);
 
-	int half_move_clock() const { return history[game_ply].half_move_clock; }
-	int full_move_clock;
+	int fifty_mr_clock() const { return history[game_ply].fifty_mr_clock; }
+	int half_move_clock;
 };
 
 //Returns the bitboard of all bishops and queens of a given color
@@ -225,15 +225,13 @@ void Position::play(const Move m) {
 	Bitboard original_castle_state = castling_state();
 	int original_ep_file = ep_file();
 	++game_ply;
+	half_move_clock += 1;
 	history[game_ply] = UndoInfo(history[game_ply - 1]);
 
 	MoveFlag type = m.flag();
-	history[game_ply].half_move_clock += 1;
+	history[game_ply].fifty_mr_clock += 1;
 	if (type == CAPTURE || type_of(at(m.from())) == PAWN) {
-		history[game_ply].half_move_clock = 0;
-	}
-	if (side_to_play == BLACK) {
-		full_move_clock += 1;
+		history[game_ply].fifty_mr_clock = 0;
 	}
 	side_to_play = ~side_to_play;
 	history[game_ply].entry |= SQUARE_BB[m.to()] | SQUARE_BB[m.from()];
@@ -382,7 +380,7 @@ void Position::undo(const Move m) {
 		break;
 	}
 	hash_history.pop_back();
-	if (side_to_play == BLACK) full_move_clock -= 1;
+	half_move_clock -= 1;
 	side_to_play = ~side_to_play;
 	--game_ply;
 	update_hash_board_features(current_castling_state, current_ep_file);

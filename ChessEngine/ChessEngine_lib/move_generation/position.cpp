@@ -73,12 +73,14 @@ std::string Position::fen() const {
 	if ((set_castling_state >> 1) & 0b1) castling_rights += "k";
 	if (set_castling_state & 0b1) castling_rights += "q";
 	if (set_castling_state == 0) castling_rights = "-";
+	int full_move_clock = half_move_clock / 2;
+	if (side_to_play == WHITE) full_move_clock += 1;
 
 	fen << (side_to_play == WHITE ? " w " : " b ")
 		<< castling_rights
 		<< (history[game_ply].epsq == NO_SQUARE ? " -" : " " + std::string(SQSTR[history[game_ply].epsq]))
 		<< " "
-		<< half_move_clock() << " "
+		<< fifty_mr_clock() << " "
 		<< full_move_clock;
 
 	return fen.str();
@@ -135,8 +137,8 @@ void Position::set(const std::string& fen, Position& p) {
 		p.history[p.game_ply].epsq = NO_SQUARE;
 	}
 
-	p.history[p.game_ply].half_move_clock = std::stoi(half_move_clock);
-	p.full_move_clock = std::stoi(full_move_clock);
+	p.history[p.game_ply].fifty_mr_clock = std::stoi(half_move_clock);
+	p.half_move_clock = std::stoi(full_move_clock);
 
 	if (p.side_to_play == BLACK) p.hash ^= zobrist::zobrist_color_key;
 	p.hash ^= zobrist::zobrist_castling_rights_table[p.castling_state()];
