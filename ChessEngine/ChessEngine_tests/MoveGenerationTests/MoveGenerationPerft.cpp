@@ -1,9 +1,11 @@
 //
 // Created by Archishmaan Peyyety on 1/10/23.
 //
+#include <fstream>
 #include "gtest/gtest.h"
 #include "move_generation/position.h"
 #include "constants.h"
+#include "helpers.h"
 
 class MoveGenerationFixture : public ::testing::Test {
 
@@ -34,7 +36,11 @@ unsigned long long perft_node_count(Position& p, unsigned int depth) {
 unsigned long long test_perft_node_count(const std::string& fen, int depth) {
 	Position p;
 	Position::set(fen, p);
-	return perft_node_count<WHITE>(p, depth);
+	if (p.turn() == WHITE) {
+		return perft_node_count<WHITE>(p, depth);
+	} else {
+		return perft_node_count<BLACK>(p, depth);
+	}
 }
 
 TEST_F(MoveGenerationFixture, PerftDepthOneDefaultFen){
@@ -102,4 +108,24 @@ TEST_F(MoveGenerationFixture, PerftDepthFiveTalkchess){
 }
 TEST_F(MoveGenerationFixture, PerftTestPosition){
 	EXPECT_EQ(test_perft_node_count("rn2kbnr/pp2pppp/2p5/8/5B2/N2P1B1P/PP3PP1/R4RK1 w kq - 0 13", 5), 18292958);
+}
+
+TEST_F(MoveGenerationFixture, Perft126) {
+	std::string perft_file_path = "/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/"
+								  "ChessEngine_tests/MoveGenerationTests/perft_results.txt";
+	std::ifstream input_file(perft_file_path);
+	std::string input_line;
+	while (std::getline(input_file, input_line)) {
+		std::vector<std::string> split_perft = split(input_line, ";");
+		std::string fen = split_perft[0];
+		for (int i = 1; i < split_perft.size(); i++) {
+			std::string expected = split_perft[i];
+			int depth = i;
+			int expected_node_count = std::stoi(split(expected, " ")[2]);
+			std::cout << "Running fen: " << fen << " depth " << depth << " expected node count " << expected_node_count << std::endl;
+			EXPECT_EQ(test_perft_node_count(fen, depth), expected_node_count);
+			std::cout << "Passed fen: " << fen << " depth " << depth << " expected node count " << expected_node_count << std::endl;
+		}
+	}
+	input_file.close();
 }
