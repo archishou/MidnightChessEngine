@@ -90,12 +90,12 @@ BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short
 	reset_clock();
 
 	for (int sub_depth = 1; sub_depth <= depth; sub_depth++) {
-		std::memset(search_results.pv, 0, sizeof(search_results.pv));
 		if (time_elapsed_exceeds(time_limit, Milliseconds)) {
 			break;
 		}
 		struct AlphaBetaData ab_results = alpha_beta_root<color>(board, sub_depth, time_limit, t_table);
 		if (ab_results.search_completed) {
+			std::memset(search_results.pv, 0, sizeof(search_results.pv));
 			update_best_move_results(search_results, ab_results, sub_depth, debug);
 		}
 	}
