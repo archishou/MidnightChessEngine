@@ -35,7 +35,7 @@ public:
 	bool key_in_table(zobrist_hash hash);
 	void put(zobrist_hash hash, short depth, int score, int ply, Move best_move, TranspositionTableEntryNodeType node_type);
 	TranspositionTableSearchResults probe_for_move_ordering(zobrist_hash hash);
-	TranspositionTableSearchResults probe_for_search(zobrist_hash hash, int depth, int ply, bool is_pv);
+	TranspositionTableSearchResults probe_for_search(zobrist_hash hash, int depth, int ply);
 	explicit TranspositionTable(uint64_t size = 3'000'000);
 	~TranspositionTable();
 

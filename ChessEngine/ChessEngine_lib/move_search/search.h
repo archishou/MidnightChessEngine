@@ -73,7 +73,6 @@ void update_best_move_results(BestMoveSearchResults& search_results, AlphaBetaDa
 	search_results.best_move = ab_results.best_move;
 	search_results.depth_searched = sub_depth;
 	search_results.nodes_searched += ab_results.nodes_searched + ab_results.q_nodes_searched;
-	//search_results.q_nodes_searched += ab_results.q_nodes_searched;
 	search_results.seldepth = ab_results.seldepth;
 	search_results.tt_key_collisions = ab_results.tt_key_collisions;
 	search_results.nodes_in_transposition_table = ab_results.nodes_in_transposition_table;

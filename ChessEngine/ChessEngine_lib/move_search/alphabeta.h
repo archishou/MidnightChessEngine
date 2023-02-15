@@ -73,7 +73,7 @@ int q_search(Position &board, const int ply, int alpha, const int beta, AlphaBet
 }
 
 template<Color color>
-int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool is_pv, AlphaBetaData& data, const int time_limit, TranspositionTable& t_table) {
+int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, AlphaBetaData& data, const int time_limit, TranspositionTable& t_table) {
 
 	if (time_elapsed_exceeds(time_limit, Milliseconds)) {
 		data.search_completed = false;
@@ -97,7 +97,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 		return q_search<color>(board, ply, alpha, beta, data, time_limit, t_table);
 	}
 
-	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), depth, ply, is_pv);
+	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), depth, ply);
 	if (probe_results.entry_found) {
 		TranspositionTableEntry tt_entry = probe_results.entry;
 		if (tt_entry.node_type == EXACT) {
@@ -112,26 +112,11 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 		}
 	}
 
-	if (depth >= 3 && !in_check && !is_pv) {
-		board.play_null<color>();
-
-		int reduction = 2;
-		int depth_prime = std::max(depth - reduction, 0);
-		int null_eval = -alpha_beta<~color>(board, depth_prime, ply + 1, -beta, -beta + 1,
-											false, data, time_limit, t_table);
-
-		board.undo_null<color>();
-		if (null_eval >= beta) {
-			if (null_eval >= MATE_BOUND) null_eval = beta;
-			return null_eval;
-		}
-	}
-
 	MoveList<color> all_legal_moves(board);
 	ScoredMoves scored_moves = order_moves(all_legal_moves, board, t_table);
 
 	if (scored_moves.empty()) {
-		if (board.in_check<color>()) return -(MATE_SCORE - ply);
+		if (in_check) return -(MATE_SCORE - ply);
 		return 0;
 	}
 
@@ -141,16 +126,8 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 		Move legal_move = scored_moves[i].move;
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
-		int new_value;
-		if (i == 0) {
-			new_value = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, is_pv,data, time_limit, t_table);
-		} else {
-			new_value =-alpha_beta<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, false,data, time_limit, t_table);
-			if (alpha < new_value && new_value < beta) {
-				new_value =-alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, true,data, time_limit, t_table);
-			}
-		}
-		value = std::max(value, new_value);
+		value = std::max(value, -alpha_beta<~color>(board, depth - 1, ply + 1, -beta,
+													-alpha, data, time_limit, t_table));
 		board.undo<color>(legal_move);
 		if (!data.search_completed) return 0;
 		if (value > alpha) {
@@ -159,16 +136,13 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 			best_move = legal_move;
 		}
 		alpha = std::max(alpha, value);
-		if (alpha >= beta) {
-			update_history(legal_move, depth);
-			break;
-		}
+		if (alpha >= beta) break;
 	}
 
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
 	t_table.put(board.get_hash(), depth, value, ply, best_move, node_type);
-	if (!is_pv) {
-		TranspositionTableSearchResults table_search_results = t_table.probe_for_search(board.get_hash(), depth, ply, is_pv);
+	if (ply != 0) {
+		TranspositionTableSearchResults table_search_results = t_table.probe_for_search(board.get_hash(), depth, ply);
 		assert(table_search_results.entry_found);
 		assert(table_search_results.entry.value == value);
 		assert(table_search_results.entry.zobrist_hash == board.get_hash());
@@ -190,7 +164,7 @@ AlphaBetaData alpha_beta_root(Position& board, short depth, int time_limit, Tran
 	data.nodes_in_transposition_table = 0;
 	std::memset(data.pv.table, 0, sizeof(data.pv.table));
 	std::memset(data.pv.length, 0, sizeof(data.pv.length));
-	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, true,data, time_limit, t_table);
+	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, data, time_limit, t_table);
 	data.best_move = data.pv.table[0][0];
 	return data;
 }

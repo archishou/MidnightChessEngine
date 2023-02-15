@@ -4,10 +4,6 @@
 #include "transposition_table.h"
 #include "search_params.h"
 
-static int sign(int x) {
-	return (x >= 0 ? 1 : -1);
-}
-
 TranspositionTable::TranspositionTable(uint64_t size) {
 	table_size = size;
 	transposition_table = new TranspositionTableEntry[table_size];
@@ -75,11 +71,11 @@ TranspositionTable::probe_for_move_ordering(zobrist_hash hash) {
 }
 
 TranspositionTableSearchResults
-TranspositionTable::probe_for_search(zobrist_hash hash, int depth, int ply, bool is_pv) {
+TranspositionTable::probe_for_search(zobrist_hash hash, int depth, int ply) {
 	TranspositionTableEntry entry = transposition_table[get_index(hash)];
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
-	if (entry.zobrist_hash == hash && entry.depth >= depth && !is_pv) {
+	if (entry.zobrist_hash == hash && entry.depth >= depth && ply != 0) {
 		results.entry_found = true;
 		results.entry = entry;
 		results.entry.value = correct_mate_for_retrieval(results.entry.value, ply);
