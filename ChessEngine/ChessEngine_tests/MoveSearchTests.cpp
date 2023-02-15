@@ -59,7 +59,7 @@ TEST_F(MoveSearchFixture, MateInOneTest4){
 	Position::set(fen, p);
 
 	BestMoveSearchResults results;
-	results = best_move<WHITE>(p);
+	results = best_move<WHITE>(p, {.debug_info = true});
 	Move mate_move = Move(c4, c8, QUIET);
 	ASSERT_TRUE(results.depth_searched >= 2);
 	EXPECT_TRUE(results.best_move == mate_move);
@@ -157,5 +157,49 @@ TEST_F(MoveSearchFixture, DrawTest1){
 	Position::set(INITIAL_BOARD_FEN, p);
 	uci_update_position_from_moves(p, uci_moves);
 	BestMoveSearchResults results = best_move(p);
+	std::cout << p.fen() << std::endl;
 	EXPECT_TRUE(p.at(results.best_move.from()) == BLACK_PAWN);
+}
+
+TEST_F(MoveSearchFixture, A1){
+	std::string uci_moves = "e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 h2h4 e8g8 f1d3 c7c5 d1g4 e7g5 h4g5 c5d4 d3h7";
+	Position p;
+	Position::set(INITIAL_BOARD_FEN, p);
+	uci_update_position_from_moves(p, uci_moves);
+	std::cout << p.fen() << std::endl;
+	const BestMoveSearchParameters parameters = {
+			.depth = 15,
+			.time_limit = 1000,
+			.debug_info = true
+	};
+	BestMoveSearchResults results = best_move(p, parameters);
+	std::cout << p.fen() << std::endl;
+	std::cout << results << std::endl;
+}
+
+TEST_F(MoveSearchFixture, MateIn5Test1){
+	Position p;
+	Position::set("4k3/1Q6/8/8/8/8/6K1/8 w - - 6 4", p);
+	std::cout << p.fen() << std::endl;
+	const BestMoveSearchParameters parameters = {
+			.depth = MAX_DEPTH,
+			.time_limit = 1000,
+			.debug_info = true
+	};
+	BestMoveSearchResults results = best_move(p, parameters);
+	assert(line_size(results.pv) == 9);
+}
+
+TEST_F(MoveSearchFixture, MateIn5Test2){
+	Position p;
+	Position::set("k7/1B6/1NK5/8/8/8/8/8 b - - 0 1", p);
+	std::cout << p.fen() << std::endl;
+	const BestMoveSearchParameters parameters = {
+			.depth = MAX_DEPTH,
+			.time_limit = 100000,
+			.debug_info = true
+	};
+	BestMoveSearchResults results = best_move(p, parameters);
+	std::cout << results << std::endl;
+	//assert(line_size(results.pv) == 9);
 }

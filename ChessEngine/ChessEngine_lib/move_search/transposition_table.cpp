@@ -28,16 +28,14 @@ TranspositionTable::~TranspositionTable() {
 }
 
 int TranspositionTable::correct_mate_for_retrieval(int score, int ply) {
-	if (std::abs(score) > MATE_SCORE - MAX_MATE_DEPTH) {
-		return (score * sign(score) + ply) * sign(score);
-	}
+	if (score < -MATE_BOUND) score += ply;
+	else if (score > MATE_BOUND) score -= ply;
 	return score;
 }
 
 int TranspositionTable::correct_mate_for_storage(int score, int ply) {
-	if (std::abs(score) > MATE_SCORE - MAX_MATE_DEPTH) {
-		return (score * sign(score) - ply) * sign(score);
-	}
+	if (score < -MATE_BOUND) score -= ply;
+	else if (score > MATE_BOUND) score += ply;
 	return score;
 }
 
@@ -77,11 +75,11 @@ TranspositionTable::probe_for_move_ordering(zobrist_hash hash) {
 }
 
 TranspositionTableSearchResults
-TranspositionTable::probe_for_search(zobrist_hash hash, int depth, int ply) {
+TranspositionTable::probe_for_search(zobrist_hash hash, int depth, int ply, bool is_pv) {
 	TranspositionTableEntry entry = transposition_table[get_index(hash)];
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
-	if (entry.zobrist_hash == hash && entry.depth >= depth && ply != 0) {
+	if (entry.zobrist_hash == hash && entry.depth >= depth && !is_pv) {
 		results.entry_found = true;
 		results.entry = entry;
 		results.entry.value = correct_mate_for_retrieval(results.entry.value, ply);

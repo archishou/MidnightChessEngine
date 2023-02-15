@@ -6,16 +6,17 @@ const int POS_INF_CHESS = 1000000;
 const int NEG_INF_CHESS = -POS_INF_CHESS;
 const int MATE_SCORE = POS_INF_CHESS / 10;
 const short MAX_DEPTH = 100;
-const int MAX_MATE_DEPTH = 10 * MAX_DEPTH;
+const int MATE_BOUND = MATE_SCORE - MAX_DEPTH;
+const int DEFAULT_SEARCH_TIME = 1000;
 
 struct BestMoveSearchParameters {
-	short depth;
-	int time_limit;
-	bool debug_info;
+	short depth = MAX_DEPTH;
+	int time_limit = DEFAULT_SEARCH_TIME;
+	bool debug_info = false;
 };
 
 const struct BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
 	.depth = MAX_DEPTH,
-	.time_limit = 1000,
-	.debug_info = false
+	.time_limit = DEFAULT_SEARCH_TIME,
+	.debug_info = true
 };

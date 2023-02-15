@@ -45,6 +45,15 @@ bool lines_equal(Line& line_1, Line& line_2) {
 	return true;
 }
 
+int line_size(Line& line) {
+	int size = 0;
+	for (Move m : line) {
+		if (m == Move()) break;
+		size += 1;
+	}
+	return size;
+}
+
 std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results) {
 	os << "Best Move: " << results.best_move << std::endl;
 	os << "Principal Variation: " << results.pv << std::endl;
@@ -73,7 +82,7 @@ void update_best_move_results(BestMoveSearchResults& search_results, AlphaBetaDa
 		search_results.pv[i] = ab_results.pv.table[0][i];
 	}
 	if (debug) {
-		std::cout << "info depth " << sub_depth << " score cp " << search_results.value << " time " <<
+		std::cout << "info depth " << sub_depth << " seldepth " << search_results.seldepth <<  " score cp " << search_results.value << " time " <<
 		search_results.time_searched << " nodes " << search_results.nodes_searched << " pv " << search_results.pv << std::endl;
 	}
 }
