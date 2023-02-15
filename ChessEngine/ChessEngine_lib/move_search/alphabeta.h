@@ -63,9 +63,9 @@ int q_search(Position &board, const int ply, int alpha, const int beta, AlphaBet
 	for (const ScoredMove& scored_move : scored_moves) {
 		const Move legal_move = scored_move.move;
 		board.play<color>(legal_move);
+		data.q_nodes_searched += 1;
 		const int score = -q_search<~color>(board, ply + 1, -beta, -alpha, data, time_limit, t_table);
 		board.undo<color>(legal_move);
-		data.q_nodes_searched += 1;
 		if (score >= beta) return beta;
 		if (score > alpha) alpha = score;
 	}
@@ -152,6 +152,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 		}
 		value = std::max(value, new_value);
 		board.undo<color>(legal_move);
+		if (!data.search_completed) return 0;
 		if (value > alpha) {
 			if (ply == 0) data.value = value;
 			update_pv(data.pv, ply, legal_move);
@@ -159,7 +160,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 		}
 		alpha = std::max(alpha, value);
 		if (alpha >= beta) {
-			//update_history(legal_move, depth);
+			update_history(legal_move, depth);
 			break;
 		}
 	}
