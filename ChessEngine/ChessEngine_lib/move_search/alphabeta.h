@@ -27,15 +27,19 @@ struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
 	.generate_quiet = false,
 };
 
-bool position_is_draw(Position &board) {
+bool position_is_draw(Position &board, const int ply) {
 	uint64_t current_hash = board.get_hash();
 	if (board.fifty_mr_clock() >= 100) {
 		return true;
 	}
-	int count = 0;
-	for (uint64_t hash : board.hash_history) {
+	int count = ply == 0 ? 0 : 1; // If it's a root node, we check for three-fold repetition. Otherwise, just two fold.
+	const size_t hash_hist_size = board.hash_history.size();
+	for (long idx = hash_hist_size - 3;
+		 idx >= 0 && idx >= hash_hist_size - board.fifty_mr_clock();
+		 idx -= 2) {
+		zobrist_hash hash = board.hash_history[idx];
 		if (hash == current_hash) count += 1;
-		if (count >= 3) return true;
+		if (count >= 2) return true;
 	}
 	return false;
 }
@@ -83,7 +87,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 	data.seldepth = std::max(data.seldepth, ply);
 
 	if (ply > 0) {
-		if (position_is_draw(board)) return 0;
+		if (position_is_draw(board, ply)) return 0;
 		alpha = std::max(alpha, -MATE_SCORE + ply);
 		beta = std::min(beta, MATE_SCORE - ply);
 		if (alpha >= beta) return alpha;

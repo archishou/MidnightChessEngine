@@ -666,7 +666,7 @@ Move* Position::generate_captures(Move *list) {
 }
 
 //Generates all legal moves in a position for the given side. Advances the move pointer and returns it.
-//TODO: seperate logic out for each MoveGenerationOption
+//TODO: separate logic out for each MoveGenerationOption
 template<Color Us>
 Move* Position::generate_legals(Move* list, const MoveGenerationOptions &options) {
 	if (options.generate_captures && !options.generate_quiet && !options.generate_promotion && !options.generate_checks) {
