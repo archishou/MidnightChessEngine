@@ -172,7 +172,9 @@ public:
 	}
 
 	template<Color C> void play(Move m);
+	template<Color c> void play_null();
 	template<Color C> void undo(Move m);
+	template<Color c> void undo_null();
 
 	template<Color Us>
 	Move *generate_legals(Move *list, const MoveGenerationOptions &options);
@@ -324,6 +326,21 @@ void Position::play(const Move m) {
 	hash_history.push_back(hash);
 }
 
+template<Color c>
+void Position::play_null() {
+	int original_ep_file = ep_file();
+	Bitboard original_castle_state = castling_state();
+	game_ply += 1;
+	side_to_play = ~side_to_play;
+	UndoInfo null_move_history = UndoInfo();
+	null_move_history.entry = history[game_ply - 1].entry;
+	null_move_history.captured = NO_PIECE;
+	null_move_history.fifty_mr_clock = history[game_ply - 1].fifty_mr_clock + 1;
+	null_move_history.epsq = NO_SQUARE;
+	history[game_ply] = null_move_history;
+	update_hash_board_features(original_castle_state, original_ep_file);
+}
+
 //Undos a move in the current position, rolling it back to the previous position
 template<Color C>
 void Position::undo(const Move m) {
@@ -384,6 +401,15 @@ void Position::undo(const Move m) {
 	side_to_play = ~side_to_play;
 	--game_ply;
 	update_hash_board_features(current_castling_state, current_ep_file);
+}
+
+template<Color C>
+void Position::undo_null() {
+	int old_ep_file = ep_file();
+	Bitboard old_castling_state = castling_state();
+	game_ply -= 1;
+	side_to_play = ~side_to_play;
+	update_hash_board_features(old_castling_state, old_ep_file);
 }
 
 template<Color Us>

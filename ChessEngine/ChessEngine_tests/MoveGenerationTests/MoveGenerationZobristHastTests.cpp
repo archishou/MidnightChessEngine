@@ -30,9 +30,11 @@ void perft_hash(Position& p, unsigned int depth) {
 		if (initial_hash != b2.get_hash()) {
 			std::cout << "Failure to set position! " << std::endl;
 		}
-		p.play<Us>(move);
+		p.play_null<~Us>();
+		p.play_null<Us>();
 		perft_hash<~Us>(p, depth - 1);
-		p.undo<Us>(move);
+		p.undo_null<Us>();
+		p.undo_null<~Us>();
 		EXPECT_EQ(initial_hash, p.get_hash());
 		EXPECT_EQ(initial_hash, b2.get_hash());
 	}
