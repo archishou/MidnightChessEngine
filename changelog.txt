@@ -1,0 +1,28 @@
+Added basic NMP
+
+Score of midnight-dev vs midnight-latest: 452 - 329 - 219 [0.561]
+...      midnight-dev playing White: 143 - 232 - 125  [0.411] 500
+...      midnight-dev playing Black: 309 - 97 - 94  [0.712] 500
+...      White vs Black: 240 - 541 - 219  [0.349] 1000
+Elo difference: 43.0 +/- 19.1, LOS: 100.0 %, DrawRatio: 21.9 %
+1000 of 1000 games finished.
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 129
+   "Draw by adjudication": 20
+   "Draw by fifty moves rule": 41
+   "Draw by insufficient mating material": 29
+   "Loss: Black mates": 232
+   "Loss: White mates": 97
+   "Win: Black mates": 309
+   "Win: White mates": 143
+Player: midnight-latest
+   "Draw by 3-fold repetition": 129
+   "Draw by adjudication": 20
+   "Draw by fifty moves rule": 41
+   "Draw by insufficient mating material": 29
+   "Loss: Black mates": 309
+   "Loss: White mates": 143
+   "Win: Black mates": 232
+   "Win: White mates": 97
+

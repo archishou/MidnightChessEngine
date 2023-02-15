@@ -76,9 +76,11 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 		return 0;
 	}
 
-	data.seldepth = std::max(data.seldepth, ply);
 	int alpha_initial = alpha;
+	bool in_check = board.in_check<color>();
+
 	init_pv(data.pv, ply);
+	data.seldepth = std::max(data.seldepth, ply);
 
 	if (ply > 0) {
 		if (position_is_draw(board)) return 0;
@@ -103,6 +105,21 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 		}
 		if (alpha >= beta) {
 			return tt_entry.value;
+		}
+	}
+
+	if (depth >= 3 && !in_check && !is_pv) {
+		board.play_null<color>();
+
+		int reduction = 2;
+		int depth_prime = std::max(depth - reduction, 0);
+		int null_eval = -alpha_beta<~color>(board, depth_prime, ply + 1, -beta, -beta + 1,
+											false, data, time_limit, t_table);
+
+		board.undo_null<color>();
+		if (null_eval >= beta) {
+			if (null_eval >= MATE_BOUND) null_eval = beta;
+			return null_eval;
 		}
 	}
 
