@@ -1,57 +1,31 @@
-Added basic NMP
+200 Full Move Draw Adjucation
 
-Score of midnight-dev vs midnight-latest: 452 - 329 - 219 [0.561]
-...      midnight-dev playing White: 143 - 232 - 125  [0.411] 500
-...      midnight-dev playing Black: 309 - 97 - 94  [0.712] 500
-...      White vs Black: 240 - 541 - 219  [0.349] 1000
-Elo difference: 43.0 +/- 19.1, LOS: 100.0 %, DrawRatio: 21.9 %
+Add History Heuristic
+
+Score of midnight-dev vs midnight-latest: 449 - 276 - 275 [0.587]
+...      midnight-dev playing White: 219 - 155 - 126  [0.564] 500
+...      midnight-dev playing Black: 230 - 121 - 149  [0.609] 500
+...      White vs Black: 340 - 385 - 275  [0.477] 1000
+Elo difference: 60.7 +/- 18.5, LOS: 100.0 %, DrawRatio: 27.5 %
 1000 of 1000 games finished.
 
 Player: midnight-dev
-   "Draw by 3-fold repetition": 129
-   "Draw by adjudication": 20
-   "Draw by fifty moves rule": 41
-   "Draw by insufficient mating material": 29
-   "Loss: Black mates": 232
-   "Loss: White mates": 97
-   "Win: Black mates": 309
-   "Win: White mates": 143
+   "Draw by 3-fold repetition": 190
+   "Draw by adjudication": 1
+   "Draw by fifty moves rule": 35
+   "Draw by insufficient mating material": 41
+   "Draw by stalemate": 8
+   "Loss: Black mates": 155
+   "Loss: White mates": 121
+   "Win: Black mates": 230
+   "Win: White mates": 219
 Player: midnight-latest
-   "Draw by 3-fold repetition": 129
-   "Draw by adjudication": 20
-   "Draw by fifty moves rule": 41
-   "Draw by insufficient mating material": 29
-   "Loss: Black mates": 309
-   "Loss: White mates": 143
-   "Win: Black mates": 232
-   "Win: White mates": 97
-
-2 Fold vs 3 Fold
-
-Score of midnight-dev vs midnight-latest: 436 - 376 - 188 [0.530]
-...      midnight-dev playing White: 159 - 245 - 96  [0.414] 500
-...      midnight-dev playing Black: 277 - 131 - 92  [0.646] 500
-...      White vs Black: 290 - 522 - 188  [0.384] 1000
-Elo difference: 20.9 +/- 19.4, LOS: 98.2 %, DrawRatio: 18.8 %
-1000 of 1000 games finished.
-
-Player: midnight-dev
-   "Draw by 3-fold repetition": 103
-   "Draw by adjudication": 19
-   "Draw by fifty moves rule": 48
-   "Draw by insufficient mating material": 17
-   "Draw by stalemate": 1
-   "Loss: Black mates": 245
-   "Loss: White mates": 131
-   "Win: Black mates": 277
-   "Win: White mates": 159
-Player: midnight-latest
-   "Draw by 3-fold repetition": 103
-   "Draw by adjudication": 19
-   "Draw by fifty moves rule": 48
-   "Draw by insufficient mating material": 17
-   "Draw by stalemate": 1
-   "Loss: Black mates": 277
-   "Loss: White mates": 159
-   "Win: Black mates": 245
-   "Win: White mates": 131
+   "Draw by 3-fold repetition": 190
+   "Draw by adjudication": 1
+   "Draw by fifty moves rule": 35
+   "Draw by insufficient mating material": 41
+   "Draw by stalemate": 8
+   "Loss: Black mates": 230
+   "Loss: White mates": 219
+   "Win: Black mates": 155
+   "Win: White mates": 121

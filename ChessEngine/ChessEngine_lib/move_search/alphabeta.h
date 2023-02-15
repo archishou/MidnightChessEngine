@@ -136,7 +136,10 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, Alpha
 			best_move = legal_move;
 		}
 		alpha = std::max(alpha, value);
-		if (alpha >= beta) break;
+		if (alpha >= beta) {
+			update_history(best_move, depth);
+			break;
+		}
 	}
 
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
