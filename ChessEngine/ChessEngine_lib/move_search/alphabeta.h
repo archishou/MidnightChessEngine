@@ -3,7 +3,7 @@
 //
 #include "search_params.h"
 #include "move_generation/position.h"
-#include "move_ordering.h"
+#include "move_search/move_ordering/move_ordering.h"
 #include "pv_table.h"
 #include "clock.h"
 
@@ -158,7 +158,10 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 			best_move = legal_move;
 		}
 		alpha = std::max(alpha, value);
-		if (alpha >= beta) break;
+		if (alpha >= beta) {
+			update_history(legal_move, depth);
+			break;
+		}
 	}
 
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);

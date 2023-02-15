@@ -10,6 +10,7 @@ protected:
 	virtual void SetUp() {
 		initialise_all_databases();
 		zobrist::initialise_zobrist_keys();
+		initialize_move_sort_tables();
 	}
 
 	virtual void TearDown() {
