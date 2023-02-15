@@ -145,7 +145,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 		if (i == 0) {
 			new_value = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, is_pv,data, time_limit, t_table);
 		} else {
-			new_value =-alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, false,data, time_limit, t_table);
+			new_value =-alpha_beta<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, false,data, time_limit, t_table);
 			if (alpha < new_value && new_value < beta) {
 				new_value =-alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, true,data, time_limit, t_table);
 			}
@@ -159,7 +159,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 		}
 		alpha = std::max(alpha, value);
 		if (alpha >= beta) {
-			update_history(legal_move, depth);
+			//update_history(legal_move, depth);
 			break;
 		}
 	}

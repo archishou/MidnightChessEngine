@@ -58,7 +58,8 @@ int promotion_move_score(Move move, Position& board) {
 
 int history_score(Move &move) {
 	if (move.flag() != QUIET) return 0;
-	return HISTORY_BONUS + history[move.from()][move.to()];
+	return 0;
+	//return HISTORY_BONUS + history[move.from()][move.to()];
 }
 
 template<Color color>
@@ -81,7 +82,7 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board, Transpositi
 		score += hash_move_score(move, previous_best_move);
 		score += capture_move_score(move, board);
 		score += promotion_move_score(move, board);
-		score += history_score(move);
+		//score += history_score(move);
 		score += in_opponent_pawn_territory<color>(move, board);
 		// Score negated for sorting. We want to evaluate high scoring moves first.
 		scored_move.score = -score;
