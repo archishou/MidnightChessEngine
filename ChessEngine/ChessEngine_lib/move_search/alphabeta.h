@@ -112,6 +112,18 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, Alpha
 		}
 	}
 
+	if (depth >= 3 && !in_check && ply != 0) {
+		board.play_null<color>();
+
+		int reduction = 1 + depth / 4;
+		int depth_prime = std::max(depth - reduction, 0);
+		int null_eval = -alpha_beta<~color>(board, depth_prime, ply + 1, -beta, -beta + 1,
+										 data, time_limit, t_table);
+
+		board.undo_null<color>();
+		if (null_eval >= beta) return null_eval;
+	}
+
 	MoveList<color> all_legal_moves(board);
 	ScoredMoves scored_moves = order_moves<color>(all_legal_moves, board, t_table, ply);
 
