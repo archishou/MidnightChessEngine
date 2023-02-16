@@ -1,4 +1,4 @@
-200 Full Move Draw Adjucation
+200 Full Move Draw Adjudication
 
 Add History Heuristic
 
@@ -29,3 +29,33 @@ Player: midnight-latest
    "Loss: White mates": 219
    "Win: Black mates": 155
    "Win: White mates": 121
+
+History with tighter bounds
+
+Score of midnight-dev vs midnight-history: 382 - 320 - 298 [0.531]
+...      midnight-dev playing White: 196 - 159 - 145  [0.537] 500
+...      midnight-dev playing Black: 186 - 161 - 153  [0.525] 500
+...      White vs Black: 357 - 345 - 298  [0.506] 1000
+Elo difference: 21.6 +/- 18.1, LOS: 99.0 %, DrawRatio: 29.8 %
+1000 of 1000 games finished.
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 200
+   "Draw by adjudication": 10
+   "Draw by fifty moves rule": 41
+   "Draw by insufficient mating material": 42
+   "Draw by stalemate": 5
+   "Loss: Black mates": 159
+   "Loss: White mates": 161
+   "Win: Black mates": 186
+   "Win: White mates": 196
+Player: midnight-history
+   "Draw by 3-fold repetition": 200
+   "Draw by adjudication": 10
+   "Draw by fifty moves rule": 41
+   "Draw by insufficient mating material": 42
+   "Draw by stalemate": 5
+   "Loss: Black mates": 186
+   "Loss: White mates": 196
+   "Win: Black mates": 159
+   "Win: White mates": 161
