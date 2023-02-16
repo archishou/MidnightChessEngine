@@ -56,8 +56,11 @@ int promotion_move_score(Move move, Position& board) {
 	else return 0;
 }
 
-int history_score(Move &move) {
+template<Color color>
+int history_score(Move &move, int ply) {
 	if (move.flag() != QUIET) return 0;
+	if (move == killers[ply][0]) return KILLER_MOVE_BONUS + 2000;
+	else if (move == killers[ply][1]) return KILLER_MOVE_BONUS + 1000;
 	return HISTORY_BONUS + history[move.from()][move.to()];
 }
 
@@ -69,7 +72,7 @@ int in_opponent_pawn_territory(Move move, Position& board) {
 }
 
 template<Color color>
-ScoredMoves order_moves(MoveList<color>& move_list, Position& board, TranspositionTable& t_table) {
+ScoredMoves order_moves(MoveList<color>& move_list, Position& board, TranspositionTable& t_table, int ply) {
 	ScoredMoves scored_moves;
 	Move previous_best_move = Move();
 	TranspositionTableSearchResults search_results = t_table.probe_for_move_ordering(board.get_hash());
@@ -81,7 +84,7 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board, Transpositi
 		score += hash_move_score(move, previous_best_move);
 		score += capture_move_score(move, board);
 		score += promotion_move_score(move, board);
-		score += history_score(move);
+		score += history_score<color>(move, ply);
 		score += in_opponent_pawn_territory<color>(move, board);
 		// Score negated for sorting. We want to evaluate high scoring moves first.
 		scored_move.score = -score;

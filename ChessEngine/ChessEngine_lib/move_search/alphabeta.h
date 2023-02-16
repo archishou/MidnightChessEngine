@@ -59,7 +59,7 @@ int q_search(Position &board, const int ply, int alpha, const int beta, AlphaBet
 	if (alpha < stand_pat) alpha = stand_pat;
 
 	MoveList<color> capture_moves(board, QSearchMoveGenerationsOptions);
-	ScoredMoves scored_moves = order_moves<color>(capture_moves, board, t_table);
+	ScoredMoves scored_moves = order_moves<color>(capture_moves, board, t_table, ply);
 	for (const ScoredMove& scored_move : scored_moves) {
 		const Move legal_move = scored_move.move;
 		board.play<color>(legal_move);
@@ -113,7 +113,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, Alpha
 	}
 
 	MoveList<color> all_legal_moves(board);
-	ScoredMoves scored_moves = order_moves(all_legal_moves, board, t_table);
+	ScoredMoves scored_moves = order_moves<color>(all_legal_moves, board, t_table, ply);
 
 	if (scored_moves.empty()) {
 		if (in_check) return -(MATE_SCORE - ply);
@@ -137,7 +137,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, Alpha
 		}
 		alpha = std::max(alpha, value);
 		if (alpha >= beta) {
-			update_history(best_move, depth);
+			update_history<color>(best_move, depth, ply);
 			break;
 		}
 	}

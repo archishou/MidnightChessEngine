@@ -59,3 +59,32 @@ Player: midnight-history
    "Loss: White mates": 196
    "Win: Black mates": 159
    "Win: White mates": 161
+
+Adds killer heuristic
+Score of midnight-dev vs vhistory-bounds: 372 - 322 - 306 [0.525]
+...      midnight-dev playing White: 162 - 180 - 158  [0.482] 500
+...      midnight-dev playing Black: 210 - 142 - 148  [0.568] 500
+...      White vs Black: 304 - 390 - 306  [0.457] 1000
+Elo difference: 17.4 +/- 17.9, LOS: 97.1 %, DrawRatio: 30.6 %
+1000 of 1000 games finished.
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 174
+   "Draw by adjudication": 16
+   "Draw by fifty moves rule": 53
+   "Draw by insufficient mating material": 50
+   "Draw by stalemate": 13
+   "Loss: Black mates": 180
+   "Loss: White mates": 142
+   "Win: Black mates": 210
+   "Win: White mates": 162
+Player: vhistory-bounds
+   "Draw by 3-fold repetition": 174
+   "Draw by adjudication": 16
+   "Draw by fifty moves rule": 53
+   "Draw by insufficient mating material": 50
+   "Draw by stalemate": 13
+   "Loss: Black mates": 210
+   "Loss: White mates": 162
+   "Win: Black mates": 180
+   "Win: White mates": 142
