@@ -73,7 +73,7 @@ int q_search(Position &board, const int ply, int alpha, const int beta, AlphaBet
 }
 
 template<Color color>
-int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, AlphaBetaData& data, const int time_limit, TranspositionTable& t_table) {
+int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool do_null, AlphaBetaData& data, const int time_limit, TranspositionTable& t_table) {
 
 	if (time_elapsed_exceeds(time_limit, Milliseconds)) {
 		data.search_completed = false;
@@ -112,13 +112,13 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, Alpha
 		}
 	}
 
-	if (depth >= 3 && !in_check && ply != 0) {
+	if (depth >= 3 && !in_check && ply != 0 && do_null) {
 		board.play_null<color>();
 
-		int reduction = 1 + depth / 4;
+		int reduction = 3;
 		int depth_prime = std::max(depth - reduction, 0);
 		int null_eval = -alpha_beta<~color>(board, depth_prime, ply + 1, -beta, -beta + 1,
-										 data, time_limit, t_table);
+										 false,data, time_limit, t_table);
 
 		board.undo_null<color>();
 		if (null_eval >= beta) return null_eval;
@@ -139,7 +139,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, Alpha
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
 		value = std::max(value, -alpha_beta<~color>(board, depth - 1, ply + 1, -beta,
-													-alpha, data, time_limit, t_table));
+													-alpha, true,data, time_limit, t_table));
 		board.undo<color>(legal_move);
 		if (!data.search_completed) return 0;
 		if (value > alpha) {
@@ -179,7 +179,7 @@ AlphaBetaData alpha_beta_root(Position& board, short depth, int time_limit, Tran
 	data.nodes_in_transposition_table = 0;
 	std::memset(data.pv.table, 0, sizeof(data.pv.table));
 	std::memset(data.pv.length, 0, sizeof(data.pv.length));
-	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, data, time_limit, t_table);
+	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, false,data, time_limit, t_table);
 	data.best_move = data.pv.table[0][0];
 	return data;
 }
