@@ -100,7 +100,7 @@ int alpha_beta(Position &board, short depth, int ply, int alpha, int beta, bool 
 	}
 
 	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), depth, ply);
-	if (probe_results.entry_found) {
+	if (probe_results.entry_found && !pv_node) {
 		TranspositionTableEntry tt_entry = probe_results.entry;
 		if (tt_entry.node_type == EXACT) {
 			return tt_entry.value;
@@ -114,7 +114,7 @@ int alpha_beta(Position &board, short depth, int ply, int alpha, int beta, bool 
 		}
 	}
 
-	if (depth >= 3 && !in_check && ply != 0 && do_null) {
+	if (depth >= 3 && !in_check && !pv_node && do_null) {
 		board.play_null<color>();
 
 		int reduction = 2 + depth/4;

@@ -176,3 +176,33 @@ Player: midnight-latest
    "Loss: White mates": 194
    "Win: Black mates": 164
    "Win: White mates": 178
+
+Adds pv_node check for nmp and ttable checks
+
+Score of midnight-dev vs midnight-latest: 400 - 333 - 267 [0.533]
+...      midnight-dev playing White: 176 - 187 - 137  [0.489] 500
+...      midnight-dev playing Black: 224 - 146 - 130  [0.578] 500
+...      White vs Black: 322 - 411 - 267  [0.456] 1000
+Elo difference: 23.3 +/- 18.5, LOS: 99.3 %, DrawRatio: 26.7 %
+1000 of 1000 games finished.
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 167
+   "Draw by adjudication": 15
+   "Draw by fifty moves rule": 40
+   "Draw by insufficient mating material": 45
+   "Loss: Black mates": 187
+   "Loss: White mates": 146
+   "Win: Black mates": 223
+   "Win: White makes an illegal move: a1a1": 1
+   "Win: White mates": 176
+Player: midnight-latest
+   "Draw by 3-fold repetition": 167
+   "Draw by adjudication": 15
+   "Draw by fifty moves rule": 40
+   "Draw by insufficient mating material": 45
+   "Loss: Black mates": 223
+   "Loss: White makes an illegal move: a1a1": 1
+   "Loss: White mates": 176
+   "Win: Black mates": 187
+   "Win: White mates": 146

@@ -183,6 +183,27 @@ TEST_F(MoveSearchFixture, IllegalMoveA1a1){
 	EXPECT_TRUE(line_size(results.pv) >= 1);
 }
 
+TEST_F(MoveSearchFixture, IllegalMoveA1a12){
+	std::string uci_moves;
+	uci_moves = "d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 e2e4 d5e4 c3e4 f8b4 e4c3 c6c5 a2a3 b4c3 b2c3 g8f6 g1f3 b8c6 f1e2 e8g8 "
+				"e1g1 d8c7 c1e3 c5d4 c3d4 f6g4 d1b3 c6a5 b3c2 g4e3 f2e3 a5c6 e2d3 f7f5 e3e4 f8d8 e4f5 c6d4 f3d4 c7c5 "
+				"f1f4 e6e5 f4h4 d8d4 c2f2 c5b6 h4d4 b6d4 f2d4 e5d4 a1f1 c8d7 f1f4 a8f8 g2g4 f8e8 f4d4 d7c6 c4c5 e8e1 "
+				"g1f2 e1h1 d3c4 g8f8 f2g3 h1c1 h2h3 f8e7 d4f4 h7h6 f4d4 e7f8 h3h4 c1c3 g3h2 f8e7 d4f4 e7f6 c4e6 c3c2 "
+				"h2h3 c2c5 f4c4 c5e5 c4c3 f6e7 e6c4 h6h5 c3g3 e7f8 c4e6 h5g4 g3g4 e5e1 g4g3 e1h1 h3g4 h1a1 g4h3 a1f1 "
+				"g3b3 c6e4 b3b4 f1e1 b4a4 a7a6 a4d4 e4c6 d4d8 f8e7 d8g8 e1g1 g8c8 g1a1 c8g8 a1a3 h3g4 e7f6 g8f8 f6e5 "
+				"h4h5 c6f3 g4g5 a3a1 e6c8 a1g1 g5h4 e5f4 f5f6 g1h1 c8h3 g7g5";
+	Position p;
+	Position::set(INITIAL_BOARD_FEN, p);
+	uci_update_position_from_moves(p, uci_moves);
+	BestMoveSearchParameters parameters = {
+			.depth = MAX_DEPTH,
+			.time_limit = 100,
+			.debug_info = true
+	};
+	BestMoveSearchResults results = best_move(p, parameters);
+	EXPECT_TRUE(line_size(results.pv) >= 1);
+}
+
 TEST_F(MoveSearchFixture, A1){
 	std::string uci_moves = "e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 h2h4 e8g8 f1d3 c7c5 d1g4 e7g5 h4g5 c5d4 d3h7";
 	Position p;
