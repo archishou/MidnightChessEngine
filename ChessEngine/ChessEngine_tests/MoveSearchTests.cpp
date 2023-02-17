@@ -162,6 +162,27 @@ TEST_F(MoveSearchFixture, DrawTest1){
 	EXPECT_TRUE(p.at(results.best_move.from()) == BLACK_PAWN);
 }
 
+
+TEST_F(MoveSearchFixture, IllegalMoveA1a1){
+	std::string uci_moves;
+	uci_moves = "d2d4 d7d6 e2e4 g8f6 b1c3 b8d7 g2g4 g7g6 g4g5 f6h5 g1f3 e7e5 d4e5 d6e5 f1c4 f8g7 e1g1 e8g8 c3d5 d7c5 "
+				"d1e2 c7c6 d5b4 c8e6 c4e6 c5e6 b4d3 d8c7 c1d2 c6c5 d2c3 h5f4 e2e3 e6d4 d3f4 e5f4 e3d3 a8d8 f3d4 c5d4 "
+				"c3b4 f8e8 f1e1 c7d7 g1h1 d7g4 e1g1 g4e6 g1e1 g7e5 b4a5 d8d7 h2h3 e6e7 e1g1 e5g7 a1e1 e7e6 a2a3 g7e5 "
+				"g1g4 e8c8 h1g1 e6c4 d3c4 c8c4 c2c3 d4d3 a5b4 d3d2 e1d1 c4e4 g1f1 d7d5 b4e7 e5c3 b2c3 e4e7 g4f4 e7c7 "
+				"c3c4 d5d3 f1g2 c7c5 h3h4 b7b5 c4b5 c5c1 d1d2 d3d2 f4a4 c1c2 a4f4 c2b2 a3a4 d2c2 g2g1 b2a2 g1g2 c2c1 "
+				"f4d4 c1a1 d4d8 g8g7 g2g3 a2a4 d8d7 a1a3 f2f3 a4b4 d7b7 a3a5 b7b8 b4b5 b8b5 a5b5 f3f4 b5b3 g3g4 h7h5";
+	Position p;
+	Position::set(INITIAL_BOARD_FEN, p);
+	uci_update_position_from_moves(p, uci_moves);
+	BestMoveSearchParameters parameters = {
+			.depth = MAX_DEPTH,
+			.time_limit = 100,
+			.debug_info = true
+	};
+	BestMoveSearchResults results = best_move(p, parameters);
+	EXPECT_TRUE(line_size(results.pv) >= 1);
+}
+
 TEST_F(MoveSearchFixture, A1){
 	std::string uci_moves = "e2e4 e7e6 d2d4 d7d5 b1c3 g8f6 c1g5 f8e7 e4e5 f6d7 h2h4 e8g8 f1d3 c7c5 d1g4 e7g5 h4g5 c5d4 d3h7";
 	Position p;
@@ -170,8 +191,8 @@ TEST_F(MoveSearchFixture, A1){
 	std::cout << p.fen() << std::endl;
 	const BestMoveSearchParameters parameters = {
 			.depth = 15,
-			.time_limit = 1000,
-			.debug_info = true
+			.time_limit = 100,
+			.debug_info = false
 	};
 	BestMoveSearchResults results = best_move(p, parameters);
 	std::cout << p.fen() << std::endl;

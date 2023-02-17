@@ -34,7 +34,7 @@ Move uci_to_move(const std::string& moveStr, Position& position) {
 		return Move(move.from(), move.to(), EN_PASSANT);
 	}
 
-	if (type_of(position.at(move.from())) == PAWN && rank_of(move.to()) - rank_of(move.from()) == 2) {
+	if (type_of(position.at(move.from())) == PAWN && abs(rank_of(move.to()) - rank_of(move.from())) == 2) {
 		return Move(move.from(), move.to(), DOUBLE_PUSH);
 	}
 

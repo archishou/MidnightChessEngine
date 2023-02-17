@@ -73,7 +73,8 @@ int q_search(Position &board, const int ply, int alpha, const int beta, AlphaBet
 }
 
 template<Color color>
-int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool do_null, AlphaBetaData& data, const int time_limit, TranspositionTable& t_table) {
+int alpha_beta(Position &board, short depth, int ply, int alpha, int beta, bool do_null, const int time_limit,
+			   TranspositionTable &t_table, AlphaBetaData &data) {
 
 	if (time_elapsed_exceeds(time_limit, Milliseconds)) {
 		data.search_completed = false;
@@ -82,6 +83,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 
 	int alpha_initial = alpha;
 	bool in_check = board.in_check<color>();
+	bool pv_node = alpha != beta - 1;
 
 	init_pv(data.pv, ply);
 	data.seldepth = std::max(data.seldepth, ply);
@@ -118,7 +120,7 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 		int reduction = 2 + depth/4;
 		int depth_prime = std::max(depth - reduction, 0);
 		int null_eval = -alpha_beta<~color>(board, depth_prime, ply + 1, -beta, -beta + 1,
-										 false,data, time_limit, t_table);
+											false, time_limit, t_table, data);
 
 		board.undo_null<color>();
 		if (null_eval >= beta) return null_eval;
@@ -138,8 +140,19 @@ int alpha_beta(Position& board, short depth, int ply, int alpha, int beta, bool 
 		Move legal_move = scored_moves[i].move;
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
-		value = std::max(value, -alpha_beta<~color>(board, depth - 1, ply + 1, -beta,
-													-alpha, true,data, time_limit, t_table));
+		int new_value;
+		if (i == 0) {
+			new_value = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, true,
+											time_limit, t_table, data);
+		} else {
+			new_value = -alpha_beta<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, true,
+										   time_limit, t_table, data);
+			if (alpha < new_value && new_value < beta) {
+				new_value = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, true,
+											   time_limit, t_table, data);
+			}
+		}
+		value = std::max(value, new_value);
 		board.undo<color>(legal_move);
 		if (!data.search_completed) return 0;
 		if (value > alpha) {
@@ -179,7 +192,7 @@ AlphaBetaData alpha_beta_root(Position& board, short depth, int time_limit, Tran
 	data.nodes_in_transposition_table = 0;
 	std::memset(data.pv.table, 0, sizeof(data.pv.table));
 	std::memset(data.pv.length, 0, sizeof(data.pv.length));
-	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, false,data, time_limit, t_table);
+	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, false, time_limit, t_table, data);
 	data.best_move = data.pv.table[0][0];
 	return data;
 }
