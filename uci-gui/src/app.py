@@ -30,6 +30,7 @@ log.setLevel(logging.ERROR)
 # probe book move
 def probe_book(pgn):
     # open book file
+    return 0
     with open('./engine/book.txt') as f:
         # read book games
         book = f.read()

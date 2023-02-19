@@ -110,6 +110,18 @@ TEST_F(MoveGenerationFixture, PerftTestPosition){
 	EXPECT_EQ(test_perft_node_count("rn2kbnr/pp2pppp/2p5/8/5B2/N2P1B1P/PP3PP1/R4RK1 w kq - 0 13", 5), 18292958);
 }
 
+TEST_F(MoveGenerationFixture, PerftTestPosition2) {
+	EXPECT_EQ(test_perft_node_count("8/8/8/3p4/4pn1N/6p1/8/5K1k w - - 10 73", 8), 24490963);
+}
+
+TEST_F(MoveGenerationFixture, PerftTestPosition3) {
+	EXPECT_EQ(test_perft_node_count("8/8/8/3p4/5n2/4p3/6pk/4KN2 b - - 3 76", 1), 7);
+}
+
+TEST_F(MoveGenerationFixture, PerftTestPositionKnightCheck){
+	EXPECT_EQ(test_perft_node_count("5n2/3KPk2/8/3p1N2/3P4/8/8/8 w - - 17 102", 8), 80433958);
+}
+
 TEST_F(MoveGenerationFixture, Perft126) {
 	std::string perft_file_path = "/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/"
 								  "ChessEngine_tests/MoveGenerationTests/perft_results.txt";

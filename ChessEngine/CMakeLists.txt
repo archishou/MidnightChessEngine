@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 project(ChessEngine)
 add_compile_options(-O3)
 
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES main.cpp)

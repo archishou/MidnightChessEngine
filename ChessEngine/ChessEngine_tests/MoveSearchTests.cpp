@@ -226,23 +226,22 @@ TEST_F(MoveSearchFixture, MateIn5Test1){
 	std::cout << p.fen() << std::endl;
 	const BestMoveSearchParameters parameters = {
 			.depth = MAX_DEPTH,
-			.time_limit = 1000,
+			.time_limit = 100000,
 			.debug_info = true
 	};
 	BestMoveSearchResults results = best_move(p, parameters);
-	assert(line_size(results.pv) == 9);
+	EXPECT_EQ(line_size(results.pv), 9);
 }
 
-TEST_F(MoveSearchFixture, MateIn5Test2){
+TEST_F(MoveSearchFixture, MateIn6Test1){
 	Position p;
 	Position::set("k7/1B6/1NK5/8/8/8/8/8 b - - 0 1", p);
 	std::cout << p.fen() << std::endl;
 	const BestMoveSearchParameters parameters = {
 			.depth = MAX_DEPTH,
-			.time_limit = 100000,
+			.time_limit = 100,
 			.debug_info = true
 	};
 	BestMoveSearchResults results = best_move(p, parameters);
-	std::cout << results << std::endl;
-	//assert(line_size(results.pv) == 9);
+	EXPECT_EQ(line_size(results.pv), 12);
 }

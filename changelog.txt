@@ -206,3 +206,29 @@ Player: midnight-latest
    "Loss: White mates": 176
    "Win: Black mates": 187
    "Win: White mates": 146
+
+Score of midnight-dev vs midnight-v1: 903 - 30 - 67 [0.936]
+...      midnight-dev playing White: 438 - 27 - 35  [0.911] 500
+...      midnight-dev playing Black: 465 - 3 - 32  [0.962] 500
+...      White vs Black: 441 - 492 - 67  [0.474] 1000
+Elo difference: 467.5 +/- 37.9, LOS: 100.0 %, DrawRatio: 6.7 %
+1000 of 1000 games finished.
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 44
+   "Draw by adjudication": 3
+   "Draw by fifty moves rule": 12
+   "Draw by insufficient mating material": 8
+   "Loss: Black mates": 27
+   "Loss: White mates": 3
+   "Win: Black mates": 465
+   "Win: White mates": 438
+Player: midnight-v1
+   "Draw by 3-fold repetition": 44
+   "Draw by adjudication": 3
+   "Draw by fifty moves rule": 12
+   "Draw by insufficient mating material": 8
+   "Loss: Black mates": 465
+   "Loss: White mates": 438
+   "Win: Black mates": 27
+   "Win: White mates": 3
