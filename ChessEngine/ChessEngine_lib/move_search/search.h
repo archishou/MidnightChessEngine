@@ -5,8 +5,6 @@
 #include <vector>
 #include <random>
 #include "move_generation/position.h"
-
-#include "move_generation/position.h"
 #include "alphabeta.h"
 #include "constants.h"
 

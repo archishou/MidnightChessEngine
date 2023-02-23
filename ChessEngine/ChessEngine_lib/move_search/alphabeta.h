@@ -16,6 +16,8 @@ struct AlphaBetaData {
 	uint64_t nodes_searched;
 	uint64_t q_nodes_searched;
 	int seldepth;
+
+	int time_limit;
 };
 
 struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
@@ -26,7 +28,6 @@ struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
 };
 
 static AlphaBetaData data;
-static int time_limit;
 
 void reset_data() {
 	data.nodes_searched = 0;
@@ -35,6 +36,7 @@ void reset_data() {
 	data.seldepth = 0;
 	std::memset(data.pv.table, 0, sizeof(data.pv.table));
 	std::memset(data.pv.length, 0, sizeof(data.pv.length));
+	data.time_limit = 0;
 }
 
 bool position_is_draw(Position &board, const int ply) {
@@ -57,7 +59,7 @@ bool position_is_draw(Position &board, const int ply) {
 template<Color color>
 int q_search(Position &board, const int ply, int alpha, const int beta) {
 
-	if (time_elapsed_exceeds(time_limit, Milliseconds)) {
+	if (time_elapsed_exceeds(data.time_limit, Milliseconds)) {
 		data.search_completed = false;
 		return 0;
 	}
@@ -85,7 +87,7 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 template<Color color>
 int alpha_beta(Position &board, short depth, int ply, int alpha, int beta, bool do_null) {
 
-	if (time_elapsed_exceeds(time_limit, Milliseconds)) {
+	if (time_elapsed_exceeds(data.time_limit, Milliseconds)) {
 		data.search_completed = false;
 		return 0;
 	}
@@ -188,9 +190,9 @@ int alpha_beta(Position &board, short depth, int ply, int alpha, int beta, bool 
 }
 
 template<Color color>
-AlphaBetaData alpha_beta_root(Position& board, short depth, int time_limit_input) {
+AlphaBetaData alpha_beta_root(Position& board, short depth, int time_limit) {
 	reset_data();
-	time_limit = time_limit_input;
+	data.time_limit = time_limit;
 	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, false);
 	data.best_move = data.pv.table[0][0];
 	return data;
