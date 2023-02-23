@@ -7,7 +7,13 @@
 TranspositionTable::TranspositionTable(uint64_t size) {
 	table_size = size;
 	transposition_table = new TranspositionTableEntry[table_size];
+}
 
+TranspositionTable::~TranspositionTable() {
+	delete [] transposition_table;
+}
+
+void TranspositionTable::reset_table() {
 	TranspositionTableEntry default_entry = TranspositionTableEntry();
 	default_entry.value = 0;
 	default_entry.zobrist_hash = 0;
@@ -17,10 +23,6 @@ TranspositionTable::TranspositionTable(uint64_t size) {
 	for (int i = 0; i < table_size; i++) {
 		transposition_table[i] = default_entry;
 	}
-}
-
-TranspositionTable::~TranspositionTable() {
-	delete [] transposition_table;
 }
 
 int TranspositionTable::correct_mate_for_retrieval(int score, int ply) {

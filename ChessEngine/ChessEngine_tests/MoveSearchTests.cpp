@@ -11,6 +11,7 @@ protected:
 		initialise_all_databases();
 		zobrist::initialise_zobrist_keys();
 		initialize_move_sort_tables();
+		t_table.reset_table();
 	}
 
 	virtual void TearDown() {

@@ -232,3 +232,33 @@ Player: midnight-v1
    "Loss: White mates": 438
    "Win: Black mates": 27
    "Win: White mates": 3
+
+Don't reset TT Every Move
+
+Score of midnight-dev vs vtt-reset-every-time: 421 - 309 - 270 [0.556]
+...      midnight-dev playing White: 262 - 107 - 131  [0.655] 500
+...      midnight-dev playing Black: 159 - 202 - 139  [0.457] 500
+...      White vs Black: 464 - 266 - 270  [0.599] 1000
+Elo difference: 39.1 +/- 18.5, LOS: 100.0 %, DrawRatio: 27.0 %
+1000 of 1000 games finished.
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 170
+   "Draw by adjudication": 11
+   "Draw by fifty moves rule": 45
+   "Draw by insufficient mating material": 39
+   "Draw by stalemate": 5
+   "Loss: Black mates": 107
+   "Loss: White mates": 202
+   "Win: Black mates": 159
+   "Win: White mates": 262
+Player: vtt-reset-every-time
+   "Draw by 3-fold repetition": 170
+   "Draw by adjudication": 11
+   "Draw by fifty moves rule": 45
+   "Draw by insufficient mating material": 39
+   "Draw by stalemate": 5
+   "Loss: Black mates": 159
+   "Loss: White mates": 262
+   "Win: Black mates": 107
+   "Win: White mates": 202

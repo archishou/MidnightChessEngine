@@ -114,6 +114,18 @@ TEST_F(MoveGenerationFixture, PerftTestPosition2) {
 	EXPECT_EQ(test_perft_node_count("8/8/8/3p4/4pn1N/6p1/8/5K1k w - - 10 73", 8), 24490963);
 }
 
+TEST_F(MoveGenerationFixture, PerftTestPosition5) {
+	EXPECT_EQ(test_perft_node_count("rnb1kbnr/ppp1pppp/4q3/3pP3/8/4K3/PPPP1PPP/RNBQ1BNR w - d6 0 1", 1), 34);
+}
+
+TEST_F(MoveGenerationFixture, PerftTestPosition6) {
+	EXPECT_EQ(test_perft_node_count("rnb1kbnr/ppp1pppp/4q3/3pP3/8/5K2/PPPP1PPP/RNBQ1BNR w - d6 0 1", 1), 28);
+}
+
+TEST_F(MoveGenerationFixture, PerftTestPosition7) {
+	EXPECT_EQ(test_perft_node_count("rnb1kbnr/ppq1pppp/p7/3pP3/8/6K1/PPPP1PPP/RNBQ1BNR w - d6 0 1", 1), 31);
+}
+
 TEST_F(MoveGenerationFixture, PerftTestPosition3) {
 	EXPECT_EQ(test_perft_node_count("8/8/8/3p4/5n2/4p3/6pk/4KN2 b - - 3 76", 1), 7);
 }

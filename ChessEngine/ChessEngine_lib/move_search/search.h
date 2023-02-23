@@ -91,12 +91,6 @@ BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short
 	struct BestMoveSearchResults search_results;
 
 	reset_clock();
-	TranspositionTable t_table = TranspositionTable();
-	if (debug) {
-		std::cout << UCI_DEBUG_STRING << "Time to initialize transposition table: " << get_elapsed_time(Milliseconds) << std::endl;
-	}
-	reset_clock();
-
 	for (int sub_depth = 1; sub_depth <= depth; sub_depth++) {
 		if (time_elapsed_exceeds(time_limit, Milliseconds)) {
 			break;

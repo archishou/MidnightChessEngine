@@ -17,6 +17,7 @@ void initialize_uci(Position& p) {
 	zobrist::initialise_zobrist_keys();
 	Position::set(INITIAL_BOARD_FEN, p);
 	initialize_move_sort_tables();
+	t_table.reset_table();
 }
 
 void uci_position(Position& board, const string& input_line) {
