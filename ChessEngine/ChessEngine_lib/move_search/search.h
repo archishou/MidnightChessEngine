@@ -19,15 +19,12 @@ struct BestMoveSearchResults {
 	int depth_searched = 0;
 	int seldepth = 0;
 
-	double time_searched = 0;
+	int time_searched = 0;
 	int value = 0;
 
 	uint64_t q_nodes_searched = 0;
 	uint64_t nodes_searched = 0;
 	double nodes_per_second = 0;
-
-	int tt_key_collisions = 0;
-	int nodes_in_transposition_table = 0;
 };
 
 std::ostream& operator<<(std::ostream& os, const Line& line) {
@@ -64,7 +61,6 @@ std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results)
 	os << "Nodes Searched: " << results.nodes_searched << std::endl;
 	os << "Node / Second: " << results.nodes_per_second << std::endl;
 	os << "Q Nodes Searched: " << results.q_nodes_searched << std::endl;
-	os << "Transpositions: " << results.nodes_in_transposition_table << std::endl;
 	return os;
 }
 
@@ -74,8 +70,6 @@ void update_best_move_results(BestMoveSearchResults& search_results, AlphaBetaDa
 	search_results.depth_searched = sub_depth;
 	search_results.nodes_searched += ab_results.nodes_searched + ab_results.q_nodes_searched;
 	search_results.seldepth = ab_results.seldepth;
-	search_results.tt_key_collisions = ab_results.tt_key_collisions;
-	search_results.nodes_in_transposition_table = ab_results.nodes_in_transposition_table;
 	search_results.time_searched = get_elapsed_time(Milliseconds);
 	for (int i = 0; i < ab_results.pv.length[0]; i++) {
 		search_results.pv[i] = ab_results.pv.table[0][i];
@@ -95,7 +89,7 @@ BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short
 		if (time_elapsed_exceeds(time_limit, Milliseconds)) {
 			break;
 		}
-		struct AlphaBetaData ab_results = alpha_beta_root<color>(board, sub_depth, time_limit, t_table);
+		struct AlphaBetaData ab_results = alpha_beta_root<color>(board, sub_depth, time_limit);
 		if (ab_results.search_completed) {
 			std::memset(search_results.pv, 0, sizeof(search_results.pv));
 			update_best_move_results(search_results, ab_results, sub_depth, debug);
