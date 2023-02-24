@@ -4,6 +4,11 @@
   - Move ordering: MVV-LVA, opponent pawn control, promotions
   - Evaluation: Material, PSTQ, Mopup for endgame
   - Transposition table
+- Midnight v2 Rating 1935 |
+  - Adds History Heuristic and Killer Moves
+  - Reset Transposition Table only at game start
+  - Adds Null Move Pruning
+  - Switches from Negamax to Principle Variation Search
 
 # File structure
 
@@ -14,7 +19,7 @@
 
 # Todo 
 
-- Restructure and implement time control in UCI Protocol
 - (Medium Importance) extern in types.h needed?
 - (Medium Importance) Try to use something other than std::vector or at least pre-define memory requirements so we don't resize array every time.
 - Implement Kind end game pstq
+- Fixup History Table, not a global variable [most likely a bug somewhere here]

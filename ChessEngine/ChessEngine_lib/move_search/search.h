@@ -5,7 +5,7 @@
 #include <vector>
 #include <random>
 #include "move_generation/position.h"
-#include "alphabeta.h"
+#include "pvs.h"
 #include "constants.h"
 
 typedef Move Line[MAX_DEPTH];
@@ -62,7 +62,7 @@ std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results)
 	return os;
 }
 
-void update_best_move_results(BestMoveSearchResults& search_results, AlphaBetaData& ab_results, int sub_depth, bool debug) {
+void update_best_move_results(BestMoveSearchResults& search_results, PVSData& ab_results, int sub_depth, bool debug) {
 	search_results.value = ab_results.value;
 	search_results.best_move = ab_results.best_move;
 	search_results.depth_searched = sub_depth;
@@ -87,7 +87,7 @@ BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short
 		if (time_elapsed_exceeds(time_limit, Milliseconds)) {
 			break;
 		}
-		struct AlphaBetaData ab_results = alpha_beta_root<color>(board, sub_depth, time_limit);
+		struct PVSData ab_results = pvs_root<color>(board, sub_depth, time_limit);
 		if (ab_results.search_completed) {
 			std::memset(search_results.pv, 0, sizeof(search_results.pv));
 			update_best_move_results(search_results, ab_results, sub_depth, debug);

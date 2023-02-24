@@ -295,3 +295,36 @@ Player: Lynx
 
 Lynx ELO: 1558
 Midnight ELO: 2069.5
+
+
+Score of midnight-dev vs snowy0.2: 321 - 506 - 173 [0.407]
+...      midnight-dev playing White: 170 - 227 - 103  [0.443] 500
+...      midnight-dev playing Black: 151 - 279 - 70  [0.372] 500
+...      White vs Black: 449 - 378 - 173  [0.535] 1000
+Elo difference: -65.0 +/- 19.8, LOS: 0.0 %, DrawRatio: 17.3 %
+1000 of 1000 games finished.
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 67
+   "Draw by adjudication": 12
+   "Draw by fifty moves rule": 66
+   "Draw by insufficient mating material": 26
+   "Draw by stalemate": 2
+   "Loss: Black mates": 226
+   "Loss: White loses on time": 1
+   "Loss: White mates": 279
+   "Win: Black mates": 151
+   "Win: White mates": 170
+Player: snowy0.2
+   "Draw by 3-fold repetition": 67
+   "Draw by adjudication": 12
+   "Draw by fifty moves rule": 66
+   "Draw by insufficient mating material": 26
+   "Draw by stalemate": 2
+   "Loss: Black mates": 151
+   "Loss: White mates": 170
+   "Win: Black mates": 226
+   "Win: White loses on time": 1
+   "Win: White mates": 279
+
+Midnight ELO 1940

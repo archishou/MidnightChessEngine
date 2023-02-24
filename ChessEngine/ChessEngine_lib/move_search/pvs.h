@@ -7,17 +7,17 @@
 #include "pv_table.h"
 #include "clock.h"
 
-struct AlphaBetaData {
+struct PVSData {
     Move best_move;
-    bool search_completed;
-	int value;
+    bool search_completed{};
+	int value{};
 	// triangular-table-table
 	PV pv;
-	uint64_t nodes_searched;
-	uint64_t q_nodes_searched;
-	int seldepth;
+	uint64_t nodes_searched{};
+	uint64_t q_nodes_searched{};
+	int seldepth{};
 
-	int time_limit;
+	int time_limit{};
 };
 
 struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
@@ -27,7 +27,7 @@ struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
 	.generate_quiet = false,
 };
 
-static AlphaBetaData data;
+static PVSData data;
 
 void reset_data() {
 	data.nodes_searched = 0;
@@ -85,7 +85,7 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 }
 
 template<Color color>
-int alpha_beta(Position &board, short depth, int ply, int alpha, int beta, bool do_null) {
+int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null) {
 
 	if (time_elapsed_exceeds(data.time_limit, Milliseconds)) {
 		data.search_completed = false;
@@ -130,8 +130,8 @@ int alpha_beta(Position &board, short depth, int ply, int alpha, int beta, bool 
 
 		int reduction = 2 + depth/4;
 		int depth_prime = std::max(depth - reduction, 0);
-		int null_eval = -alpha_beta<~color>(board, depth_prime, ply + 1, -beta, -beta + 1,
-											false);
+		int null_eval = -pvs<~color>(board, depth_prime, ply + 1, -beta, -beta + 1,
+									 false);
 
 		board.undo_null<color>();
 		if (null_eval >= beta) return null_eval;
@@ -153,11 +153,11 @@ int alpha_beta(Position &board, short depth, int ply, int alpha, int beta, bool 
 		data.nodes_searched += 1;
 		int new_value;
 		if (i == 0) {
-			new_value = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
+			new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
 		} else {
-			new_value = -alpha_beta<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, true);
+			new_value = -pvs<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, true);
 			if (alpha < new_value && new_value < beta) {
-				new_value = -alpha_beta<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
+				new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
 			}
 		}
 		value = std::max(value, new_value);
@@ -190,10 +190,10 @@ int alpha_beta(Position &board, short depth, int ply, int alpha, int beta, bool 
 }
 
 template<Color color>
-AlphaBetaData alpha_beta_root(Position& board, short depth, int time_limit) {
+PVSData pvs_root(Position& board, short depth, int time_limit) {
 	reset_data();
 	data.time_limit = time_limit;
-	alpha_beta<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, false);
+	pvs<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, false);
 	data.best_move = data.pv.table[0][0];
 	return data;
 }
