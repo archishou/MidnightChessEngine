@@ -357,3 +357,33 @@ Player: midnight-latest
    "Win: Black mates": 9
    "Win: White mates": 9
 Finished match
+
+Remove Mop - Up [Thank god!]
+
+Score of midnight-dev vs midnight-latest: 136 - 126 - 135 [0.513]
+...      midnight-dev playing White: 74 - 58 - 66  [0.540] 198
+...      midnight-dev playing Black: 62 - 68 - 69  [0.485] 199
+...      White vs Black: 142 - 120 - 135  [0.528] 397
+Elo difference: 8.8 +/- 27.8, LOS: 73.2 %, DrawRatio: 34.0 %
+402 of 1000 games finished.
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 79
+   "Draw by fifty moves rule": 16
+   "Draw by insufficient mating material": 37
+   "Draw by stalemate": 3
+   "Loss: Black mates": 58
+   "Loss: White mates": 68
+   "No result": 5
+   "Win: Black mates": 62
+   "Win: White mates": 74
+Player: midnight-latest
+   "Draw by 3-fold repetition": 79
+   "Draw by fifty moves rule": 16
+   "Draw by insufficient mating material": 37
+   "Draw by stalemate": 3
+   "Loss: Black mates": 62
+   "Loss: White mates": 74
+   "No result": 5
+   "Win: Black mates": 58
+   "Win: White mates": 68
