@@ -32,7 +32,7 @@ echo Engine 2 Path ${ENGINE_2[1]}
 ./cutechess-cli \
     -engine name=${ENGINE_1[0]} proto=uci cmd=${ENGINE_1[1]} stderr=$TEST_ROOT/$TEST_NAME/stderr/${ENGINE_1[0]}_stderr.txt \
     -engine name=${ENGINE_2[0]} proto=uci cmd=${ENGINE_2[1]} stderr=$TEST_ROOT/$TEST_NAME/stderr/${ENGINE_2[0]}_stderr.txt\
-    -repeat -each tc=8+0.08 \
+    -repeat -each tc=$TIME_CONTROL \
     -openings file=$TEST_OPENING_BOOK format=pgn order=random \
     -concurrency $CONCURRENCY -ratinginterval 1 -games 50000 \
     -draw movenumber=200 movecount=0 score=0 \
