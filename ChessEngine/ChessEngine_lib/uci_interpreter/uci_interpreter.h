@@ -3,6 +3,7 @@
 //
 #include "move_search/search.h"
 #include "parse_uci_move.h"
+#include "time_manager.h"
 #include "helpers.h"
 #include "sstream"
 
@@ -42,12 +43,37 @@ void uci_position(Position& board, const string& input_line) {
 	}
 }
 
+int parse_move_time(const Color side_to_play, const string& move_time_s) {
+	std::vector<string> tokens = split(move_time_s, " ");
+	// Possible inputs to parse
+	// input --> go movetime xxx
+	// input --> go xtime ### xinc ### ytime ### yinc ###
+	// input --> go xtime ### ytime ###
+	if (tokens[1] == "movetime") {
+		return stoi(tokens[2]) * 0.95;
+	}
+	int wtime = 0, winc = 0, btime = 0, binc = 0;
+	for (int i = 1; i < tokens.size(); i += 2) {
+		string token = tokens[i];
+		int value = 0;
+		if (tokens.size() > i + 1) value = stoi(tokens[i + 1]);
+
+		if (token == "wtime") wtime = value;
+		else if (token == "winc") winc = value;
+		else if (token == "btime") btime = value;
+		else if (token == "binc") binc = value;
+	}
+	if (side_to_play == WHITE) {
+		return time_for_move(wtime, winc);
+	}
+	return time_for_move(btime, binc);
+}
+
 void uci_go(Position& board, const string& input_line, ReadUCIParameters& uci_parameters) {
 	auto t_start = std::chrono::high_resolution_clock::now();
 
 	BestMoveSearchResults results;
-	string move_time_s = split(input_line," ")[2];
-	int move_time = stoi(move_time_s);
+	int move_time = parse_move_time(board.turn(), input_line);
 	const BestMoveSearchParameters params = BestMoveSearchParameters {
 		.depth = MAX_DEPTH,
 		.time_limit = move_time,
@@ -68,7 +94,7 @@ void read_uci() {
 
 	while (std::getline(cin, input_line)) {
 		if (input_line == "uci") {
-			std::cout << "id name MidnightV1.3" << std::endl;
+			std::cout << "id name MidnightV2.0" << std::endl;
 			std::cout << "id author Archishmaan Peyyety" << std::endl;
 			std::cout << "uciok" << std::endl;
 		} else if (input_line == "quit") {

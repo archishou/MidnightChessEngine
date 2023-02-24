@@ -262,3 +262,36 @@ Player: vtt-reset-every-time
    "Loss: White mates": 262
    "Win: Black mates": 107
    "Win: White mates": 202
+
+Net Gains of V2
+
+Score of midnight-dev vs Lynx: 926 - 26 - 48 [0.950]
+...      midnight-dev playing White: 485 - 0 - 15  [0.985] 500
+...      midnight-dev playing Black: 441 - 26 - 33  [0.915] 500
+...      White vs Black: 511 - 441 - 48  [0.535] 1000
+Elo difference: 511.5 +/- 43.4, LOS: 100.0 %, DrawRatio: 4.8 %
+1000 of 1000 games finished.
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 33
+   "Draw by fifty moves rule": 6
+   "Draw by insufficient mating material": 8
+   "Draw by stalemate": 1
+   "Loss: White mates": 26
+   "Win: Black loses on time": 135
+   "Win: Black mates": 374
+   "Win: White loses on time": 67
+   "Win: White mates": 350
+Player: Lynx
+   "Draw by 3-fold repetition": 33
+   "Draw by fifty moves rule": 6
+   "Draw by insufficient mating material": 8
+   "Draw by stalemate": 1
+   "Loss: Black loses on time": 135
+   "Loss: Black mates": 374
+   "Loss: White loses on time": 67
+   "Loss: White mates": 350
+   "Win: White mates": 26
+
+Lynx ELO: 1558
+Midnight ELO: 2069.5
