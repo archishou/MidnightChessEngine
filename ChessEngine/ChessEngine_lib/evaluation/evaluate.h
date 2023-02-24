@@ -58,33 +58,36 @@ int evaluate_material(Position& board) {
 }
 
 template<Color color>
-int evaluate_piece_position(Position& board, PieceType piece_type) {
-	int pstq_score = 0;
-	Bitboard piece_bitboard = board.bitboard_of(color, piece_type);
-	while (piece_bitboard != 0) {
-		Square square = pop_lsb(&piece_bitboard);
-		pstq_score += read_pstq<color>(piece_type, square);
-	}
-	return pstq_score;
-}
-
-template<Color color>
-int evaluate_all_piece_positions(Position& board, double endgame_weight) {
-	int pstq_score = 0;
-	for (PieceType piece_type : {PAWN, KNIGHT, BISHOP, ROOK, QUEEN}) {
-		pstq_score += evaluate_piece_position<color>(board, piece_type);
-	}
-	pstq_score += (evaluate_piece_position<color>(board, KING) * (1 - endgame_weight));
-	return pstq_score;
-}
-
-template<Color color>
 int evaluate_all_piece_positions(Position& board) {
-	return evaluate_all_piece_positions<color>(board, 0);
+	int mg_score_us = 0, eg_score_us = 0;
+	int mg_score_them = 0, eg_score_them = 0;
+	int game_phase = 0;
+	for (PieceType piece_type : {PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING}) {
+		Bitboard piece_bitboard_us = board.bitboard_of(color, piece_type);
+		Bitboard piece_bitboard_them = board.bitboard_of(~color, piece_type);
+		while (piece_bitboard_us) {
+			Square square = pop_lsb(&piece_bitboard_us);
+			mg_score_us += read_pstq<color>(MIDDLE, piece_type, square) + PIECE_VALUES[MIDDLE][piece_type];
+			eg_score_us += read_pstq<color>(END, piece_type, square) + PIECE_VALUES[END][piece_type];
+			game_phase += GAME_PHASE_BONUS[piece_type];
+		}
+		while (piece_bitboard_them) {
+			Square square = pop_lsb(&piece_bitboard_them);
+			mg_score_them += read_pstq<~color>(MIDDLE, piece_type, square) + PIECE_VALUES[MIDDLE][piece_type];
+			eg_score_them += read_pstq<~color>(END, piece_type, square) + PIECE_VALUES[END][piece_type];
+			game_phase += GAME_PHASE_BONUS[piece_type];
+		}
+	}
+	int mg_score = mg_score_us - mg_score_them;
+	int eg_score = eg_score_us - eg_score_them;
+	int mg_phase = std::min(game_phase, 24);
+	int eg_phase = 24 - mg_phase;
+	return (mg_score * mg_phase + eg_score * eg_phase) / 24;
 }
 
 template<Color color>
 int evaluate(Position& board) {
+
 	int us_material = evaluate_material<color>(board);
 	int their_material = evaluate_material<~color>(board);
 
@@ -94,13 +97,20 @@ int evaluate(Position& board) {
 	double us_end_weight = endgame_weight(us_material_wo_pawns);
 	double their_end_weight = endgame_weight(their_material_wo_pawns);
 
-	int us_piece_positions = evaluate_all_piece_positions<color>(board, us_end_weight);
-	int their_piece_positions = evaluate_all_piece_positions<~color>(board, their_end_weight);
+	/*
+	int us_piece_positions = evaluate_all_piece_positions<color>(board);
+	int their_piece_positions = evaluate_all_piece_positions<~color>(board);
+	 */
 
 	int us_mop_up_eval = mop_up_eval<color>(board, us_material, their_material, us_end_weight);
 	int their_mop_up_eval = mop_up_eval<~color>(board, their_material, us_material, their_end_weight);
+	 /*
 
 	int us_eval = us_material + us_piece_positions + us_mop_up_eval;
 	int their_eval = their_material + their_piece_positions + their_mop_up_eval;
 	return us_eval - their_eval;
+	 */
+	int piece_position = evaluate_all_piece_positions<color>(board);
+	int mop_up_eval = us_mop_up_eval - their_mop_up_eval;
+	return piece_position + mop_up_eval;
 }

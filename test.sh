@@ -4,7 +4,7 @@ cd /Users/archishmaan/Documents/cutechess/build/
 # Engine Paths and Names
 ENGINE_DEV=(midnight-dev /Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_run)
 ENGINE_V2=(midnight-v2 /Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/releases/v2/master)
-ENGINE_LATEST=(midnight-v2 /Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/releases/vlatest/master)
+ENGINE_LATEST=(midnight-latest /Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/releases/vlatest/master)
 
 # Opening Books
 SUITE_1=/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/testing/books-master/8moves_v3.pgn
@@ -17,7 +17,7 @@ TEST_NAME=test1
 
 # Test Variables
 ENGINE_1=(${ENGINE_DEV[*]})
-ENGINE_2=(${ENGINE_V2[*]})
+ENGINE_2=(${ENGINE_LATEST[*]})
 TEST_OPENING_BOOK=$SUITE_1
 TIME_CONTROL=5+0.05
 CONCURRENCY=5

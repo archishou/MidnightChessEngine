@@ -328,3 +328,32 @@ Player: snowy0.2
    "Win: White mates": 279
 
 Midnight ELO 1940
+
+PESTO EVAL GOES BRRRRRR
+
+Score of midnight-dev vs midnight-latest: 108 - 18 - 11  [0.828] 137
+...      midnight-dev playing White: 57 - 9 - 3  [0.848] 69
+...      midnight-dev playing Black: 51 - 9 - 8  [0.809] 68
+...      White vs Black: 66 - 60 - 11  [0.522] 137
+Elo difference: 273.6 +/- 73.9, LOS: 100.0 %, DrawRatio: 8.0 %
+SPRT: llr 2.96 (100.5%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 5
+   "Draw by fifty moves rule": 4
+   "Draw by insufficient mating material": 2
+   "Loss: Black mates": 9
+   "Loss: White mates": 9
+   "No result": 4
+   "Win: Black mates": 51
+   "Win: White mates": 57
+Player: midnight-latest
+   "Draw by 3-fold repetition": 5
+   "Draw by fifty moves rule": 4
+   "Draw by insufficient mating material": 2
+   "Loss: Black mates": 51
+   "Loss: White mates": 57
+   "No result": 4
+   "Win: Black mates": 9
+   "Win: White mates": 9
+Finished match

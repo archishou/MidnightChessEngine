@@ -246,3 +246,30 @@ TEST_F(MoveSearchFixture, MateIn6Test1){
 	BestMoveSearchResults results = best_move(p, parameters);
 	EXPECT_EQ(line_size(results.pv), 12);
 }
+
+TEST_F(MoveSearchFixture, DefaultFenPSTQWhite) {
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			std::cout << "{" << mg_pawn_table[i*8 + j] << ", " << eg_pawn_table[i * 8 + j] << "}, ";
+		}
+		std::cout << std::endl;
+	}
+	Position p;
+	Position::set("5rk1/pp3ppp/b1p5/P3PP2/1P6/6rP/1nKB2B1/R5R1 b - - 1 30", p);
+	std::cout << evaluate_all_piece_positions<WHITE>(p) << std::endl;
+}
+
+TEST_F(MoveSearchFixture, PositionInCheck) {
+	Position p;
+	Position::set("rnbqkbnr/ppppp1pp/8/5p1Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 0 1", p);
+	EXPECT_TRUE(p.in_check<BLACK>());
+	EXPECT_FALSE(p.in_check<WHITE>());
+
+	Position::set("rnb1kbnr/ppppp2p/6p1/5p1Q/4P3/4q3/PPPP1PPP/RNB1KBNR w KQkq - 0 1", p);
+	EXPECT_TRUE(p.in_check<WHITE>());
+	EXPECT_FALSE(p.in_check<BLACK>());
+
+	Position::set("rnb1kbnr/ppppp2p/6p1/5p1Q/4P3/4q3/PPPPBPPP/RNB1K1NR b KQkq - 0 1", p);
+	EXPECT_FALSE(p.in_check<WHITE>());
+	EXPECT_FALSE(p.in_check<BLACK>());
+}
