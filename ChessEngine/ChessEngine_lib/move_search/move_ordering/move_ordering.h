@@ -3,7 +3,6 @@
 //
 #include "move_generation/position.h"
 #include "move_generation/tables.h"
-#include "evaluation/evaluate.h"
 #include "move_search/transposition_table.h"
 #include "history_table.h"
 
@@ -24,12 +23,12 @@ bool compare_moves(ScoredMove const& lhs, ScoredMove const& rhs) {
 
 int get_piece_value(PieceType piece_type) {
 	switch (piece_type) {
-		case PieceType::PAWN: return PAWN_VALUE;
-		case PieceType::KNIGHT: return KNIGHT_VALUE;
-		case PieceType::BISHOP: return BISHOP_VALUE;
-		case PieceType::ROOK: return ROOK_VALUE;
-		case PieceType::QUEEN: return QUEEN_VALUE;
-		case PieceType::KING: return KING_VALUE;
+		case PieceType::PAWN: return ORDERING_PAWN_VALUE;
+		case PieceType::KNIGHT: return ORDERING_KNIGHT_VALUE;
+		case PieceType::BISHOP: return ORDERING_BISHOP_VALUE;
+		case PieceType::ROOK: return ORDERING_ROOK_VALUE;
+		case PieceType::QUEEN: return ORDERING_QUEEN_VALUE;
+		case PieceType::KING: return ORDERING_KING_VALUE;
 		default: return 0;
 	}
 }
@@ -49,10 +48,10 @@ int capture_move_score(Move move, Position& board) {
 int promotion_move_score(Move move, Position& board) {
 	if (!move.is_promotion()) return 0;
 	MoveFlag flag = move.flag();
-	if (flag == PC_QUEEN || flag == PR_QUEEN) return QUEEN_VALUE + PROMOTION_BONUS;
-	else if (flag == PC_ROOK || flag == PR_ROOK) return ROOK_VALUE + PROMOTION_BONUS;
-	else if (flag == PC_BISHOP || flag == PR_BISHOP) return BISHOP_VALUE + PROMOTION_BONUS;
-	else if (flag == PC_KNIGHT || flag == PR_KNIGHT) return KNIGHT_VALUE + PROMOTION_BONUS;
+	if (flag == PC_QUEEN || flag == PR_QUEEN) return ORDERING_QUEEN_VALUE + PROMOTION_BONUS;
+	else if (flag == PC_ROOK || flag == PR_ROOK) return ORDERING_ROOK_VALUE + PROMOTION_BONUS;
+	else if (flag == PC_BISHOP || flag == PR_BISHOP) return ORDERING_BISHOP_VALUE + PROMOTION_BONUS;
+	else if (flag == PC_KNIGHT || flag == PR_KNIGHT) return ORDERING_KNIGHT_VALUE + PROMOTION_BONUS;
 	else return 0;
 }
 

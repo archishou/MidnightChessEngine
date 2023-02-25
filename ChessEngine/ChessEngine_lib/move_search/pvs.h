@@ -4,6 +4,7 @@
 #include "search_params.h"
 #include "move_generation/position.h"
 #include "move_search/move_ordering/move_ordering.h"
+#include "evaluation/evaluate.h"
 #include "pv_table.h"
 #include "clock.h"
 

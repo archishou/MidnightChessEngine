@@ -4,6 +4,7 @@
 #include "move_generation/position.h"
 #include "move_search/search.h"
 #include "uci_interpreter/parse_uci_move.h"
+#include "evaluation/evaluate.h"
 
 class MoveSearchFixture : public ::testing::Test {
 protected:
