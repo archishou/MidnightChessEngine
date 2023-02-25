@@ -4,6 +4,8 @@
 // Created by Archishmaan Peyyety on 1/10/23.
 //
 
+constexpr int PASSED_PAWN_BONUS = 10;
+
 constexpr int NGAME_PHASES = 2;
 enum GamePhase {
 	MIDDLE,

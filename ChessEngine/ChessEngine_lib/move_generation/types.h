@@ -128,14 +128,33 @@ constexpr Square create_square(File f, Rank r) { return Square(r << 3 | f); }
 //Shifts a bitboard in a particular direction. There is no wrapping, so bits that are shifted of the edge are lost 
 template<Direction D>
 constexpr Bitboard shift(Bitboard b) {
-	return D == NORTH ? b << 8 : D == SOUTH ? b >> 8
-		: D == NORTH + NORTH ? b << 16 : D == SOUTH + SOUTH ? b >> 16
-		: D == EAST ? (b & ~MASK_FILE[HFILE]) << 1 : D == WEST ? (b & ~MASK_FILE[AFILE]) >> 1
+	return D == NORTH ? b << 8
+		: D == SOUTH ? b >> 8
+		: D == NORTH + NORTH ? b << 16
+		: D == SOUTH + SOUTH ? b >> 16
+		: D == EAST ? (b & ~MASK_FILE[HFILE]) << 1
+		: D == WEST ? (b & ~MASK_FILE[AFILE]) >> 1
 		: D == NORTH_EAST ? (b & ~MASK_FILE[HFILE]) << 9 
 		: D == NORTH_WEST ? (b & ~MASK_FILE[AFILE]) << 7
 		: D == SOUTH_EAST ? (b & ~MASK_FILE[HFILE]) >> 7 
 		: D == SOUTH_WEST ? (b & ~MASK_FILE[AFILE]) >> 9
 		: 0;	
+}
+
+// Only supports north and south
+template<Direction D>
+constexpr Bitboard fill(Bitboard b) {
+	switch (D) {
+		case NORTH:
+			b |= (b << 8);
+			b |= (b << 16);
+			return b | (b << 32);
+		case SOUTH:
+			b |= (b >> 8);
+			b |= (b >> 16);
+			return b | (b >> 32);
+		default: return b;
+	}
 }
 
 //Returns the actual rank from a given side's perspective (e.g. rank 1 is rank 8 from Black's perspective)
@@ -148,6 +167,22 @@ constexpr Rank relative_rank(Rank r) {
 template<Color C>
 constexpr Direction relative_dir(Direction d) {
 	return Direction(C == WHITE ? d : -d);
+}
+
+template<Color C>
+constexpr Bitboard forward_ranks(const Square s) {
+	return C == WHITE ? ~MASK_RANK[RANK1] << 8 * relative_rank<WHITE>(rank_of(s))
+					  : ~MASK_RANK[RANK8] >> 8 * relative_rank<BLACK>(rank_of(s));
+}
+
+template<Color C>
+constexpr Bitboard forward_file(const Square s) {
+	return forward_ranks<C>(s) & MASK_FILE[file_of(s)];
+}
+
+template<Color C>
+constexpr Bitboard forward_files(const Bitboard b) {
+	return C == WHITE ? fill<NORTH>(b) : fill<SOUTH>(b);
 }
 
 //The type of the move

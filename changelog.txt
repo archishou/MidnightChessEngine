@@ -387,3 +387,33 @@ Player: midnight-latest
    "No result": 5
    "Win: Black mates": 58
    "Win: White mates": 68
+
+Rank * 10 Bonus for Passed Pawns
+
+Score of midnight-dev vs midnight-latest: 417 - 340 - 243 [0.538]
+...      midnight-dev playing White: 193 - 194 - 113  [0.499] 500
+...      midnight-dev playing Black: 224 - 146 - 130  [0.578] 500
+...      White vs Black: 339 - 418 - 243  [0.461] 1000
+Elo difference: 26.8 +/- 18.8, LOS: 99.7 %, DrawRatio: 24.3 %
+1000 of 1000 games finished.
+
+Player: midnight-dev
+   "Draw by 3-fold repetition": 163
+   "Draw by adjudication": 1
+   "Draw by fifty moves rule": 19
+   "Draw by insufficient mating material": 55
+   "Draw by stalemate": 5
+   "Loss: Black mates": 194
+   "Loss: White mates": 146
+   "Win: Black mates": 224
+   "Win: White mates": 193
+Player: midnight-latest
+   "Draw by 3-fold repetition": 163
+   "Draw by adjudication": 1
+   "Draw by fifty moves rule": 19
+   "Draw by insufficient mating material": 55
+   "Draw by stalemate": 5
+   "Loss: Black mates": 224
+   "Loss: White mates": 193
+   "Win: Black mates": 194
+   "Win: White mates": 146

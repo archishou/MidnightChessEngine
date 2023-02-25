@@ -4,7 +4,6 @@
 #include "move_generation/position.h"
 #include "move_search/search.h"
 #include "uci_interpreter/parse_uci_move.h"
-#include "evaluation/evaluate.h"
 
 class MoveSearchFixture : public ::testing::Test {
 protected:
@@ -248,16 +247,11 @@ TEST_F(MoveSearchFixture, MateIn6Test1){
 	EXPECT_EQ(line_size(results.pv), 12);
 }
 
-TEST_F(MoveSearchFixture, DefaultFenPSTQWhite) {
-	for (int i = 0; i < 8; i++) {
-		for (int j = 0; j < 8; j++) {
-			std::cout << "{" << mg_pawn_table[i*8 + j] << ", " << eg_pawn_table[i * 8 + j] << "}, ";
-		}
-		std::cout << std::endl;
-	}
+TEST_F(MoveSearchFixture, CountPassedPawns1) {
 	Position p;
-	Position::set("5rk1/pp3ppp/b1p5/P3PP2/1P6/6rP/1nKB2B1/R5R1 b - - 1 30", p);
-	std::cout << evaluate_all_piece_positions<WHITE>(p) << std::endl;
+	Position::set("rnbqkbnr/ppp1pppp/8/3p4/8/8/PP3PPP/RNBQKBNR w KQkq - 0 1", p);
+	print_bitboard(passed_pawns<BLACK>(p));
+	std::cout << evaluate_passed_pawns<BLACK>(p) << std::endl;
 }
 
 TEST_F(MoveSearchFixture, PositionInCheck) {

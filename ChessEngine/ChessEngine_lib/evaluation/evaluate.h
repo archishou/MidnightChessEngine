@@ -1,5 +1,6 @@
 #include "move_generation/position.h"
-#include "piece_square_tables.h"
+#include "eval_constants.h"
+#include "pawn.h"
 
 template<Color color>
 void compute_piece_score(Position& board, PieceType piece_type, int& mg_score, int& eg_score, int& game_phase) {
@@ -30,6 +31,7 @@ int evaluate_all_piece_positions(Position& board) {
 
 template<Color color>
 int evaluate(Position& board) {
-	int piece_position = evaluate_all_piece_positions<color>(board);
-	return piece_position;
+	const int piece_position = evaluate_all_piece_positions<color>(board);
+	const int pawn_structure = evaluate_pawn_structure<color>(board);
+	return piece_position + pawn_structure;
 }
