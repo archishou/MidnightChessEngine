@@ -24,19 +24,19 @@ constexpr Bitboard passed_pawns(Position& board) {
 }
 
 template<Color c>
-constexpr int evaluate_passed_pawns(Position& board) {
-	int passed_pawn_score = 0;
+constexpr Score evaluate_passed_pawns(Position& board) {
+	Score passed_pawn_score = Score(0, 0);
 	Bitboard passed_pawns_us = passed_pawns<c>(board);
 	while (passed_pawns_us) {
 		const Square pawn = pop_lsb(&passed_pawns_us);
 		const Rank rank = relative_rank<c>(rank_of(pawn));
-		passed_pawn_score += rank * PASSED_PAWN_BONUS;
+		passed_pawn_score += PASSED_PAWN_BONUS * rank;
 	}
 	return passed_pawn_score;
 }
 
 template<Color c>
-constexpr int evaluate_pawn_structure(Position& board) {
-	const int passed_pawn_eval = evaluate_passed_pawns<c>(board) - evaluate_passed_pawns<~c>(board);
+constexpr Score evaluate_pawn_structure(Position& board) {
+	const Score passed_pawn_eval = evaluate_passed_pawns<c>(board);
 	return passed_pawn_eval;
 }

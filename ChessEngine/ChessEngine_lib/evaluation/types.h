@@ -23,14 +23,14 @@ struct Score {
 	}
 	constexpr Score operator * (const short& s) const {
 		return {
-				(short) (middle_game * s),
-				(short) (end_game * s)
+			(short) (middle_game * s),
+			(short) (end_game * s)
 		};
 	}
 	constexpr Score operator - (const Score& s) const {
 		return {
-				(short) (middle_game - s.middle_game),
-				(short) (end_game - s.end_game)
+			(short) (middle_game - s.middle_game),
+			(short) (end_game - s.end_game)
 		};
 	}
 	inline Score& operator += (const Score& s) {
