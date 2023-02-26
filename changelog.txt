@@ -417,3 +417,11 @@ Player: midnight-latest
    "Loss: White mates": 193
    "Win: Black mates": 194
    "Win: White mates": 146
+
+Isolated Pawn Penalty
+Score of midnight-dev vs midnight-latest: 1006 - 893 - 678  [0.522] 2577
+...      midnight-dev playing White: 535 - 412 - 342  [0.548] 1289
+...      midnight-dev playing Black: 471 - 481 - 336  [0.496] 1288
+...      White vs Black: 1016 - 883 - 678  [0.526] 2577
+Elo difference: 15.2 +/- 11.5, LOS: 99.5 %, DrawRatio: 26.3 %
+SPRT: llr 2.97 (100.8%), lbound -2.94, ubound 2.94 - H1 was accepted

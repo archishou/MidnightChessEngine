@@ -240,18 +240,62 @@ TEST_F(MoveSearchFixture, MateIn6Test1){
 	std::cout << p.fen() << std::endl;
 	const BestMoveSearchParameters parameters = {
 			.depth = MAX_DEPTH,
-			.time_limit = 100,
+			.time_limit = 1000,
 			.debug_info = true
 	};
 	BestMoveSearchResults results = best_move(p, parameters);
 	EXPECT_EQ(line_size(results.pv), 12);
 }
 
-TEST_F(MoveSearchFixture, CountPassedPawns1) {
+TEST_F(MoveSearchFixture, CountIsolatedPawns1) {
 	Position p;
-	Position::set("rnbqkbnr/ppp1pppp/8/3p4/8/8/PP3PPP/RNBQKBNR w KQkq - 0 1", p);
-	print_bitboard(passed_pawns<BLACK>(p));
-	std::cout << evaluate_passed_pawns<BLACK>(p) << std::endl;
+	Position::set("5q2/6k1/2b5/1pB5/1n2QpB1/r3b2p/3PK1pN/8 w - - 0 1", p);
+	int num_black, num_white;
+	num_black = pop_count(isolated_pawns<BLACK>(p));
+	num_white = pop_count(isolated_pawns<WHITE>(p));
+	EXPECT_EQ(num_black, 1);
+	EXPECT_EQ(num_white, 1);
+}
+
+
+TEST_F(MoveSearchFixture, CountIsolatedPawns2) {
+	Position p;
+	Position::set("1R1Bbn2/1pP5/3b1KN1/n3P3/8/1B2Q1pr/6k1/8 w - - 0 1", p);
+	int num_black, num_white;
+	num_black = pop_count(isolated_pawns<BLACK>(p));
+	num_white = pop_count(isolated_pawns<WHITE>(p));
+	EXPECT_EQ(num_black, 2);
+	EXPECT_EQ(num_white, 2);
+}
+
+TEST_F(MoveSearchFixture, CountIsolatedPawns3) {
+	Position p;
+	Position::set("2N3N1/R5n1/1pp4n/4r3/4B3/P5K1/kbP1p3/7b w - - 0 1", p);
+	int num_black, num_white;
+	num_black = pop_count(isolated_pawns<BLACK>(p));
+	num_white = pop_count(isolated_pawns<WHITE>(p));
+	EXPECT_EQ(num_black, 1);
+	EXPECT_EQ(num_white, 2);
+}
+
+TEST_F(MoveSearchFixture, CountIsolatedPawns4) {
+	Position p;
+	Position::set("1q6/1P4b1/pn1P4/4k3/N2r1p2/4PR2/1K5N/3r3b w - - 0 1", p);
+	int num_black, num_white;
+	num_black = pop_count(isolated_pawns<BLACK>(p));
+	num_white = pop_count(isolated_pawns<WHITE>(p));
+	EXPECT_EQ(num_black, 2);
+	EXPECT_EQ(num_white, 1);
+}
+
+TEST_F(MoveSearchFixture, CountIsolatedPawns5) {
+	Position p;
+	Position::set("1k2N3/5rP1/1r2R2p/5Q2/8/2PN1P1R/4n1np/5K2 w - - 0 1", p);
+	int num_black, num_white;
+	num_black = pop_count(isolated_pawns<BLACK>(p));
+	num_white = pop_count(isolated_pawns<WHITE>(p));
+	EXPECT_EQ(num_black, 2);
+	EXPECT_EQ(num_white, 2);
 }
 
 TEST_F(MoveSearchFixture, PositionInCheck) {

@@ -48,6 +48,9 @@ struct Score {
 		end_game = short(end_game * s);
 		return *this;
 	}
+	friend inline std::ostream& operator<<(std::ostream& os, const Score& s) {
+		return os << "midgame: " << s.middle_game << " endgame: " << s.end_game;
+	}
 };
 
 typedef Score S;
