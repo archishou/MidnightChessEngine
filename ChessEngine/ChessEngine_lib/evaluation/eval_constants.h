@@ -84,6 +84,7 @@ constexpr Score KING_TABLE[NSQUARES] = {
 		S(-15, -53),S(36, -34),	S(12, -21),	S(-54, -11),S(8, -28),	S(-28, -14),S(24, -24),	S(14, -43),
 };
 
+// TODO: This kinda slow. Like 8 conditionals when it could just be PST[COLOR][TYPE][SQUARE]
 template<Color color>
 constexpr Score read_pstq(PieceType piece_type, Square square) {
 	if (color == WHITE) square = ~square;
