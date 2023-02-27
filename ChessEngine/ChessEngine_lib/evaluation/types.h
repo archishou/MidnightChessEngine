@@ -33,6 +33,9 @@ struct Score {
 			(short) (end_game - s.end_game)
 		};
 	}
+	inline constexpr bool operator == (const Score& s) const {
+		return middle_game == s.middle_game && end_game == s.end_game;
+	}
 	inline Score& operator += (const Score& s) {
 		middle_game = short(middle_game + s.middle_game);
 		end_game = short(end_game + s.end_game);

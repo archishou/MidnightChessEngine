@@ -25,6 +25,12 @@ inline constexpr Bitboard isolated_pawns(Position& board) {
 }
 
 template<Color color>
+inline constexpr Bitboard doubled_pawns(Position& board) {
+	Bitboard us_pawns = board.bitboard_of(color, PAWN);
+	return us_pawns & shift<relative_dir<color>(SOUTH)>(fill<relative_dir<color>(SOUTH)>(us_pawns));
+}
+
+template<Color color>
 constexpr Bitboard pawn_passed_span(const Bitboard s) {
 	return shift<relative_dir<color>(NORTH)>(forward_files<color>(s) | pawn_attack_span<color>(s));
 }
@@ -53,8 +59,14 @@ inline constexpr Score evaluate_isolated_pawns(Position& board) {
 }
 
 template<Color c>
+inline constexpr Score evaluate_doubled_pawns(Position& board) {
+	return DOUBLED_PAWN_PENALTY * pop_count(doubled_pawns<c>(board));
+}
+
+template<Color c>
 constexpr Score evaluate_pawn_structure(Position& board) {
 	const Score passed_pawn_eval = evaluate_passed_pawns<c>(board);
 	const Score isolated_pawn_eval = evaluate_isolated_pawns<c>(board);
-	return passed_pawn_eval + isolated_pawn_eval;
+	const Score doubled_pawn_eval = evaluate_doubled_pawns<c>(board);
+	return passed_pawn_eval + isolated_pawn_eval + doubled_pawn_eval;
 }

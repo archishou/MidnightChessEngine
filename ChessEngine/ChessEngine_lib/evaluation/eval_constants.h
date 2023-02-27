@@ -7,6 +7,7 @@
 
 constexpr Score PASSED_PAWN_BONUS = S(10, 10);
 constexpr Score ISOLATED_PAWN_PENALTY = S(-8, -16);
+constexpr Score DOUBLED_PAWN_PENALTY = S(-8, -20);
 
 // If this is updated be sure compute_game_phase loop is also updated. Currently only checks non-zeros.
 constexpr int GAME_PHASE_BONUS[NPIECE_TYPES] = {
