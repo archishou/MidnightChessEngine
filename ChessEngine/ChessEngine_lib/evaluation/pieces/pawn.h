@@ -59,7 +59,7 @@ inline constexpr Score evaluate_pawn_locations(Position& board) {
 	while (pawns) {
 		Square pawn_square = pop_lsb(&pawns);
 		score += PIECE_VALUES[PAWN];
-		score += read_pstq<c>(PAWN, pawn_square);
+		score += read_psqt<c>(PAWN, pawn_square);
 	}
 	return score;
 }

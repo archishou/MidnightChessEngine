@@ -89,7 +89,7 @@ constexpr Score KING_TABLE[NSQUARES] = {
 
 // TODO: This kinda slow. Like 8 conditionals when it could just be PST[COLOR][TYPE][SQUARE]
 template<Color color>
-constexpr Score read_pstq(PieceType piece_type, Square square) {
+constexpr Score read_psqt(PieceType piece_type, Square square) {
 	if (color == WHITE) square = ~square;
 	switch (piece_type) {
 		case PAWN: return PAWN_TABLE[square];

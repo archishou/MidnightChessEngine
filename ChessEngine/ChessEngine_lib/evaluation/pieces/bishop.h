@@ -9,7 +9,7 @@ constexpr Score evaluate_bishops(Position& board) {
 	while (bishops) {
 		Square bishop_square = pop_lsb(&bishops);
 		score += PIECE_VALUES[BISHOP];
-		score += read_pstq<color>(BISHOP, bishop_square);
+		score += read_psqt<color>(BISHOP, bishop_square);
 	}
 	return score;
 }

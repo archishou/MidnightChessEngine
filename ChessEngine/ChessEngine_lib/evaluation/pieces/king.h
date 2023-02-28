@@ -7,7 +7,7 @@ constexpr Score evaluate_king(Position& board) {
 	Bitboard king = board.bitboard_of(color, KING);
 	Square king_square = pop_lsb(&king);
 	score += PIECE_VALUES[KING];
-	score += read_pstq<color>(KING, king_square);
+	score += read_psqt<color>(KING, king_square);
 	return score;
 }
 

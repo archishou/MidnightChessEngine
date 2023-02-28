@@ -8,7 +8,7 @@ constexpr Score evaluate_knight(Position& board) {
 	while (knights) {
 		Square knight_square = pop_lsb(&knights);
 		score += PIECE_VALUES[KNIGHT];
-		score += read_pstq<color>(KNIGHT, knight_square);
+		score += read_psqt<color>(KNIGHT, knight_square);
 	}
 	return score;
 }
