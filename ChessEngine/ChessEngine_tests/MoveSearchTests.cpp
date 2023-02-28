@@ -297,6 +297,13 @@ TEST_F(MoveSearchFixture, CountIsolatedPawns5) {
 	EXPECT_EQ(num_black, 2);
 	EXPECT_EQ(num_white, 1);
 }
+
+TEST_F(MoveSearchFixture, TestQuickEval) {
+	Position p;
+	Position::set("1k2N3/5rP1/1r2R2p/5Q2/8/2PN1P1R/4n1np/5K2 w - - 0 1", p);
+	std::cout << evaluate<WHITE>(p);
+}
+
 TEST_F(MoveSearchFixture, PositionInCheck) {
 	Position p;
 	Position::set("rnbqkbnr/ppppp1pp/8/5p1Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 0 1", p);

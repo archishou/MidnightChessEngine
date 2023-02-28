@@ -1,6 +1,11 @@
 #include "move_generation/position.h"
 #include "eval_constants.h"
-#include "pawn.h"
+#include "evaluation/pieces/pawn.h"
+#include "evaluation/pieces/knight.h"
+#include "evaluation/pieces/bishop.h"
+#include "evaluation/pieces/rook.h"
+#include "evaluation/pieces/queen.h"
+#include "evaluation/pieces/king.h"
 
 template<Color color>
 constexpr int compute_game_phase(Position& board) {
@@ -14,30 +19,14 @@ constexpr int compute_game_phase(Position& board) {
 	return game_phase;
 }
 
-// Evaluates piece position and material count simultaneously
-template<Color color>
-constexpr Score evaluate_piece_position(Position& board, PieceType piece_type) {
-	Score score;
-	Bitboard piece_bitboard_us = board.bitboard_of(color, piece_type);
-	while (piece_bitboard_us) {
-		Square square = pop_lsb(&piece_bitboard_us);
-		score += read_pstq<color>(piece_type, square) + PIECE_VALUES[piece_type];
-	}
-	return score;
-}
-
-template<Color color>
-constexpr Score evaluate_all_piece_positions(Position& board) {
-	Score score;
-	for (PieceType piece_type : {PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING}) {
-		score += evaluate_piece_position<color>(board, piece_type);
-	}
-	return score;
-}
-
 template<Color color>
 constexpr Score evaluate_single_side(Position& board) {
-	return evaluate_all_piece_positions<color>(board) + evaluate_pawn_structure<color>(board);
+	return 	evaluate_pawn_structure<color>(board) +
+			evaluate_knight<color>(board) +
+			evaluate_bishops<color>(board) +
+			evaluate_rooks<color>(board) +
+			evaluate_queens<color>(board) +
+			evaluate_king<color>(board);
 }
 
 template<Color color>

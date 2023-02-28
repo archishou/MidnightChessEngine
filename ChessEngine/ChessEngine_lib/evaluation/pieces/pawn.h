@@ -53,8 +53,21 @@ inline constexpr Score evaluate_isolated_pawns(Position& board) {
 }
 
 template<Color c>
+inline constexpr Score evaluate_pawn_locations(Position& board) {
+	Score score = Score();
+	Bitboard pawns = board.bitboard_of(c, PAWN);
+	while (pawns) {
+		Square pawn_square = pop_lsb(&pawns);
+		score += PIECE_VALUES[PAWN];
+		score += read_pstq<c>(PAWN, pawn_square);
+	}
+	return score;
+}
+
+template<Color c>
 constexpr Score evaluate_pawn_structure(Position& board) {
+	const Score pawn_location_eval = evaluate_pawn_locations<c>(board);
 	const Score passed_pawn_eval = evaluate_passed_pawns<c>(board);
 	const Score isolated_pawn_eval = evaluate_isolated_pawns<c>(board);
-	return passed_pawn_eval + isolated_pawn_eval;
+	return pawn_location_eval + passed_pawn_eval + isolated_pawn_eval;
 }
