@@ -5,8 +5,11 @@
 // Created by Archishmaan Peyyety on 1/10/23.
 //
 
+// Pawn Bonuses
 constexpr Score PASSED_PAWN_BONUS = S(10, 10);
 constexpr Score ISOLATED_PAWN_PENALTY = S(-8, -16);
+// Bishop Bonuses
+constexpr Score BISHOP_PAIR_BONUS = S(30, 60);
 
 // If this is updated be sure compute_game_phase loop is also updated. Currently only checks non-zeros.
 constexpr int GAME_PHASE_BONUS[NPIECE_TYPES] = {
