@@ -21,8 +21,7 @@ extern void initialise_rook_attacks();
 extern /*constexpr*/ Bitboard get_rook_attacks(Square square, Bitboard occ);
 extern Bitboard get_xray_rook_attacks(Square square, Bitboard occ, Bitboard blockers);
 
-extern Bitboard get_bishop_attacks_for_init(Square square, Bitboard occ);
-extern const Bitboard BISHOP_MAGICS[NSQUARES];
+extern Bitboard get_bishop_aMAGICS[NSQUARES];
 extern Bitboard BISHOP_ATTACK_MASKS[NSQUARES];
 extern int BISHOP_ATTACK_SHIFTS[NSQUARES];
 extern Bitboard BISHOP_ATTACKS[NSQUARES][512];
