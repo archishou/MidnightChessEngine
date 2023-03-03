@@ -12,7 +12,7 @@ constexpr Score evaluate_knight(Position& board) {
 		score += PIECE_VALUES[KNIGHT];
 		score += read_psqt<color>(KNIGHT, knight_square);
 		Bitboard pseudo_legal_moves = attacks<KNIGHT>(knight_square, them_pieces | us_pieces) & ~us_pieces;
-		//score += MOBILITY_KNIGHT[pop_count(pseudo_legal_moves)];
+		score += KNIGHT_MOBILITY * pop_count(pseudo_legal_moves);
 	}
 	return score;
 }

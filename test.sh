@@ -13,7 +13,7 @@ SUITE_1=/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/testi
 TEST_ROOT=/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/testing
 
 # Test Name
-TEST_NAME=pesto-vs-texel
+TEST_NAME=test1
 
 # Test Variables
 ENGINE_1=(${ENGINE_DEV[*]})

@@ -13,7 +13,7 @@ constexpr Score evaluate_bishops(Position& board) {
 		score += PIECE_VALUES[BISHOP];
 		score += read_psqt<color>(BISHOP, bishop_square);
 		Bitboard pseudo_legal_moves = attacks<BISHOP>(bishop_square, them_pieces | us_pieces) & ~us_pieces;
-		//score += MOBILITY_BISHOP[pop_count(pseudo_legal_moves)];
+		score += BISHOP_MOBILITY * pop_count(pseudo_legal_moves);
 	}
 	return score;
 }

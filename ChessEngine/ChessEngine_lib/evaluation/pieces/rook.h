@@ -12,7 +12,7 @@ constexpr Score evaluate_rooks(Position& board) {
 		score += PIECE_VALUES[ROOK];
 		score += read_psqt<color>(ROOK, rook_square);
 		Bitboard pseudo_legal_moves = attacks<ROOK>(rook_square, them_pieces | us_pieces) & ~us_pieces;
-		//score += MOBILITY_ROOK[pop_count(pseudo_legal_moves)];
+		score += ROOK_MOBILITY * pop_count(pseudo_legal_moves);
 	}
 	return score;
 }

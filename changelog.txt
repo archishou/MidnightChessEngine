@@ -441,3 +441,12 @@ Score of midnight-dev vs midnight-pesto: 875 - 677 - 448 [0.549]
 ...      White vs Black: 808 - 744 - 448  [0.516] 2000
 Elo difference: 34.5 +/- 13.4, LOS: 100.0 %, DrawRatio: 22.4 %
 
+Mobility Bonus
+Score of midnight-dev vs midnight-latest: 399 - 308 - 234  [0.548] 941
+...      midnight-dev playing White: 200 - 155 - 116  [0.548] 471
+...      midnight-dev playing Black: 199 - 153 - 118  [0.549] 470
+...      White vs Black: 353 - 354 - 234  [0.499] 941
+Elo difference: 33.7 +/- 19.3, LOS: 100.0 %, DrawRatio: 24.9 %
+SPRT: llr 2.98 (101.1%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+
