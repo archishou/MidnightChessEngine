@@ -5,7 +5,6 @@ cd /Users/archishmaan/Documents/cutechess/build/
 ENGINE_DEV=(midnight-dev /Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/cmake-build-debug/ChessEngine_run)
 ENGINE_V2=(midnight-v2 /Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/releases/v2/master)
 ENGINE_LATEST=(midnight-latest /Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/releases/vlatest/master)
-ENGINE_PESTO=(midnight-pesto /Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/releases/v-pesto/master)
 
 # Opening Books
 SUITE_1=/Users/archishmaan/Documents/CodeProjects/chess-engine/ChessEngine/testing/books-master/8moves_v3.pgn
