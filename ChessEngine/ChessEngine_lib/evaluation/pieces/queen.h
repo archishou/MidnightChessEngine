@@ -21,9 +21,9 @@ constexpr Score evaluate_queens(Position& board) {
 		Square queen_square = pop_lsb(&queens);
 		score += PIECE_VALUES[QUEEN];
 		score += read_psqt<color>(QUEEN, queen_square);
-		Bitboard pseudo_legal_moves = attacks<QUEEN>(queen_square, them_pieces | us_pieces) & ~us_pieces;
-		Score s = MOBILITY_QUEEN[pop_count(pseudo_legal_moves)];
-		score += Score((short) (s.middle_game * 0.5), (short) (s.end_game * 0.5));
+		//Bitboard pseudo_legal_moves = attacks<QUEEN>(queen_square, them_pieces | us_pieces) & ~us_pieces;
+		//Score s = MOBILITY_QUEEN[pop_count(pseudo_legal_moves)];
+		//score += Score((short) (s.middle_game * 0.5), (short) (s.end_game * 0.5));
 	}
 	return score;
 }
