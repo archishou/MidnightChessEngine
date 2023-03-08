@@ -4,8 +4,8 @@
 #include "move_generation/types.h"
 #include "ordering_constants.h"
 
-int history[NSQUARES][NSQUARES];
-Move killers[MAX_PLY][NKILLERS];
+static int history[NSQUARES][NSQUARES];
+static Move killers[MAX_PLY][NKILLERS];
 
 void init_history() {
 	for (int i = 0; i < NSQUARES; i++)
