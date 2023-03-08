@@ -9,27 +9,6 @@ Score of midnight-dev vs midnight-latest: 449 - 276 - 275 [0.587]
 Elo difference: 60.7 +/- 18.5, LOS: 100.0 %, DrawRatio: 27.5 %
 1000 of 1000 games finished.
 
-Player: midnight-dev
-   "Draw by 3-fold repetition": 190
-   "Draw by adjudication": 1
-   "Draw by fifty moves rule": 35
-   "Draw by insufficient mating material": 41
-   "Draw by stalemate": 8
-   "Loss: Black mates": 155
-   "Loss: White mates": 121
-   "Win: Black mates": 230
-   "Win: White mates": 219
-Player: midnight-latest
-   "Draw by 3-fold repetition": 190
-   "Draw by adjudication": 1
-   "Draw by fifty moves rule": 35
-   "Draw by insufficient mating material": 41
-   "Draw by stalemate": 8
-   "Loss: Black mates": 230
-   "Loss: White mates": 219
-   "Win: Black mates": 155
-   "Win: White mates": 121
-
 History with tighter bounds
 
 Score of midnight-dev vs midnight-history: 382 - 320 - 298 [0.531]
@@ -39,27 +18,6 @@ Score of midnight-dev vs midnight-history: 382 - 320 - 298 [0.531]
 Elo difference: 21.6 +/- 18.1, LOS: 99.0 %, DrawRatio: 29.8 %
 1000 of 1000 games finished.
 
-Player: midnight-dev
-   "Draw by 3-fold repetition": 200
-   "Draw by adjudication": 10
-   "Draw by fifty moves rule": 41
-   "Draw by insufficient mating material": 42
-   "Draw by stalemate": 5
-   "Loss: Black mates": 159
-   "Loss: White mates": 161
-   "Win: Black mates": 186
-   "Win: White mates": 196
-Player: midnight-history
-   "Draw by 3-fold repetition": 200
-   "Draw by adjudication": 10
-   "Draw by fifty moves rule": 41
-   "Draw by insufficient mating material": 42
-   "Draw by stalemate": 5
-   "Loss: Black mates": 186
-   "Loss: White mates": 196
-   "Win: Black mates": 159
-   "Win: White mates": 161
-
 Adds killer heuristic
 Score of midnight-dev vs vhistory-bounds: 372 - 322 - 306 [0.525]
 ...      midnight-dev playing White: 162 - 180 - 158  [0.482] 500
@@ -67,27 +25,6 @@ Score of midnight-dev vs vhistory-bounds: 372 - 322 - 306 [0.525]
 ...      White vs Black: 304 - 390 - 306  [0.457] 1000
 Elo difference: 17.4 +/- 17.9, LOS: 97.1 %, DrawRatio: 30.6 %
 1000 of 1000 games finished.
-
-Player: midnight-dev
-   "Draw by 3-fold repetition": 174
-   "Draw by adjudication": 16
-   "Draw by fifty moves rule": 53
-   "Draw by insufficient mating material": 50
-   "Draw by stalemate": 13
-   "Loss: Black mates": 180
-   "Loss: White mates": 142
-   "Win: Black mates": 210
-   "Win: White mates": 162
-Player: vhistory-bounds
-   "Draw by 3-fold repetition": 174
-   "Draw by adjudication": 16
-   "Draw by fifty moves rule": 53
-   "Draw by insufficient mating material": 50
-   "Draw by stalemate": 13
-   "Loss: Black mates": 210
-   "Loss: White mates": 162
-   "Win: Black mates": 180
-   "Win: White mates": 142
 
 Adds NMP
 
@@ -98,27 +35,6 @@ Score of midnight-dev vs midnight-latest: 382 - 304 - 314 [0.539]
 Elo difference: 27.2 +/- 17.9, LOS: 99.9 %, DrawRatio: 31.4 %
 1000 of 1000 games finished.
 
-Player: midnight-dev
-   "Draw by 3-fold repetition": 173
-   "Draw by adjudication": 19
-   "Draw by fifty moves rule": 54
-   "Draw by insufficient mating material": 61
-   "Draw by stalemate": 7
-   "Loss: Black mates": 161
-   "Loss: White mates": 143
-   "Win: Black mates": 206
-   "Win: White mates": 176
-Player: midnight-latest
-   "Draw by 3-fold repetition": 173
-   "Draw by adjudication": 19
-   "Draw by fifty moves rule": 54
-   "Draw by insufficient mating material": 61
-   "Draw by stalemate": 7
-   "Loss: Black mates": 206
-   "Loss: White mates": 176
-   "Win: Black mates": 161
-   "Win: White mates": 143
-
 NMP Fixup
 
 Score of midnight-dev vs midnight-v1.5: 435 - 293 - 272 [0.571]
@@ -127,27 +43,6 @@ Score of midnight-dev vs midnight-v1.5: 435 - 293 - 272 [0.571]
 ...      White vs Black: 470 - 258 - 272  [0.606] 1000
 Elo difference: 49.7 +/- 18.5, LOS: 100.0 %, DrawRatio: 27.2 %
 1000 of 1000 games finished.
-
-Player: midnight-dev
-   "Draw by 3-fold repetition": 167
-   "Draw by adjudication": 11
-   "Draw by fifty moves rule": 37
-   "Draw by insufficient mating material": 54
-   "Draw by stalemate": 3
-   "Loss: Black mates": 96
-   "Loss: White mates": 197
-   "Win: Black mates": 162
-   "Win: White mates": 273
-Player: midnight-v1.5
-   "Draw by 3-fold repetition": 167
-   "Draw by adjudication": 11
-   "Draw by fifty moves rule": 37
-   "Draw by insufficient mating material": 54
-   "Draw by stalemate": 3
-   "Loss: Black mates": 162
-   "Loss: White mates": 273
-   "Win: Black mates": 96
-   "Win: White mates": 197
 
 Adaptive NMP
 
@@ -158,25 +53,6 @@ Score of midnight-dev vs midnight-latest: 384 - 342 - 274 [0.521]
 Elo difference: 14.6 +/- 18.3, LOS: 94.0 %, DrawRatio: 27.4 %
 1000 of 1000 games finished.
 
-Player: midnight-dev
-   "Draw by 3-fold repetition": 154
-   "Draw by adjudication": 6
-   "Draw by fifty moves rule": 67
-   "Draw by insufficient mating material": 47
-   "Loss: Black mates": 164
-   "Loss: White mates": 178
-   "Win: Black mates": 190
-   "Win: White mates": 194
-Player: midnight-latest
-   "Draw by 3-fold repetition": 154
-   "Draw by adjudication": 6
-   "Draw by fifty moves rule": 67
-   "Draw by insufficient mating material": 47
-   "Loss: Black mates": 190
-   "Loss: White mates": 194
-   "Win: Black mates": 164
-   "Win: White mates": 178
-
 Adds pv_node check for nmp and ttable checks
 
 Score of midnight-dev vs midnight-latest: 400 - 333 - 267 [0.533]
@@ -186,52 +62,12 @@ Score of midnight-dev vs midnight-latest: 400 - 333 - 267 [0.533]
 Elo difference: 23.3 +/- 18.5, LOS: 99.3 %, DrawRatio: 26.7 %
 1000 of 1000 games finished.
 
-Player: midnight-dev
-   "Draw by 3-fold repetition": 167
-   "Draw by adjudication": 15
-   "Draw by fifty moves rule": 40
-   "Draw by insufficient mating material": 45
-   "Loss: Black mates": 187
-   "Loss: White mates": 146
-   "Win: Black mates": 223
-   "Win: White makes an illegal move: a1a1": 1
-   "Win: White mates": 176
-Player: midnight-latest
-   "Draw by 3-fold repetition": 167
-   "Draw by adjudication": 15
-   "Draw by fifty moves rule": 40
-   "Draw by insufficient mating material": 45
-   "Loss: Black mates": 223
-   "Loss: White makes an illegal move: a1a1": 1
-   "Loss: White mates": 176
-   "Win: Black mates": 187
-   "Win: White mates": 146
-
 Score of midnight-dev vs midnight-v1: 903 - 30 - 67 [0.936]
 ...      midnight-dev playing White: 438 - 27 - 35  [0.911] 500
 ...      midnight-dev playing Black: 465 - 3 - 32  [0.962] 500
 ...      White vs Black: 441 - 492 - 67  [0.474] 1000
 Elo difference: 467.5 +/- 37.9, LOS: 100.0 %, DrawRatio: 6.7 %
 1000 of 1000 games finished.
-
-Player: midnight-dev
-   "Draw by 3-fold repetition": 44
-   "Draw by adjudication": 3
-   "Draw by fifty moves rule": 12
-   "Draw by insufficient mating material": 8
-   "Loss: Black mates": 27
-   "Loss: White mates": 3
-   "Win: Black mates": 465
-   "Win: White mates": 438
-Player: midnight-v1
-   "Draw by 3-fold repetition": 44
-   "Draw by adjudication": 3
-   "Draw by fifty moves rule": 12
-   "Draw by insufficient mating material": 8
-   "Loss: Black mates": 465
-   "Loss: White mates": 438
-   "Win: Black mates": 27
-   "Win: White mates": 3
 
 Don't reset TT Every Move
 
@@ -242,90 +78,24 @@ Score of midnight-dev vs vtt-reset-every-time: 421 - 309 - 270 [0.556]
 Elo difference: 39.1 +/- 18.5, LOS: 100.0 %, DrawRatio: 27.0 %
 1000 of 1000 games finished.
 
-Player: midnight-dev
-   "Draw by 3-fold repetition": 170
-   "Draw by adjudication": 11
-   "Draw by fifty moves rule": 45
-   "Draw by insufficient mating material": 39
-   "Draw by stalemate": 5
-   "Loss: Black mates": 107
-   "Loss: White mates": 202
-   "Win: Black mates": 159
-   "Win: White mates": 262
-Player: vtt-reset-every-time
-   "Draw by 3-fold repetition": 170
-   "Draw by adjudication": 11
-   "Draw by fifty moves rule": 45
-   "Draw by insufficient mating material": 39
-   "Draw by stalemate": 5
-   "Loss: Black mates": 159
-   "Loss: White mates": 262
-   "Win: Black mates": 107
-   "Win: White mates": 202
-
 Net Gains of V2
 
-Score of midnight-dev vs Lynx: 926 - 26 - 48 [0.950]
-...      midnight-dev playing White: 485 - 0 - 15  [0.985] 500
-...      midnight-dev playing Black: 441 - 26 - 33  [0.915] 500
-...      White vs Black: 511 - 441 - 48  [0.535] 1000
-Elo difference: 511.5 +/- 43.4, LOS: 100.0 %, DrawRatio: 4.8 %
-1000 of 1000 games finished.
+    Score of midnight-dev vs Lynx: 926 - 26 - 48 [0.950]
+    ...      midnight-dev playing White: 485 - 0 - 15  [0.985] 500
+    ...      midnight-dev playing Black: 441 - 26 - 33  [0.915] 500
+    ...      White vs Black: 511 - 441 - 48  [0.535] 1000
+    Elo difference: 511.5 +/- 43.4, LOS: 100.0 %, DrawRatio: 4.8 %
+    1000 of 1000 games finished.
 
-Player: midnight-dev
-   "Draw by 3-fold repetition": 33
-   "Draw by fifty moves rule": 6
-   "Draw by insufficient mating material": 8
-   "Draw by stalemate": 1
-   "Loss: White mates": 26
-   "Win: Black loses on time": 135
-   "Win: Black mates": 374
-   "Win: White loses on time": 67
-   "Win: White mates": 350
-Player: Lynx
-   "Draw by 3-fold repetition": 33
-   "Draw by fifty moves rule": 6
-   "Draw by insufficient mating material": 8
-   "Draw by stalemate": 1
-   "Loss: Black loses on time": 135
-   "Loss: Black mates": 374
-   "Loss: White loses on time": 67
-   "Loss: White mates": 350
-   "Win: White mates": 26
+    Lynx ELO: 1558
+    Midnight ELO: 2069.5
 
-Lynx ELO: 1558
-Midnight ELO: 2069.5
-
-
-Score of midnight-dev vs snowy0.2: 321 - 506 - 173 [0.407]
-...      midnight-dev playing White: 170 - 227 - 103  [0.443] 500
-...      midnight-dev playing Black: 151 - 279 - 70  [0.372] 500
-...      White vs Black: 449 - 378 - 173  [0.535] 1000
-Elo difference: -65.0 +/- 19.8, LOS: 0.0 %, DrawRatio: 17.3 %
-1000 of 1000 games finished.
-
-Player: midnight-dev
-   "Draw by 3-fold repetition": 67
-   "Draw by adjudication": 12
-   "Draw by fifty moves rule": 66
-   "Draw by insufficient mating material": 26
-   "Draw by stalemate": 2
-   "Loss: Black mates": 226
-   "Loss: White loses on time": 1
-   "Loss: White mates": 279
-   "Win: Black mates": 151
-   "Win: White mates": 170
-Player: snowy0.2
-   "Draw by 3-fold repetition": 67
-   "Draw by adjudication": 12
-   "Draw by fifty moves rule": 66
-   "Draw by insufficient mating material": 26
-   "Draw by stalemate": 2
-   "Loss: Black mates": 151
-   "Loss: White mates": 170
-   "Win: Black mates": 226
-   "Win: White loses on time": 1
-   "Win: White mates": 279
+    Score of midnight-dev vs snowy0.2: 321 - 506 - 173 [0.407]
+    ...      midnight-dev playing White: 170 - 227 - 103  [0.443] 500
+    ...      midnight-dev playing Black: 151 - 279 - 70  [0.372] 500
+    ...      White vs Black: 449 - 378 - 173  [0.535] 1000
+    Elo difference: -65.0 +/- 19.8, LOS: 0.0 %, DrawRatio: 17.3 %
+    1000 of 1000 games finished.
 
 Midnight ELO 1940
 
@@ -338,26 +108,6 @@ Score of midnight-dev vs midnight-latest: 108 - 18 - 11  [0.828] 137
 Elo difference: 273.6 +/- 73.9, LOS: 100.0 %, DrawRatio: 8.0 %
 SPRT: llr 2.96 (100.5%), lbound -2.94, ubound 2.94 - H1 was accepted
 
-Player: midnight-dev
-   "Draw by 3-fold repetition": 5
-   "Draw by fifty moves rule": 4
-   "Draw by insufficient mating material": 2
-   "Loss: Black mates": 9
-   "Loss: White mates": 9
-   "No result": 4
-   "Win: Black mates": 51
-   "Win: White mates": 57
-Player: midnight-latest
-   "Draw by 3-fold repetition": 5
-   "Draw by fifty moves rule": 4
-   "Draw by insufficient mating material": 2
-   "Loss: Black mates": 51
-   "Loss: White mates": 57
-   "No result": 4
-   "Win: Black mates": 9
-   "Win: White mates": 9
-Finished match
-
 Remove Mop - Up [Thank god!]
 
 Score of midnight-dev vs midnight-latest: 136 - 126 - 135 [0.513]
@@ -367,27 +117,6 @@ Score of midnight-dev vs midnight-latest: 136 - 126 - 135 [0.513]
 Elo difference: 8.8 +/- 27.8, LOS: 73.2 %, DrawRatio: 34.0 %
 402 of 1000 games finished.
 
-Player: midnight-dev
-   "Draw by 3-fold repetition": 79
-   "Draw by fifty moves rule": 16
-   "Draw by insufficient mating material": 37
-   "Draw by stalemate": 3
-   "Loss: Black mates": 58
-   "Loss: White mates": 68
-   "No result": 5
-   "Win: Black mates": 62
-   "Win: White mates": 74
-Player: midnight-latest
-   "Draw by 3-fold repetition": 79
-   "Draw by fifty moves rule": 16
-   "Draw by insufficient mating material": 37
-   "Draw by stalemate": 3
-   "Loss: Black mates": 62
-   "Loss: White mates": 74
-   "No result": 5
-   "Win: Black mates": 58
-   "Win: White mates": 68
-
 Rank * 10 Bonus for Passed Pawns
 
 Score of midnight-dev vs midnight-latest: 417 - 340 - 243 [0.538]
@@ -396,27 +125,6 @@ Score of midnight-dev vs midnight-latest: 417 - 340 - 243 [0.538]
 ...      White vs Black: 339 - 418 - 243  [0.461] 1000
 Elo difference: 26.8 +/- 18.8, LOS: 99.7 %, DrawRatio: 24.3 %
 1000 of 1000 games finished.
-
-Player: midnight-dev
-   "Draw by 3-fold repetition": 163
-   "Draw by adjudication": 1
-   "Draw by fifty moves rule": 19
-   "Draw by insufficient mating material": 55
-   "Draw by stalemate": 5
-   "Loss: Black mates": 194
-   "Loss: White mates": 146
-   "Win: Black mates": 224
-   "Win: White mates": 193
-Player: midnight-latest
-   "Draw by 3-fold repetition": 163
-   "Draw by adjudication": 1
-   "Draw by fifty moves rule": 19
-   "Draw by insufficient mating material": 55
-   "Draw by stalemate": 5
-   "Loss: Black mates": 224
-   "Loss: White mates": 193
-   "Win: Black mates": 194
-   "Win: White mates": 146
 
 Isolated Pawn Penalty
 Score of midnight-dev vs midnight-latest: 1006 - 893 - 678  [0.522] 2577
