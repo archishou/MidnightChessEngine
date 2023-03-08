@@ -25,6 +25,12 @@ inline constexpr Bitboard isolated_pawns(Position& board) {
 }
 
 template<Color color>
+inline constexpr Bitboard doubled_pawns(Position& board) {
+	Bitboard us_pawns = board.bitboard_of(color, PAWN);
+	return us_pawns & shift<relative_dir<color>(SOUTH)>(us_pawns);
+}
+
+template<Color color>
 constexpr Bitboard pawn_passed_span(const Bitboard s) {
 	return shift<relative_dir<color>(NORTH)>(forward_files<color>(s) | pawn_attack_span<color>(s));
 }
