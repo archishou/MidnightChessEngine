@@ -4,26 +4,11 @@
 #include "move_generation/types.h"
 #include "ordering_constants.h"
 
-static int history[NSQUARES][NSQUARES];
-static Move killers[MAX_PLY][NKILLERS];
+extern int history[NSQUARES][NSQUARES];
+extern Move killers[MAX_PLY][NKILLERS];
 
-void init_history() {
-	for (int i = 0; i < NSQUARES; i++)
-		for (int j = 0; j < NSQUARES; j++)
-			history[i][j] = 0;
-
-	for (int i = 0; i < MAX_PLY; i++) {
-		for (int j = 0; j < NKILLERS; j++) {
-			killers[i][j] = Move();
-		}
-	}
-}
-
-void scale_history() {
-	for (int i = 0; i < NSQUARES; i++)
-		for (int j = 0; j < NSQUARES; j++)
-			history[i][j] >>= 1;
-}
+extern void init_history();
+extern void scale_history();
 
 template<Color color>
 void update_history(Move &move, int depth, int ply) {

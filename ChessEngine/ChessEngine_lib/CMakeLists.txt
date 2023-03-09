@@ -13,5 +13,5 @@ set(SOURCE_FILES
         move_generation/types.cpp
         move_generation/types.h
         evaluation/evaluate.h
-        evaluation/eval_constants.h move_search/transposition_table.h move_search/transposition_table.cpp move_search/pv_table.h helpers.cpp helpers.h clock.cpp clock.h constants.h uci_interpreter/parse_uci_move.h move_search/move_ordering/history_table.h move_search/move_ordering/ordering_constants.h uci_interpreter/time_manager.h evaluation/pieces/pawn.h evaluation/types.h evaluation/pieces/knight.h evaluation/pieces/bishop.h evaluation/pieces/rook.h evaluation/pieces/queen.h evaluation/pieces/king.h)
+        evaluation/eval_constants.h move_search/transposition_table.h move_search/transposition_table.cpp move_search/pv_table.h helpers.cpp helpers.h clock.cpp clock.h constants.h uci_interpreter/parse_uci_move.h move_search/move_ordering/history_table.h move_search/move_ordering/ordering_constants.h uci_interpreter/time_manager.h evaluation/pieces/pawn.h evaluation/types.h evaluation/pieces/knight.h evaluation/pieces/bishop.h evaluation/pieces/rook.h evaluation/pieces/queen.h evaluation/pieces/king.h move_search/move_ordering/history_table.cpp)
 add_library(ChessEngine_lib STATIC ${SOURCE_FILES})
