@@ -11,6 +11,7 @@ constexpr int GAME_PHASE_BONUS[NPIECE_TYPES] = {
 };
 // Pawn Bonuses
 constexpr Score PASSED_PAWN_BONUS = S(1, 17);
+constexpr Score BLOCKED_PASSED_PAWN_BONUS = S(-1, -17);
 constexpr Score ISOLATED_PAWN_PENALTY = S(-23, -13);
 // Bishop Bonuses
 constexpr Score BISHOP_PAIR_BONUS =S(32, 54);

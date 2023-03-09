@@ -305,6 +305,12 @@ TEST_F(MoveSearchFixture, Mobility) {
 	EXPECT_EQ(count_pseudo_legal_queen<WHITE>(p, a7), 7);
 }
 
+TEST_F(MoveSearchFixture, PassedPawn) {
+	Position p;
+	Position::set("rnbqk2r/ppp3pp/8/7p/5n2/4P3/P4PPP/R1B1KBNR w KQkq - 0 1", p);
+	evaluate_passed_pawns<BLACK>(p);
+}
+
 TEST_F(MoveSearchFixture, PositionInCheck) {
 	Position p;
 	Position::set("rnbqkbnr/ppppp1pp/8/5p1Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 0 1", p);
