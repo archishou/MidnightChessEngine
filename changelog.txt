@@ -157,4 +157,11 @@ Score of midnight-dev vs midnight-latest: 399 - 308 - 234  [0.548] 941
 Elo difference: 33.7 +/- 19.3, LOS: 100.0 %, DrawRatio: 24.9 %
 SPRT: llr 2.98 (101.1%), lbound -2.94, ubound 2.94 - H1 was accepted
 
+Blocked Passed Pawn Eval
+Score of midnight-dev vs midnight-latest: 773 - 670 - 541  [0.526] 1984
+...      midnight-dev playing White: 400 - 315 - 278  [0.543] 993
+...      midnight-dev playing Black: 373 - 355 - 263  [0.509] 991
+...      White vs Black: 755 - 688 - 541  [0.517] 1984
+Elo difference: 18.1 +/- 13.0, LOS: 99.7 %, DrawRatio: 27.3 %
+SPRT: llr 2.95 (100.2%), lbound -2.94, ubound 2.94 - H1 was accepted
 
