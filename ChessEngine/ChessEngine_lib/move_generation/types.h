@@ -185,6 +185,10 @@ constexpr Bitboard forward_files(const Bitboard b) {
 	return C == WHITE ? fill<NORTH>(b) : fill<SOUTH>(b);
 }
 
+constexpr Bitboard file_fill(const Bitboard b) {
+	return fill<NORTH>(b) | fill<SOUTH>(b);
+}
+
 //The type of the move
 enum MoveFlag : int {
 	QUIET = 0b0000, DOUBLE_PUSH = 0b0001,

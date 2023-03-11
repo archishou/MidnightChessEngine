@@ -41,6 +41,15 @@ constexpr Bitboard passed_pawns(Position& board) {
 	return board.bitboard_of(c, PAWN) & ~them_pawn_occupants;
 }
 
+constexpr Bitboard open_files(Position& board) {
+	return ~file_fill(board.bitboard_of(WHITE_PAWN)) & ~file_fill(board.bitboard_of(BLACK_PAWN));
+}
+
+template<Color c>
+constexpr Bitboard semi_open_files(Position& board) {
+	return ~file_fill(board.bitboard_of(c, PAWN)) ^ open_files(board);
+}
+
 template<Color c>
 constexpr Score evaluate_passed_pawns(Position& board) {
 	Score passed_pawn_score = Score(0, 0);

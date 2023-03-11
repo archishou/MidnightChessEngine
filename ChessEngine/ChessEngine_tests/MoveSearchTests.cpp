@@ -305,10 +305,10 @@ TEST_F(MoveSearchFixture, Mobility) {
 	EXPECT_EQ(count_pseudo_legal_queen<WHITE>(p, a7), 7);
 }
 
-TEST_F(MoveSearchFixture, PassedPawn) {
+TEST_F(MoveSearchFixture, OpenFiles) {
 	Position p;
-	Position::set("rnbqk2r/ppp3pp/8/7p/5n2/4P3/P4PPP/R1B1KBNR w KQkq - 0 1", p);
-	evaluate_passed_pawns<BLACK>(p);
+	Position::set("rnbqkbnr/1p2p1p1/p1p4p/3p4/P4P2/2P5/1PP1R1PP/RNBQKBN1 w Qkq - 0 1", p);
+	std::cout << evaluate_rooks<WHITE>(p);
 }
 
 TEST_F(MoveSearchFixture, PositionInCheck) {
