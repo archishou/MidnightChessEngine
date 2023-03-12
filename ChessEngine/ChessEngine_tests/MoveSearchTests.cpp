@@ -300,8 +300,7 @@ TEST_F(MoveSearchFixture, CountIsolatedPawns5) {
 
 TEST_F(MoveSearchFixture, OpenFiles) {
 	Position p;
-	Position::set("rnbqkbnr/1p2p1p1/p1p4p/3p4/P4P2/2P5/1PP1R1PP/RNBQKBN1 w Qkq - 0 1", p);
-	std::cout << evaluate_rooks<WHITE>(p);
+	Position::set("r2qk1nr/1p3p1p/p1p1p3/1b1p1p2/1PP1b3/P3P3/3P1PPP/RNBQKBNR w KQkq - 0 1", p);
 }
 
 TEST_F(MoveSearchFixture, PositionInCheck) {

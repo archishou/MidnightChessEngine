@@ -73,10 +73,14 @@ template<Color c>
 inline constexpr Score evaluate_pawn_locations(Position& board) {
 	Score score = Score();
 	Bitboard pawns = board.bitboard_of(c, PAWN);
+	const Bitboard all_pawns = pawns;
 	while (pawns) {
 		Square pawn_square = pop_lsb(&pawns);
+		const Rank rank = relative_rank<c>(rank_of(pawn_square));
 		score += PIECE_VALUES[PAWN];
 		score += read_psqt<c>(PAWN, pawn_square);
+		const Bitboard supporting_pawns = all_pawns & pawn_attacks<~c>(pawn_square);
+		score += PAWN_PROTECTION[PAWN] * pop_count(supporting_pawns) * rank;
 	}
 	return score;
 }
