@@ -100,7 +100,6 @@ Net Gains of V2
 Midnight ELO 1940
 
 PESTO EVAL GOES BRRRRRR
-
 Score of midnight-dev vs midnight-latest: 108 - 18 - 11  [0.828] 137
 ...      midnight-dev playing White: 57 - 9 - 3  [0.848] 69
 ...      midnight-dev playing Black: 51 - 9 - 8  [0.809] 68
@@ -109,7 +108,6 @@ Elo difference: 273.6 +/- 73.9, LOS: 100.0 %, DrawRatio: 8.0 %
 SPRT: llr 2.96 (100.5%), lbound -2.94, ubound 2.94 - H1 was accepted
 
 Remove Mop - Up [Thank god!]
-
 Score of midnight-dev vs midnight-latest: 136 - 126 - 135 [0.513]
 ...      midnight-dev playing White: 74 - 58 - 66  [0.540] 198
 ...      midnight-dev playing Black: 62 - 68 - 69  [0.485] 199
@@ -118,7 +116,6 @@ Elo difference: 8.8 +/- 27.8, LOS: 73.2 %, DrawRatio: 34.0 %
 402 of 1000 games finished.
 
 Rank * 10 Bonus for Passed Pawns
-
 Score of midnight-dev vs midnight-latest: 417 - 340 - 243 [0.538]
 ...      midnight-dev playing White: 193 - 194 - 113  [0.499] 500
 ...      midnight-dev playing Black: 224 - 146 - 130  [0.578] 500
