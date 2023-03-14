@@ -51,12 +51,6 @@ constexpr Bitboard semi_open_files(Position& board) {
 }
 
 template<Color c>
-constexpr Score evaluate_pawn_phalanx(Position& board) {
-	Bitboard phalanx = board.bitboard_of(c, PAWN) & shift<relative_dir<c>(WEST)>(board.bitboard_of(c, PAWN));
-	return PAWN_PHALANX * pop_count(phalanx);
-}
-
-template<Color c>
 constexpr Score evaluate_passed_pawns(Position& board) {
 	Score passed_pawn_score = Score(0, 0);
 	Bitboard passed_pawns_us = passed_pawns<c>(board);
@@ -96,6 +90,5 @@ constexpr Score evaluate_pawn_structure(Position& board) {
 	const Score pawn_location_eval = evaluate_pawn_locations<c>(board);
 	const Score passed_pawn_eval = evaluate_passed_pawns<c>(board);
 	const Score isolated_pawn_eval = evaluate_isolated_pawns<c>(board);
-	const Score phalanx_pawn_eval = evaluate_pawn_phalanx<c>(board);
-	return pawn_location_eval + passed_pawn_eval + isolated_pawn_eval + phalanx_pawn_eval;
+	return pawn_location_eval + passed_pawn_eval + isolated_pawn_eval;
 }
