@@ -52,14 +52,8 @@ constexpr Bitboard semi_open_files(Position& board) {
 
 template<Color c>
 constexpr Score evaluate_pawn_phalanx(Position& board) {
-	Score phalanx_score = Score(0, 0);
 	Bitboard phalanx = board.bitboard_of(c, PAWN) & shift<relative_dir<c>(WEST)>(board.bitboard_of(c, PAWN));
-	while (phalanx) {
-		const Square phalanx_pawn = pop_lsb(&phalanx);
-		const Rank rank = relative_rank<c>(rank_of(phalanx_pawn));
-		phalanx_score += PAWN_PHALANX * rank;
-	}
-	return phalanx_score;
+	return PAWN_PHALANX * pop_count(phalanx);
 }
 
 template<Color c>
