@@ -300,7 +300,8 @@ TEST_F(MoveSearchFixture, CountIsolatedPawns5) {
 
 TEST_F(MoveSearchFixture, OpenFiles) {
 	Position p;
-	Position::set("r2qk1nr/1p3p1p/p1p1p3/1b1p1p2/1PP1b3/P3P3/3P1PPP/RNBQKBNR w KQkq - 0 1", p);
+	Position::set("rnbqkbnr/pppp2pp/8/4pp2/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", p);
+	evaluate_pawn_phalanx<BLACK>(p);
 }
 
 TEST_F(MoveSearchFixture, PositionInCheck) {
