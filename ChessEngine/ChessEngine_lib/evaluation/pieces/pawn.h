@@ -57,7 +57,7 @@ constexpr Score evaluate_pawn_phalanx(Position& board) {
 	while (phalanx) {
 		const Square phalanx_pawn = pop_lsb(&phalanx);
 		const Rank rank = relative_rank<c>(rank_of(phalanx_pawn));
-		phalanx_score += PAWN_PHALANX[rank];
+		phalanx_score += PAWN_PHALANX * rank;
 	}
 	return phalanx_score;
 }
