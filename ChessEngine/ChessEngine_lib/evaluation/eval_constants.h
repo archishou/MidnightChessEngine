@@ -20,6 +20,7 @@ constexpr Score KING_TABLE[] = {S(-125, -76), S(186, -73), S(192, -58), S(121, -
 constexpr Score OPEN_FILE_BONUS[] = {S(0, 0), S(0, 0), S(0, 0), S(59, -6), S(-6, 22), S(-65, 3)};
 constexpr Score SEMI_OPEN_FILE_BONUS[] = {S(0, 0), S(0, 0), S(0, 0), S(17, 6), S(-1, 15), S(-31, 15)};
 constexpr Score PAWN_PROTECTION[] = {S(-1, 6), S(-0, 20), S(-2, 20), S(0, 0), S(0, 0), S(0, 0)};
+constexpr Score KING_PAWN_SHIELD[] = {S(1, 1), S(1, 1)};
 constexpr Score PASSED_PAWN_BONUS = S(1, 20);
 constexpr Score BLOCKED_PASSED_PAWN_PENALTY = S(5, -20);
 constexpr Score ISOLATED_PAWN_PENALTY = S(-24, -10);

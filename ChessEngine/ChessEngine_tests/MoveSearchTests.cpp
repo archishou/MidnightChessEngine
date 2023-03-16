@@ -300,8 +300,9 @@ TEST_F(MoveSearchFixture, CountIsolatedPawns5) {
 
 TEST_F(MoveSearchFixture, OpenFiles) {
 	Position p;
-	Position::set("rnbqkbnr/pppp2pp/8/4pp2/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", p);
-	evaluate_pawn_phalanx<BLACK>(p);
+	Position::set("rn3bkr/pppppppp/5b2/8/6q1/8/PPPPPPPP/RN4KR w - - 0 1", p);
+	std::cout << evaluate_king<BLACK>(p) << std::endl;
+
 }
 
 TEST_F(MoveSearchFixture, PositionInCheck) {
