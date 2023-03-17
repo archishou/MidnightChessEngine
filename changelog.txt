@@ -1,7 +1,6 @@
 200 Full Move Draw Adjudication
 
 Add History Heuristic
-
 Score of midnight-dev vs midnight-latest: 449 - 276 - 275 [0.587]
 ...      midnight-dev playing White: 219 - 155 - 126  [0.564] 500
 ...      midnight-dev playing Black: 230 - 121 - 149  [0.609] 500
@@ -10,7 +9,6 @@ Elo difference: 60.7 +/- 18.5, LOS: 100.0 %, DrawRatio: 27.5 %
 1000 of 1000 games finished.
 
 History with tighter bounds
-
 Score of midnight-dev vs midnight-history: 382 - 320 - 298 [0.531]
 ...      midnight-dev playing White: 196 - 159 - 145  [0.537] 500
 ...      midnight-dev playing Black: 186 - 161 - 153  [0.525] 500
@@ -27,7 +25,6 @@ Elo difference: 17.4 +/- 17.9, LOS: 97.1 %, DrawRatio: 30.6 %
 1000 of 1000 games finished.
 
 Adds NMP
-
 Score of midnight-dev vs midnight-latest: 382 - 304 - 314 [0.539]
 ...      midnight-dev playing White: 176 - 161 - 163  [0.515] 500
 ...      midnight-dev playing Black: 206 - 143 - 151  [0.563] 500
@@ -36,7 +33,6 @@ Elo difference: 27.2 +/- 17.9, LOS: 99.9 %, DrawRatio: 31.4 %
 1000 of 1000 games finished.
 
 NMP Fixup
-
 Score of midnight-dev vs midnight-v1.5: 435 - 293 - 272 [0.571]
 ...      midnight-dev playing White: 273 - 96 - 131  [0.677] 500
 ...      midnight-dev playing Black: 162 - 197 - 141  [0.465] 500
@@ -45,7 +41,6 @@ Elo difference: 49.7 +/- 18.5, LOS: 100.0 %, DrawRatio: 27.2 %
 1000 of 1000 games finished.
 
 Adaptive NMP
-
 Score of midnight-dev vs midnight-latest: 384 - 342 - 274 [0.521]
 ...      midnight-dev playing White: 194 - 164 - 142  [0.530] 500
 ...      midnight-dev playing Black: 190 - 178 - 132  [0.512] 500
@@ -54,7 +49,6 @@ Elo difference: 14.6 +/- 18.3, LOS: 94.0 %, DrawRatio: 27.4 %
 1000 of 1000 games finished.
 
 Adds pv_node check for nmp and ttable checks
-
 Score of midnight-dev vs midnight-latest: 400 - 333 - 267 [0.533]
 ...      midnight-dev playing White: 176 - 187 - 137  [0.489] 500
 ...      midnight-dev playing Black: 224 - 146 - 130  [0.578] 500
@@ -70,7 +64,6 @@ Elo difference: 467.5 +/- 37.9, LOS: 100.0 %, DrawRatio: 6.7 %
 1000 of 1000 games finished.
 
 Don't reset TT Every Move
-
 Score of midnight-dev vs vtt-reset-every-time: 421 - 309 - 270 [0.556]
 ...      midnight-dev playing White: 262 - 107 - 131  [0.655] 500
 ...      midnight-dev playing Black: 159 - 202 - 139  [0.457] 500
@@ -79,7 +72,6 @@ Elo difference: 39.1 +/- 18.5, LOS: 100.0 %, DrawRatio: 27.0 %
 1000 of 1000 games finished.
 
 Net Gains of V2
-
     Score of midnight-dev vs Lynx: 926 - 26 - 48 [0.950]
     ...      midnight-dev playing White: 485 - 0 - 15  [0.985] 500
     ...      midnight-dev playing Black: 441 - 26 - 33  [0.915] 500
@@ -97,7 +89,7 @@ Net Gains of V2
     Elo difference: -65.0 +/- 19.8, LOS: 0.0 %, DrawRatio: 17.3 %
     1000 of 1000 games finished.
 
-Midnight ELO 1940
+    Midnight ELO 1935
 
 PESTO EVAL GOES BRRRRRR
 Score of midnight-dev vs midnight-latest: 108 - 18 - 11  [0.828] 137
