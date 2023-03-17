@@ -65,6 +65,11 @@ constexpr Score evaluate_passed_pawns(Position& board) {
 }
 
 template<Color c>
+inline constexpr Score evaluate_doubled_pawns(Position& board) {
+	return DOUBLED_PAWN_PENALTY * pop_count(doubled_pawns<c>(board));
+}
+
+template<Color c>
 inline constexpr Score evaluate_isolated_pawns(Position& board) {
 	return ISOLATED_PAWN_PENALTY * pop_count(isolated_pawns<c>(board));
 }
@@ -90,5 +95,6 @@ constexpr Score evaluate_pawn_structure(Position& board) {
 	const Score pawn_location_eval = evaluate_pawn_locations<c>(board);
 	const Score passed_pawn_eval = evaluate_passed_pawns<c>(board);
 	const Score isolated_pawn_eval = evaluate_isolated_pawns<c>(board);
-	return pawn_location_eval + passed_pawn_eval + isolated_pawn_eval;
+	const Score doubled_pawn_eval = evaluate_doubled_pawns<c>(board);
+	return pawn_location_eval + passed_pawn_eval + isolated_pawn_eval + doubled_pawn_eval;
 }

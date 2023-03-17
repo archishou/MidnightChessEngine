@@ -24,6 +24,7 @@ constexpr Score KING_PAWN_SHIELD[] = {S(39, -12), S(33, -10)};
 constexpr Score PASSED_PAWN_BONUS = S(0, 22);
 constexpr Score BLOCKED_PASSED_PAWN_PENALTY = S(5, -20);
 constexpr Score ISOLATED_PAWN_PENALTY = S(-22, -9);
+constexpr Score DOUBLED_PAWN_PENALTY = S(1, 1);
 constexpr Score BISHOP_PAIR_BONUS = S(26, 65);
 constexpr Score KNIGHT_MOBILITY = S(1, 1);
 constexpr Score BISHOP_MOBILITY = S(5, 6);
