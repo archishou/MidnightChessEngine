@@ -2,6 +2,7 @@
 // Created by Archishmaan Peyyety on 1/31/23.
 //
 #include <iostream>
+#include <chrono>
 
 static auto start_time = std::chrono::high_resolution_clock::now();
 enum TimeResolution {
