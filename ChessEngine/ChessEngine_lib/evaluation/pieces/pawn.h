@@ -42,7 +42,7 @@ constexpr Bitboard passed_pawns(Position& board) {
 }
 
 constexpr Bitboard open_files(Position& board) {
-	return ~file_fill(board.bitboard_of(WHITE_PAWN)) & ~file_fill(board.bitboard_of(BLACK_PAWN));
+	return ~file_fill(board.bitboard_of(WHITE, PAWN)) & ~file_fill(board.bitboard_of(BLACK, PAWN));
 }
 
 template<Color c>
