@@ -41,7 +41,7 @@ constexpr Bitboard passed_pawns(Position& board) {
 	return board.bitboard_of(c, PAWN) & ~them_pawn_occupants;
 }
 
-constexpr Bitboard open_files(Position& board) {
+/*constexpr*/ Bitboard open_files(Position& board) {
 	return ~file_fill(board.bitboard_of(WHITE, PAWN)) & ~file_fill(board.bitboard_of(BLACK, PAWN));
 }
 
