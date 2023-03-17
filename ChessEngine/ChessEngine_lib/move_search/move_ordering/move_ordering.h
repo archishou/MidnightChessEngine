@@ -1,6 +1,7 @@
 //
 // Created by Archishmaan Peyyety on 1/8/23.
 //
+#include <algorithm>
 #include "move_generation/position.h"
 #include "move_generation/tables.h"
 #include "move_search/transposition_table.h"

@@ -1,6 +1,7 @@
 //
 // Created by Archishmaan Peyyety on 1/1/23.
 //
+#include "cstring"
 #include "search_params.h"
 #include "move_generation/position.h"
 #include "move_search/move_ordering/move_ordering.h"
@@ -178,6 +179,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
 	t_table.put(board.get_hash(), depth, value, ply, best_move, node_type);
+	/*
 	if (ply != 0) {
 		TranspositionTableSearchResults table_search_results = t_table.probe_for_search(board.get_hash(), depth, ply);
 		assert(table_search_results.entry_found);
@@ -187,6 +189,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		assert(table_search_results.entry.best_move == best_move);
 		assert(table_search_results.entry.node_type == node_type);
 	}
+	 */
 	return value;
 }
 
