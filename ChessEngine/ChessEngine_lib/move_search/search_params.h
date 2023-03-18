@@ -10,6 +10,9 @@ const short MAX_PLY = MAX_DEPTH;
 const int MATE_BOUND = MATE_SCORE - MAX_DEPTH;
 const int DEFAULT_SEARCH_TIME = 1000;
 
+const int RFP_MARGIN = 200;
+const int RFP_MAX_DEPTH = 4;
+
 struct BestMoveSearchParameters {
 	short depth = MAX_DEPTH;
 	int time_limit = DEFAULT_SEARCH_TIME;

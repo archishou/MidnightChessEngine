@@ -85,6 +85,18 @@ TranspositionTable::probe_for_search(zobrist_hash hash, int depth, int ply) {
 	return results;
 }
 
+TranspositionTableSearchResults TranspositionTable::probe_eval(zobrist_hash hash, int ply) {
+	TranspositionTableEntry entry = transposition_table[get_index(hash)];
+	TranspositionTableSearchResults results;
+	results.entry_found = false;
+	if (entry.zobrist_hash == hash) {
+		results.entry_found = true;
+		results.entry = entry;
+		results.entry.value = correct_mate_for_retrieval(results.entry.value, ply);
+	}
+	return results;
+}
+
 bool TranspositionTable::key_in_table(zobrist_hash hash) {
 	return transposition_table[get_index(hash)].zobrist_hash == 0;
 }

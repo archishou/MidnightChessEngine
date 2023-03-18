@@ -97,6 +97,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	int alpha_initial = alpha;
 	bool in_check = board.in_check<color>();
 	bool pv_node = alpha != beta - 1;
+	int static_eval = evaluate<color>(board);
 
 	init_pv(data.pv, ply);
 	data.seldepth = std::max(data.seldepth, ply);
@@ -137,6 +138,12 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 		board.undo_null<color>();
 		if (null_eval >= beta) return null_eval;
+	}
+
+	if (!in_check && !pv_node) {
+		if (depth < RFP_MAX_DEPTH && static_eval >= beta + RFP_MARGIN * depth) {
+			return static_eval;
+		}
 	}
 
 	MoveList<color> all_legal_moves(board);
