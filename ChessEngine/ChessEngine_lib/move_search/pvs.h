@@ -163,15 +163,23 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 	Move best_move = scored_moves.begin()->move;
 	int value = NEG_INF_CHESS;
-	for (int i = 0; i < scored_moves.size(); i++) {
-		Move legal_move = scored_moves[i].move;
+	for (int move_idx = 0; move_idx < scored_moves.size(); move_idx++) {
+		Move legal_move = scored_moves[move_idx].move;
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
 		int new_value;
-		if (i == 0) {
+		if (move_idx == 0) {
 			new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
 		} else {
-			new_value = -pvs<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, true);
+			int reduction = 1;
+			int lmr_depth = pv_node ? 5 : 3;
+			if (depth >= 3 && move_idx > lmr_depth) {
+				reduction = LMR_BASE + log(depth) * log(move_idx) / LMR_DIVISOR;
+				reduction += !pv_node;
+				reduction -= legal_move.is_capture();
+				std::clamp(reduction, 1, depth - 1);
+			}
+			new_value = -pvs<~color>(board, depth - reduction, ply + 1, -alpha - 1, -alpha, true);
 			if (alpha < new_value && new_value < beta) {
 				new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
 			}

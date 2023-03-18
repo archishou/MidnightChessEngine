@@ -13,6 +13,9 @@ const int DEFAULT_SEARCH_TIME = 1000;
 const int RFP_MARGIN = 75;
 const int RFP_MAX_DEPTH = 9;
 
+const int LMR_BASE = 9;
+const int LMR_DIVISOR = 9;
+
 struct BestMoveSearchParameters {
 	short depth = MAX_DEPTH;
 	int time_limit = DEFAULT_SEARCH_TIME;
