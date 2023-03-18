@@ -178,7 +178,7 @@ Score of midnight-dev vs midnight-latest: 514 - 423 - 398  [0.534] 1335
 Elo difference: 23.7 +/- 15.6, LOS: 99.9 %, DrawRatio: 29.8 %
 SPRT: llr 2.95 (100.2%), lbound -2.94, ubound 2.94 - H1 was accepted
 
-King Sheild Pawns
+King Shield Pawns
 Score of midnight-dev vs midnight-latest: 1163 - 1044 - 767  [0.520] 2974
 ...      midnight-dev playing White: 582 - 521 - 385  [0.520] 1488
 ...      midnight-dev playing Black: 581 - 523 - 382  [0.520] 1486
