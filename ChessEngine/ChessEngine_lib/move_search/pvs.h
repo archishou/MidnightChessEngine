@@ -97,7 +97,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	int alpha_initial = alpha;
 	bool in_check = board.in_check<color>();
 	bool pv_node = alpha != beta - 1;
-	int static_eval = evaluate<color>(board);
+	int static_eval = 0;
 
 	init_pv(data.pv, ply);
 	data.seldepth = std::max(data.seldepth, ply);
@@ -126,6 +126,13 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		if (alpha >= beta) {
 			return tt_entry.value;
 		}
+	}
+
+	probe_results = t_table.probe_eval(board.get_hash(), ply);
+	if (probe_results.entry_found) {
+		static_eval = probe_results.entry.value;
+	} else {
+		static_eval = evaluate<color>(board);
 	}
 
 	if (depth >= 3 && !in_check && !pv_node && do_null) {
