@@ -1,7 +1,7 @@
 //
 // Created by Archishmaan Peyyety on 1/1/23.
 //
-
+#pragma once
 const int POS_INF_CHESS = 1000000;
 const int NEG_INF_CHESS = -POS_INF_CHESS;
 const int MATE_SCORE = POS_INF_CHESS / 10;
@@ -13,8 +13,8 @@ const int DEFAULT_SEARCH_TIME = 1000;
 const int RFP_MARGIN = 75;
 const int RFP_MAX_DEPTH = 9;
 
-const int LMR_BASE = 9;
-const int LMR_DIVISOR = 9;
+const double LMR_BASE = 0.75;
+const double LMR_DIVISOR = 2.25;
 
 struct BestMoveSearchParameters {
 	short depth = MAX_DEPTH;

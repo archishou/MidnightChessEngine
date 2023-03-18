@@ -8,6 +8,7 @@
 #include "evaluation/evaluate.h"
 #include "pv_table.h"
 #include "clock.h"
+#include "lmr_table.h"
 
 struct PVSData {
     Move best_move;
@@ -174,7 +175,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			int reduction = 1;
 			int lmr_depth = pv_node ? 5 : 3;
 			if (depth >= 3 && move_idx > lmr_depth) {
-				reduction = LMR_BASE + log(depth) * log(move_idx) / LMR_DIVISOR;
+				reduction = int(lmr_table[depth][move_idx]);
 				reduction += !pv_node;
 				reduction -= legal_move.is_capture();
 				std::clamp(reduction, 1, depth - 1);
