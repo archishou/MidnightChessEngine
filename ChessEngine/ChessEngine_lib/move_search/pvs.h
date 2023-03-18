@@ -138,8 +138,8 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	if (depth >= 3 && !in_check && !pv_node && do_null) {
 		board.play_null<color>();
 
-		int reduction = 2 + depth/4;
-		int depth_prime = std::max(depth - reduction, 0);
+		int reduction = 3 + depth/3 + std::min((static_eval - beta) / 200, 3);
+		int depth_prime = std::max(depth - std::max(reduction, 3), 0);
 		int null_eval = -pvs<~color>(board, depth_prime, ply + 1, -beta, -beta + 1,
 									 false);
 
