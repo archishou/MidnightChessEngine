@@ -201,7 +201,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	}
 
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
-	t_table.put(board.get_hash(), depth, value, ply, best_move, node_type);
+	t_table.put(board.get_hash(), depth, value, ply, best_move, pv_node, node_type);
 	return value;
 }
 

@@ -50,14 +50,26 @@ TranspositionTable::get_node_type(const int &alpha_initial, const int &beta, con
 	return node_type;
 }
 
-void TranspositionTable::put(zobrist_hash hash, short depth, int score, int ply, Move best_move, TranspositionTableEntryNodeType node_type) {
-	TranspositionTableEntry entry;
-	entry.zobrist_hash = hash;
-	entry.depth = depth;
-	entry.value = correct_mate_for_storage(score, ply);
-	entry.node_type = node_type;
-	entry.best_move = best_move;
-	transposition_table[get_index(hash)] = entry;
+void TranspositionTable::put(zobrist_hash hash, short depth, int score, int ply, Move best_move, bool pv_node,
+							 TranspositionTableEntryNodeType node_type) {
+
+	score = correct_mate_for_storage(score, ply);
+	TranspositionTableEntry previous_entry = transposition_table[get_index(hash)];
+	if (previous_entry.zobrist_hash != hash) {
+		transposition_table[get_index(hash)].best_move = best_move;
+	}
+
+	// Overwrite less valuable entries (cheapest checks first)
+	if (node_type == EXACT ||
+		previous_entry.zobrist_hash != hash ||
+		depth + 7 + 2 * pv_node > previous_entry.depth - 4) {
+		TranspositionTableEntry entry;
+		entry.zobrist_hash = hash;
+		entry.depth = depth;
+		entry.value = score;
+		entry.node_type = node_type;
+		transposition_table[get_index(hash)] = entry;
+	}
 }
 
 TranspositionTableSearchResults

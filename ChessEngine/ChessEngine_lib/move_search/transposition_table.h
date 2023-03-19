@@ -33,7 +33,8 @@ public:
 	int correct_mate_for_retrieval(int score, int ply);
 	int count_entries();
 	bool key_in_table(zobrist_hash hash);
-	void put(zobrist_hash hash, short depth, int score, int ply, Move best_move, TranspositionTableEntryNodeType node_type);
+	void put(zobrist_hash hash, short depth, int score, int ply, Move best_move, bool pv_node,
+			 TranspositionTableEntryNodeType node_type);
 	void reset_table();
 	TranspositionTableSearchResults probe_for_move_ordering(zobrist_hash hash);
 	TranspositionTableSearchResults probe_for_search(zobrist_hash hash, int depth, int ply);
