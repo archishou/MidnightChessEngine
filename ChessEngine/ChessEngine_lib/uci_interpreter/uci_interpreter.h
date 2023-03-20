@@ -95,7 +95,7 @@ void read_uci() {
 
 	while (std::getline(cin, input_line)) {
 		if (input_line == "uci") {
-			std::cout << "id name Midnight V2.0" << std::endl;
+			std::cout << "id name Midnight V3.0" << std::endl;
 			std::cout << "id author Archishmaan Peyyety" << std::endl;
 			std::cout << "uciok" << std::endl;
 		} else if (input_line == "quit") {
