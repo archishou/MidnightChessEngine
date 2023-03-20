@@ -2,7 +2,9 @@
 
 cmake-build-debug_diagnostics_file/
 .DS_Store
-/ChessEngine/releases/
+/releases/
 /ChessEngine/cmake-build-debug/
 build
-/ChessEngine/testing/
+/testing/
+/cmake-build-debug/
+/tests/lib/

@@ -1,0 +1,10 @@
+project(Google_tests)
+add_subdirectory(lib)
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+
+
+add_executable(ChessEngine_tests_run MoveGenerationTests/MoveGenerationPerft.cpp MoveSearchTests.cpp MoveGenerationTests/MoveGenerationHashHistoryTests.cpp MoveGenerationTests/MoveGenerationOptionsTests.cpp MoveGenerationTests/MoveGenerationZobristHastTests.cpp)
+
+target_link_libraries(ChessEngine_tests_run src)
+
+target_link_libraries(ChessEngine_tests_run gtest gtest_main)
