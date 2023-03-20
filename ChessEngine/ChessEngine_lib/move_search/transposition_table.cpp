@@ -55,11 +55,7 @@ void TranspositionTable::put(zobrist_hash hash, short depth, int score, int ply,
 
 	score = correct_mate_for_storage(score, ply);
 	TranspositionTableEntry previous_entry = transposition_table[get_index(hash)];
-	if (previous_entry.zobrist_hash != hash) {
-		transposition_table[get_index(hash)].best_move = best_move;
-	}
 
-	// Overwrite less valuable entries (cheapest checks first)
 	if (node_type == EXACT ||
 		previous_entry.zobrist_hash != hash ||
 		depth + 7 + 2 * pv_node > previous_entry.depth - 4) {
@@ -68,6 +64,7 @@ void TranspositionTable::put(zobrist_hash hash, short depth, int score, int ply,
 		entry.depth = depth;
 		entry.value = score;
 		entry.node_type = node_type;
+		entry.best_move = best_move;
 		transposition_table[get_index(hash)] = entry;
 	}
 }

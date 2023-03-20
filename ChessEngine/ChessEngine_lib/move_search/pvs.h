@@ -73,6 +73,16 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	if (stand_pat >= beta) return beta;
 	if (alpha < stand_pat) alpha = stand_pat;
 
+	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), -1, ply);
+	if (probe_results.entry_found) {
+		if ((probe_results.entry.node_type == EXACT)
+		|| (probe_results.entry.node_type == LOWER_NODE && probe_results.entry.value >= beta)
+		   || (probe_results.entry.node_type == UPPER_NODE && probe_results.entry.value <= alpha)) {
+			return probe_results.entry.value;
+		}
+	}
+
+	Move best_move = Move();
 	MoveList<color> capture_moves(board, QSearchMoveGenerationsOptions);
 	ScoredMoves scored_moves = order_moves<color>(capture_moves, board, t_table, ply);
 	for (const ScoredMove& scored_move : scored_moves) {
@@ -81,9 +91,20 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 		data.q_nodes_searched += 1;
 		const int score = -q_search<~color>(board, ply + 1, -beta, -alpha);
 		board.undo<color>(legal_move);
-		if (score >= beta) return beta;
-		if (score > alpha) alpha = score;
+		if (score >= beta) {
+			alpha = beta;
+			best_move = legal_move;
+			break;
+		}
+		if (score > alpha) {
+			best_move = legal_move;
+			alpha = score;
+		}
 	}
+	TranspositionTableEntryNodeType node_type;
+	if (alpha >= beta) node_type = LOWER_NODE;
+	else node_type = UPPER_NODE;
+	t_table.put(board.get_hash(), -1, alpha, ply, best_move, false, node_type);
 	return alpha;
 }
 
