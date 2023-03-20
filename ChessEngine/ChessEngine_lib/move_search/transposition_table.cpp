@@ -105,17 +105,3 @@ TranspositionTableSearchResults TranspositionTable::probe_eval(zobrist_hash hash
 	}
 	return results;
 }
-
-bool TranspositionTable::key_in_table(zobrist_hash hash) {
-	return transposition_table[get_index(hash)].zobrist_hash == 0;
-}
-
-int TranspositionTable::count_entries() {
-	int entries = 0;
-	for (int i = 0; i < table_size; i++) {
-		if (transposition_table[i].zobrist_hash != 0) {
-			entries += 1;
-		}
-	}
-	return entries;
-}

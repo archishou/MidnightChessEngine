@@ -31,8 +31,6 @@ public:
 	TranspositionTableEntryNodeType get_node_type(const int &alpha_initial, const int &beta, const int &value);
 	int correct_mate_for_storage(int score, int ply);
 	int correct_mate_for_retrieval(int score, int ply);
-	int count_entries();
-	bool key_in_table(zobrist_hash hash);
 	void put(zobrist_hash hash, short depth, int score, int ply, Move best_move, bool pv_node,
 			 TranspositionTableEntryNodeType node_type);
 	void reset_table();
