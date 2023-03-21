@@ -1,3 +1,5 @@
+# Engine Name
+NAME := Midnight
 # compiler
 CC := g++
 # linker flags
@@ -11,7 +13,7 @@ CFLAGS := -std=c++17 -Wall -Wextra -pedantic -O3 -I$(SRC_DIR)
 OBJ_DIR := obj/**/
 OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
 # executable
-EXEC := my_program
+EXEC := $(NAME)
 
 # test files
 TEST_DIR := tests
