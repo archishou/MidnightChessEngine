@@ -1,52 +1,68 @@
-# Engine Name
-NAME := Midnight
-# compiler
-CC := g++
-# linker flags
-LDFLAGS := -flto
-# source files
-SRC_DIR := src
-SRCS := $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/*.cpp) main.cpp
-# compiler flags
-CFLAGS := -std=c++17 -Wall -Wextra -pedantic -O3 -I$(SRC_DIR)
-# object files
-OBJ_DIR := obj/**/
-OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
-# executable
-EXEC := $(NAME)
+CXX = g++
+CXXFLAGS = -O3 -std=c++17 -Wall -Wextra -DNDEBUG
+INCLUDES = -Isrc
+DEPFLAGS = -MMD -MP
+TMPDIR = tmp
+TARGET    := engine
+NATIVE       := -march=native
 
-# test files
-TEST_DIR := tests
-TEST_SRCS := $(wildcard $(TEST_DIR)/**/*.cpp) $(wildcard $(TEST_DIR)/*.cpp)
-TEST_OBJS := $(patsubst $(TEST_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(TEST_SRCS))
-TEST_EXEC := test
+# recursive wildcard
+rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
-# build rules
-$(EXEC): $(OBJS)
-	$(CC) $(LDFLAGS) $^ -o $@
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+# Detect Windows
+ifeq ($(OS), Windows_NT)
+    MKDIR    := mkdir
+    uname_S  := Windows
+    SUFFIX   := .exe
+else
+ifeq ($(COMP), MINGW)
+    MKDIR    := mkdir
+    uname_S  := Windows
+    SUFFIX   := .exe
+else
+    MKDIR   := mkdir -p
+    LDFLAGS := -pthread
+    uname_S := $(shell uname -s)
+    SUFFIX  :=
+endif
+endif
 
-$(TEST_EXEC): $(OBJS) $(TEST_OBJS)
-	$(CC) $(LDFLAGS) $^ -o $@
+ifeq ($(build), debug)
+    CXXFLAGS := -g3 -O3  $(INCLUDES) -std=c++17 -Wall -Wextra -pedantic
+endif
 
-$(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+ifeq ($(build), release)
+    CXXFLAGS := -O3 -std=c++17  $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
+    LDFLAGS  := -lpthread -static -static-libgcc -static-libstdc++ -Wl,--no-as-needed
+    NATIVE   := -march=x86-64-avx2
+endif
 
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+# Different native flag for macOS
+ifeq ($(uname_S), Darwin)
+    NATIVE =
+    LDFLAGS =
+endif
 
-.PHONY: all
-all: $(EXEC) $(TEST_EXEC)
 
-.PHONY: release
-release: $(EXEC)
+SRC_FILES := $(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
+OBJECTS   := $(patsubst %.cpp,$(TMPDIR)/%.o,$(SRC_FILES))
+DEPENDS   := $(patsubst %.cpp,$(TMPDIR)/%.d,$(SRC_FILES))
 
-.PHONY: tests
-tests: $(TEST_EXEC)
-	./$(TEST_EXEC)
+.PHONY: clean all tests FORCE
 
-.PHONY: clean
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(NATIVE) -MMD -MP -o $@ $^ $(LDFLAGS)
+
+$(TMPDIR)/%.o: %.cpp | $(TMPDIR)
+	$(CXX) $(CXXFLAGS) $(NATIVE) -MMD -MP -c $< -o $@ $(LDFLAGS)
+
+$(TMPDIR):
+	$(MKDIR) "$(TMPDIR)" "$(TMPDIR)/src"
+
 clean:
-	rm -rf $(OBJ_DIR) $(EXEC) $(TEST_EXEC)
+	rm -rf $(TMPDIR)
+
+-include $(DEPENDS)
