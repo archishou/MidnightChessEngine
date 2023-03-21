@@ -2,13 +2,14 @@ CXX = g++
 CXXFLAGS = -O3 -std=c++17 -Wall -Wextra -DNDEBUG
 INCLUDES = -Isrc
 DEPFLAGS = -MMD -MP
+SRCDIR = src
+TESTDIR = test
 TMPDIR = tmp
 TARGET    := engine
 NATIVE       := -march=native
 
 # recursive wildcard
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
-
 
 # Detect Windows
 ifeq ($(OS), Windows_NT)
@@ -44,8 +45,12 @@ ifeq ($(uname_S), Darwin)
     LDFLAGS =
 endif
 
+ALL_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
+SRC_FILES := $(filter-out $(SRCDIR)/main.cpp, $(ALL_FILES))
 
-SRC_FILES := $(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
+SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
+TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
+
 OBJECTS   := $(patsubst %.cpp,$(TMPDIR)/%.o,$(SRC_FILES))
 DEPENDS   := $(patsubst %.cpp,$(TMPDIR)/%.d,$(SRC_FILES))
 
@@ -60,7 +65,7 @@ $(TMPDIR)/%.o: %.cpp | $(TMPDIR)
 	$(CXX) $(CXXFLAGS) $(NATIVE) -MMD -MP -c $< -o $@ $(LDFLAGS)
 
 $(TMPDIR):
-	$(MKDIR) "$(TMPDIR)" "$(TMPDIR)/src"
+	$(MKDIR) $(TMP_DIRS)
 
 clean:
 	rm -rf $(TMPDIR)
