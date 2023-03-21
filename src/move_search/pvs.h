@@ -1,6 +1,7 @@
 //
 // Created by Archishmaan Peyyety on 1/1/23.
 //
+#pragma once
 #include "cstring"
 #include "search_params.h"
 #include "move_generation/position.h"

@@ -1,3 +1,4 @@
+#pragma once
 #include "move_generation/position.h"
 #include "eval_constants.h"
 #include "evaluation/pieces/pawn.h"

@@ -1,6 +1,7 @@
 //
 // Created by Archishmaan on 12/21/22.
 //
+#pragma once
 #include <fstream>
 #include <vector>
 #include <random>

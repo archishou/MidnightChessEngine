@@ -1,7 +1,7 @@
 //
 // Created by Archishmaan Peyyety on 2/1/23.
 //
-
+#pragma once
 #include "string"
 
 static const std::string UCI_DEBUG_STRING = "info string ";

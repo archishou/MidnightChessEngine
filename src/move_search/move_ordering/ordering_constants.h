@@ -1,6 +1,7 @@
 //
 // Created by Archishmaan Peyyety on 2/14/23.
 //
+#pragma once
 const int PREVIOUS_BEST_MOVE_BONUS = 10'000'000;
 const int PROMOTION_BONUS = PREVIOUS_BEST_MOVE_BONUS / 10;
 const int MVV_LVA_BONUS = PROMOTION_BONUS / 10;

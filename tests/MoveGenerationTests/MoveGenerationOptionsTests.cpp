@@ -1,20 +1,9 @@
 //
 // Created by Archishmaan Peyyety on 1/13/23.
 //
-#include "gtest/gtest.h"
-#include "move_generation/position.h"
+#include "../lib/doctests.h"
+#include "engine.h"
 #include "constants.h"
-
-class MoveGenerationOptionTests : public ::testing::Test {
-
-protected:
-	virtual void SetUp() {
-		initialise_all_databases();
-		zobrist::initialise_zobrist_keys();
-	}
-
-	virtual void TearDown() {}
-};
 
 bool is_move_flag_promotion_cap(MoveFlag flag) {
 	return flag == PC_BISHOP || flag == PC_KNIGHT || flag == PC_ROOK || flag == PC_QUEEN;
@@ -77,58 +66,63 @@ unsigned long long perft_generated(Position& p, unsigned int depth, MoveGenerati
 }
 
 unsigned long long test_perft_filtered(const std::string& fen, int depth, MoveGenerationOptions& options) {
+	initialize_engine();
 	Position p;
 	Position::set(fen, p);
 	return perft_filtered<WHITE>(p, depth, options);
 }
 
 unsigned long long test_perft_generated(const std::string& fen, int depth, MoveGenerationOptions& options) {
+	initialize_engine();
 	Position p;
 	Position::set(fen, p);
 	return perft_generated<WHITE>(p, depth, options);
 }
 
-TEST_F(MoveGenerationOptionTests, TestKiwiCapturesDepth4){
+TEST_SUITE_BEGIN("MoveGenerationOptionsTesting");
+
+TEST_CASE("StartPos Captures"){
 	MoveGenerationOptions generate_captures = {
 			.generate_captures = true,
 	};
-	int depth = 4;
-	unsigned long long filtered = test_perft_filtered(KIWIPETE_FEN, depth, generate_captures);
-	unsigned long long generated = test_perft_generated(KIWIPETE_FEN, depth, generate_captures);
-	EXPECT_EQ(filtered, generated);
-	EXPECT_EQ(filtered, 757163);
+	int depth = 7;
+	unsigned long long filtered = test_perft_filtered(INITIAL_BOARD_FEN, depth, generate_captures);
+	unsigned long long generated = test_perft_generated(INITIAL_BOARD_FEN, depth, generate_captures);
+	CHECK_EQ(filtered, generated);
+	CHECK_EQ(filtered, 108329926);
 }
 
-TEST_F(MoveGenerationOptionTests, TestKiwiCapturesDepth5){
+TEST_CASE("CPW Position3 Captures"){
+	MoveGenerationOptions generate_captures = {
+			.generate_captures = true,
+	};
+	int depth = 8;
+	unsigned long long filtered = test_perft_filtered("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -", depth, generate_captures);
+	unsigned long long generated = test_perft_generated("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -", depth, generate_captures);
+	CHECK_EQ(filtered, generated);
+	CHECK_EQ(filtered, 267586558);
+}
+
+TEST_CASE("KiwiPete Captures"){
 	MoveGenerationOptions generate_captures = {
 		.generate_captures = true,
 	};
 	int depth = 5;
 	unsigned long long filtered = test_perft_filtered(KIWIPETE_FEN, depth, generate_captures);
 	unsigned long long generated = test_perft_generated(KIWIPETE_FEN, depth, generate_captures);
-	EXPECT_EQ(filtered, generated);
-	EXPECT_EQ(filtered, 35043416);
+	CHECK_EQ(filtered, generated);
+	CHECK_EQ(filtered, 35043416);
 }
 
-TEST_F(MoveGenerationOptionTests, TestP4CapturesDepth4){
-	MoveGenerationOptions generate_captures = {
-			.generate_captures = true,
-	};
-	int depth = 4;
-	unsigned long long filtered = test_perft_filtered(PERFT_RESULTS_POS4_FEN, depth, generate_captures);
-	unsigned long long generated = test_perft_generated(PERFT_RESULTS_POS4_FEN, depth, generate_captures);
-	EXPECT_EQ(filtered, generated);
-	EXPECT_EQ(filtered, 131393);
-}
-
-TEST_F(MoveGenerationOptionTests, TestP4CapturesDepth5){
+TEST_CASE("CPW Position 4 Captures") {
 	MoveGenerationOptions generate_captures = {
 			.generate_captures = true,
 	};
 	int depth = 5;
 	unsigned long long filtered = test_perft_filtered(PERFT_RESULTS_POS4_FEN, depth, generate_captures);
 	unsigned long long generated = test_perft_generated(PERFT_RESULTS_POS4_FEN, depth, generate_captures);
-	EXPECT_EQ(filtered, generated);
-	EXPECT_EQ(filtered, 2046173);
+	CHECK_EQ(filtered, generated);
+	CHECK_EQ(filtered, 2046173);
 }
 
+TEST_SUITE_END();

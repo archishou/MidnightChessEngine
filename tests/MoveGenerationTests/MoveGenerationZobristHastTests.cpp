@@ -2,21 +2,10 @@
 // Created by Archishmaan Peyyety on 1/22/23.
 //
 
-#include "gtest/gtest.h"
+#include "../lib/doctests.h"
 #include "constants.h"
-#include "bitset"
 #include "move_generation/position.h"
-
-class MoveGenerationZobristHashTests : public ::testing::Test {
-
-protected:
-	virtual void SetUp() {
-		initialise_all_databases();
-		zobrist::initialise_zobrist_keys();
-	}
-
-	virtual void TearDown() {}
-};
+#include "engine.h"
 
 template<Color Us>
 void perft_hash(Position& p, unsigned int depth) {
@@ -26,7 +15,7 @@ void perft_hash(Position& p, unsigned int depth) {
 		zobrist_hash initial_hash = p.get_hash();
 		Position b2;
 		Position::set(p.fen(), b2);
-		EXPECT_EQ(p.get_hash(), b2.get_hash());
+		CHECK_EQ(p.get_hash(), b2.get_hash());
 		if (initial_hash != b2.get_hash()) {
 			std::cout << "Failure to set position! " << std::endl;
 		}
@@ -35,8 +24,8 @@ void perft_hash(Position& p, unsigned int depth) {
 		perft_hash<~Us>(p, depth - 1);
 		p.undo_null<Us>();
 		p.undo_null<~Us>();
-		EXPECT_EQ(initial_hash, p.get_hash());
-		EXPECT_EQ(initial_hash, b2.get_hash());
+		CHECK_EQ(initial_hash, p.get_hash());
+		CHECK_EQ(initial_hash, b2.get_hash());
 	}
 }
 
@@ -47,7 +36,9 @@ void test_perft_hash(const std::string& fen, int depth) {
 	else perft_hash<WHITE>(p, depth);
 }
 
-TEST_F(MoveGenerationZobristHashTests, TestCastlingState){
+TEST_SUITE_BEGIN("Zobrist Hash Test Suite");
+
+TEST_CASE("TestCastlingState") {
 	Position board;
 
 	for (int i = 15; i >= 0; i--) {
@@ -61,20 +52,23 @@ TEST_F(MoveGenerationZobristHashTests, TestCastlingState){
 		if (i == 0) castling_rights = "-";
 		std::string test_fen = fen + castling_rights + move_counter;
 		Position::set(test_fen, board);
-		EXPECT_EQ(board.castling_state(), i);
+		CHECK_EQ(board.castling_state(), i);
 	}
 }
-TEST_F(MoveGenerationZobristHashTests, TestConsitentHashInitialFen){
+TEST_CASE("TestConsitentHashInitialFen") {
+	initialize_engine();
 	test_perft_hash(INITIAL_BOARD_FEN, 6);
 }
-TEST_F(MoveGenerationZobristHashTests, TestConsitentHashKiwiPete){
+TEST_CASE("TestConsitentHashKiwiPete") {
+	initialize_engine();
 	test_perft_hash(KIWIPETE_FEN, 5);
 }
-TEST_F(MoveGenerationZobristHashTests, TestConsitentHashTalkchess){
+TEST_CASE("TestConsitentHashTalkchess") {
+	initialize_engine();
 	test_perft_hash(TALKCHESS_FEN, 5);
 }
 
-TEST_F(MoveGenerationZobristHashTests, TestTraiangulation){
+TEST_CASE("TestTraiangulation") {
 	Position p;
 	Position::set("8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1", p);
 	zobrist_hash initial_hash = p.get_hash();
@@ -90,17 +84,17 @@ TEST_F(MoveGenerationZobristHashTests, TestTraiangulation){
 	p.play<WHITE>(m3);
 	p.play<BLACK>(m4);
 	p.play<WHITE>(m5);
-	EXPECT_NE(p.get_hash(), initial_hash);
+	CHECK_NE(p.get_hash(), initial_hash);
 
 	p.undo<WHITE>(m5);
 	p.undo<BLACK>(m4);
 	p.undo<WHITE>(m3);
 	p.undo<BLACK>(m2);
 	p.undo<WHITE>(m1);
-	EXPECT_EQ(p.get_hash(), initial_hash);
+	CHECK_EQ(p.get_hash(), initial_hash);
 }
 
-TEST_F(MoveGenerationZobristHashTests, TestCastling) {
+TEST_CASE("TestCastling") {
 	Position p;
 	Position::set(INITIAL_BOARD_FEN, p);
 	zobrist_hash initial_hash = p.get_hash();
@@ -124,7 +118,7 @@ TEST_F(MoveGenerationZobristHashTests, TestCastling) {
 	Position p2;
 	Position::set(p.fen(), p2);
 
-	EXPECT_EQ(p.get_hash(), p2.get_hash());
+	CHECK_EQ(p.get_hash(), p2.get_hash());
 
 	p.undo<WHITE>(m7);
 	p.undo<BLACK>(m6);
@@ -136,30 +130,30 @@ TEST_F(MoveGenerationZobristHashTests, TestCastling) {
 
 	Position p3;
 	Position::set(p.fen(), p3);
-	EXPECT_EQ(p.get_hash(), initial_hash);
-	EXPECT_EQ(p3.get_hash(), initial_hash);
+	CHECK_EQ(p.get_hash(), initial_hash);
+	CHECK_EQ(p3.get_hash(), initial_hash);
 }
 
-TEST_F(MoveGenerationZobristHashTests, TestEPFile) {
+TEST_CASE("TestEPFile") {
 	Position p;
 	Position::set("rnbqkbnr/1ppppppp/8/pP6/8/8/P1PPPPPP/RNBQKBNR w KQkq a6 0 1", p);
-	EXPECT_EQ(p.ep_file(), 0);
+	CHECK_EQ(p.ep_file(), 0);
 	Position::set("rnbqkbnr/p1pppppp/8/1pP5/8/8/PP1PPPPP/RNBQKBNR w KQkq b6 0 1", p);
-	EXPECT_EQ(p.ep_file(), 1);
+	CHECK_EQ(p.ep_file(), 1);
 	Position::set("rnbqkbnr/pp1ppppp/8/2pP4/8/8/PPP1PPPP/RNBQKBNR w KQkq c6 0 1", p);
-	EXPECT_EQ(p.ep_file(), 2);
+	CHECK_EQ(p.ep_file(), 2);
 	Position::set("rnbqkbnr/ppp1pppp/8/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 1", p);
-	EXPECT_EQ(p.ep_file(), 3);
+	CHECK_EQ(p.ep_file(), 3);
 	Position::set("rnbqkbnr/pppp1ppp/8/4pP2/8/8/PPPPP1PP/RNBQKBNR w KQkq e6 0 1", p);
-	EXPECT_EQ(p.ep_file(), 4);
+	CHECK_EQ(p.ep_file(), 4);
 	Position::set("rnbqkbnr/ppppp1pp/8/5pP1/8/8/PPPPPP1P/RNBQKBNR w KQkq f6 0 1", p);
-	EXPECT_EQ(p.ep_file(), 5);
+	CHECK_EQ(p.ep_file(), 5);
 	Position::set("rnbqkbnr/pppppp1p/8/6pP/8/8/PPPPPPP1/RNBQKBNR w KQkq g6 0 1", p);
-	EXPECT_EQ(p.ep_file(), 6);
+	CHECK_EQ(p.ep_file(), 6);
 	Position::set("rnbqkbnr/ppppppp1/8/6Pp/8/8/PPPPPP1P/RNBQKBNR w KQkq h6 0 1", p);
-	EXPECT_EQ(p.ep_file(), 7);
+	CHECK_EQ(p.ep_file(), 7);
 	Position::set(INITIAL_BOARD_FEN, p);
-	EXPECT_EQ(p.ep_file(), 8);
+	CHECK_EQ(p.ep_file(), 8);
 
 
 	Position::set(INITIAL_BOARD_FEN, p);
@@ -174,11 +168,13 @@ TEST_F(MoveGenerationZobristHashTests, TestEPFile) {
 	p.play<BLACK>(m4);
 	Position p2;
 	Position::set(p.fen(), p2);
-	EXPECT_EQ(p2.get_hash(), p.get_hash());
+	CHECK_EQ(p2.get_hash(), p.get_hash());
 
 	p.undo<BLACK>(m4);
 	p.undo<WHITE>(m3);
 	p.undo<BLACK>(m2);
 	p.undo<WHITE>(m1);
-	EXPECT_EQ(p.get_hash(), initial_hash);
+	CHECK_EQ(p.get_hash(), initial_hash);
 }
+
+TEST_SUITE_END();

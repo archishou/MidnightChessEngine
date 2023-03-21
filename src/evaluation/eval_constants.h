@@ -1,3 +1,4 @@
+#pragma once
 #include "move_generation/types.h"
 #include "types.h"
 

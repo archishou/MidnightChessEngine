@@ -1,6 +1,4 @@
-#ifndef BISHOP_H
-#define BISHOP_H
-
+#pragma once
 template<Color color>
 constexpr Score evaluate_bishops(Position& board) {
 	Score score = Score();
@@ -20,5 +18,3 @@ constexpr Score evaluate_bishops(Position& board) {
 	}
 	return score;
 }
-
-#endif // BISHOP_H

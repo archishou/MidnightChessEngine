@@ -1,6 +1,4 @@
-#ifndef QUEEN_H
-#define QUEEN_H
-
+#pragma once
 template<Color color>
 constexpr Score evaluate_queens(Position& board) {
 	Bitboard queens = board.bitboard_of(color, QUEEN);
@@ -26,5 +24,3 @@ constexpr Score evaluate_queens(Position& board) {
 	}
 	return score;
 }
-
-#endif // QUEEN_H

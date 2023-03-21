@@ -1,6 +1,7 @@
 //
 // Created by Archishmaan Peyyety on 2/1/23.
 //
+#pragma once
 #include "move_generation/position.h"
 #include "helpers.h"
 

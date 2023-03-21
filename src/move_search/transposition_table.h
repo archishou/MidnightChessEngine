@@ -1,6 +1,6 @@
+#pragma once
 #include <unordered_map>
 #include "move_generation/position.h"
-
 enum TranspositionTableEntryNodeType {
 	EXACT,
 	UPPER_NODE,

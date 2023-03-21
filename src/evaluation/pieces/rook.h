@@ -1,6 +1,4 @@
-#ifndef ROOK_H
-#define ROOK_H
-
+#pragma once
 template<Color color>
 constexpr Score evaluate_rooks(Position& board) {
 	Score score = Score();
@@ -22,5 +20,3 @@ constexpr Score evaluate_rooks(Position& board) {
 	}
 	return score;
 }
-
-#endif // ROOK_H

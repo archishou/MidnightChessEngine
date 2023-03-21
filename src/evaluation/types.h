@@ -1,7 +1,7 @@
 //
 // Created by Archishmaan Peyyety on 2/25/23.
 //
-
+#pragma once
 
 constexpr int NGAME_PHASES = 2;
 enum GamePhase {

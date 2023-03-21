@@ -1,7 +1,7 @@
 //
 // Created by Archishmaan Peyyety on 2/24/23.
 //
-
+#pragma once
 #include "move_generation/types.h"
 
 template<Color color>

@@ -1,6 +1,8 @@
 //
 // Created by Archishmaan Peyyety on 1/9/23.
 //
+#pragma once
+#include "engine.h"
 #include "move_search/search.h"
 #include "parse_uci_move.h"
 #include "time_manager.h"
@@ -14,12 +16,8 @@ struct ReadUCIParameters {
 };
 
 void initialize_uci(Position& p) {
-	initialise_all_databases();
-	zobrist::initialise_zobrist_keys();
+	initialize_engine();
 	Position::set(INITIAL_BOARD_FEN, p);
-	initialize_move_sort_tables();
-	init_lmr_table();
-	t_table.reset_table();
 }
 
 void uci_position(Position& board, const string& input_line) {

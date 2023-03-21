@@ -1,6 +1,4 @@
-#ifndef KING_H
-#define KING_H
-
+#pragma once
 constexpr int NKING_SIDES = 2;
 constexpr Bitboard KING_SAFE_AREA[NCOLORS] = {
 		0xC3D7, 0xd7c3000000000000
@@ -37,5 +35,3 @@ constexpr Score evaluate_king(Position& board) {
 	}
 	return score;
 }
-
-#endif // KING_H

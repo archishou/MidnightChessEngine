@@ -1,6 +1,4 @@
-#ifndef KNIGHT_H
-#define KNIGHT_H
-
+#pragma once
 template<Color color>
 constexpr Score evaluate_knight(Position& board) {
 	Score score = Score();
@@ -19,5 +17,3 @@ constexpr Score evaluate_knight(Position& board) {
 	}
 	return score;
 }
-
-#endif // KNIGHT_H

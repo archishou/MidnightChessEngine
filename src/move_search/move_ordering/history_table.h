@@ -1,8 +1,10 @@
 //
 // Created by Archishmaan Peyyety on 2/14/23.
 //
+#pragma once
 #include "move_generation/types.h"
 #include "ordering_constants.h"
+#include "move_search/search_params.h"
 
 extern int history[NSQUARES][NSQUARES];
 extern Move killers[MAX_PLY][NKILLERS];
