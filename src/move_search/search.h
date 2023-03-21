@@ -7,7 +7,7 @@
 #include <random>
 #include "move_generation/position.h"
 #include "pvs.h"
-#include "constants.h"
+#include "utils/fen_constants.h"
 
 typedef Move Line[MAX_DEPTH];
 const int LINE_SIZE = MAX_DEPTH;

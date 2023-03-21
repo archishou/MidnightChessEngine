@@ -3,7 +3,7 @@
 //
 #include "../lib/doctests.h"
 #include "engine.h"
-#include "constants.h"
+#include "utils/fen_constants.h"
 
 bool is_move_flag_promotion_cap(MoveFlag flag) {
 	return flag == PC_BISHOP || flag == PC_KNIGHT || flag == PC_ROOK || flag == PC_QUEEN;

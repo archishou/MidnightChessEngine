@@ -1,6 +1,6 @@
 #include "position.h"
 #include "tables.h"
-#include "helpers.h"
+#include "utils/helpers.h"
 #include <sstream>
 
 //Zobrist keys for each piece and each square

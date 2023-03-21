@@ -3,7 +3,7 @@
 //
 
 #include "../lib/doctests.h"
-#include "constants.h"
+#include "utils/fen_constants.h"
 #include "move_generation/position.h"
 #include "engine.h"
 
@@ -69,6 +69,7 @@ TEST_CASE("TestConsitentHashTalkchess") {
 }
 
 TEST_CASE("TestTraiangulation") {
+	initialize_engine();
 	Position p;
 	Position::set("8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1", p);
 	zobrist_hash initial_hash = p.get_hash();
@@ -95,6 +96,7 @@ TEST_CASE("TestTraiangulation") {
 }
 
 TEST_CASE("TestCastling") {
+	initialize_engine();
 	Position p;
 	Position::set(INITIAL_BOARD_FEN, p);
 	zobrist_hash initial_hash = p.get_hash();
@@ -135,6 +137,7 @@ TEST_CASE("TestCastling") {
 }
 
 TEST_CASE("TestEPFile") {
+	initialize_engine();
 	Position p;
 	Position::set("rnbqkbnr/1ppppppp/8/pP6/8/8/P1PPPPPP/RNBQKBNR w KQkq a6 0 1", p);
 	CHECK_EQ(p.ep_file(), 0);

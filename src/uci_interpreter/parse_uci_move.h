@@ -3,7 +3,7 @@
 //
 #pragma once
 #include "move_generation/position.h"
-#include "helpers.h"
+#include "utils/helpers.h"
 
 char promotion_character(std::string uci_move) {
 	char promotion_piece = uci_move.at(4);

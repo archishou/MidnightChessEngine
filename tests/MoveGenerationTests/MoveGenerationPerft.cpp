@@ -4,8 +4,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "../lib/doctests.h"
 #include "move_generation/position.h"
-#include "constants.h"
-#include "helpers.h"
+#include "utils/fen_constants.h"
+#include "utils/helpers.h"
 #include "engine.h"
 
 template<Color Us>

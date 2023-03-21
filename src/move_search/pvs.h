@@ -8,7 +8,7 @@
 #include "move_search/move_ordering/move_ordering.h"
 #include "evaluation/evaluate.h"
 #include "pv_table.h"
-#include "clock.h"
+#include "utils/clock.h"
 #include "lmr_table.h"
 
 struct PVSData {
