@@ -36,9 +36,10 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 .PHONY: all
-all:
-	echo $(SRCS)
-	$(EXEC) $(TEST_EXEC)
+all: $(EXEC) $(TEST_EXEC)
+
+.PHONY: release
+release: $(EXEC)
 
 .PHONY: tests
 tests: $(TEST_EXEC)
