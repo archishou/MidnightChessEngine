@@ -86,7 +86,7 @@ void uci_go(Position& board, const string& input_line, ReadUCIParameters& uci_pa
 void bench() {
 	uint64_t total_nodes = 0;
 	auto start = std::chrono::steady_clock::now();
-	for (int idx = 0; idx < 50; idx++) {
+	for (int idx = 0; idx < BENCH_SIZE; idx++) {
 		Position p;
 		Position::set(BENCH_FENS[idx], p);
 
