@@ -7,3 +7,4 @@ cmake-build-debug_diagnostics_file/
 build
 /testing/
 /cmake-build-debug/
+/tmp/

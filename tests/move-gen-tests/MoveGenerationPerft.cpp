@@ -77,7 +77,7 @@ TEST_CASE("PerftTestPositionKnightCheck"){
 
 TEST_CASE("Perft126") {
 	std::string perft_file_path = "/Users/archishmaan/Documents/CodeProjects/chess-engine/"
-								  "tests/MoveGenerationTests/perft_results.txt";
+								  "tests/move-gen-tests/perft_results.txt";
 	std::ifstream input_file(perft_file_path);
 	std::string input_line;
 	while (std::getline(input_file, input_line)) {
