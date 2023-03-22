@@ -29,7 +29,7 @@ endif
 endif
 
 CXXFLAGS := -O3 -std=c++17  $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
-#LDFLAGS  := -flto
+LDFLAGS  := -flto
 
 SRC_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
 
