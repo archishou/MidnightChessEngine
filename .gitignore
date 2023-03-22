@@ -8,3 +8,5 @@ build
 /testing/
 /cmake-build-debug/
 /tmp/
+midnight
+midnight-tests
