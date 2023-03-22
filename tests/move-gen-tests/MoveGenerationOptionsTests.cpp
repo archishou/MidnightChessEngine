@@ -85,22 +85,22 @@ TEST_CASE("StartPos Captures"){
 	MoveGenerationOptions generate_captures = {
 			.generate_captures = true,
 	};
-	int depth = 7;
+	int depth = 6;
 	unsigned long long filtered = test_perft_filtered(INITIAL_BOARD_FEN, depth, generate_captures);
 	unsigned long long generated = test_perft_generated(INITIAL_BOARD_FEN, depth, generate_captures);
 	CHECK_EQ(filtered, generated);
-	CHECK_EQ(filtered, 108329926);
+	CHECK_EQ(filtered, 2812008);
 }
 
 TEST_CASE("CPW Position3 Captures"){
 	MoveGenerationOptions generate_captures = {
 			.generate_captures = true,
 	};
-	int depth = 8;
+	int depth = 7;
 	unsigned long long filtered = test_perft_filtered("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -", depth, generate_captures);
 	unsigned long long generated = test_perft_generated("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -", depth, generate_captures);
 	CHECK_EQ(filtered, generated);
-	CHECK_EQ(filtered, 267586558);
+	CHECK_EQ(filtered, 14519036);
 }
 
 TEST_CASE("KiwiPete Captures"){

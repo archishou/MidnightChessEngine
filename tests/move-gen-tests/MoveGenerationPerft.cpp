@@ -1,12 +1,12 @@
 //
 // Created by Archishmaan Peyyety on 1/10/23.
 //
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "../lib/doctests.h"
 #include "move_generation/position.h"
 #include "utils/fen_constants.h"
 #include "utils/helpers.h"
 #include "engine.h"
+#include "fstream"
 
 template<Color Us>
 unsigned long long perft_node_count(Position& p, unsigned int depth) {

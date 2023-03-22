@@ -2,15 +2,10 @@ CXX = g++
 CXXFLAGS = -O3 -std=c++17 -Wall -Wextra -DNDEBUG
 INCLUDES = -Isrc
 DEPFLAGS = -MMD -MP
-
 SRCDIR = src
 TESTDIR = tests
-
-TMP_SRC_ROOT_DIR = tmp-src
-TMP_TESTS_ROOT_DIR = tmp-tests
-
-SRC_TARGET := midnight
-TEST_TARGET := midnight-tests
+TMPDIR = tmp
+TARGET := midnight
 
 # recursive wildcard
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
@@ -33,29 +28,39 @@ else
 endif
 endif
 
-CXXFLAGS := -O3 -std=c++17  $(INCLUDES) -Wall
-LDFLAGS  := -flto
+CXXFLAGS := -O3 -std=c++17  $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
+#LDFLAGS  := -flto
+
+SRC_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
+
+ifeq ($(MAKECMDGOALS),tests)
+	SRC_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
+	SRC_FILES += $(call rwildcard,$(TESTDIR)/,*.cpp)
+	SRC_FILES := $(filter-out $(SRCDIR)/main.cpp, $(SRC_FILES))
+	TARGET    := midnight-tests
+endif
 
 SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
-TMP_SRC_DIRS := $(addprefix $(TMP_SRC_ROOT_DIR)/,$(SRC_DIRECTORIES))
+SRC_DIRECTORIES += $(shell find $(TESTDIR) -type d)
+TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
 
-OBJECTS_SRC   := $(patsubst %.cpp,$(TMP_SRC_ROOT_DIR)/%.o,$(SRC_FILES))
-DEPENDS_SRC   := $(patsubst %.cpp,$(TMP_SRC_ROOT_DIR)/%.d,$(SRC_FILES))
+OBJECTS   := $(patsubst %.cpp,$(TMPDIR)/%.o,$(SRC_FILES))
+DEPENDS   := $(patsubst %.cpp,$(TMPDIR)/%.d,$(SRC_FILES))
 
 .PHONY: clean all tests FORCE
 
-all: $(SRC_TARGET)
-
-$(SRC_TARGET): $(OBJECTS_SRC)
+all: $(TARGET)
+tests: $(TARGET)
+$(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -MMD -MP -o $@ $^ $(LDFLAGS)
 
-$(TMP_SRC_ROOT_DIR)/%.o: %.cpp | $(TMP_SRC_ROOT_DIR)
+$(TMPDIR)/%.o: %.cpp | $(TMPDIR)
 	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@ $(LDFLAGS)
 
-$(TMP_SRC_ROOT_DIR):
-	$(MKDIR) $(TMP_SRC_DIRS)
+$(TMPDIR):
+	$(MKDIR) $(TMP_DIRS)
 
 clean:
-	rm -rf $(TMP_SRC_DIRS)
+	rm -rf $(TMPDIR)
 
--include $(DEPENDS_SRC)
+-include $(DEPENDS)
