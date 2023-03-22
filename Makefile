@@ -45,8 +45,8 @@ ifeq ($(uname_S), Darwin)
     LDFLAGS =
 endif
 
-ALL_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
-SRC_FILES := $(filter-out $(SRCDIR)/main.cpp, $(ALL_FILES))
+SRC_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
+#SRC_FILES := $(filter-out $(SRCDIR)/main.cpp, $(ALL_FILES))
 
 SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
 TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
