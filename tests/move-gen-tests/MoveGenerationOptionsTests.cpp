@@ -79,7 +79,7 @@ unsigned long long test_perft_generated(const std::string& fen, int depth, MoveG
 	return perft_generated<WHITE>(p, depth, options);
 }
 
-TEST_SUITE_BEGIN("MoveGenerationOptionsTesting");
+TEST_SUITE_BEGIN("move-gen-options");
 
 TEST_CASE("StartPos Captures"){
 	MoveGenerationOptions generate_captures = {

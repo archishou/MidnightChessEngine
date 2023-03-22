@@ -36,7 +36,7 @@ void test_perft_hash(const std::string& fen, int depth) {
 	else perft_hash<WHITE>(p, depth);
 }
 
-TEST_SUITE_BEGIN("Zobrist Hash Test Suite");
+TEST_SUITE_BEGIN("zobrist");
 
 TEST_CASE("TestCastlingState") {
 	Position board;

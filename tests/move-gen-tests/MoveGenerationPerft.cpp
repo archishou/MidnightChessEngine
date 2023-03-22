@@ -34,7 +34,7 @@ unsigned long long test_perft_node_count(const std::string& fen, int depth) {
 	}
 }
 
-TEST_SUITE_BEGIN("Perft Testing");
+TEST_SUITE_BEGIN("perft");
 
 TEST_CASE("PerftDepthSixDefaultFen") {
 	CHECK_EQ(test_perft_node_count(INITIAL_BOARD_FEN, 6), 119060324);
@@ -87,9 +87,9 @@ TEST_CASE("Perft126") {
 			std::string expected = split_perft[i];
 			int depth = i;
 			int expected_node_count = std::stoi(split(expected, " ")[2]);
-			std::cout << "Running fen: " << fen << " depth " << depth << " expected node count " << expected_node_count << std::endl;
+			//std::cout << "Running fen: " << fen << " depth " << depth << " expected node count " << expected_node_count << std::endl;
 			CHECK_EQ(test_perft_node_count(fen, depth), expected_node_count);
-			std::cout << "Passed fen: " << fen << " depth " << depth << " expected node count " << expected_node_count << std::endl;
+			//std::cout << "Passed fen: " << fen << " depth " << depth << " expected node count " << expected_node_count << std::endl;
 		}
 	}
 	input_file.close();
