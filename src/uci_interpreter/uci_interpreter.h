@@ -103,7 +103,7 @@ void bench() {
 	auto end = std::chrono::steady_clock::now();
 	auto total_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 	double total_time = float(total_time_ms) / 1000;
-	std::cout << total_time;
+	std::cout << "Total Time: " << total_time << std::endl;
 	std::cout << "\n";
 	std::cout << total_nodes << " nodes " << signed(total_nodes / (total_time + 1)) << " nps" << std::endl;
 }
