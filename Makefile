@@ -31,7 +31,7 @@ ifeq ($(COMP), MINGW)
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
     SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
-    SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
+	SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
     TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
 else
     MKDIR   := mkdir -p
