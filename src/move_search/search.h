@@ -7,7 +7,20 @@
 #include <random>
 #include "move_generation/position.h"
 #include "pvs.h"
+#include "search_constants.h"
 #include "utils/fen_constants.h"
+
+struct BestMoveSearchParameters {
+	short depth = MAX_DEPTH;
+	int time_limit = DEFAULT_SEARCH_TIME;
+	bool debug_info = false;
+};
+
+const struct BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
+		.depth = MAX_DEPTH,
+		.time_limit = DEFAULT_SEARCH_TIME,
+		.debug_info = true
+};
 
 typedef Move Line[MAX_DEPTH];
 const int LINE_SIZE = MAX_DEPTH;
@@ -32,22 +45,6 @@ std::ostream& operator<<(std::ostream& os, const Line& line) {
 		os << i << " ";
 	}
 	return os;
-}
-
-bool lines_equal(Line& line_1, Line& line_2) {
-	for (int i = 0; i < LINE_SIZE; ++i) {
-		if (line_1[i] != line_2[i]) return false;
-	}
-	return true;
-}
-
-int line_size(Line& line) {
-	int size = 0;
-	for (Move m : line) {
-		if (m == Move()) break;
-		size += 1;
-	}
-	return size;
 }
 
 std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results) {

@@ -3,6 +3,7 @@
 //
 #include "transposition_table.h"
 #include "move_search/search_params.h"
+#include "move_search/search_constants.h"
 
 TranspositionTable::TranspositionTable(uint64_t size) {
 	table_size = size;
