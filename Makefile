@@ -15,7 +15,6 @@ define wfind
 $(foreach d,$1,$(wildcard $d**/) $(call wfind,$(wildcard $d**/)))
 endef
 
-
 # Detect Windows
 ifeq ($(OS), Windows_NT)
     MKDIR    := mkdir
@@ -23,6 +22,7 @@ ifeq ($(OS), Windows_NT)
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
 	SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
+	SRC_DIRECTORIES := $(patsubst /,\\,$(SRC_DIRECTORIES))
 	TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
 else
 ifeq ($(COMP), MINGW)
@@ -31,6 +31,7 @@ ifeq ($(COMP), MINGW)
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
     SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
+    SRC_DIRECTORIES := $(patsubst /,\\,$(SRC_DIRECTORIES))
     TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
 else
     MKDIR   := mkdir -p
@@ -55,8 +56,7 @@ ifeq ($(MAKECMDGOALS),tests)
 	TARGET    := midnight-tests
 endif
 
-
-
+TARGET := $(addsuffix $(SUFFIX),$(TARGET))
 
 OBJECTS   := $(patsubst %.cpp,$(TMPDIR)/%.o,$(SRC_FILES))
 DEPENDS   := $(patsubst %.cpp,$(TMPDIR)/%.d,$(SRC_FILES))
