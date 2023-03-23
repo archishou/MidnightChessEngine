@@ -6,11 +6,6 @@ enum TranspositionTableEntryNodeType {
 	LOWER_NODE
 };
 
-enum TranspositionTableEntrySearchType {
-	Q_SEARCH,
-	FULL_SEARCH
-};
-
 struct TranspositionTableEntry {
 	zobrist_hash zobrist_hash;
 	short depth;
@@ -23,6 +18,9 @@ struct TranspositionTableSearchResults {
 	TranspositionTableEntry entry;
 	bool entry_found;
 };
+
+constexpr short QSEARCH_TT_DEPTH = -1;
+constexpr bool QSEARCH_TT_PV_NODE = false;
 
 // More to learn from here: https://github.com/kobolabs/stockfish/blob/master/tt.cpp
 class TranspositionTable {

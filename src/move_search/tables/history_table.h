@@ -3,7 +3,7 @@
 //
 #pragma once
 #include "move_generation/types.h"
-#include "ordering_constants.h"
+#include "move_search/move_ordering/ordering_constants.h"
 #include "move_search/search_params.h"
 
 extern int history[NSQUARES][NSQUARES];

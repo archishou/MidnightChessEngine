@@ -5,8 +5,8 @@
 #include <algorithm>
 #include "move_generation/position.h"
 #include "move_generation/tables.h"
-#include "move_search/transposition_table.h"
-#include "history_table.h"
+#include "move_search/tables/transposition_table.h"
+#include "move_search/tables/history_table.h"
 
 struct ScoredMove {
 	Move move;
@@ -43,7 +43,7 @@ int in_opponent_pawn_territory(Move move, Position& board) {
 }
 
 template<Color color>
-ScoredMoves order_moves(MoveList<color>& move_list, Position& board, TranspositionTable& t_table, int ply) {
+ScoredMoves order_moves(MoveList<color>& move_list, Position& board, int ply) {
 	ScoredMoves scored_moves;
 	Move previous_best_move = Move();
 	TranspositionTableSearchResults search_results = t_table.probe_for_move_ordering(board.get_hash());

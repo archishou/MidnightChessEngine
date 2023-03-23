@@ -7,9 +7,10 @@
 #include "move_generation/position.h"
 #include "move_search/move_ordering/move_ordering.h"
 #include "evaluation/evaluate.h"
-#include "pv_table.h"
+#include "move_search/tables/pv_table.h"
 #include "utils/clock.h"
-#include "lmr_table.h"
+#include "move_search/tables/lmr_table.h"
+#include "reductions.h"
 
 struct PVSData {
     Move best_move;
@@ -74,18 +75,18 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	if (stand_pat >= beta) return beta;
 	if (alpha < stand_pat) alpha = stand_pat;
 
-	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), -1, ply);
+	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), QSEARCH_TT_DEPTH, ply);
 	if (probe_results.entry_found) {
-		if ((probe_results.entry.node_type == EXACT)
-		|| (probe_results.entry.node_type == LOWER_NODE && probe_results.entry.value >= beta)
-		   || (probe_results.entry.node_type == UPPER_NODE && probe_results.entry.value <= alpha)) {
+		if ((probe_results.entry.node_type == EXACT) ||
+			(probe_results.entry.node_type == LOWER_NODE && probe_results.entry.value >= beta) ||
+			(probe_results.entry.node_type == UPPER_NODE && probe_results.entry.value <= alpha)) {
 			return probe_results.entry.value;
 		}
 	}
 
 	Move best_move = Move();
 	MoveList<color> capture_moves(board, QSearchMoveGenerationsOptions);
-	ScoredMoves scored_moves = order_moves<color>(capture_moves, board, t_table, ply);
+	ScoredMoves scored_moves = order_moves<color>(capture_moves, board, ply);
 	for (const ScoredMove& scored_move : scored_moves) {
 		const Move legal_move = scored_move.move;
 		board.play<color>(legal_move);
@@ -105,7 +106,7 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	TranspositionTableEntryNodeType node_type;
 	if (alpha >= beta) node_type = LOWER_NODE;
 	else node_type = UPPER_NODE;
-	t_table.put(board.get_hash(), -1, alpha, ply, best_move, false, node_type);
+	t_table.put(board.get_hash(), QSEARCH_TT_DEPTH, alpha, ply, best_move, QSEARCH_TT_PV_NODE, node_type);
 	return alpha;
 }
 
@@ -161,10 +162,9 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	if (depth >= 3 && !in_check && !pv_node && do_null) {
 		board.play_null<color>();
 
-		int reduction = 3 + depth/3 + std::min((static_eval - beta) / 200, 3);
-		int depth_prime = std::max(depth - std::max(reduction, 3), 0);
-		int null_eval = -pvs<~color>(board, depth_prime, ply + 1, -beta, -beta + 1,
-									 false);
+		int reduction = nmp_reduction(depth, beta, static_eval);
+		int depth_prime = std::max(depth - reduction, 0);
+		int null_eval = -pvs<~color>(board, depth_prime, ply + 1, -beta, -beta + 1, false);
 
 		board.undo_null<color>();
 		if (null_eval >= beta) return null_eval;
@@ -177,7 +177,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	}
 
 	MoveList<color> all_legal_moves(board);
-	ScoredMoves scored_moves = order_moves<color>(all_legal_moves, board, t_table, ply);
+	ScoredMoves scored_moves = order_moves<color>(all_legal_moves, board, ply);
 
 	if (scored_moves.empty()) {
 		if (in_check) return -(MATE_SCORE - ply);
@@ -194,14 +194,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		if (move_idx == 0) {
 			new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
 		} else {
-			int reduction = 1;
-			int lmr_depth = pv_node ? 5 : 3;
-			if (depth >= 3 && move_idx > lmr_depth) {
-				reduction = int(lmr_table[depth][move_idx]);
-				reduction += !pv_node;
-				reduction -= legal_move.is_capture();
-				std::clamp(reduction, 1, depth - 1);
-			}
+			int reduction = lmr_reduction(pv_node, move_idx, depth, legal_move);
 			new_value = -pvs<~color>(board, depth - reduction, ply + 1, -alpha - 1, -alpha, true);
 			if (alpha < new_value && new_value < beta) {
 				new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);

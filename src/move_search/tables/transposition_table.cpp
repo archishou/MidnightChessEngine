@@ -2,7 +2,7 @@
 // Created by Archishmaan Peyyety on 1/15/23.
 //
 #include "transposition_table.h"
-#include "search_params.h"
+#include "move_search/search_params.h"
 
 TranspositionTable::TranspositionTable(uint64_t size) {
 	table_size = size;
