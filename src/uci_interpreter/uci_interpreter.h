@@ -10,8 +10,6 @@
 #include "sstream"
 #include "bench_fens.h"
 
-using namespace std;
-
 struct ReadUCIParameters {
 	bool debug_info = true;
 };
@@ -21,7 +19,7 @@ void initialize_uci(Position& p) {
 	Position::set(INITIAL_BOARD_FEN, p);
 }
 
-void uci_position(Position& board, const string& input_line) {
+void uci_position(Position& board, const std::string& input_line) {
 	if (input_line.substr(0, 17) == "position startpos") {
 		std::string uci_moves;
 		if (input_line.size() > 17) uci_moves = input_line.substr(24, input_line.size() - 24);
@@ -32,7 +30,7 @@ void uci_position(Position& board, const string& input_line) {
 		int fen_end = input_line.find(" moves");
 		int moves_start = fen_end + 6;
 		int fen_size = fen_end - fen_start;
-		const string& fen = input_line.substr(fen_start, fen_size);
+		const std::string& fen = input_line.substr(fen_start, fen_size);
 		std::string moves;
 		if (fen_end != std::string::npos) {
 			moves = input_line.substr(moves_start + 1, input_line.size() - moves_start);
@@ -43,8 +41,8 @@ void uci_position(Position& board, const string& input_line) {
 	}
 }
 
-int parse_move_time(const Color side_to_play, const string& move_time_s) {
-	std::vector<string> tokens = split(move_time_s, " ");
+int parse_move_time(const Color side_to_play, const std::string& move_time_s) {
+	std::vector<std::string> tokens = split(move_time_s, " ");
 	// Possible inputs to parse
 	// input --> go movetime xxx
 	// input --> go xtime ### xinc ### ytime ### yinc ###
@@ -54,7 +52,7 @@ int parse_move_time(const Color side_to_play, const string& move_time_s) {
 	}
 	int wtime = 0, winc = 0, btime = 0, binc = 0;
 	for (int i = 1; i < tokens.size(); i += 2) {
-		string token = tokens[i];
+		std::string token = tokens[i];
 		int value = 0;
 		if (tokens.size() > i + 1) value = stoi(tokens[i + 1]);
 
@@ -69,7 +67,7 @@ int parse_move_time(const Color side_to_play, const string& move_time_s) {
 	return time_for_move(btime, binc);
 }
 
-void uci_go(Position& board, const string& input_line, ReadUCIParameters& uci_parameters) {
+void uci_go(Position& board, const std::string& input_line, ReadUCIParameters& uci_parameters) {
 	auto t_start = std::chrono::high_resolution_clock::now();
 
 	BestMoveSearchResults results;
@@ -113,11 +111,11 @@ void read_uci() {
 	ReadUCIParameters parameters = {};
 	initialize_uci(board);
 
-	string input_line;
+	std::string input_line;
 
-	cout.setf(ios::unitbuf);
+	std::cout.setf(std::ios::unitbuf);
 
-	while (std::getline(cin, input_line)) {
+	while (std::getline(std::cin, input_line)) {
 		if (input_line == "uci") {
 			std::cout << "id name Midnight V3.0" << std::endl;
 			std::cout << "id author Archishmaan Peyyety" << std::endl;
