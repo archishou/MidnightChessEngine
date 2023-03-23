@@ -4,6 +4,7 @@
 #pragma once
 #include "move_generation/position.h"
 #include "utils/helpers.h"
+#include <locale>
 
 char promotion_character(std::string uci_move) {
 	char promotion_piece = uci_move.at(4);
