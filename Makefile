@@ -23,6 +23,7 @@ ifeq ($(OS), Windows_NT)
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
 	SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
+	TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
 else
 ifeq ($(COMP), MINGW)
     MKDIR    := mkdir
@@ -30,6 +31,7 @@ ifeq ($(COMP), MINGW)
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
     SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
+    TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
 else
     MKDIR   := mkdir -p
     LDFLAGS := -pthread
@@ -37,6 +39,7 @@ else
     SUFFIX  :=
     SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
     SRC_DIRECTORIES += $(shell find $(TESTDIR) -type d)
+    TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
 endif
 endif
 
@@ -53,7 +56,7 @@ ifeq ($(MAKECMDGOALS),tests)
 endif
 
 
-TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
+
 
 OBJECTS   := $(patsubst %.cpp,$(TMPDIR)/%.o,$(SRC_FILES))
 DEPENDS   := $(patsubst %.cpp,$(TMPDIR)/%.d,$(SRC_FILES))
