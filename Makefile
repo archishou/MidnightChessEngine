@@ -10,21 +10,33 @@ TARGET := midnight
 # recursive wildcard
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
+#windows find, assumes no spaces in dir names
+define wfind
+$(foreach d,$1,$(wildcard $d**/) $(call wfind,$(wildcard $d**/)))
+endef
+
+
 # Detect Windows
 ifeq ($(OS), Windows_NT)
     MKDIR    := mkdir
     uname_S  := Windows
     SUFFIX   := .exe
+    SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
+	SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
 else
 ifeq ($(COMP), MINGW)
     MKDIR    := mkdir
     uname_S  := Windows
     SUFFIX   := .exe
+    SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
+    SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
 else
     MKDIR   := mkdir -p
     LDFLAGS := -pthread
     uname_S := $(shell uname -s)
     SUFFIX  :=
+    SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
+    SRC_DIRECTORIES += $(shell find $(TESTDIR) -type d)
 endif
 endif
 
@@ -40,8 +52,7 @@ ifeq ($(MAKECMDGOALS),tests)
 	TARGET    := midnight-tests
 endif
 
-SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
-SRC_DIRECTORIES += $(shell find $(TESTDIR) -type d)
+
 TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
 
 OBJECTS   := $(patsubst %.cpp,$(TMPDIR)/%.o,$(SRC_FILES))
