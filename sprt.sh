@@ -2,9 +2,9 @@
 cd /Users/archishmaan/Documents/cutechess/build/
 
 # Engine Paths and Names
-ENGINE_DEV=(midnight-dev /Users/archishmaan/Documents/CodeProjects/chess-engine/cmake-build-debug/ChessEngine_run)
+ENGINE_DEV=(midnight-dev /Users/archishmaan/Documents/CodeProjects/chess-engine/midnight)
 ENGINE_V2=(midnight-v2 /Users/archishmaan/Documents/CodeProjects/chess-engine/releases/v2/master)
-ENGINE_LATEST=(midnight-latest /Users/archishmaan/Documents/CodeProjects/chess-engine/releases/vlatest/master)
+ENGINE_LATEST=(midnight-latest /Users/archishmaan/Documents/CodeProjects/chess-engine/releases/vlatest/midnight)
 
 # Opening Books
 SUITE_1=/Users/archishmaan/Documents/CodeProjects/chess-engine/testing/books-master/8moves_v3.pgn
