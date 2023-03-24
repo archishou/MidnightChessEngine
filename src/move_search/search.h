@@ -12,13 +12,15 @@
 
 struct BestMoveSearchParameters {
 	short depth = MAX_DEPTH;
-	int time_limit = DEFAULT_SEARCH_TIME;
+	int hard_time_limit = DEFAULT_SEARCH_TIME;
+	int soft_time_limit = DEFAULT_SEARCH_TIME;
 	bool debug_info = false;
 };
 
 const struct BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
 		.depth = MAX_DEPTH,
-		.time_limit = DEFAULT_SEARCH_TIME,
+		.hard_time_limit = DEFAULT_SEARCH_TIME,
+		.soft_time_limit = DEFAULT_SEARCH_TIME,
 		.debug_info = true
 };
 
@@ -77,18 +79,18 @@ void update_best_move_results(BestMoveSearchResults& search_results, PVSData& ab
 }
 
 template<Color color>
-BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short depth, bool debug) {
+BestMoveSearchResults iterative_deepening(Position& board, const BestMoveSearchParameters& params) {
 	struct BestMoveSearchResults search_results;
 
 	reset_clock();
-	for (int sub_depth = 1; sub_depth <= depth; sub_depth++) {
-		if (time_elapsed_exceeds(time_limit, Milliseconds)) {
+	for (int sub_depth = 1; sub_depth <= params.depth; sub_depth++) {
+		if (time_elapsed_exceeds(params.soft_time_limit, Milliseconds)) {
 			break;
 		}
-		struct PVSData ab_results = pvs_root<color>(board, sub_depth, time_limit);
+		struct PVSData ab_results = pvs_root<color>(board, sub_depth, params.hard_time_limit);
 		if (ab_results.search_completed) {
 			std::memset(search_results.pv, 0, sizeof(search_results.pv));
-			update_best_move_results(search_results, ab_results, sub_depth, debug);
+			update_best_move_results(search_results, ab_results, sub_depth, params.debug_info);
 		}
 	}
 
@@ -100,7 +102,7 @@ BestMoveSearchResults iterative_deepening(Position& board, int time_limit, short
 
 template<Color color>
 BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters& parameters) {
-	return iterative_deepening<color>(board, parameters.time_limit, parameters.depth, parameters.debug_info);
+	return iterative_deepening<color>(board, parameters);
 }
 
 template<Color color>

@@ -41,14 +41,16 @@ void uci_position(Position& board, const std::string& input_line) {
 	}
 }
 
-int parse_move_time(const Color side_to_play, const std::string& move_time_s) {
+void parse_move_time(const Color side_to_play, const std::string& move_time_s, BestMoveSearchParameters& params) {
 	std::vector<std::string> tokens = split(move_time_s, " ");
 	// Possible inputs to parse
 	// input --> go movetime xxx
 	// input --> go xtime ### xinc ### ytime ### yinc ###
 	// input --> go xtime ### ytime ###
 	if (tokens[1] == "movetime") {
-		return stoi(tokens[2]) * 0.95;
+		params.hard_time_limit = stoi(tokens[2]) * 0.95;
+		params.soft_time_limit = stoi(tokens[2]) * 0.95;
+		return;
 	}
 	int wtime = 0, winc = 0, btime = 0, binc = 0;
 	for (int i = 1; i < tokens.size(); i += 2) {
@@ -62,21 +64,23 @@ int parse_move_time(const Color side_to_play, const std::string& move_time_s) {
 		else if (token == "binc") binc = value;
 	}
 	if (side_to_play == WHITE) {
-		return time_for_move(wtime, winc);
+		params.soft_time_limit = time_search(wtime, winc);
+		params.hard_time_limit = time_iterative_deepening(wtime, winc);
+		return;
 	}
-	return time_for_move(btime, binc);
+	params.soft_time_limit = time_search(btime, binc);
+	params.hard_time_limit = time_iterative_deepening(btime, binc);
 }
 
 void uci_go(Position& board, const std::string& input_line, ReadUCIParameters& uci_parameters) {
 	auto t_start = std::chrono::high_resolution_clock::now();
 
 	BestMoveSearchResults results;
-	int move_time = parse_move_time(board.turn(), input_line);
-	const BestMoveSearchParameters params = BestMoveSearchParameters {
+	BestMoveSearchParameters params = BestMoveSearchParameters {
 		.depth = MAX_DEPTH,
-		.time_limit = move_time,
 		.debug_info = uci_parameters.debug_info
 	};
+	parse_move_time(board.turn(), input_line, params);
 	results = best_move(board, params);
 	std::cout << "bestmove " << results.best_move << std::endl;
 }
@@ -92,7 +96,7 @@ void bench() {
 
 		BestMoveSearchParameters parameters = {
 				.depth = 12,
-				.time_limit = 10000,
+				.hard_time_limit = 10000,
 				.debug_info = true,
 		};
 		BestMoveSearchResults results = best_move(p, parameters);
