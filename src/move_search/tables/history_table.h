@@ -21,7 +21,7 @@ void update_history(Move &move, int depth, int ply) {
 	killers[ply][0] = move;
 
 	history[move.from()][move.to()] += depth * depth;
-	if (history[move.from()][move.to()] >= -HISTORY_BONUS) {
+	if (history[move.from()][move.to()] >= HISTORY_BONUS_CAP) {
 		scale_history();
 	}
 }

@@ -19,7 +19,7 @@ TEST_NAME=test1
 ENGINE_1=(${ENGINE_DEV[*]})
 ENGINE_2=(${ENGINE_LATEST[*]})
 TEST_OPENING_BOOK=$SUITE_1
-TIME_CONTROL=2+0.02
+TIME_CONTROL=5+0.05
 CONCURRENCY=5
 
 mkdir -p $TEST_ROOT/$TEST_NAME
@@ -36,7 +36,7 @@ echo Engine 2 Path ${ENGINE_2[1]}
     -openings file=$TEST_OPENING_BOOK format=pgn order=random \
     -concurrency $CONCURRENCY -ratinginterval 1 -games 50000 \
     -draw movenumber=200 movecount=0 score=0 \
-    -sprt elo0=0 elo1=10 alpha=0.05 beta=0.05 \
+    -sprt elo0=-10 elo1=0 alpha=0.05 beta=0.05 \
     -pgnout $TEST_ROOT/$TEST_NAME/test.pgn \
     -recover \
 

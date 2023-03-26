@@ -32,7 +32,7 @@ int history_score(Move &move, int ply) {
 	if (move.flag() != QUIET) return 0;
 	if (move == killers[ply][0]) return KILLER_MOVE_BONUS + 2000;
 	else if (move == killers[ply][1]) return KILLER_MOVE_BONUS + 1000;
-	return HISTORY_BONUS + history[move.from()][move.to()];
+	return history[move.from()][move.to()];
 }
 
 template<Color color>
