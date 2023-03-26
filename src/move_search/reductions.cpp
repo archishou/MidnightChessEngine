@@ -6,14 +6,13 @@
 #include "tables/lmr_table.h"
 #include <algorithm>
 
-int lmr_reduction(const bool& pv_node, const int& move_idx, const int& depth, const Move& legal_move) {
-	int reduction = 1;
-	int lmr_depth = pv_node ? 5 : 3;
-	if (depth >= 3 && move_idx > lmr_depth) {
+int lmr_reduction(const bool& pv_node, const int& ply, const bool& in_check, const int& move_idx, const int& depth, const Move& legal_move) {
+	int reduction = 0;
+	int lmr_depth = (pv_node || ply == 0) ? 5 : 3;
+	if (depth >= 3 && move_idx > lmr_depth && !legal_move.is_capture() && !in_check) {
 		reduction = int(lmr_table[depth][move_idx]);
-		reduction += !pv_node;
-		reduction -= legal_move.is_capture();
-		std::clamp(reduction, 1, depth - 1);
+		reduction -= pv_node;
+		std::clamp(reduction, 0, depth - 1);
 	}
 	return reduction;
 }
