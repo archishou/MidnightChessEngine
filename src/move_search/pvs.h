@@ -2,6 +2,8 @@
 // Created by Archishmaan Peyyety on 1/1/23.
 //
 #pragma once
+
+#include <array>
 #include "cstring"
 #include "search_params.h"
 #include "move_generation/position.h"
@@ -184,6 +186,9 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		return 0;
 	}
 
+	MoveHistory failed_moves;
+	int failed_move_count = 0;
+
 	Move best_move = scored_moves.begin()->move;
 	int value = NEG_INF_CHESS;
 	for (int move_idx = 0; move_idx < scored_moves.size(); move_idx++) {
@@ -212,7 +217,6 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
             new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
         }
 
-
 		value = std::max(value, new_value);
 		board.undo<color>(legal_move);
 		if (!data.search_completed) return 0;
@@ -220,10 +224,12 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			if (ply == 0) data.value = value;
 			update_pv(data.pv, ply, legal_move);
 			best_move = legal_move;
+		} else {
+			failed_moves[failed_move_count++] = legal_move;
 		}
 		alpha = std::max(alpha, value);
 		if (alpha >= beta) {
-			update_history<color>(best_move, depth, ply);
+			update_history<color>(scored_moves, best_move, depth, ply, move_idx);
 			break;
 		}
 	}

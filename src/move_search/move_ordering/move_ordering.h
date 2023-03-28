@@ -7,13 +7,7 @@
 #include "move_generation/tables.h"
 #include "move_search/tables/transposition_table.h"
 #include "move_search/tables/history_table.h"
-
-struct ScoredMove {
-	Move move;
-	int score;
-};
-
-typedef std::vector<ScoredMove> ScoredMoves;
+#include "move_search/types.h"
 
 void initialize_move_sort_tables();
 
@@ -32,7 +26,7 @@ int history_score(Move &move, int ply) {
 	if (move.flag() != QUIET) return 0;
 	if (move == killers[ply][0]) return KILLER_MOVE_BONUS + 2000;
 	else if (move == killers[ply][1]) return KILLER_MOVE_BONUS + 1000;
-	return history[move.from()][move.to()];
+	return history[color][move.from()][move.to()];
 }
 
 template<Color color>

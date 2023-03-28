@@ -242,6 +242,10 @@ public:
 			flag == PC_KNIGHT || flag == PC_BISHOP || flag == PC_ROOK || flag == PC_QUEEN;
 	}
 
+	inline bool is_quiet() const {
+		return !is_capture() && !is_promotion();
+	}
+
 	void operator=(Move m) { move = m.move; }
 	bool operator==(Move a) const { return to_from() == a.to_from(); }
 	bool operator!=(Move a) const { return to_from() != a.to_from(); }
