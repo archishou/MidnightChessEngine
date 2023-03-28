@@ -186,9 +186,6 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		return 0;
 	}
 
-	MoveHistory failed_moves;
-	int failed_move_count = 0;
-
 	Move best_move = scored_moves.begin()->move;
 	int value = NEG_INF_CHESS;
 	for (int move_idx = 0; move_idx < scored_moves.size(); move_idx++) {
@@ -224,8 +221,6 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			if (ply == 0) data.value = value;
 			update_pv(data.pv, ply, legal_move);
 			best_move = legal_move;
-		} else {
-			failed_moves[failed_move_count++] = legal_move;
 		}
 		alpha = std::max(alpha, value);
 		if (alpha >= beta) {
