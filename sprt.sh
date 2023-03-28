@@ -36,7 +36,7 @@ echo Engine 2 Path ${ENGINE_2[1]}
     -openings file=$TEST_OPENING_BOOK format=pgn order=random \
     -concurrency $CONCURRENCY -ratinginterval 1 -games 50000 \
     -draw movenumber=200 movecount=0 score=0 \
-    -sprt elo0=-10 elo1=0 alpha=0.05 beta=0.05 \
+    -sprt elo0=0 elo1=10 alpha=0.05 beta=0.05 \
     -pgnout $TEST_ROOT/$TEST_NAME/test.pgn \
     -recover \
 
