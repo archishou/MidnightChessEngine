@@ -34,10 +34,4 @@ void update_history(ScoredMoves& ordered_moves, Move &best_move, int depth, int 
 		if (move.flag() != QUIET) continue;
 		update_history_entry(history[color][move.from()][move.to()], -history_bonus);
 	}
-
-	/*
-	if (history[color][best_move.from()][best_move.to()] >= HISTORY_BONUS_CAP) {
-		scale_history();
-	}
-	 */
 }
