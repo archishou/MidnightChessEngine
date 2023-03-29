@@ -56,7 +56,7 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board, int ply) {
 		scored_move.score = -score;
 		scored_moves.push_back(scored_move);
 	}
-	//std::stable_sort(scored_moves.begin(), scored_moves.end(), &compare_moves);
+	std::stable_sort(scored_moves.begin(), scored_moves.end(), &compare_moves);
 	return scored_moves;
 }
 
