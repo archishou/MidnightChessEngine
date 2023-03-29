@@ -89,8 +89,8 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	Move best_move = Move();
 	MoveList<color> capture_moves(board, QSearchMoveGenerationsOptions);
 	ScoredMoves scored_moves = order_moves<color>(capture_moves, board, ply);
-	for (const ScoredMove& scored_move : scored_moves) {
-		const Move legal_move = scored_move.move;
+	for (int move_idx = 0; move_idx < scored_moves.size(); move_idx++) {
+		const Move legal_move = select_move(scored_moves, move_idx);
 		board.play<color>(legal_move);
 		data.q_nodes_searched += 1;
 		const int score = -q_search<~color>(board, ply + 1, -beta, -alpha);

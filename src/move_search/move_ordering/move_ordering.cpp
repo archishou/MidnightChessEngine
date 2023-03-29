@@ -55,15 +55,14 @@ Move& select_move(ScoredMoves& scored_moves, int& idx) {
 			best_score = scored_moves[i].score;
 		}
 	}
-	ScoredMove temp = scored_moves[idx];
-	scored_moves[idx] = scored_moves[best_idx];
-	scored_moves[best_idx] = temp;
-	//std::swap(scored_moves[idx], scored_moves[best_idx]);
-	ScoredMoves mo = scored_moves;
-	std::stable_sort(mo.begin(), mo.end(), &compare_moves);
+	std::swap(scored_moves[idx], scored_moves[best_idx]);
+	//ScoredMoves mo = scored_moves;
+	//std::stable_sort(mo.begin(), mo.end(), &compare_moves);
+	/*
 	if (scored_moves[idx].move != mo[idx].move) {
 		std::cout << "failure" << std::endl;
 	}
+	 */
 	return scored_moves[idx].move;
 }
 
