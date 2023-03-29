@@ -6,7 +6,8 @@ constexpr Score evaluate_bishops(Position& board) {
 	Bitboard us_pieces = board.all_pieces<color>();
 	Bitboard them_pieces = board.all_pieces<~color>();
 	const Bitboard all_pawns = board.bitboard_of(color, PAWN);
-	if (pop_count(bishops) >= 2) score += BISHOP_PAIR_BONUS;
+	const bool bishop_pair = pop_count(bishops) >> 1;
+	score += BISHOP_PAIR_BONUS * bishop_pair;
 	while (bishops) {
 		Square bishop_square = pop_lsb(&bishops);
 		score += PIECE_VALUES[BISHOP];

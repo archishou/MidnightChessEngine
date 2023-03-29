@@ -46,3 +46,24 @@ int promotion_move_score(Move move, Position& board) {
 	else return 0;
 }
 
+Move& select_move(ScoredMoves& scored_moves, int& idx) {
+	int best_idx = idx;
+	int best_score = scored_moves[idx].score;
+	for (int i = idx; i < scored_moves.size(); i++) {
+		if (scored_moves[i].score < best_score) {
+			best_idx = i;
+			best_score = scored_moves[i].score;
+		}
+	}
+	ScoredMove temp = scored_moves[idx];
+	scored_moves[idx] = scored_moves[best_idx];
+	scored_moves[best_idx] = temp;
+	//std::swap(scored_moves[idx], scored_moves[best_idx]);
+	ScoredMoves mo = scored_moves;
+	std::stable_sort(mo.begin(), mo.end(), &compare_moves);
+	if (scored_moves[idx].move != mo[idx].move) {
+		std::cout << "failure" << std::endl;
+	}
+	return scored_moves[idx].move;
+}
+

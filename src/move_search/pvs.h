@@ -179,17 +179,17 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	}
 
 	MoveList<color> all_legal_moves(board);
-	ScoredMoves scored_moves = order_moves<color>(all_legal_moves, board, ply);
-
-	if (scored_moves.empty()) {
+	if (all_legal_moves.size() == 0) {
 		if (in_check) return -(MATE_SCORE - ply);
 		return 0;
 	}
 
+	ScoredMoves scored_moves = order_moves<color>(all_legal_moves, board, ply);
+
 	Move best_move = scored_moves.begin()->move;
 	int value = NEG_INF_CHESS;
 	for (int move_idx = 0; move_idx < scored_moves.size(); move_idx++) {
-		Move legal_move = scored_moves[move_idx].move;
+		Move legal_move = select_move(scored_moves, move_idx);
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
 		int new_value;
