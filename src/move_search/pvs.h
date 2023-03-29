@@ -15,8 +15,8 @@
 #include "reductions.h"
 
 struct PVSData {
-    Move best_move;
-    bool search_completed{};
+	Move best_move;
+	bool search_completed{};
 	int value{};
 	// triangular-table-table
 	PV pv;
@@ -198,25 +198,25 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		data.nodes_searched += 1;
 		int new_value;
 
-        bool full_depth_zero_window;
+		bool full_depth_zero_window;
 
-        int reduction = lmr_reduction(pv_node, ply, in_check, move_idx, depth, legal_move);
-        if (reduction > 0) {
-            int new_depth = std::max(0, depth - reduction - 1);
-            new_value = -pvs<~color>(board, new_depth, ply + 1, -alpha - 1, -alpha, true);
-            full_depth_zero_window = new_value > alpha && new_depth != depth - 1;
-        }
-        else {
-            full_depth_zero_window = !pv_node || move_idx > 0;
-        }
+		int reduction = lmr_reduction(pv_node, ply, in_check, move_idx, depth, legal_move);
+		if (reduction > 0) {
+			int new_depth = std::max(0, depth - reduction - 1);
+			new_value = -pvs<~color>(board, new_depth, ply + 1, -alpha - 1, -alpha, true);
+			full_depth_zero_window = new_value > alpha && new_depth != depth - 1;
+		}
+		else {
+			full_depth_zero_window = !pv_node || move_idx > 0;
+		}
 
-        if (full_depth_zero_window) {
-            new_value = -pvs<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, true);
-        }
+		if (full_depth_zero_window) {
+			new_value = -pvs<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, true);
+		}
 
-        if (pv_node && ((new_value > alpha && new_value < beta) || move_idx == 0)) {
-            new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
-        }
+		if (pv_node && ((new_value > alpha && new_value < beta) || move_idx == 0)) {
+			new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
+		}
 
 		value = std::max(value, new_value);
 		board.undo<color>(legal_move);
