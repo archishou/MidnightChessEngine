@@ -46,7 +46,7 @@ int promotion_move_score(Move move, Position& board) {
 	else return 0;
 }
 
-Move& select_move(ScoredMoves& scored_moves, int& idx) {
+Move& select_move(ScoredMoves& scored_moves, int idx) {
 	int best_idx = idx;
 	int best_score = scored_moves[idx].score;
 	for (int i = idx + 1; i < scored_moves.size(); i++) {

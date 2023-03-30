@@ -90,7 +90,7 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	MoveList<color> capture_moves(board, QSearchMoveGenerationsOptions);
 	ScoredMoves scored_moves = order_moves<color>(capture_moves, board, ply);
 	for (int move_idx = 0; move_idx < scored_moves.size(); move_idx++) {
-		const Move legal_move = scored_moves[move_idx].move;
+		const Move legal_move = select_move(scored_moves, move_idx);
 		board.play<color>(legal_move);
 		data.q_nodes_searched += 1;
 		const int score = -q_search<~color>(board, ply + 1, -beta, -alpha);
@@ -186,10 +186,10 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 	ScoredMoves scored_moves = order_moves<color>(all_legal_moves, board, ply);
 
-	Move best_move = scored_moves.begin()->move;
+	Move best_move = select_move(scored_moves, 0);
 	int value = NEG_INF_CHESS;
 	for (int move_idx = 0; move_idx < scored_moves.size(); move_idx++) {
-		Move legal_move = scored_moves[move_idx].move;
+		Move legal_move = select_move(scored_moves, move_idx);
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
 		int new_value;
