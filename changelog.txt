@@ -257,3 +257,11 @@ Score of midnight-dev vs midnight-latest: 639 - 552 - 1044  [0.519] 2235
 ...      White vs Black: 648 - 543 - 1044  [0.523] 2235
 Elo difference: 13.5 +/- 10.5, LOS: 99.4 %, DrawRatio: 46.7 %
 SPRT: llr 2.97 (100.8%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Profile Code and added incremental sel sort + slower time checks
+Score of midnight-dev vs midnight-latest: 134 - 75 - 183  [0.575] 392
+...      midnight-dev playing White: 74 - 33 - 89  [0.605] 196
+...      midnight-dev playing Black: 60 - 42 - 94  [0.546] 196
+...      White vs Black: 116 - 93 - 183  [0.529] 392
+Elo difference: 52.7 +/- 25.2, LOS: 100.0 %, DrawRatio: 46.7 %
+SPRT: llr 2.96 (100.6%), lbound -2.94, ubound 2.94 - H1 was accepted
