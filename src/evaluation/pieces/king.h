@@ -37,13 +37,14 @@ constexpr Score evaluate_king(Position& board) {
 		score += KING_PAWN_SHIELD[1] * pop_count(pawns & shift<relative_dir<Us>(NORTH)>(pawn_shield));
 	}
 	constexpr Color Them = ~Us;
+	const Bitboard them_pieces = board.all_pieces<Them>();
 
 	Bitboard us_pieces = board.all_pieces<Us>();
 	Bitboard king_ring = (KING_ATTACKS[king_square] & ~us_pieces);
 
 	while (king_ring) {
 		Square king_attack_square = pop_lsb(&king_ring);
-		Bitboard them_attack_ring = board.attackers_from<Them>(king_attack_square, us_pieces);
+		Bitboard them_attack_ring = board.attackers_from<Them>(king_attack_square, us_pieces | them_pieces);
 		while (them_attack_ring) {
 			Square attacking_piece_square = pop_lsb(&them_attack_ring);
 			PieceType attacking_piece = type_of(board.at(attacking_piece_square));
@@ -51,7 +52,7 @@ constexpr Score evaluate_king(Position& board) {
 		}
 	}
 
-	Bitboard checkers = board.attackers_from<Them>(king_square, us_pieces);
+	Bitboard checkers = board.attackers_from<Them>(king_square, us_pieces | them_pieces);
 	while (checkers) {
 		Square checker_square = pop_lsb(&checkers);
 		PieceType attacking_piece = type_of(board.at(checker_square));
