@@ -273,3 +273,11 @@ Score of midnight-dev vs midnight-latest: 309 - 239 - 458  [0.535] 1006
 ...      White vs Black: 298 - 250 - 458  [0.524] 1006
 Elo difference: 24.2 +/- 15.8, LOS: 99.9 %, DrawRatio: 45.5 %
 SPRT: llr 2.95 (100.2%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+King Ring Danger Eval
+Score of midnight-dev vs midnight-latest: 297 - 225 - 385  [0.540] 907
+...      midnight-dev playing White: 166 - 112 - 176  [0.559] 454
+...      midnight-dev playing Black: 131 - 113 - 209  [0.520] 453
+...      White vs Black: 279 - 243 - 385  [0.520] 907
+Elo difference: 27.6 +/- 17.2, LOS: 99.9 %, DrawRatio: 42.4 %
+SPRT: llr 2.97 (100.7%), lbound -2.94, ubound 2.94 - H1 was accepted
