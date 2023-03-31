@@ -13,7 +13,7 @@ TEST_CASE("king-ring"){
 	Position p;
 	Position::set("r3kb2/ppppppp1/4q2r/6n1/5n2/4P2K/PPPP1PPP/RNBQNb1R w q - 0 1", p);
 	constexpr Color Us = WHITE;
-	constexpr Color Them = BLACK;
+	constexpr Color Them = ~Us;
 
 	Bitboard us_king = p.bitboard_of(Us, KING);
 	Bitboard us_pieces = p.all_pieces<Us>();
