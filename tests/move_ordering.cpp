@@ -5,9 +5,9 @@
 #include "move_search/types.h"
 #include "move_search/move_ordering/move_ordering.h"
 
-TEST_SUITE_BEGIN("move-gen-options");
+TEST_SUITE_BEGIN("move-ordering");
 
-TEST_CASE("StartPos Captures"){
+TEST_CASE("sorting-test-one"){
 	ScoredMoves scored_moves;
 	ScoredMove m1 = {
 			.move = Move(a1, a1),
@@ -39,19 +39,11 @@ TEST_CASE("StartPos Captures"){
 	scored_moves.push_back(m4);
 	scored_moves.push_back(m5);
 	scored_moves.push_back(m6);
-	ScoredMoves movies2 = scored_moves;
-	for (int i = 0; i < scored_moves.size(); i++) {
-		std::cout << select_move(scored_moves, i) << std::endl;
-	}
-	std::cout << std::endl;
-	for (int i = 0; i < 6; i++) {
-		std::cout << movies2[i].move << std::endl;
-	}
-	std::stable_sort(movies2.begin(), movies2.end(), &compare_moves);
-	std::cout << std::endl;
-	for (int i = 0; i < 6; i++) {
-		std::cout << movies2[i].move << std::endl;
-	}
-
+	CHECK_EQ(select_move(scored_moves, 0), Move(a6, a6));
+	CHECK_EQ(select_move(scored_moves, 1), Move(a4, a4));
+	CHECK_EQ(select_move(scored_moves, 2), Move(a5, a5));
+	CHECK_EQ(select_move(scored_moves, 3), Move(a3, a3));
+	CHECK_EQ(select_move(scored_moves, 4), Move(a2, a2));
+	CHECK_EQ(select_move(scored_moves, 5), Move(a1, a1));
 }
 TEST_SUITE_END();
