@@ -42,4 +42,22 @@ TEST_CASE("king-ring"){
 	}
 }
 
+TEST_CASE("psuedo-legal"){
+	initialize_engine();
+	Position p;
+	Position::set("r3kb2/ppppp1p1/4q2r/5pn1/5n2/4PQ1K/PPPP1PPP/RNB1Nb1R w q - 0 1", p);
+	constexpr Color Us = BLACK;
+	constexpr Color Them = ~Us;
+
+	const Bitboard them_pieces = p.all_pieces<Them>();
+	Bitboard us_pieces = p.all_pieces<Us>();
+
+	const PieceType piece = ROOK;
+	Square queen_square = bsf(p.bitboard_of(Us, piece));
+	Bitboard pseudo_legal_moves = attacks<piece>(queen_square, them_pieces | us_pieces) & ~us_pieces;
+
+	print_bitboard(pseudo_legal_moves);
+}
+
+
 TEST_SUITE_END();

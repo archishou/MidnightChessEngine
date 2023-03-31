@@ -34,13 +34,26 @@ inline constexpr Score evaluate_pawn_locations(Position& board) {
 	Score score = Score();
 	Bitboard pawns = board.bitboard_of(c, PAWN);
 	const Bitboard all_pawns = pawns;
+	const Bitboard us_pieces = board.all_pieces<c>();
+	const Bitboard them_pieces = board.all_pieces<~c>();
+	const Square them_king = bsf(board.bitboard_of(~c, KING));
+	const Bitboard them_king_ring = KING_ATTACKS[them_king] & ~them_pieces;
+
 	while (pawns) {
 		Square pawn_square = pop_lsb(&pawns);
 		const Rank rank = relative_rank<c>(rank_of(pawn_square));
 		score += PIECE_VALUES[PAWN];
 		score += read_psqt<c>(PAWN, pawn_square);
+
 		const Bitboard supporting_pawns = all_pawns & pawn_attacks<~c>(pawn_square);
 		score += PAWN_PROTECTION[PAWN] * pop_count(supporting_pawns) * rank;
+
+		const Bitboard pseudo_legal_moves = pawn_attacks<c>(pawn_square) & ~us_pieces;
+		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
+		score += KING_RING_ATTACK_BONUS[PAWN] * pop_count(king_ring_attacks);
+
+		const bool king_in_check = pseudo_legal_moves & SQUARE_BB[them_king];
+		score += CHECK_BONUS[PAWN] * king_in_check;
 	}
 	return score;
 }
