@@ -22,6 +22,10 @@ constexpr Score OPEN_FILE_BONUS[] = {S(0, 0), S(0, 0), S(0, 0), S(48, 0), S(-2, 
 constexpr Score SEMI_OPEN_FILE_BONUS[] = {S(0, 0), S(0, 0), S(0, 0), S(18, 7), S(1, 21), S(-25, 14)};
 constexpr Score PAWN_PROTECTION[] = {S(-2, 11), S(-1, 21), S(-4, 21), S(0, 0), S(0, 0), S(0, 0)};
 constexpr Score KING_PAWN_SHIELD[] = {S(40, -13), S(34, -10)};
+
+constexpr Score KING_RING_PENALTY[NPIECE_TYPES] = {S(0, 0), S(0, 0), S(0, 0), S(0, 0), S(0, 0), S(0, 0)};
+constexpr Score CHECK_PENALTY[NPIECE_TYPES] = {S(0, 0), S(0, 0), S(0, 0), S(0, 0), S(0, 0), S(0, 0)};
+
 constexpr Score PASSED_PAWN_BONUS = S(-0, 22);
 constexpr Score BLOCKED_PASSED_PAWN_PENALTY = S(5, -20);
 constexpr Score ISOLATED_PAWN_PENALTY = S(-19, -8);
