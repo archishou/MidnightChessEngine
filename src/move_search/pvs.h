@@ -165,7 +165,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		static_eval = evaluate<color>(board);
 	}
 
-	if (depth >= 3 && !in_check && !pv_node && do_null) {
+	if (depth >= NMP_MIN_DEPTH && !in_check && !pv_node && do_null) {
 		board.play_null<color>();
 
 		int reduction = nmp_reduction(depth, beta, static_eval);
@@ -211,9 +211,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			new_value = -pvs<~color>(board, new_depth, ply + 1, -alpha - 1, -alpha, true);
 			full_depth_zero_window = new_value > alpha && new_depth != depth - 1;
 		}
-		else {
-			full_depth_zero_window = !pv_node || move_idx > 0;
-		}
+		else full_depth_zero_window = !pv_node || move_idx > 0;
 
 		if (full_depth_zero_window) {
 			new_value = -pvs<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, true);
