@@ -11,7 +11,7 @@ constexpr Score evaluate_knight(Position& board) {
 	const Square them_king = bsf(board.bitboard_of(~color, KING));
 	const Bitboard them_king_ring = KING_ATTACKS[them_king] & ~them_pieces;
 
-	Score score = Score();
+	Score score = SCORE_ZERO;
 
 	while (knights) {
 		Square knight_square = pop_lsb(&knights);

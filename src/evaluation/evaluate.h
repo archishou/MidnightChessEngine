@@ -7,6 +7,7 @@
 #include "evaluation/pieces/rook.h"
 #include "evaluation/pieces/queen.h"
 #include "evaluation/pieces/king.h"
+#include "types.h"
 
 template<Color color>
 constexpr int compute_game_phase(Position& board) {
@@ -40,7 +41,7 @@ constexpr int evaluate(Position& board) {
 	int mg_phase = std::min(game_phase, 24);
 	int eg_phase = 24 - mg_phase;
 
-	const int mg_score = us.middle_game - them.middle_game;
-	const int eg_score = us.end_game - them.end_game;
+	const int mg_score = mg_value(us) - mg_value(them);
+	const int eg_score = eg_value(us) - eg_value(them);
 	return (mg_score * mg_phase + eg_score * eg_phase) / 24;
 }

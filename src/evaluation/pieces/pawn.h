@@ -7,7 +7,7 @@
 
 template<Color c>
 constexpr Score evaluate_passed_pawns(Position& board) {
-	Score passed_pawn_score = Score(0, 0);
+	Score passed_pawn_score = SCORE_ZERO;
 	Bitboard passed_pawns_us = passed_pawns<c>(board);
 	while (passed_pawns_us) {
 		const Square pawn = pop_lsb(&passed_pawns_us);
@@ -31,7 +31,7 @@ inline constexpr Score evaluate_isolated_pawns(Position& board) {
 
 template<Color c>
 inline constexpr Score evaluate_pawn_locations(Position& board) {
-	Score score = Score();
+	Score score = SCORE_ZERO;
 	Bitboard pawns = board.bitboard_of(c, PAWN);
 	const Bitboard all_pawns = pawns;
 	const Bitboard us_pieces = board.all_pieces<c>();

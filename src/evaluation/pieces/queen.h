@@ -13,7 +13,7 @@ constexpr Score evaluate_queens(Position& board) {
 
 	const Bitboard them_pawns = board.bitboard_of(~color, PAWN);
 
-	Score score = Score();
+	Score score = SCORE_ZERO;
 
 	while (queens) {
 		Square queen_square = pop_lsb(&queens);

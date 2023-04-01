@@ -13,7 +13,7 @@ constexpr Bitboard PAWN_SHIELD[NKING_SIDES][NCOLORS] = {
 
 template<Color Us>
 constexpr Score evaluate_king(Position& board) {
-	Score score = Score();
+	Score score = SCORE_ZERO;
 	const Bitboard board_open_files = open_files(board);
 	const Bitboard board_semi_open_files = semi_open_files<Us>(board);
 	const Bitboard pawns = board.bitboard_of(Us, PAWN);

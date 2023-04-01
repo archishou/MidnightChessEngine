@@ -1,7 +1,7 @@
 #pragma once
 template<Color color>
 constexpr Score evaluate_bishops(Position& board) {
-	Score score = Score();
+	Score score = SCORE_ZERO;
 
 	Bitboard bishops = board.bitboard_of(color, BISHOP);
 	Bitboard us_pieces = board.all_pieces<color>();
