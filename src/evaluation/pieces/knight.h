@@ -6,6 +6,7 @@ constexpr Score evaluate_knight(Position& board) {
 	Bitboard them_pieces = board.all_pieces<~color>();
 
 	const Bitboard all_pawns = board.bitboard_of(color, PAWN);
+	const Bitboard them_pawns = board.bitboard_of(~color, PAWN);
 
 	const Square them_king = bsf(board.bitboard_of(~color, KING));
 	const Bitboard them_king_ring = KING_ATTACKS[them_king] & ~them_pieces;
@@ -22,6 +23,9 @@ constexpr Score evaluate_knight(Position& board) {
 
 		const Bitboard supporting_pawns = all_pawns & pawn_attacks<~color>(knight_square);
 		score += PAWN_PROTECTION[KNIGHT] * pop_count(supporting_pawns);
+
+		const Bitboard attacking_pawns = them_pawns & pawn_attacks<color>(knight_square);
+		score += ATTACKED_BY_PAWN[KNIGHT] * pop_count(attacking_pawns);
 
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
 		score += KING_RING_ATTACK_BONUS[KNIGHT] * pop_count(king_ring_attacks);

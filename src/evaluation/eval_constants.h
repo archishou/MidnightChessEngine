@@ -21,6 +21,7 @@ constexpr Score KING_TABLE[] = {S(-104, -98), S(201, -84), S(194, -60), S(141, -
 constexpr Score OPEN_FILE_BONUS[] = {S(0, 0), S(0, 0), S(0, 0), S(48, 2), S(-3, 29), S(-59, -0)};
 constexpr Score SEMI_OPEN_FILE_BONUS[] = {S(0, 0), S(0, 0), S(0, 0), S(19, 9), S(3, 26), S(-24, 11)};
 constexpr Score PAWN_PROTECTION[] = {S(3, 3), S(1, 20), S(-2, 22), S(0, 0), S(0, 0), S(0, 0)};
+constexpr Score ATTACKED_BY_PAWN[] = {S(0, 0), S(0, 0), S(0, 0), S(0, 0), S(0, 0), S(0, 0)};
 constexpr Score KING_RING_ATTACK_BONUS[] = {S(16, -12), S(30, -11), S(22, -6), S(34, -9), S(32, 6), S(0, 0)};
 constexpr Score CHECK_BONUS[] = {S(241, -23), S(102, -1), S(69, 47), S(123, -15), S(71, 71), S(0, 0)};
 constexpr Score KING_PAWN_SHIELD[] = {S(39, -14), S(31, -8)};

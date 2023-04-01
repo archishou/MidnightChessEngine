@@ -59,5 +59,17 @@ TEST_CASE("psuedo-legal"){
 	print_bitboard(pseudo_legal_moves);
 }
 
+TEST_CASE("attacked-by-pawn"){
+	initialize_engine();
+	Position p;
+	Position::set("r3kb2/ppppp1p1/4q2r/3P1Pn1/5n2/4PQPK/P2P1P2/RNB1Nb1R w q - 0 1", p);
+	constexpr Color Us = BLACK;
+	constexpr Color Them = ~Us;
+
+	const Bitboard them_pawns = p.bitboard_of(~Us, PAWN);
+	const Bitboard attacking_pawns = them_pawns & pawn_attacks<Us>(e6);
+
+	print_bitboard(attacking_pawns);
+}
 
 TEST_SUITE_END();

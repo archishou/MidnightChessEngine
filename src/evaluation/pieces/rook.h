@@ -5,6 +5,7 @@ constexpr Score evaluate_rooks(Position& board) {
 	Bitboard rooks = board.bitboard_of(color, ROOK);
 	Bitboard us_pieces = board.all_pieces<color>();
 	Bitboard them_pieces = board.all_pieces<~color>();
+	const Bitboard them_pawns = board.bitboard_of(~color, PAWN);
 	const Bitboard board_open_files = open_files(board);
 	const Bitboard board_semi_open_files = semi_open_files<color>(board);
 	const Square them_king = bsf(board.bitboard_of(~color, KING));
@@ -21,6 +22,9 @@ constexpr Score evaluate_rooks(Position& board) {
 		const bool on_open_file = rook_square_bb & board_open_files;
 		const bool on_semi_open_file = rook_square_bb & board_semi_open_files;
 		score += (OPEN_FILE_BONUS[ROOK] * on_open_file) + (SEMI_OPEN_FILE_BONUS[ROOK] * on_semi_open_file);
+
+		const Bitboard attacking_pawns = them_pawns & pawn_attacks<color>(rook_square);
+		score += ATTACKED_BY_PAWN[ROOK] * pop_count(attacking_pawns);
 
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
 		score += KING_RING_ATTACK_BONUS[ROOK] * pop_count(king_ring_attacks);
