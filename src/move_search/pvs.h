@@ -195,7 +195,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	for (int move_idx = 0; move_idx < scored_moves.size(); move_idx++) {
 		Move legal_move = select_move(scored_moves, move_idx);
 
-		if (!pv_node && depth <= 3 && move_idx > depth * 12) {
+		if (!pv_node && depth <= LMP_MIN_DEPTH && move_idx > depth * LMP_DEPTH_MULTIPLIER) {
 			break;
 		}
 
