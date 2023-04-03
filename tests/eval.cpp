@@ -3,8 +3,8 @@
 //
 #include "lib/doctests.h"
 #include "move_search/types.h"
-#include "move_search/move_ordering/move_ordering.h"
 #include "engine.h"
+#include "evaluation/bitboards.h"
 
 TEST_SUITE_BEGIN("eval");
 
