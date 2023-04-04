@@ -11,6 +11,8 @@ constexpr Score evaluate_knight(Position& board) {
 	const Square them_king = bsf(board.bitboard_of(~color, KING));
 	const Bitboard them_king_ring = KING_ATTACKS[them_king] & ~them_pieces;
 
+	const Bitboard them_pawn_attacks = pawn_attacks<~color>(them_pawns);
+
 	Score score = SCORE_ZERO;
 
 	while (knights) {
@@ -19,7 +21,9 @@ constexpr Score evaluate_knight(Position& board) {
 		score += read_psqt<color, KNIGHT>(knight_square);
 
 		Bitboard pseudo_legal_moves = attacks<KNIGHT>(knight_square, them_pieces | us_pieces) & ~us_pieces;
-		score += KNIGHT_MOBILITY[pop_count(pseudo_legal_moves)];
+		Bitboard mobility_squares = pseudo_legal_moves & ~them_pawn_attacks;
+
+		score += KNIGHT_MOBILITY[pop_count(mobility_squares)];
 
 		const Bitboard supporting_pawns = all_pawns & pawn_attacks<~color>(knight_square);
 		score += PAWN_PROTECTION[KNIGHT] * pop_count(supporting_pawns);

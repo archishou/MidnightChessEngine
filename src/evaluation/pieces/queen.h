@@ -13,6 +13,8 @@ constexpr Score evaluate_queens(Position& board) {
 
 	const Bitboard them_pawns = board.bitboard_of(~color, PAWN);
 
+	const Bitboard them_pawn_attacks = pawn_attacks<~color>(them_pawns);
+	const Bitboard xray_occupancy = us_pieces ^ queens ^ board.bitboard_of(color, ROOK) ^ board.bitboard_of(color, BISHOP);
 	Score score = SCORE_ZERO;
 
 	while (queens) {
@@ -22,7 +24,9 @@ constexpr Score evaluate_queens(Position& board) {
 		score += read_psqt<color, QUEEN>(queen_square);
 
 		Bitboard pseudo_legal_moves = attacks<QUEEN>(queen_square, them_pieces | us_pieces) & ~us_pieces;
-		score += QUEEN_MOBILITY[pop_count(pseudo_legal_moves)];
+		Bitboard mobility_squares = attacks<QUEEN>(queen_square, them_pieces | xray_occupancy) & ~(xray_occupancy | them_pawn_attacks);
+
+		score += QUEEN_MOBILITY[pop_count(mobility_squares)];
 
 		const bool on_open_file = queen_square_bb & board_open_files;
 		const bool on_semi_open_file = queen_square_bb & board_semi_open_files;

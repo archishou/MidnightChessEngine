@@ -10,6 +10,9 @@ constexpr Score evaluate_rooks(Position& board) {
 	const Bitboard board_semi_open_files = semi_open_files<color>(board);
 	const Square them_king = bsf(board.bitboard_of(~color, KING));
 	const Bitboard them_king_ring = KING_ATTACKS[them_king] & ~them_pieces;
+
+	const Bitboard them_pawn_attacks = pawn_attacks<~color>(them_pawns);
+	const Bitboard xray_occupancy = us_pieces ^ rooks ^ board.bitboard_of(color, QUEEN);
 	while (rooks) {
 		Square rook_square = pop_lsb(&rooks);
 		const Bitboard rook_square_bb = SQUARE_BB[rook_square];
@@ -17,7 +20,9 @@ constexpr Score evaluate_rooks(Position& board) {
 		score += read_psqt<color, ROOK>(rook_square);
 
 		Bitboard pseudo_legal_moves = attacks<ROOK>(rook_square, them_pieces | us_pieces) & ~us_pieces;
-		score += ROOK_MOBILITY[pop_count(pseudo_legal_moves)];
+		Bitboard mobility_squares = attacks<ROOK>(rook_square, them_pieces | xray_occupancy) & ~(xray_occupancy | them_pawn_attacks);
+
+		score += ROOK_MOBILITY[pop_count(mobility_squares)];
 
 		const bool on_open_file = rook_square_bb & board_open_files;
 		const bool on_semi_open_file = rook_square_bb & board_semi_open_files;

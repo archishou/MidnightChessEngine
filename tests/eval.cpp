@@ -5,6 +5,7 @@
 #include "move_search/types.h"
 #include "engine.h"
 #include "evaluation/bitboards.h"
+#include "evaluation/evaluate.h"
 
 TEST_SUITE_BEGIN("eval");
 
@@ -62,14 +63,8 @@ TEST_CASE("psuedo-legal"){
 TEST_CASE("attacked-by-pawn"){
 	initialize_engine();
 	Position p;
-	Position::set("r3kb2/ppppp1p1/4q2r/3P1Pn1/5n2/4PQPK/P2P1P2/RNB1Nb1R w q - 0 1", p);
-	constexpr Color Us = BLACK;
-	constexpr Color Them = ~Us;
-
-	const Bitboard them_pawns = p.bitboard_of(~Us, PAWN);
-	const Bitboard attacking_pawns = them_pawns & pawn_attacks<Us>(e6);
-
-	print_bitboard(attacking_pawns);
+	Position::set("rnbqkbnr/pppppppp/8/4Q3/2N2B2/4R3/PPPPPPPP/4K3 w kq - 0 1", p);
+	evaluate<WHITE>(p);
 }
 
 TEST_SUITE_END();
