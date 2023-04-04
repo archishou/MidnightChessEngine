@@ -19,7 +19,7 @@ constexpr Score evaluate_queens(Position& board) {
 		Square queen_square = pop_lsb(&queens);
 		const Bitboard queen_square_bb = SQUARE_BB[queen_square];
 		score += PIECE_VALUES[QUEEN];
-		score += read_psqt<color>(QUEEN, queen_square);
+		score += read_psqt<color, QUEEN>(queen_square);
 
 		Bitboard pseudo_legal_moves = attacks<QUEEN>(queen_square, them_pieces | us_pieces) & ~us_pieces;
 		score += QUEEN_MOBILITY * pop_count(pseudo_legal_moves);

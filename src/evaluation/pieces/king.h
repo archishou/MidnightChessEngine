@@ -25,7 +25,7 @@ constexpr Score evaluate_king(Position& board) {
 
 	const Bitboard king_bb = SQUARE_BB[king_square];
 	score += PIECE_VALUES[KING];
-	score += read_psqt<Us>(KING, king_square);
+	score += read_psqt<Us, KING>(king_square);
 
 	const bool on_open_file = king_bb & board_open_files;
 	const bool on_semi_open_file = king_bb & board_semi_open_files;

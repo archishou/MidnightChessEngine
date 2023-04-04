@@ -43,7 +43,7 @@ inline constexpr Score evaluate_pawn_locations(Position& board) {
 		Square pawn_square = pop_lsb(&pawns);
 		const Rank rank = relative_rank<c>(rank_of(pawn_square));
 		score += PIECE_VALUES[PAWN];
-		score += read_psqt<c>(PAWN, pawn_square);
+		score += read_psqt<c, PAWN>(pawn_square);
 
 		const Bitboard supporting_pawns = all_pawns & pawn_attacks<~c>(pawn_square);
 		score += PAWN_PROTECTION[PAWN] * pop_count(supporting_pawns) * rank;
