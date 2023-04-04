@@ -30,10 +30,10 @@ constexpr Score BLOCKED_PASSED_PAWN_PENALTY = S(5, -20);
 constexpr Score ISOLATED_PAWN_PENALTY = S(-16, -14);
 constexpr Score DOUBLED_PAWN_PENALTY = S(-16, -18);
 constexpr Score BISHOP_PAIR_BONUS = S(29, 73);
-constexpr Score KNIGHT_MOBILITY = S(0, 1);
-constexpr Score BISHOP_MOBILITY = S(5, 7);
-constexpr Score ROOK_MOBILITY = S(4, 3);
-constexpr Score QUEEN_MOBILITY = S(1, 4);
+constexpr Score KNIGHT_MOBILITY[9] = {S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1)};
+constexpr Score BISHOP_MOBILITY[14] = {S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1)};
+constexpr Score ROOK_MOBILITY[15] = {S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 0)};
+constexpr Score QUEEN_MOBILITY[32] = {S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 0), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 1), S(0, 0), S(0, 0), S(0, 0)};
 
 template<Color color, PieceType piece_type>
 constexpr Score read_psqt(Square square) {

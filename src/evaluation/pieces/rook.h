@@ -17,7 +17,7 @@ constexpr Score evaluate_rooks(Position& board) {
 		score += read_psqt<color, ROOK>(rook_square);
 
 		Bitboard pseudo_legal_moves = attacks<ROOK>(rook_square, them_pieces | us_pieces) & ~us_pieces;
-		score += ROOK_MOBILITY * pop_count(pseudo_legal_moves);
+		score += ROOK_MOBILITY[pop_count(pseudo_legal_moves)];
 
 		const bool on_open_file = rook_square_bb & board_open_files;
 		const bool on_semi_open_file = rook_square_bb & board_semi_open_files;

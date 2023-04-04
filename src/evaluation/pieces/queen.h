@@ -22,7 +22,7 @@ constexpr Score evaluate_queens(Position& board) {
 		score += read_psqt<color, QUEEN>(queen_square);
 
 		Bitboard pseudo_legal_moves = attacks<QUEEN>(queen_square, them_pieces | us_pieces) & ~us_pieces;
-		score += QUEEN_MOBILITY * pop_count(pseudo_legal_moves);
+		score += QUEEN_MOBILITY[pop_count(pseudo_legal_moves)];
 
 		const bool on_open_file = queen_square_bb & board_open_files;
 		const bool on_semi_open_file = queen_square_bb & board_semi_open_files;
