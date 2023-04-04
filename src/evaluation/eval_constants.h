@@ -35,7 +35,6 @@ constexpr Score BISHOP_MOBILITY = S(5, 7);
 constexpr Score ROOK_MOBILITY = S(4, 3);
 constexpr Score QUEEN_MOBILITY = S(1, 4);
 
-// TODO: This kinda slow. Like 8 conditionals when it could just be PST[COLOR][TYPE][SQUARE]
 template<Color color, PieceType piece_type>
 constexpr Score read_psqt(Square square) {
 	if (color == WHITE) square = ~square;
