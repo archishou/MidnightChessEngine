@@ -12,9 +12,9 @@ constexpr Score evaluate_passed_pawns(Position& board) {
 	while (passed_pawns_us) {
 		const Square pawn = pop_lsb(&passed_pawns_us);
 		const Rank rank = relative_rank<c>(rank_of(pawn));
-		passed_pawn_score += PASSED_PAWN_BONUS * rank;
+		passed_pawn_score += PASSED_PAWN_BONUS[pawn];
 		const bool blocked = shift<relative_dir<c>(NORTH)>(SQUARE_BB[pawn]) & board.all_pieces<~c>();
-		passed_pawn_score += BLOCKED_PASSED_PAWN_PENALTY * rank * blocked;
+		passed_pawn_score += BLOCKED_PASSED_PAWN_PENALTY[pawn] * blocked;
 	}
 	return passed_pawn_score;
 }
