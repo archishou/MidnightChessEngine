@@ -1,3 +1,4 @@
+# Credit to Analog Hors
 import re, sys
 
 raw = sys.stdin.read()
