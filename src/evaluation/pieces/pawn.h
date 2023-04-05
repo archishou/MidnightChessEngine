@@ -10,11 +10,12 @@ constexpr Score evaluate_passed_pawns(Position& board) {
 	Score passed_pawn_score = SCORE_ZERO;
 	Bitboard passed_pawns_us = passed_pawns<c>(board);
 	while (passed_pawns_us) {
-		const Square pawn = pop_lsb(&passed_pawns_us);
+		Square pawn = pop_lsb(&passed_pawns_us);
+		constexpr Square relative_pawn_square = c == WHITE ? ~pawn : pawn;
 		const Rank rank = relative_rank<c>(rank_of(pawn));
-		passed_pawn_score += PASSED_PAWN_BONUS[pawn];
+		passed_pawn_score += PASSED_PAWN_BONUS[relative_pawn_square];
 		const bool blocked = shift<relative_dir<c>(NORTH)>(SQUARE_BB[pawn]) & board.all_pieces<~c>();
-		passed_pawn_score += BLOCKED_PASSED_PAWN_PENALTY[pawn] * blocked;
+		passed_pawn_score += BLOCKED_PASSED_PAWN_PENALTY[relative_pawn_square] * blocked;
 	}
 	return passed_pawn_score;
 }
