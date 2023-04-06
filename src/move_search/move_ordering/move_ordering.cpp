@@ -8,10 +8,6 @@ void initialize_move_sort_tables() {
 	init_history();
 }
 
-bool compare_moves(ScoredMove const& lhs, ScoredMove const& rhs) {
-	return lhs.score < rhs.score;
-}
-
 int get_piece_value(PieceType piece_type) {
 	switch (piece_type) {
 		case PieceType::PAWN: return ORDERING_PAWN_VALUE;
