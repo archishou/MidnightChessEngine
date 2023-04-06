@@ -110,6 +110,58 @@ void bench() {
 	std::cout << total_nodes << " nodes " << signed(total_nodes / (total_time + 1)) << " nps" << std::endl;
 }
 
+template<Color Us>
+unsigned long long perft(Position& p, unsigned int depth) {
+	int nmoves;
+	unsigned long long nodes = 0;
+
+	MoveList<Us> list(p);
+
+	if (depth == 0) return 1;
+
+	for (Move move : list) {
+		p.play<Us>(move);
+		nodes += perft<~Us>(p, depth - 1);
+		p.undo<Us>(move);
+	}
+
+	return nodes;
+}
+
+template<Color Us>
+unsigned long long split_perft(Position& p, unsigned int depth) {
+	unsigned long long nodes = 0, pf;
+
+	MoveList<Us> list(p);
+
+	for (Move move : list) {
+		std::cout << move;
+		p.play<Us>(move);
+		pf = perft<~Us>(p, depth - 1);
+		std::cout << ": " << pf << " moves\n";
+		nodes += pf;
+		p.undo<Us>(move);
+	}
+
+	return nodes;
+}
+
+void test_perft(Position& p, int depth) {
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+	unsigned long long n = 0;
+	if (p.turn() == BLACK) n = split_perft<BLACK>(p, depth);
+	else n = split_perft<WHITE>(p, depth);
+	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+	auto diff = end - begin;
+
+	std::cout << "Nodes: " << n << "\n";
+	std::cout << "NPS: "
+			  << int(n * 1000000.0 / std::chrono::duration_cast<std::chrono::microseconds>(diff).count())
+			  << "\n";
+	std::cout << "Total Time = "
+			  << std::chrono::duration_cast<std::chrono::milliseconds>(diff).count() << " millseconds\n";
+}
+
 void read_uci() {
 	Position board;
 	ReadUCIParameters parameters = {};
@@ -143,6 +195,9 @@ void read_uci() {
 			uci_go(board, input_line, parameters);
 		} else if (input_line == "bench") {
 			bench();
+		} else if (input_line.substr(0, 10) == "splitperft") {
+			int depth = std::stoi(split(input_line, " ")[1]);
+			test_perft(board, depth);
 		}
 	}
 }
