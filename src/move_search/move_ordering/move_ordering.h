@@ -7,13 +7,7 @@
 #include "move_generation/tables.h"
 #include "move_search/tables/transposition_table.h"
 #include "move_search/tables/history_table.h"
-
-struct ScoredMove {
-	Move move;
-	int score;
-};
-
-typedef std::vector<ScoredMove> ScoredMoves;
+#include "move_search/types.h"
 
 void initialize_move_sort_tables();
 
@@ -32,7 +26,7 @@ int history_score(Move &move, int ply) {
 	if (move.flag() != QUIET) return 0;
 	if (move == killers[ply][0]) return KILLER_MOVE_BONUS + 2000;
 	else if (move == killers[ply][1]) return KILLER_MOVE_BONUS + 1000;
-	return HISTORY_BONUS + history[move.from()][move.to()];
+	return history[color][move.from()][move.to()];
 }
 
 template<Color color>
@@ -45,6 +39,7 @@ int in_opponent_pawn_territory(Move move, Position& board) {
 template<Color color>
 ScoredMoves order_moves(MoveList<color>& move_list, Position& board, int ply) {
 	ScoredMoves scored_moves;
+	scored_moves.reserve(move_list.size());
 	Move previous_best_move = Move();
 	TranspositionTableSearchResults search_results = t_table.probe_for_move_ordering(board.get_hash());
 	if (search_results.entry_found) previous_best_move = search_results.entry.best_move;
@@ -61,6 +56,7 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board, int ply) {
 		scored_move.score = -score;
 		scored_moves.push_back(scored_move);
 	}
-	std::sort(scored_moves.begin(), scored_moves.end(), &compare_moves);
 	return scored_moves;
 }
+
+Move& select_move(ScoredMoves& scored_moves, int idx);

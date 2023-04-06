@@ -129,7 +129,9 @@ void read_uci() {
 			break;
 		} else if (input_line == "isready") {
 			std::cout << "readyok" << std::endl;
-		} else if (input_line == "ucinewgame") {}
+		} else if (input_line == "ucinewgame") {
+			initialize_uci(board);
+		}
 		if (input_line.substr(0, 8) == "position") {
 			uci_position(board, input_line);
 		} else if (input_line == "stop") {

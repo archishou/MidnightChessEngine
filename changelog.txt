@@ -241,3 +241,75 @@ Score of midnight-dev vs midnight-latest: 2772 - 2589 - 4423  [0.509] 9784
 ...      White vs Black: 2863 - 2498 - 4423  [0.519] 9784
 Elo difference: 6.5 +/- 5.1, LOS: 99.4 %, DrawRatio: 45.2 %
 SPRT: llr 2.96 (100.5%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Antares makes my LMR a lot better
+Score of midnight-dev vs midnight-latest: 93 - 39 - 123  [0.606] 255
+...      midnight-dev playing White: 50 - 18 - 60  [0.625] 128
+...      midnight-dev playing Black: 43 - 21 - 63  [0.587] 127
+...      White vs Black: 71 - 61 - 123  [0.520] 255
+Elo difference: 74.7 +/- 30.7, LOS: 100.0 %, DrawRatio: 48.2 %
+SPRT: llr 2.98 (101.1%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Update History Heuristic
+Score of midnight-dev vs midnight-latest: 639 - 552 - 1044  [0.519] 2235
+...      midnight-dev playing White: 352 - 256 - 510  [0.543] 1118
+...      midnight-dev playing Black: 287 - 296 - 534  [0.496] 1117
+...      White vs Black: 648 - 543 - 1044  [0.523] 2235
+Elo difference: 13.5 +/- 10.5, LOS: 99.4 %, DrawRatio: 46.7 %
+SPRT: llr 2.97 (100.8%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Profile Code and added incremental sel sort + slower time checks
+Score of midnight-dev vs midnight-latest: 134 - 75 - 183  [0.575] 392
+...      midnight-dev playing White: 74 - 33 - 89  [0.605] 196
+...      midnight-dev playing Black: 60 - 42 - 94  [0.546] 196
+...      White vs Black: 116 - 93 - 183  [0.529] 392
+Elo difference: 52.7 +/- 25.2, LOS: 100.0 %, DrawRatio: 46.7 %
+SPRT: llr 2.96 (100.6%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Late Move Pruning
+Score of midnight-dev vs midnight-latest: 309 - 239 - 458  [0.535] 1006
+...      midnight-dev playing White: 163 - 104 - 235  [0.559] 502
+...      midnight-dev playing Black: 146 - 135 - 223  [0.511] 504
+...      White vs Black: 298 - 250 - 458  [0.524] 1006
+Elo difference: 24.2 +/- 15.8, LOS: 99.9 %, DrawRatio: 45.5 %
+SPRT: llr 2.95 (100.2%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+King Ring Danger Eval
+Score of midnight-dev vs midnight-latest: 297 - 225 - 385  [0.540] 907
+...      midnight-dev playing White: 166 - 112 - 176  [0.559] 454
+...      midnight-dev playing Black: 131 - 113 - 209  [0.520] 453
+...      White vs Black: 279 - 243 - 385  [0.520] 907
+Elo difference: 27.6 +/- 17.2, LOS: 99.9 %, DrawRatio: 42.4 %
+SPRT: llr 2.97 (100.7%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Pawn Attack Eval
+Score of midnight-dev vs midnight-latest: 686 - 597 - 1159  [0.518] 2442
+...      midnight-dev playing White: 388 - 264 - 569  [0.551] 1221
+...      midnight-dev playing Black: 298 - 333 - 590  [0.486] 1221
+...      White vs Black: 721 - 562 - 1159  [0.533] 2442
+Elo difference: 12.7 +/- 10.0, LOS: 99.4 %, DrawRatio: 47.5 %
+SPRT: llr 2.96 (100.4%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Change Score Style ~300KNps Quicker than previous implementation.
+Score of midnight-dev vs midnight-latest: 258 - 193 - 440  [0.536] 891
+...      midnight-dev playing White: 133 - 89 - 223  [0.549] 445
+...      midnight-dev playing Black: 125 - 104 - 217  [0.524] 446
+...      White vs Black: 237 - 214 - 440  [0.513] 891
+Elo difference: 25.4 +/- 16.2, LOS: 99.9 %, DrawRatio: 49.4 %
+SPRT: llr 2.99 (101.5%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+New Mobility Style, Kinda hate it tho
+Score of midnight-dev vs midnight-latest: 883 - 783 - 1334  [0.517] 3000
+...      midnight-dev playing White: 458 - 360 - 683  [0.533] 1501
+...      midnight-dev playing Black: 425 - 423 - 651  [0.501] 1499
+...      White vs Black: 881 - 785 - 1334  [0.516] 3000
+Elo difference: 11.6 +/- 9.3, LOS: 99.3 %, DrawRatio: 44.5 %
+SPRT: llr 2.95 (100.2%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Passed Pawn Blocked Pawn PST
+Score of midnight-dev vs midnight-latest: 479 - 400 - 759  [0.524] 1638
+...      midnight-dev playing White: 289 - 163 - 367  [0.577] 819
+...      midnight-dev playing Black: 190 - 237 - 392  [0.471] 819
+...      White vs Black: 526 - 353 - 759  [0.553] 1638
+Elo difference: 16.8 +/- 12.3, LOS: 99.6 %, DrawRatio: 46.3 %
+SPRT: llr 2.98 (101.3%), lbound -2.94, ubound 2.94 - H1 was accepted

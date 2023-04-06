@@ -3,57 +3,19 @@
 //
 #pragma once
 
-constexpr int NGAME_PHASES = 2;
-enum GamePhase {
-	MIDDLE,
-	END
-};
+typedef int Score;
+constexpr Score SCORE_ZERO = 0;
 
-struct Score {
-	short middle_game;
-	short end_game;
-	constexpr Score (short m, short e) : middle_game(m), end_game(e) {}
-	constexpr Score () : middle_game(0), end_game(0) {}
-	Score& operator = (const Score& s) = default;
-	constexpr Score operator + (const Score& s) const {
-		return {
-			(short) (middle_game + s.middle_game),
-			(short) (end_game + s.end_game)
-		};
-	}
-	constexpr Score operator * (const short& s) const {
-		return {
-			(short) (middle_game * s),
-			(short) (end_game * s)
-		};
-	}
-	constexpr Score operator - (const Score& s) const {
-		return {
-			(short) (middle_game - s.middle_game),
-			(short) (end_game - s.end_game)
-		};
-	}
-	inline constexpr bool operator == (const Score& s) const {
-		return middle_game == s.middle_game && end_game == s.end_game;
-	}
-	inline Score& operator += (const Score& s) {
-		middle_game = short(middle_game + s.middle_game);
-		end_game = short(end_game + s.end_game);
-		return *this;
-	}
-	inline Score& operator -= (const Score& s) {
-		middle_game = short(middle_game - s.middle_game);
-		end_game = short(end_game - s.end_game);
-		return *this;
-	}
-	inline Score& operator *= (const short& s) {
-		middle_game = short(middle_game * s);
-		end_game = short(end_game * s);
-		return *this;
-	}
-	friend inline std::ostream& operator<<(std::ostream& os, const Score& s) {
-		return os << "midgame: " << s.middle_game << " endgame: " << s.end_game;
-	}
-};
+constexpr Score S(int mg, int eg) {
+	return Score((int)((unsigned int)eg << 16) + mg);
+}
 
-typedef Score S;
+inline int eg_value(Score s) {
+	union { uint16_t u; int16_t s; } eg = { uint16_t(unsigned(s + 0x8000) >> 16) };
+	return int(eg.s);
+}
+
+inline int mg_value(Score s) {
+	union { uint16_t u; int16_t s; } mg = { uint16_t(unsigned(s)) };
+	return int(mg.s);
+}

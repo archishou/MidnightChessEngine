@@ -2,6 +2,8 @@
 // Created by Archishmaan Peyyety on 1/1/23.
 //
 #pragma once
+
+#include <array>
 #include "cstring"
 #include "search_params.h"
 #include "move_generation/position.h"
@@ -13,8 +15,8 @@
 #include "reductions.h"
 
 struct PVSData {
-    Move best_move;
-    bool search_completed{};
+	Move best_move;
+	bool search_completed{};
 	int value{};
 	// triangular-table-table
 	PV pv;
@@ -64,9 +66,11 @@ bool position_is_draw(Position &board, const int ply) {
 template<Color color>
 int q_search(Position &board, const int ply, int alpha, const int beta) {
 
-	if (time_elapsed_exceeds(data.time_limit, Milliseconds)) {
-		data.search_completed = false;
-		return 0;
+	if ((data.q_nodes_searched + data.nodes_searched) % 1024 == 0) {
+		if (time_elapsed_exceeds(data.time_limit, Milliseconds)) {
+			data.search_completed = false;
+			return 0;
+		}
 	}
 
 	data.seldepth = std::max(data.seldepth, ply);
@@ -87,8 +91,8 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	Move best_move = Move();
 	MoveList<color> capture_moves(board, QSearchMoveGenerationsOptions);
 	ScoredMoves scored_moves = order_moves<color>(capture_moves, board, ply);
-	for (const ScoredMove& scored_move : scored_moves) {
-		const Move legal_move = scored_move.move;
+	for (int move_idx = 0; move_idx < scored_moves.size(); move_idx++) {
+		const Move legal_move = select_move(scored_moves, move_idx);
 		board.play<color>(legal_move);
 		data.q_nodes_searched += 1;
 		const int score = -q_search<~color>(board, ply + 1, -beta, -alpha);
@@ -113,9 +117,11 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 template<Color color>
 int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null) {
 
-	if (time_elapsed_exceeds(data.time_limit, Milliseconds)) {
-		data.search_completed = false;
-		return 0;
+	if ((data.q_nodes_searched + data.nodes_searched) % 1024 == 0) {
+		if (time_elapsed_exceeds(data.time_limit, Milliseconds)) {
+			data.search_completed = false;
+			return 0;
+		}
 	}
 
 	int alpha_initial = alpha;
@@ -159,7 +165,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		static_eval = evaluate<color>(board);
 	}
 
-	if (depth >= 3 && !in_check && !pv_node && do_null) {
+	if (depth >= NMP_MIN_DEPTH && !in_check && !pv_node && do_null) {
 		board.play_null<color>();
 
 		int reduction = nmp_reduction(depth, beta, static_eval);
@@ -177,47 +183,43 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	}
 
 	MoveList<color> all_legal_moves(board);
-	ScoredMoves scored_moves = order_moves<color>(all_legal_moves, board, ply);
-
-	if (scored_moves.empty()) {
+	if (all_legal_moves.size() == 0) {
 		if (in_check) return -(MATE_SCORE - ply);
 		return 0;
 	}
 
-	Move best_move = scored_moves.begin()->move;
+	ScoredMoves scored_moves = order_moves<color>(all_legal_moves, board, ply);
+
+	Move best_move = select_move(scored_moves, 0);
 	int value = NEG_INF_CHESS;
 	for (int move_idx = 0; move_idx < scored_moves.size(); move_idx++) {
-		Move legal_move = scored_moves[move_idx].move;
+		Move legal_move = select_move(scored_moves, move_idx);
 
-        // LMP
-        if (!pv_node && depth <= 3 && move_idx > depth * 12) {
-            break;
-        }
+		if (!pv_node && depth <= LMP_MIN_DEPTH && move_idx > depth * LMP_DEPTH_MULTIPLIER) {
+			break;
+		}
 
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
 		int new_value;
 
-        bool full_depth_zero_window;
+		bool full_depth_zero_window;
 
-        int reduction = lmr_reduction(pv_node, ply, in_check, move_idx, depth, legal_move);
-        if (reduction > 0) {
-            int new_depth = std::max(0, depth - reduction - 1);
-            new_value = -pvs<~color>(board, new_depth, ply + 1, -alpha - 1, -alpha, true);
-            full_depth_zero_window = new_value > alpha && new_depth != depth - 1;
-        }
-        else {
-            full_depth_zero_window = !pv_node || move_idx > 0;
-        }
+		int reduction = lmr_reduction(pv_node, ply, in_check, move_idx, depth, legal_move);
+		if (reduction > 0) {
+			int new_depth = std::max(0, depth - reduction - 1);
+			new_value = -pvs<~color>(board, new_depth, ply + 1, -alpha - 1, -alpha, true);
+			full_depth_zero_window = new_value > alpha && new_depth != depth - 1;
+		}
+		else full_depth_zero_window = !pv_node || move_idx > 0;
 
-        if (full_depth_zero_window) {
-            new_value = -pvs<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, true);
-        }
+		if (full_depth_zero_window) {
+			new_value = -pvs<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, true);
+		}
 
-        if (pv_node && ((new_value > alpha && new_value < beta) || move_idx == 0)) {
-            new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
-        }
-
+		if (pv_node && ((new_value > alpha && new_value < beta) || move_idx == 0)) {
+			new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
+		}
 
 		value = std::max(value, new_value);
 		board.undo<color>(legal_move);
@@ -229,7 +231,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		}
 		alpha = std::max(alpha, value);
 		if (alpha >= beta) {
-			update_history<color>(best_move, depth, ply);
+			update_history<color>(scored_moves, best_move, depth, ply, move_idx);
 			break;
 		}
 	}
