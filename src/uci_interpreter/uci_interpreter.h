@@ -110,25 +110,26 @@ void bench() {
 	std::cout << total_nodes << " nodes " << signed(total_nodes / (total_time + 1)) << " nps" << std::endl;
 }
 
-template<Color Us>
+template<Color Us, bool bulk>
 unsigned long long perft(Position& p, unsigned int depth) {
 	int nmoves;
 	unsigned long long nodes = 0;
 
 	MoveList<Us> list(p);
 
-	if (depth == 0) return 1;
+	if (bulk && depth == 1) return (unsigned long long) list.size();
+	if (!bulk && depth == 0) return 1;
 
 	for (Move move : list) {
 		p.play<Us>(move);
-		nodes += perft<~Us>(p, depth - 1);
+		nodes += perft<~Us, bulk>(p, depth - 1);
 		p.undo<Us>(move);
 	}
 
 	return nodes;
 }
 
-template<Color Us>
+template<Color Us, bool bulk>
 unsigned long long split_perft(Position& p, unsigned int depth) {
 	unsigned long long nodes = 0, pf;
 
@@ -137,7 +138,7 @@ unsigned long long split_perft(Position& p, unsigned int depth) {
 	for (Move move : list) {
 		std::cout << move;
 		p.play<Us>(move);
-		pf = perft<~Us>(p, depth - 1);
+		pf = perft<~Us, bulk>(p, depth - 1);
 		std::cout << ": " << pf << " moves\n";
 		nodes += pf;
 		p.undo<Us>(move);
@@ -146,11 +147,12 @@ unsigned long long split_perft(Position& p, unsigned int depth) {
 	return nodes;
 }
 
+template<bool bulk>
 void test_perft(Position& p, int depth) {
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	unsigned long long n = 0;
-	if (p.turn() == BLACK) n = split_perft<BLACK>(p, depth);
-	else n = split_perft<WHITE>(p, depth);
+	if (p.turn() == BLACK) n = split_perft<BLACK, bulk>(p, depth);
+	else n = split_perft<WHITE, bulk>(p, depth);
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 	auto diff = end - begin;
 
@@ -197,7 +199,10 @@ void read_uci() {
 			bench();
 		} else if (input_line.substr(0, 10) == "splitperft") {
 			int depth = std::stoi(split(input_line, " ")[1]);
-			test_perft(board, depth);
+			test_perft<false>(board, depth);
+		} else if (input_line.substr(0, 15) == "bulk splitperft") {
+			int depth = std::stoi(split(input_line, " ")[2]);
+			test_perft<true>(board, depth);
 		}
 	}
 }
