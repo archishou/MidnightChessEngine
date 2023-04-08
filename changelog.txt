@@ -321,3 +321,11 @@ Score of Midnight_dev vs Midnight_master: 645 - 553 - 691  [0.524] 1889
 ...      White vs Black: 786 - 412 - 691  [0.599] 1889
 Elo difference: 16.9 +/- 12.5, LOS: 99.6 %, DrawRatio: 36.6 %
 SPRT: llr 2.95 (100.1%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Check Extentions
+Score of Midnight_dev vs Midnight_master: 367 - 286 - 349  [0.540] 1002
+...      Midnight_dev playing White: 239 - 94 - 168  [0.645] 501
+...      Midnight_dev playing Black: 128 - 192 - 181  [0.436] 501
+...      White vs Black: 431 - 222 - 349  [0.604] 1002
+Elo difference: 28.1 +/- 17.4, LOS: 99.9 %, DrawRatio: 34.8 %
+SPRT: llr 2.95 (100.3%), lbound -2.94, ubound 2.94 - H1 was accepted
