@@ -21,7 +21,7 @@ int promotion_move_score(Move move, Position& board);
 
 template<Color color>
 int history_score(Move &move, int ply) {
-	if (move.flag() != QUIET) return 0;
+	if (!move.is_quiet()) return 0;
 	if (move == killers[ply][0]) return KILLER_MOVE_BONUS + 2000;
 	else if (move == killers[ply][1]) return KILLER_MOVE_BONUS + 1000;
 	return history[color][move.from()][move.to()];
