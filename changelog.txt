@@ -313,3 +313,11 @@ Score of midnight-dev vs midnight-latest: 479 - 400 - 759  [0.524] 1638
 ...      White vs Black: 526 - 353 - 759  [0.553] 1638
 Elo difference: 16.8 +/- 12.3, LOS: 99.6 %, DrawRatio: 46.3 %
 SPRT: llr 2.98 (101.3%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Update Move Ordering def of quiet to include castling/double pushes
+Score of Midnight_dev vs Midnight_master: 645 - 553 - 691  [0.524] 1889
+...      Midnight_dev playing White: 422 - 189 - 334  [0.623] 945
+...      Midnight_dev playing Black: 223 - 364 - 357  [0.425] 944
+...      White vs Black: 786 - 412 - 691  [0.599] 1889
+Elo difference: 16.9 +/- 12.5, LOS: 99.6 %, DrawRatio: 36.6 %
+SPRT: llr 2.95 (100.1%), lbound -2.94, ubound 2.94 - H1 was accepted
