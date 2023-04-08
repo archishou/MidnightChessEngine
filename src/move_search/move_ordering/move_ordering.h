@@ -11,8 +11,6 @@
 
 void initialize_move_sort_tables();
 
-bool compare_moves(ScoredMove const& lhs, ScoredMove const& rhs);
-
 int get_piece_value(PieceType piece_type);
 
 int hash_move_score(Move& move, Move& previous_best_move);
