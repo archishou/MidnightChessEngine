@@ -124,11 +124,6 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		}
 	}
 
-	int alpha_initial = alpha;
-	bool in_check = board.in_check<color>();
-	bool pv_node = alpha != beta - 1;
-	int static_eval = 0;
-
 	init_pv(data.pv, ply);
 	data.seldepth = std::max(data.seldepth, ply);
 
@@ -138,6 +133,13 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		beta = std::min(beta, MATE_SCORE - ply);
 		if (alpha >= beta) return alpha;
 	}
+
+    int alpha_initial = alpha;
+    bool in_check = board.in_check<color>();
+    bool pv_node = alpha != beta - 1;
+    int static_eval = 0;
+
+    if (in_check) depth++;
 
 	if (depth == 0) {
 		return q_search<color>(board, ply, alpha, beta);
