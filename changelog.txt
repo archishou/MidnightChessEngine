@@ -314,18 +314,10 @@ Score of midnight-dev vs midnight-latest: 479 - 400 - 759  [0.524] 1638
 Elo difference: 16.8 +/- 12.3, LOS: 99.6 %, DrawRatio: 46.3 %
 SPRT: llr 2.98 (101.3%), lbound -2.94, ubound 2.94 - H1 was accepted
 
-Update Move Ordering def of quiet to include castling/double pushes
-Score of Midnight_dev vs Midnight_master: 645 - 553 - 691  [0.524] 1889
-...      Midnight_dev playing White: 422 - 189 - 334  [0.623] 945
-...      Midnight_dev playing Black: 223 - 364 - 357  [0.425] 944
-...      White vs Black: 786 - 412 - 691  [0.599] 1889
-Elo difference: 16.9 +/- 12.5, LOS: 99.6 %, DrawRatio: 36.6 %
-SPRT: llr 2.95 (100.1%), lbound -2.94, ubound 2.94 - H1 was accepted
-
-Check Extentions
-Score of Midnight_dev vs Midnight_master: 367 - 286 - 349  [0.540] 1002
-...      Midnight_dev playing White: 239 - 94 - 168  [0.645] 501
-...      Midnight_dev playing Black: 128 - 192 - 181  [0.436] 501
-...      White vs Black: 431 - 222 - 349  [0.604] 1002
-Elo difference: 28.1 +/- 17.4, LOS: 99.9 %, DrawRatio: 34.8 %
-SPRT: llr 2.95 (100.3%), lbound -2.94, ubound 2.94 - H1 was accepted
+Update Move Ordering def of quiet to include castling/double pushes and Check Extentions
+Score of midnight-dev vs midnight-latest: 427 - 352 - 716  [0.525] 1495
+...      midnight-dev playing White: 241 - 170 - 337  [0.547] 748
+...      midnight-dev playing Black: 186 - 182 - 379  [0.503] 747
+...      White vs Black: 423 - 356 - 716  [0.522] 1495
+Elo difference: 17.4 +/- 12.7, LOS: 99.6 %, DrawRatio: 47.9 %
+SPRT: llr 2.96 (100.7%), lbound -2.94, ubound 2.94 - H1 was accepted
