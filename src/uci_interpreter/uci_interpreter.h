@@ -52,7 +52,7 @@ void parse_move_time(const Color side_to_play, const std::string& move_time_s, B
 		params.soft_time_limit = stoi(tokens[2]) * 0.95;
 		return;
 	}
-	int wtime = 0, winc = 0, btime = 0, binc = 0;
+	int wtime = 0, winc = 0, btime = 0, binc = 0, moves_to_go = -1;
 	for (int i = 1; i < tokens.size(); i += 2) {
 		std::string token = tokens[i];
 		int value = 0;
@@ -62,14 +62,15 @@ void parse_move_time(const Color side_to_play, const std::string& move_time_s, B
 		else if (token == "winc") winc = value;
 		else if (token == "btime") btime = value;
 		else if (token == "binc") binc = value;
+		else if (token == "movestogo") moves_to_go = value;
 	}
 	if (side_to_play == WHITE) {
-		params.soft_time_limit = time_search(wtime, winc);
-		params.hard_time_limit = time_iterative_deepening(wtime, winc);
+		params.soft_time_limit = time_search(wtime, winc, 0);
+		params.hard_time_limit = time_iterative_deepening(wtime, winc, 0);
 		return;
 	}
-	params.soft_time_limit = time_search(btime, binc);
-	params.hard_time_limit = time_iterative_deepening(btime, binc);
+	params.soft_time_limit = time_search(btime, binc, 0);
+	params.hard_time_limit = time_iterative_deepening(btime, binc, 0);
 }
 
 void uci_go(Position& board, const std::string& input_line, ReadUCIParameters& uci_parameters) {
@@ -175,8 +176,9 @@ void read_uci() {
 
 	while (std::getline(std::cin, input_line)) {
 		if (input_line == "uci") {
-			std::cout << "id name Midnight V4.0" << std::endl;
+			std::cout << "id name Midnight" << std::endl;
 			std::cout << "id author Archishmaan Peyyety" << std::endl;
+			std::cout << "option name Hash type spin default 64 min 1 max 1024" << std::endl;
 			std::cout << "uciok" << std::endl;
 		} else if (input_line == "quit") {
 			std::cout << "Bye Bye" << std::endl;
