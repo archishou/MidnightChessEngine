@@ -7,11 +7,8 @@
 
 TranspositionTable::TranspositionTable(uint64_t size) {
 	table_size = size;
-	transposition_table = new TranspositionTableEntry[table_size];
-}
-
-TranspositionTable::~TranspositionTable() {
-	delete [] transposition_table;
+	transposition_table.reserve(size);
+	reset_table();
 }
 
 void TranspositionTable::reset_table() {

@@ -36,12 +36,11 @@ public:
 	TranspositionTableSearchResults probe_eval(zobrist_hash hash, int ply);
 	int mb_to_entries(int mb);
 	explicit TranspositionTable(uint64_t size = 3'000'000);
-	~TranspositionTable();
 	uint64_t table_size;
 
 private:
 	uint64_t get_index(uint64_t zobrist_hash);
-	TranspositionTableEntry *transposition_table;
+	std::vector<TranspositionTableEntry> transposition_table;
 };
 
 static TranspositionTable t_table = TranspositionTable();
