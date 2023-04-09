@@ -106,3 +106,8 @@ TranspositionTableSearchResults TranspositionTable::probe_eval(zobrist_hash hash
 	}
 	return results;
 }
+
+int TranspositionTable::mb_to_entries(int mb) {
+	int bytes = mb * 1'000'000;
+	return int(bytes / sizeof(TranspositionTableEntry));
+}

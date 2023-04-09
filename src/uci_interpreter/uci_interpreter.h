@@ -203,6 +203,15 @@ void read_uci() {
 		} else if (input_line.substr(0, 15) == "bulk splitperft") {
 			int depth = std::stoi(split(input_line, " ")[2]);
 			test_perft<true>(board, depth);
+		} else if (input_line.substr(0, 11) == "option name") {
+			std::vector<std::string> parsed_options = split(input_line, " ");
+			if (parsed_options[2] == "Hash") {
+				int mb = std::stoi(parsed_options[4]);
+				t_table = TranspositionTable(t_table.mb_to_entries(mb));
+				t_table.reset_table();
+			}
+		} else if (input_line == "hash size") {
+			std::cout << t_table.table_size << " entries" << std::endl;
 		}
 	}
 }
