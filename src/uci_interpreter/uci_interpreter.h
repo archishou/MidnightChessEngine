@@ -207,7 +207,9 @@ void read_uci() {
 			test_perft<true>(board, depth);
 		} else if (input_line.substr(0, 14) == "setoption name") {
 			std::vector<std::string> parsed_options = split(input_line, " ");
-			if (parsed_options[2] == "Hash") {
+			std::transform(parsed_options[2].begin(), parsed_options[2].end(), parsed_options[2].begin(),
+											   [](unsigned char c){ return std::tolower(c); });
+			if (parsed_options[2] == "hash") {
 				int mb = std::stoi(parsed_options[4]);
 				t_table = TranspositionTable(t_table.mb_to_entries(mb));
 				t_table.reset_table();
