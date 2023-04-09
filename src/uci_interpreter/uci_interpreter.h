@@ -211,8 +211,7 @@ void read_uci() {
 											   [](unsigned char c){ return std::tolower(c); });
 			if (parsed_options[2] == "hash") {
 				int mb = std::stoi(parsed_options[4]);
-				t_table = TranspositionTable(t_table.mb_to_entries(mb));
-				t_table.reset_table();
+				t_table.resize(mb);
 			}
 		} else if (input_line == "hash size") {
 			std::cout << t_table.table_size << " entries" << std::endl;

@@ -31,11 +31,12 @@ public:
 	void put(zobrist_hash hash, short depth, int score, int ply, Move best_move, bool pv_node,
 			 TranspositionTableEntryNodeType node_type);
 	void reset_table();
+	void resize(int mb);
 	TranspositionTableSearchResults probe_for_move_ordering(zobrist_hash hash);
 	TranspositionTableSearchResults probe_for_search(zobrist_hash hash, int depth, int ply);
 	TranspositionTableSearchResults probe_eval(zobrist_hash hash, int ply);
 	int mb_to_entries(int mb);
-	explicit TranspositionTable(uint64_t size = 3'000'000);
+	explicit TranspositionTable(int mb = 64);
 	uint64_t table_size;
 
 private:

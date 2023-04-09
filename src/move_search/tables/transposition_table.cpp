@@ -5,10 +5,8 @@
 #include "move_search/search_params.h"
 #include "move_search/search_constants.h"
 
-TranspositionTable::TranspositionTable(uint64_t size) {
-	table_size = size;
-	transposition_table.reserve(size);
-	reset_table();
+TranspositionTable::TranspositionTable(int mb) {
+	resize(mb);
 }
 
 void TranspositionTable::reset_table() {
@@ -107,4 +105,11 @@ TranspositionTableSearchResults TranspositionTable::probe_eval(zobrist_hash hash
 int TranspositionTable::mb_to_entries(int mb) {
 	int bytes = mb * 1'000'000;
 	return int(bytes / sizeof(TranspositionTableEntry));
+}
+
+void TranspositionTable::resize(int mb) {
+	int entries = mb_to_entries(mb);
+	table_size = entries;
+	transposition_table.reserve(entries);
+	reset_table();
 }
