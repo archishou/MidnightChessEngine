@@ -41,8 +41,6 @@ extern void initialise_line();
 extern void initialise_pseudo_legal();
 extern void initialise_all_databases();
 
-
-//Returns a bitboard containing all squares that a piece on a square can move to, in the given position
 template<PieceType P>
 constexpr Bitboard attacks(Square s, Bitboard occ) {
 	static_assert(P != PAWN, "The piece type may not be a pawn; use pawn_attacks instead");
@@ -52,8 +50,6 @@ constexpr Bitboard attacks(Square s, Bitboard occ) {
 		PSEUDO_LEGAL_ATTACKS[P][s];
 }
 
-//Returns a bitboard containing all squares that a piece on a square can move to, in the given position
-//Used when the piece type is not known at compile-time
 constexpr Bitboard attacks(PieceType pt, Square s, Bitboard occ) {
 	switch (pt) {
 	case ROOK:
@@ -67,14 +63,12 @@ constexpr Bitboard attacks(PieceType pt, Square s, Bitboard occ) {
 	}
 }
 
-//Returns a bitboard containing pawn attacks from all pawns in the given bitboard
 template<Color C>
 constexpr Bitboard pawn_attacks(Bitboard p) {
 	return C == WHITE ? shift<NORTH_WEST>(p) | shift<NORTH_EAST>(p) :
 		shift<SOUTH_WEST>(p) | shift<SOUTH_EAST>(p);
 }
 
-//Returns a bitboard containing pawn attacks from the pawn on the given square
 template<Color C>
 constexpr Bitboard pawn_attacks(Square s) {
 	return PAWN_ATTACKS[C][s];

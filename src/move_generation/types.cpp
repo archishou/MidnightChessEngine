@@ -1,7 +1,6 @@
 #include "types.h"
 #include <iostream>
 
-//Lookup tables of square names in algebraic chess notation
 const char* SQSTR[65] = {
 	"a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1",
 	"a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
@@ -14,21 +13,16 @@ const char* SQSTR[65] = {
 	"None"
 };
 
-//All masks have been generated from a Java program
-
-//Precomputed file masks
 const Bitboard MASK_FILE[8] = {
 	0x101010101010101, 0x202020202020202, 0x404040404040404, 0x808080808080808,
 	0x1010101010101010, 0x2020202020202020, 0x4040404040404040, 0x8080808080808080,
 };
 
-//Precomputed rank masks
 const Bitboard MASK_RANK[8] = {
 	0xff, 0xff00, 0xff0000, 0xff000000,
 	0xff00000000, 0xff0000000000, 0xff000000000000, 0xff00000000000000
 };
 
-//Precomputed diagonal masks
 const Bitboard MASK_DIAGONAL[15] = {
 	0x80, 0x8040, 0x804020,
 	0x80402010, 0x8040201008, 0x804020100804,
@@ -37,7 +31,6 @@ const Bitboard MASK_DIAGONAL[15] = {
 	0x402010000000000, 0x201000000000000, 0x100000000000000,
 };
 
-//Precomputed anti-diagonal masks
 const Bitboard MASK_ANTI_DIAGONAL[15] = {
 	0x1, 0x102, 0x10204,
 	0x1020408, 0x102040810, 0x10204081020,
@@ -67,7 +60,6 @@ const Bitboard SQUARE_BB[65] = {
 	0x0
 };
 
-//Prints the bitboard, little-endian format
 void print_bitboard(Bitboard b) {
 	for (int i = 56; i >= 0; i -= 8) {
 		for (int j = 0; j < 8; j++)
@@ -82,7 +74,6 @@ const Bitboard k2 = 0x3333333333333333;
 const Bitboard k4 = 0x0f0f0f0f0f0f0f0f;
 const Bitboard kf = 0x0101010101010101;
 
-//Returns number of set bits in the bitboard
 /*inline*/ int pop_count(Bitboard x) {
 	x = x - ((x >> 1) & k1);
 	x = (x & k2) + ((x >> 2) & k2);
@@ -91,7 +82,6 @@ const Bitboard kf = 0x0101010101010101;
 	return int(x);
 }
 
-//Returns number of set bits in the bitboard. Faster than pop_count(x) when the bitboard has few set bits
 /*inline*/ int sparse_pop_count(Bitboard x) {
 	int count = 0;
 	while (x) {
@@ -114,19 +104,16 @@ const int DEBRUIJN64[64] = {
 
 const Bitboard MAGIC = 0x03f79d71b4cb0a89;
 
-//Returns the index of the least significant bit in the bitboard, and removes the bit from the bitboard
 /*inline*/ Square pop_lsb(Bitboard* b) {
 	int lsb = bsf(*b);
 	*b &= *b - 1;
 	return Square(lsb);
 }
 
-//Returns the index of the least significant bit in the bitboard
 /*constexpr*/ Square bsf(Bitboard b) {
 	return Square(DEBRUIJN64[MAGIC * (b ^ (b - 1)) >> 58]);
 }
 
-//Returns the representation of the move type in algebraic chess notation. (capture) is used for debugging
 const char* MOVE_TYPESTR[16] = {
 	"", "", " O-O", " O-O-O", "N", "B", "R", "Q", " (capture)", "", " e.p.", "",
 	"N", "B", "R", "Q"
@@ -137,8 +124,6 @@ const char* MOVE_TYPESTR_UCI[16] = {
 		"N", "B", "R", "Q"
 };
 
-//Prints the move
-//For example: e5d6 (capture); a7a8R; O-O
 std::ostream& operator<<(std::ostream& os, const Move& m) {
 	os << SQSTR[m.from()] << SQSTR[m.to()] << MOVE_TYPESTR_UCI[m.flag()];
 	return os;

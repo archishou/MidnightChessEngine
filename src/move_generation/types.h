@@ -12,7 +12,6 @@ enum Color : int {
 	WHITE, BLACK
 };
 
-//Inverts the color (WHITE -> BLACK) and (BLACK -> WHITE)
 constexpr Color operator~(Color c) {
 	return Color(c ^ BLACK);
 }
@@ -31,16 +30,12 @@ enum PieceType : int {
 	PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
 };
 
-//PIECE_STR[piece] is the algebraic chess representation of that piece
 const std::string PIECE_STR = "PNBRQK~>pnbrqk.";
 
-//The FEN of the starting position
 const std::string DEFAULT_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
 
-//The Kiwipete position, used for perft_node_count debugging
 const std::string KIWIPETE = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -";
 
-//Number of combinations for castling rights.
 const size_t NCASTLING_RIGHTS = 16;
 
 const size_t NPIECES = 15;
@@ -61,8 +56,6 @@ constexpr PieceType type_of(Piece pc) {
 constexpr Color color_of(Piece pc) {
 	return Color((pc & 0b1000) >> 3);
 }
-
-
 
 typedef uint64_t Bitboard;
 
@@ -125,7 +118,6 @@ constexpr int diagonal_of(Square s) { return 7 + rank_of(s) - file_of(s); }
 constexpr int anti_diagonal_of(Square s) { return rank_of(s) + file_of(s); }
 constexpr Square create_square(File f, Rank r) { return Square(r << 3 | f); }
 
-//Shifts a bitboard in a particular direction. There is no wrapping, so bits that are shifted of the edge are lost 
 template<Direction D>
 constexpr Bitboard shift(Bitboard b) {
 	return D == NORTH ? b << 8
@@ -141,7 +133,6 @@ constexpr Bitboard shift(Bitboard b) {
 		: 0;	
 }
 
-// Only supports north and south
 template<Direction D>
 constexpr Bitboard fill(Bitboard b) {
 	switch (D) {
@@ -157,13 +148,11 @@ constexpr Bitboard fill(Bitboard b) {
 	}
 }
 
-//Returns the actual rank from a given side's perspective (e.g. rank 1 is rank 8 from Black's perspective)
 template<Color C>
 constexpr Rank relative_rank(Rank r) {
 	return C == WHITE ? r : Rank(RANK8 - r);
 }
 
-//Returns the actual direction from a given side's perspective (e.g. North is South from Black's perspective)
 template<Color C>
 constexpr Direction relative_dir(Direction d) {
 	return Direction(C == WHITE ? d : -d);
@@ -205,10 +194,8 @@ enum MoveFlag : int {
 
 class Move {
 private:
-	//The internal representation of the move
 	uint16_t move;
 public:
-	//Defaults to a null move (a1a1)
 	inline Move() : move(0) {}
 	
 	inline Move(uint16_t m) { move = m; }
@@ -237,7 +224,6 @@ public:
 
 	inline bool is_promotion() const {
 		MoveFlag flag = this->flag();
-		// Be explicit to avoid breaking if values of PR_X, PC_X change.
 		return flag == PR_KNIGHT || flag == PR_BISHOP || flag == PR_ROOK || flag == PR_QUEEN ||
 			flag == PC_KNIGHT || flag == PC_BISHOP || flag == PC_ROOK || flag == PC_QUEEN;
 	}
@@ -251,14 +237,12 @@ public:
 	bool operator!=(Move a) const { return to_from() != a.to_from(); }
 };
 
-//Adds, to the move pointer all moves of the form (from, s), where s is a square in the bitboard to
 template<MoveFlag F = QUIET>
 inline Move *make(Square from, Bitboard to, Move *list) {
 	while (to) *list++ = Move(from, pop_lsb(&to), F);
 	return list;
 }
 
-//Adds, to the move pointer all quiet promotion moves of the form (from, s), where s is a square in the bitboard to
 template<>
 inline Move *make<PROMOTIONS>(Square from, Bitboard to, Move *list) {
 	Square p;
@@ -272,7 +256,6 @@ inline Move *make<PROMOTIONS>(Square from, Bitboard to, Move *list) {
 	return list;
 }
 
-//Adds, to the move pointer all capture promotion moves of the form (from, s), where s is a square in the bitboard to
 template<>
 inline Move* make<PROMOTION_CAPTURES>(Square from, Bitboard to, Move* list) {
 	Square p;
