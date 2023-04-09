@@ -205,7 +205,7 @@ void read_uci() {
 		} else if (input_line.substr(0, 15) == "bulk splitperft") {
 			int depth = std::stoi(split(input_line, " ")[2]);
 			test_perft<true>(board, depth);
-		} else if (input_line.substr(0, 11) == "option name") {
+		} else if (input_line.substr(0, 11) == "setoption name") {
 			std::vector<std::string> parsed_options = split(input_line, " ");
 			if (parsed_options[2] == "Hash") {
 				int mb = std::stoi(parsed_options[4]);
