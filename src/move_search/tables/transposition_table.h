@@ -44,4 +44,4 @@ private:
 	std::vector<TranspositionTableEntry> transposition_table;
 };
 
-static TranspositionTable t_table = TranspositionTable();
+extern TranspositionTable t_table;

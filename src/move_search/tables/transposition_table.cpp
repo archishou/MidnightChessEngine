@@ -117,3 +117,5 @@ void TranspositionTable::resize(int mb) {
 size_t TranspositionTable::entry_count() {
 	return transposition_table.size();
 }
+
+TranspositionTable t_table = TranspositionTable();
