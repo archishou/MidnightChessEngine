@@ -37,7 +37,7 @@ public:
 	TranspositionTableSearchResults probe_eval(zobrist_hash hash, int ply);
 	int mb_to_entries(int mb);
 	explicit TranspositionTable(int mb = 64);
-	uint64_t table_size;
+	size_t entry_count();
 
 private:
 	uint64_t get_index(uint64_t zobrist_hash);

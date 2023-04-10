@@ -214,7 +214,7 @@ void read_uci() {
 				t_table.resize(mb);
 			}
 		} else if (input_line == "hash size") {
-			std::cout << t_table.table_size << " entries" << std::endl;
+			std::cout << t_table.entry_count() << " entries" << std::endl;
 		}
 	}
 }

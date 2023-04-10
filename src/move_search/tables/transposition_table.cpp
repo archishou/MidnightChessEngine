@@ -16,7 +16,7 @@ void TranspositionTable::reset_table() {
 	default_entry.depth = 0;
 	default_entry.best_move = 0;
 	default_entry.node_type = EXACT;
-	for (int i = 0; i < table_size; i++) {
+	for (int i = 0; i < transposition_table.size(); i++) {
 		transposition_table[i] = default_entry;
 	}
 }
@@ -34,7 +34,7 @@ int TranspositionTable::correct_mate_for_storage(int score, int ply) {
 }
 
 uint64_t TranspositionTable::get_index(uint64_t zobrist_hash) {
-	return zobrist_hash % table_size;
+	return zobrist_hash % entry_count();
 }
 
 TranspositionTableEntryNodeType
@@ -109,8 +109,11 @@ int TranspositionTable::mb_to_entries(int mb) {
 
 void TranspositionTable::resize(int mb) {
 	int entries = mb_to_entries(mb);
-	table_size = entries;
 	transposition_table.resize(entries);
 	transposition_table.shrink_to_fit();
 	reset_table();
+}
+
+size_t TranspositionTable::entry_count() {
+	return transposition_table.size();
 }
