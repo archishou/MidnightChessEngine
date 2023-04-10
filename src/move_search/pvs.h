@@ -66,6 +66,8 @@ bool position_is_draw(Position &board, const int ply) {
 template<Color color>
 int q_search(Position &board, const int ply, int alpha, const int beta) {
 
+	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
+
 	if ((data.q_nodes_searched + data.nodes_searched) % 1024 == 0) {
 		if (time_elapsed_exceeds(data.time_limit, Milliseconds)) {
 			data.search_completed = false;
@@ -116,6 +118,8 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 
 template<Color color>
 int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null) {
+
+	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
 	if ((data.q_nodes_searched + data.nodes_searched) % 1024 == 0) {
 		if (time_elapsed_exceeds(data.time_limit, Milliseconds)) {
