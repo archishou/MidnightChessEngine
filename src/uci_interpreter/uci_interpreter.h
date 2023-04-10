@@ -65,12 +65,12 @@ void parse_move_time(const Color side_to_play, const std::string& move_time_s, B
 		else if (token == "movestogo") moves_to_go = value;
 	}
 	if (side_to_play == WHITE) {
-		params.soft_time_limit = time_search(wtime, winc, 0);
-		params.hard_time_limit = time_iterative_deepening(wtime, winc, 0);
+		params.soft_time_limit = time_search(wtime, winc, moves_to_go);
+		params.hard_time_limit = time_iterative_deepening(wtime, winc, moves_to_go);
 		return;
 	}
-	params.soft_time_limit = time_search(btime, binc, 0);
-	params.hard_time_limit = time_iterative_deepening(btime, binc, 0);
+	params.soft_time_limit = time_search(btime, binc, moves_to_go);
+	params.hard_time_limit = time_iterative_deepening(btime, binc, moves_to_go);
 }
 
 void uci_go(Position& board, const std::string& input_line, ReadUCIParameters& uci_parameters) {
