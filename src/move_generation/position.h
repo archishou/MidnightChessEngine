@@ -54,7 +54,7 @@ private:
 	Piece board[NSQUARES];
 	Color side_to_play;
 	int game_ply;
-	zobrist_hash hash;
+	ZobristHash hash;
 
 	template<Color Us>
 	Move *generate_captures(Move *list);
@@ -67,7 +67,7 @@ public:
 	Bitboard checkers;
 	Bitboard pinned;
 
-	std::vector<zobrist_hash> hash_history;
+	std::vector<ZobristHash> hash_history;
 
 	Position() : piece_bb{ 0 }, side_to_play(WHITE), game_ply(0), half_move_clock(1), board{},
 				 hash(0), pinned(0), checkers(0) {
@@ -121,7 +121,7 @@ public:
 	short ep_file() const { return ep_square() == NO_SQUARE ? NFILES : file_of(ep_square()); }
 
 	void update_hash_board_features(Bitboard original_castle_state, int original_ep_file);
-	inline zobrist_hash get_hash() const { return hash; }
+	inline ZobristHash get_hash() const { return hash; }
 
 	template<Color C> inline Bitboard diagonal_sliders() const;
 	template<Color C> inline Bitboard orthogonal_sliders() const;

@@ -23,7 +23,7 @@ enum Direction : int {
 	NORTH_NORTH = 16, SOUTH_SOUTH = -16
 };
 
-typedef uint64_t zobrist_hash;
+typedef uint64_t ZobristHash;
 
 const size_t NPIECE_TYPES = 6;
 enum PieceType : int {

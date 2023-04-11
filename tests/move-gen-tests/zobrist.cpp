@@ -12,7 +12,7 @@ void perft_hash(Position& p, unsigned int depth) {
 	MoveList<Us> list(p);
 	if (depth == 1) return;
 	for (Move move : list) {
-		zobrist_hash initial_hash = p.get_hash();
+		ZobristHash initial_hash = p.get_hash();
 		Position b2;
 		Position::set(p.fen(), b2);
 		CHECK_EQ(p.get_hash(), b2.get_hash());
@@ -72,7 +72,7 @@ TEST_CASE("TestTraiangulation") {
 	initialize_engine();
 	Position p;
 	Position::set("8/k7/3p4/p2P1p2/P2P1P2/8/8/K7 w - - 0 1", p);
-	zobrist_hash initial_hash = p.get_hash();
+	ZobristHash initial_hash = p.get_hash();
 
 	Move m1 = Move(a1, a2, QUIET);
 	Move m2 = Move(a7, b7, QUIET);
@@ -99,7 +99,7 @@ TEST_CASE("TestCastling") {
 	initialize_engine();
 	Position p;
 	Position::set(INITIAL_BOARD_FEN, p);
-	zobrist_hash initial_hash = p.get_hash();
+	ZobristHash initial_hash = p.get_hash();
 
 	Move m1 = Move(e2, e4, DOUBLE_PUSH);
 	Move m2 = Move(e7, e5, DOUBLE_PUSH);
@@ -160,7 +160,7 @@ TEST_CASE("TestEPFile") {
 
 
 	Position::set(INITIAL_BOARD_FEN, p);
-	zobrist_hash initial_hash = p.get_hash();
+	ZobristHash initial_hash = p.get_hash();
 	Move m1 = Move(e2, e4, DOUBLE_PUSH);
 	Move m2 = Move(d7, d5, DOUBLE_PUSH);
 	Move m3 = Move(e4, e5);

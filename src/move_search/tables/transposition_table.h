@@ -7,7 +7,7 @@ enum TranspositionTableEntryNodeType {
 };
 
 struct TranspositionTableEntry {
-	zobrist_hash zobrist_hash;
+	ZobristHash zobrist_hash;
 	short depth;
 	int value;
 	TranspositionTableEntryNodeType node_type;
@@ -28,13 +28,13 @@ public:
 	TranspositionTableEntryNodeType get_node_type(const int &alpha_initial, const int &beta, const int &value);
 	int correct_mate_for_storage(int score, int ply);
 	int correct_mate_for_retrieval(int score, int ply);
-	void put(zobrist_hash hash, short depth, int score, int ply, Move best_move, bool pv_node,
+	void put(ZobristHash hash, short depth, int score, int ply, Move best_move, bool pv_node,
 			 TranspositionTableEntryNodeType node_type);
 	void reset_table();
 	void resize(int mb);
-	TranspositionTableSearchResults probe_for_move_ordering(zobrist_hash hash);
-	TranspositionTableSearchResults probe_for_search(zobrist_hash hash, int depth, int ply);
-	TranspositionTableSearchResults probe_eval(zobrist_hash hash, int ply);
+	TranspositionTableSearchResults probe_for_move_ordering(ZobristHash hash);
+	TranspositionTableSearchResults probe_for_search(ZobristHash hash, int depth, int ply);
+	TranspositionTableSearchResults probe_eval(ZobristHash hash, int ply);
 	int mb_to_entries(int mb);
 	explicit TranspositionTable(int mb = 64);
 	size_t entry_count();

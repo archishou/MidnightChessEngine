@@ -56,7 +56,7 @@ bool position_is_draw(Position &board, const int ply) {
 	for (long idx = hash_hist_size - 3;
 		 idx >= 0 && idx >= hash_hist_size - board.fifty_mr_clock();
 		 idx -= 2) {
-		zobrist_hash hash = board.hash_history[idx];
+		ZobristHash hash = board.hash_history[idx];
 		if (hash == current_hash) count += 1;
 		if (count >= 2) return true;
 	}

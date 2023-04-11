@@ -46,7 +46,7 @@ TranspositionTable::get_node_type(const int &alpha_initial, const int &beta, con
 	return node_type;
 }
 
-void TranspositionTable::put(zobrist_hash hash, short depth, int score, int ply, Move best_move, bool pv_node,
+void TranspositionTable::put(ZobristHash hash, short depth, int score, int ply, Move best_move, bool pv_node,
 							 TranspositionTableEntryNodeType node_type) {
 
 	score = correct_mate_for_storage(score, ply);
@@ -66,7 +66,7 @@ void TranspositionTable::put(zobrist_hash hash, short depth, int score, int ply,
 }
 
 TranspositionTableSearchResults
-TranspositionTable::probe_for_move_ordering(zobrist_hash hash) {
+TranspositionTable::probe_for_move_ordering(ZobristHash hash) {
 	TranspositionTableEntry entry = transposition_table[get_index(hash)];
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
@@ -78,7 +78,7 @@ TranspositionTable::probe_for_move_ordering(zobrist_hash hash) {
 }
 
 TranspositionTableSearchResults
-TranspositionTable::probe_for_search(zobrist_hash hash, int depth, int ply) {
+TranspositionTable::probe_for_search(ZobristHash hash, int depth, int ply) {
 	TranspositionTableEntry entry = transposition_table[get_index(hash)];
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
@@ -90,7 +90,7 @@ TranspositionTable::probe_for_search(zobrist_hash hash, int depth, int ply) {
 	return results;
 }
 
-TranspositionTableSearchResults TranspositionTable::probe_eval(zobrist_hash hash, int ply) {
+TranspositionTableSearchResults TranspositionTable::probe_eval(ZobristHash hash, int ply) {
 	TranspositionTableEntry entry = transposition_table[get_index(hash)];
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
