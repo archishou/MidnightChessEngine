@@ -81,3 +81,17 @@ constexpr Score BLOCKED_PASSED_PAWN_PENALTY[] = {
 		S(   9,  -36), S(   0,  -15), S( -19,   18), S( -51,  -31), S(  91, -159), S(  32,  -28), S( -61,    8), S(  39,  -33),
 		S(   0,    0), S(   0,    0), S(   0,    0), S(   0,    0), S(   0,    0), S(   0,    0), S(   0,    0), S(   0,    0),
 };
+
+template<Color color, PieceType piece_type>
+constexpr Score read_psqt(Square square) {
+	if (color == WHITE) square = ~square;
+	switch (piece_type) {
+		case PAWN: return PAWN_TABLE[square];
+		case KNIGHT: return KNIGHT_TABLE[square];
+		case BISHOP: return BISHOP_TABLE[square];
+		case ROOK: return ROOK_TABLE[square];
+		case QUEEN: return QUEEN_TABLE[square];
+		case KING: return KING_TABLE[square];
+		default: return {};
+	}
+}

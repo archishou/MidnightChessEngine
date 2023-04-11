@@ -10,20 +10,6 @@
 #include "evaluation/pieces/king.h"
 #include "types.h"
 
-template<Color color, PieceType piece_type>
-constexpr Score read_psqt(Square square) {
-	if (color == WHITE) square = ~square;
-	switch (piece_type) {
-		case PAWN: return PAWN_TABLE[square];
-		case KNIGHT: return KNIGHT_TABLE[square];
-		case BISHOP: return BISHOP_TABLE[square];
-		case ROOK: return ROOK_TABLE[square];
-		case QUEEN: return QUEEN_TABLE[square];
-		case KING: return KING_TABLE[square];
-		default: return {};
-	}
-}
-
 template<Color color>
 constexpr int compute_game_phase(Position& board) {
 	int game_phase = 0;
