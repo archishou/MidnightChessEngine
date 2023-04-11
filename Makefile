@@ -1,5 +1,4 @@
 CXX = g++
-CXXFLAGS = -O3 -std=c++17 -Wall -Wextra -DNDEBUG
 INCLUDES = -Isrc
 DEPFLAGS = -MMD -MP
 SRCDIR = src
@@ -44,7 +43,7 @@ else
 endif
 endif
 
-CXXFLAGS := -O3 -std=c++17  $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
+CXXFLAGS := -O3 -std=c++17 -march=native $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
 LDFLAGS  := -flto
 
 SRC_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
