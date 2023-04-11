@@ -82,6 +82,7 @@ constexpr Score BLOCKED_PASSED_PAWN_PENALTY[] = {
 		S(   0,    0), S(   0,    0), S(   0,    0), S(   0,    0), S(   0,    0), S(   0,    0), S(   0,    0), S(   0,    0),
 };
 
+// pretty ignore
 template<Color color, PieceType piece_type>
 constexpr Score read_psqt(Square square) {
 	if (color == WHITE) square = ~square;
@@ -95,3 +96,4 @@ constexpr Score read_psqt(Square square) {
 		default: return {};
 	}
 }
+// pretty stop-ignore

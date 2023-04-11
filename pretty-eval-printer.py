@@ -2,11 +2,14 @@
 import re, sys
 
 tables = ""
+reading_ignore = True
 for line in sys.stdin:
-    if line.startswith("#"):
+    if line.startswith('// pretty ignore'): reading_ignore = True
+    if line.startswith("#") or reading_ignore:
         print(line, end="")
     else:
         tables += line
+    if line.startswith('// pretty stop-ignore'): reading_ignore = False
 
 names = iter(re.findall("\w+(?=\[\])", tables))
 ints = iter(re.findall("-?[0-9]+", tables))
