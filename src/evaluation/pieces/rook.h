@@ -3,6 +3,7 @@ template<Color color>
 constexpr Score evaluate_rooks(Position& board) {
 	Score score = SCORE_ZERO;
 	Bitboard rooks = board.bitboard_of(color, ROOK);
+
 	Bitboard us_pieces = board.all_pieces<color>();
 	Bitboard them_pieces = board.all_pieces<~color>();
 	const Bitboard them_pawns = board.bitboard_of(~color, PAWN);
