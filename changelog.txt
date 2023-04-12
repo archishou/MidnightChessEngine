@@ -321,3 +321,11 @@ Score of midnight-dev vs midnight-latest: 427 - 352 - 716  [0.525] 1495
 ...      White vs Black: 423 - 356 - 716  [0.522] 1495
 Elo difference: 17.4 +/- 12.7, LOS: 99.6 %, DrawRatio: 47.9 %
 SPRT: llr 2.96 (100.7%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+New LMR Constants: Base 1.0 Divisor 2.00
+STC: https://engineprogramming.pythonanywhere.com/test/8/
+ELO   | 7.57 +- 6.08 (95%)
+SPRT  | 5.0+0.05s Threads=1 Hash=64MB
+LLR   | 2.97 (-2.94, 2.94) [0.00, 10.00]
+GAMES | N: 6792 W: 1915 L: 1767 D: 3110
+Bench: 26029471
