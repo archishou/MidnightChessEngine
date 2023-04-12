@@ -329,3 +329,10 @@ SPRT  | 5.0+0.05s Threads=1 Hash=64MB
 LLR   | 2.97 (-2.94, 2.94) [0.00, 10.00]
 GAMES | N: 6792 W: 1915 L: 1767 D: 3110
 Bench: 26029471
+
+New LMR Constants: Base 1.2 Divisor 1.8
+https://engineprogramming.pythonanywhere.com/test/13/
+ELO   | 5.36 +- 4.35 (95%)
+SPRT  | 5.0+0.05s Threads=1 Hash=64MB
+LLR   | 2.71 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 13352 W: 3752 L: 3546 D: 6054
