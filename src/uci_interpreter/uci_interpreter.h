@@ -176,7 +176,7 @@ void read_uci() {
 
 	while (std::getline(std::cin, input_line)) {
 		if (input_line == "uci") {
-			std::cout << "id name Midnight5.0" << std::endl;
+			std::cout << "id name Midnight 5.0" << std::endl;
 			std::cout << "id author Archishmaan Peyyety" << std::endl;
 			std::cout << "option name Hash type spin default 64 min 1 max 1024" << std::endl;
 			std::cout << "uciok" << std::endl;
