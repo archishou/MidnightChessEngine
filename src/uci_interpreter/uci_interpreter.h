@@ -91,6 +91,7 @@ void bench() {
 	auto start = std::chrono::steady_clock::now();
 	for (int idx = 0; idx < BENCH_SIZE; idx++) {
 		Position p;
+		initialize_uci(p);
 		Position::set(BENCH_FENS[idx], p);
 
 		std::cout << "\nPosition: " << idx + 1 << std::endl;
