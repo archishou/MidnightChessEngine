@@ -9,13 +9,10 @@
 #include "array"
 #include "move_search/types.h"
 
-typedef std::array<Move, MAX_PLY> MoveHistory;
-
 extern int history[NCOLORS][NSQUARES][NSQUARES];
 extern Move killers[MAX_PLY][NKILLERS];
 
 extern void init_history();
-extern void scale_history();
 extern void update_history_entry(int& history_entry, int bonus);
 
 template<Color color>
