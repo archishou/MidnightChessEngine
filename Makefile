@@ -4,7 +4,7 @@ DEPFLAGS = -MMD -MP
 SRCDIR = src
 TESTDIR = tests
 TMPDIR = tmp
-TARGET := midnight
+EXE = midnight
 
 # recursive wildcard
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
@@ -55,16 +55,16 @@ ifeq ($(MAKECMDGOALS),tests)
 	TARGET    := midnight-tests
 endif
 
-TARGET := $(addsuffix $(SUFFIX),$(TARGET))
+TARGET = $(addsuffix $(SUFFIX),$(EXE))
 
 OBJECTS   := $(patsubst %.cpp,$(TMPDIR)/%.o,$(SRC_FILES))
 DEPENDS   := $(patsubst %.cpp,$(TMPDIR)/%.d,$(SRC_FILES))
 
 .PHONY: clean all tests FORCE
 
-all: $(TARGET)
-tests: $(TARGET)
-$(TARGET): $(OBJECTS)
+all: $(EXE)
+tests: $(EXE)
+$(EXE): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -MMD -MP -o $@ $^ $(LDFLAGS)
 
 $(TMPDIR)/%.o: %.cpp | $(TMPDIR)
