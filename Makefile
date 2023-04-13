@@ -64,10 +64,10 @@ DEPENDS   := $(patsubst %.cpp,$(TMPDIR)/%.d,$(SRC_FILES))
 
 .PHONY: clean all tests FORCE
 
-all: $(TARGET)
-tests: $(TARGET)
-$(TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -MMD -MP -o $@ $^ $(LDFLAGS)
+all: $(EXE)
+tests: $(EXE)
+$(EXE): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -MMD -MP -o $(TARGET) $^ $(LDFLAGS)
 
 $(TMPDIR)/%.o: %.cpp | $(TMPDIR)
 	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@ $(LDFLAGS)
