@@ -52,3 +52,4 @@ constexpr Score QUEEN_MOBILITY[] = {
 		S(-11, 31),     S(-2, 26),      S(-7, 37),      S(3, 28),       S(36, -0),      S(19, 19),      S(-8, 33),      S(51, 15),
 		S(52, -4),      S(113, -48),    S(65, -32),     S(297, -150)
 };
+constexpr Score TEMPO = S(0, 0);
