@@ -2,7 +2,7 @@
 // Created by Archishmaan Peyyety on 2/23/23.
 //
 #pragma once
-int time_iterative_deepening(int time_remaining, int increment, int moves_to_go) {
+inline int time_iterative_deepening(int time_remaining, int increment, int moves_to_go) {
 	if (moves_to_go != -1) {
 		moves_to_go = std::min(moves_to_go, 50);
 		double scale = 0.7 / moves_to_go;
@@ -12,7 +12,7 @@ int time_iterative_deepening(int time_remaining, int increment, int moves_to_go)
 	return (time_remaining / 10) + (increment / 2);
 }
 
-int time_search(int time_remaining, int increment, int moves_to_go) {
+inline int time_search(int time_remaining, int increment, int moves_to_go) {
 	if (moves_to_go != -1) {
 		moves_to_go = std::min(moves_to_go, 50);
 		double scale = 0.7 / moves_to_go;

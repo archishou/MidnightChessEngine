@@ -6,13 +6,13 @@
 #include "utils/helpers.h"
 #include <locale>
 
-char promotion_character(std::string uci_move) {
+inline char promotion_character(std::string uci_move) {
 	char promotion_piece = uci_move.at(4);
 	char lower_case = std::tolower(promotion_piece, std::locale());
 	return lower_case;
 }
 
-Move uci_to_move(const std::string& moveStr, Position& position) {
+inline Move uci_to_move(const std::string& moveStr, Position& position) {
 	Move move = Move(moveStr.substr(0, 4));
 	// Pawn Promotion
 	if (moveStr.size() == 5) {
@@ -54,7 +54,7 @@ Move uci_to_move(const std::string& moveStr, Position& position) {
 	return {move.from(), move.to(), QUIET};
 }
 
-void uci_update_position_from_moves(Position& board, const std::string& uci_move_string) {
+inline void uci_update_position_from_moves(Position& board, const std::string& uci_move_string) {
 	std::vector<std::string> uci_moves = split(uci_move_string, " ");
 	for (const std::string& uci_move : uci_moves) {
 		if (uci_move.empty()) return;

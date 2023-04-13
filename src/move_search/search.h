@@ -41,7 +41,7 @@ struct BestMoveSearchResults {
 	double nodes_per_second = 0;
 };
 
-std::ostream& operator<<(std::ostream& os, const Line& line) {
+inline std::ostream& operator<<(std::ostream& os, const Line& line) {
 	for(const Move & i : line) {
 		if (i == 0) break;
 		os << i << " ";
@@ -49,7 +49,7 @@ std::ostream& operator<<(std::ostream& os, const Line& line) {
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results) {
+inline std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results) {
 	os << "Best Move: " << results.best_move << std::endl;
 	os << "Principal Variation: " << results.pv << std::endl;
 	os << "Depth Searched: " << results.depth_searched << std::endl;
@@ -62,13 +62,13 @@ std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results)
 	return os;
 }
 
-void update_best_move_results(BestMoveSearchResults& search_results, PVSData& ab_results, int sub_depth, bool debug) {
+inline void update_best_move_results(BestMoveSearchResults& search_results, PVSData& ab_results, int sub_depth, bool debug) {
 	search_results.value = ab_results.value;
 	search_results.best_move = ab_results.best_move;
 	search_results.depth_searched = sub_depth;
 	search_results.nodes_searched += ab_results.nodes_searched + ab_results.q_nodes_searched;
 	search_results.seldepth = ab_results.seldepth;
-	search_results.time_searched = get_elapsed_time(Milliseconds);
+	search_results.time_searched = get_elapsed_time(TimeResolution::Milliseconds);
 	for (int i = 0; i < ab_results.pv.length[0]; i++) {
 		search_results.pv[i] = ab_results.pv.table[0][i];
 	}
@@ -79,12 +79,12 @@ void update_best_move_results(BestMoveSearchResults& search_results, PVSData& ab
 }
 
 template<Color color>
-BestMoveSearchResults iterative_deepening(Position& board, const BestMoveSearchParameters& params) {
+inline BestMoveSearchResults iterative_deepening(Position& board, const BestMoveSearchParameters& params) {
 	struct BestMoveSearchResults search_results;
 
 	reset_clock();
 	for (int sub_depth = 1; sub_depth <= params.depth; sub_depth++) {
-		if (time_elapsed_exceeds(params.soft_time_limit, Milliseconds)) {
+		if (time_elapsed_exceeds(params.soft_time_limit, TimeResolution::Milliseconds)) {
 			break;
 		}
 		struct PVSData ab_results = pvs_root<color>(board, sub_depth, params.hard_time_limit);
@@ -94,27 +94,27 @@ BestMoveSearchResults iterative_deepening(Position& board, const BestMoveSearchP
 		}
 	}
 
-	search_results.time_searched = get_elapsed_time(Seconds);
+	search_results.time_searched = get_elapsed_time(TimeResolution::Seconds);
 	search_results.nodes_per_second = search_results.nodes_searched / (search_results.time_searched + 1);
 
 	return search_results;
 }
 
 template<Color color>
-BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters& parameters) {
+inline BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters& parameters) {
 	return iterative_deepening<color>(board, parameters);
 }
 
 template<Color color>
-BestMoveSearchResults best_move(Position& board) {
+inline BestMoveSearchResults best_move(Position& board) {
 	return best_move<color>(board, DEFAULT_BEST_MOVE_SEARCH_PARAMS);
 }
 
-BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters& parameters) {
+inline BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters& parameters) {
 	if (board.turn() == BLACK) return best_move<BLACK>(board, parameters);
 	return best_move<WHITE>(board, parameters);
 }
 
-BestMoveSearchResults best_move(Position& board) {
+inline BestMoveSearchResults best_move(Position& board) {
 	return best_move(board, DEFAULT_BEST_MOVE_SEARCH_PARAMS);
 }

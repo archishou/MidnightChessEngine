@@ -30,11 +30,11 @@ enum PieceType : int {
 	PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
 };
 
-const std::string PIECE_STR = "PNBRQK~>pnbrqk.";
+static const std::string PIECE_STR = "PNBRQK~>pnbrqk.";
 
-const std::string DEFAULT_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
+constexpr auto DEFAULT_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
 
-const std::string KIWIPETE = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -";
+constexpr auto  KIWIPETE = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -";
 
 const size_t NCASTLING_RIGHTS = 16;
 
@@ -80,14 +80,30 @@ inline Square& operator+=(Square& s, Direction d) { return s = s + d; }
 inline Square& operator-=(Square& s, Direction d) { return s = s - d; }
 
 const size_t NFILES = 8;
-enum File : int {
-	AFILE, BFILE, CFILE, DFILE, EFILE, FFILE, GFILE, HFILE
-};	
+
+using File = int;
+
+constexpr File AFILE = 0;
+constexpr File BFILE = 1;
+constexpr File CFILE = 2;
+constexpr File DFILE = 3;
+constexpr File EFILE = 4;
+constexpr File FFILE = 5;
+constexpr File GFILE = 6;
+constexpr File HFILE = 7;
 
 const size_t NRANKS = 8;
-enum Rank : int {
-	RANK1, RANK2, RANK3, RANK4, RANK5, RANK6, RANK7, RANK8
-};
+
+using Rank = int;
+
+constexpr Rank RANK1 = 0;
+constexpr Rank RANK2 = 1;
+constexpr Rank RANK3 = 2;
+constexpr Rank RANK4 = 3;
+constexpr Rank RANK5 = 4;
+constexpr Rank RANK6 = 5;
+constexpr Rank RANK7 = 6;
+constexpr Rank RANK8 = 7;
 
 extern const char* SQSTR[65];
 
@@ -208,9 +224,9 @@ public:
 		move = (flags << 12) | (from << 6) | to;
 	}
 
-	Move(const std::string& move) {
-		this->move = (create_square(File(move[0] - 'a'), Rank(move[1] - '1')) << 6) |
-			create_square(File(move[2] - 'a'), Rank(move[3] - '1'));
+	Move(const std::string& m) {
+		this->move = (create_square(File(m[0] - 'a'), Rank(m[1] - '1')) << 6) |
+			create_square(File(m[2] - 'a'), Rank(m[3] - '1'));
 	}
 
 	inline Square to() const { return Square(move & 0x3f); }

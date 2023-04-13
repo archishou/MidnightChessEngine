@@ -14,20 +14,20 @@ struct ReadUCIParameters {
 	bool debug_info = true;
 };
 
-void initialize_uci(Position& p) {
+inline void initialize_uci(Position& p) {
 	initialize_engine();
 	Position::set(INITIAL_BOARD_FEN, p);
 }
 
-void uci_position(Position& board, const std::string& input_line) {
+inline void uci_position(Position& board, const std::string& input_line) {
 	if (input_line.substr(0, 17) == "position startpos") {
 		std::string uci_moves;
 		if (input_line.size() > 17) uci_moves = input_line.substr(24, input_line.size() - 24);
 		Position::set(INITIAL_BOARD_FEN, board);
 		uci_update_position_from_moves(board,  uci_moves);
 	} else {
-		int fen_start = input_line.find("position fen ") + 13;
-		int fen_end = input_line.find(" moves");
+		int fen_start = static_cast<int>(input_line.find("position fen ")) + 13;
+		int fen_end = static_cast<int>(input_line.find(" moves"));
 		int moves_start = fen_end + 6;
 		int fen_size = fen_end - fen_start;
 		const std::string& fen = input_line.substr(fen_start, fen_size);
@@ -41,7 +41,7 @@ void uci_position(Position& board, const std::string& input_line) {
 	}
 }
 
-void parse_move_time(const Color side_to_play, const std::string& move_time_s, BestMoveSearchParameters& params) {
+inline void parse_move_time(const Color side_to_play, const std::string& move_time_s, BestMoveSearchParameters& params) {
 	std::vector<std::string> tokens = split(move_time_s, " ");
 	// Possible inputs to parse
 	// input --> go movetime xxx
@@ -73,9 +73,7 @@ void parse_move_time(const Color side_to_play, const std::string& move_time_s, B
 	params.hard_time_limit = time_iterative_deepening(btime, binc, moves_to_go);
 }
 
-void uci_go(Position& board, const std::string& input_line, ReadUCIParameters& uci_parameters) {
-	auto t_start = std::chrono::high_resolution_clock::now();
-
+inline void uci_go(Position& board, const std::string& input_line, ReadUCIParameters& uci_parameters) {
 	BestMoveSearchResults results;
 	BestMoveSearchParameters params = BestMoveSearchParameters {
 		.depth = MAX_DEPTH,
@@ -86,7 +84,7 @@ void uci_go(Position& board, const std::string& input_line, ReadUCIParameters& u
 	std::cout << "bestmove " << results.best_move << std::endl;
 }
 
-void bench() {
+inline void bench() {
 	uint64_t total_nodes = 0;
 	auto start = std::chrono::steady_clock::now();
 	for (int idx = 0; idx < BENCH_SIZE; idx++) {
@@ -106,7 +104,7 @@ void bench() {
 	}
 	auto end = std::chrono::steady_clock::now();
 	auto total_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-	double total_time = float(total_time_ms) / 1000;
+	double total_time = double(total_time_ms) / 1000.0;
 	std::cout << "Total Time: " << total_time << std::endl;
 	std::cout << "\n";
 	std::cout << total_nodes << " nodes " << signed(total_nodes / (total_time + 1)) << " nps" << std::endl;
@@ -114,7 +112,6 @@ void bench() {
 
 template<Color Us, bool bulk>
 unsigned long long perft(Position& p, unsigned int depth) {
-	int nmoves;
 	unsigned long long nodes = 0;
 
 	MoveList<Us> list(p);
@@ -166,7 +163,7 @@ void test_perft(Position& p, int depth) {
 			  << std::chrono::duration_cast<std::chrono::milliseconds>(diff).count() << " millseconds\n";
 }
 
-void read_uci() {
+inline void read_uci() {
 	Position board;
 	ReadUCIParameters parameters = {};
 	initialize_uci(board);

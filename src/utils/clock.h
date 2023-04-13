@@ -6,7 +6,7 @@
 #include <chrono>
 
 static auto start_time = std::chrono::high_resolution_clock::now();
-enum TimeResolution {
+enum class TimeResolution {
 	Seconds = 1,
 	Milliseconds = 1000,
 };

@@ -27,7 +27,7 @@ struct PVSData {
 	int time_limit{};
 };
 
-struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
+inline const MoveGenerationOptions QSearchMoveGenerationsOptions = {
 	.generate_captures = true,
 	.generate_checks = false,
 	.generate_promotion = false,
@@ -36,7 +36,7 @@ struct MoveGenerationOptions QSearchMoveGenerationsOptions = {
 
 static PVSData data;
 
-void reset_data() {
+inline void reset_data() {
 	data.nodes_searched = 0;
 	data.q_nodes_searched = 0;
 	data.search_completed = true;
@@ -46,14 +46,14 @@ void reset_data() {
 	data.time_limit = 0;
 }
 
-bool position_is_draw(Position &board, const int ply) {
+inline bool position_is_draw(Position &board, const int ply) {
 	uint64_t current_hash = board.get_hash();
 	if (board.fifty_mr_clock() >= 100) {
 		return true;
 	}
 	int count = ply == 0 ? 0 : 1; // If it's a root node, we check for three-fold repetition. Otherwise, just two fold.
 	const size_t hash_hist_size = board.hash_history.size();
-	for (long idx = hash_hist_size - 3;
+	for (int idx = static_cast<int>(hash_hist_size) - 3;
 		 idx >= 0 && idx >= hash_hist_size - board.fifty_mr_clock();
 		 idx -= 2) {
 		ZobristHash hash = board.hash_history[idx];
@@ -69,7 +69,7 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
 	if ((data.q_nodes_searched + data.nodes_searched) % 1024 == 0) {
-		if (time_elapsed_exceeds(data.time_limit, Milliseconds)) {
+		if (time_elapsed_exceeds(data.time_limit, TimeResolution::Milliseconds)) {
 			data.search_completed = false;
 			return 0;
 		}
@@ -122,7 +122,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
 	if ((data.q_nodes_searched + data.nodes_searched) % 1024 == 0) {
-		if (time_elapsed_exceeds(data.time_limit, Milliseconds)) {
+		if (time_elapsed_exceeds(data.time_limit, TimeResolution::Milliseconds)) {
 			data.search_completed = false;
 			return 0;
 		}

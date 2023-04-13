@@ -69,8 +69,8 @@ public:
 
 	std::vector<ZobristHash> hash_history;
 
-	Position() : piece_bb{ 0 }, side_to_play(WHITE), game_ply(0), half_move_clock(1), board{},
-				 hash(0), pinned(0), checkers(0) {
+	Position() : piece_bb{ 0 }, board{}, side_to_play(WHITE), game_ply(0),
+				 hash(0), checkers(0), pinned(0), half_move_clock(1) {
 
 		for (int i = 0; i < 64; i++) board[i] = NO_PIECE;
 		history[0] = UndoInfo();
@@ -102,12 +102,12 @@ public:
 	Position& operator=(const Position&) = delete;
 	inline bool operator==(const Position& other) const { return hash == other.hash; }
 
-	const Bitboard castling_state() const {
+	inline Bitboard castling_state() const {
 		Bitboard entry = history[game_ply].entry;
-		int white_oo = !((bool) (entry & WHITE_OO_MASK)) << 3;
-		int white_ooo = !((bool) (entry & WHITE_OOO_MASK)) << 2;
-		int black_oo = !((bool) (entry & BLACK_OO_MASK)) << 1;
-		int black_ooo = !((bool) (entry & BLACK_OOO_MASK));
+		int white_oo = !(entry & WHITE_OO_MASK) << 3;
+		int white_ooo = !(entry & WHITE_OOO_MASK) << 2;
+		int black_oo = !(entry & BLACK_OO_MASK) << 1;
+		int black_ooo = !(entry & BLACK_OOO_MASK);
 		return white_ooo | black_oo | white_oo | black_ooo;
 	}
 
