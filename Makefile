@@ -6,6 +6,7 @@ TESTDIR = tests
 TMPDIR = tmp
 EXE = midnight
 
+LDFLAGS  := -flto
 # recursive wildcard
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
@@ -23,6 +24,7 @@ ifeq ($(OS), Windows_NT)
 	SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
 	SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
 	TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
+	LDFLAGS := -flto -fuse-ld=lld-link
 else
 ifeq ($(COMP), MINGW)
     MKDIR    := mkdir
@@ -32,6 +34,7 @@ ifeq ($(COMP), MINGW)
     SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
 	SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
     TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
+    LDFLAGS := -flto
 else
     MKDIR   := mkdir -p
     LDFLAGS := -pthread
@@ -44,7 +47,6 @@ endif
 endif
 
 CXXFLAGS := -O3 -std=c++17 -march=native $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
-LDFLAGS  := -flto
 
 SRC_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
 
@@ -52,7 +54,7 @@ ifeq ($(MAKECMDGOALS),tests)
 	SRC_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
 	SRC_FILES += $(call rwildcard,$(TESTDIR)/,*.cpp)
 	SRC_FILES := $(filter-out $(SRCDIR)/main.cpp, $(SRC_FILES))
-	TARGET    := midnight-tests
+	EXE    = midnight-tests
 endif
 
 TARGET = $(addsuffix $(SUFFIX),$(EXE))
@@ -62,9 +64,9 @@ DEPENDS   := $(patsubst %.cpp,$(TMPDIR)/%.d,$(SRC_FILES))
 
 .PHONY: clean all tests FORCE
 
-all: $(EXE)
-tests: $(EXE)
-$(EXE): $(OBJECTS)
+all: $(TARGET)
+tests: $(TARGET)
+$(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -MMD -MP -o $@ $^ $(LDFLAGS)
 
 $(TMPDIR)/%.o: %.cpp | $(TMPDIR)
