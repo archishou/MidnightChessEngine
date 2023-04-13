@@ -207,7 +207,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
-		int new_value;
+		int new_value = NEG_INF_CHESS;
 
 		bool full_depth_zero_window;
 
@@ -223,7 +223,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			new_value = -pvs<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, true);
 		}
 
-		if (pv_node && ((new_value > alpha && new_value < beta) || move_idx == 0)) {
+		if (new_value == NEG_INF_CHESS || (pv_node && ((new_value > alpha && new_value < beta) || move_idx == 0))) {
 			new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
 		}
 

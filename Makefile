@@ -17,7 +17,7 @@ endef
 
 # Detect Windows
 ifeq ($(OS), Windows_NT)
-    MKDIR    := mkdir
+    MKDIR    := mkdir --parents
     uname_S  := Windows
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
@@ -27,7 +27,7 @@ ifeq ($(OS), Windows_NT)
 	LDFLAGS := -flto -fuse-ld=lld-link
 else
 ifeq ($(COMP), MINGW)
-    MKDIR    := mkdir
+    MKDIR    := mkdir --parents
     uname_S  := Windows
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
