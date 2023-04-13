@@ -54,4 +54,3 @@ Move& select_move(ScoredMoves& scored_moves, int idx) {
 	std::swap(scored_moves[idx], scored_moves[best_idx]);
 	return scored_moves[idx].move;
 }
-

@@ -1,12 +1,12 @@
 /.idea
 
-cmake-build-debug_diagnostics_file/
+cmake-build-*_diagnostics_file/
 .DS_Store
 /releases/
-/ChessEngine/cmake-build-debug/
+/ChessEngine/cmake-build-*/
 build
 /testing/
-/cmake-build-debug/
+/cmake-build-*/
 /tmp/
 midnight
 midnight-tests

@@ -6,4 +6,3 @@ const short MAX_DEPTH = 100;
 const short MAX_PLY = MAX_DEPTH;
 const int MATE_BOUND = MATE_SCORE - MAX_DEPTH;
 const int DEFAULT_SEARCH_TIME = 1000;
-

@@ -118,4 +118,3 @@ BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters&
 BestMoveSearchResults best_move(Position& board) {
 	return best_move(board, DEFAULT_BEST_MOVE_SEARCH_PARAMS);
 }
-
