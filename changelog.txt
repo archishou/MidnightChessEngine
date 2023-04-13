@@ -336,3 +336,10 @@ ELO   | 5.36 +- 4.35 (95%)
 SPRT  | 5.0+0.05s Threads=1 Hash=64MB
 LLR   | 2.71 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 13352 W: 3752 L: 3546 D: 6054
+
+Tempo Bonus
+https://engineprogramming.pythonanywhere.com/test/33/
+ELO   | 23.88 +- 10.74 (95%)
+SPRT  | 5.0+0.05s Threads=1 Hash=64MB
+LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 2288 W: 728 L: 571 D: 989
