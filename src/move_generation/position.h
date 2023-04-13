@@ -436,6 +436,7 @@ Move* Position::generate_captures(Move *list) {
 						b1 = pawn_attacks<Them>(history[game_ply].epsq) & bitboard_of(Us, PAWN) & not_pinned;
 						while (b1) *list++ = Move(pop_lsb(&b1), history[game_ply].epsq, EN_PASSANT);
 					}
+					[[fallthrough]];
 				case make_piece(Them, KNIGHT):
 					b1 = attackers_from<Us>(checker_square, all) & not_pinned;
 					while (b1) {
@@ -643,6 +644,7 @@ Move* Position::generate_legals(Move* list, const MoveGenerationOptions &options
 				b1 = pawn_attacks<Them>(history[game_ply].epsq) & bitboard_of(Us, PAWN) & not_pinned;
 				while (b1) *list++ = Move(pop_lsb(&b1), history[game_ply].epsq, EN_PASSANT);
 			}
+			[[fallthrough]];
 		case make_piece(Them, KNIGHT):
 			b1 = attackers_from<Us>(checker_square, all) & not_pinned;
 			while (b1) {
