@@ -38,11 +38,12 @@ constexpr int evaluate(Position& board) {
 
 	Score us = evaluate_single_side<color>(board);
 	Score them = evaluate_single_side<~color>(board);
+	Score total = us - them + TEMPO;
 
 	int mg_phase = std::min(game_phase, 24);
 	int eg_phase = 24 - mg_phase;
 
-	const int mg_score = mg_value(us) - mg_value(them);
-	const int eg_score = eg_value(us) - eg_value(them);
+	const int mg_score = mg_value(total);
+	const int eg_score = eg_value(total);
 	return (mg_score * mg_phase + eg_score * eg_phase) / 24;
 }
