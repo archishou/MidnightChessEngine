@@ -10,7 +10,7 @@ typedef int Score;
 constexpr Score SCORE_ZERO = 0;
 
 constexpr Score S(int mg, int eg) {
-	return Score(static_cast<int>(static_cast<int>(eg) << 16) + mg);
+	return Score(static_cast<int>(static_cast<unsigned int>(eg) << 16) + mg);
 }
 
 inline int eg_value(Score s) {
