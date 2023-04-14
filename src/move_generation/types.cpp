@@ -79,7 +79,7 @@ const Bitboard kf = 0x0101010101010101;
 	x = (x & k2) + ((x >> 2) & k2);
 	x = (x + (x >> 4)) & k4;
 	x = (x * kf) >> 56;
-	return int(x);
+	return static_cast<int>(x);
 }
 
 /*inline*/ int sparse_pop_count(Bitboard x) {
