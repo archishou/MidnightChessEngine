@@ -96,7 +96,8 @@ inline void bench() {
 
 		BestMoveSearchParameters parameters = {
 				.depth = 12,
-				.hard_time_limit = 10000,
+				.hard_time_limit = 86'400'000, // 1 Day
+				.soft_time_limit = 86'400'000,
 				.debug_info = true,
 		};
 		BestMoveSearchResults results = best_move(p, parameters);
