@@ -52,8 +52,8 @@ inline bool position_is_draw(Position &board, const int ply) {
 		return true;
 	}
 	int count = ply == 0 ? 0 : 1; // If it's a root node, we check for three-fold repetition. Otherwise, just two fold.
-	const size_t hash_hist_size = board.hash_history.size();
-	for (int idx = static_cast<int>(hash_hist_size) - 3;
+	const int hash_hist_size = static_cast<int>(board.hash_history.size());
+	for (int idx = hash_hist_size - 3;
 		 idx >= 0 && idx >= hash_hist_size - board.fifty_mr_clock();
 		 idx -= 2) {
 		ZobristHash hash = board.hash_history[idx];
