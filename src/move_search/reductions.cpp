@@ -12,7 +12,7 @@ int lmr_reduction(const bool& pv_node, const int& ply, const bool& in_check, con
 	if (depth >= 3 && move_idx > lmr_depth && legal_move.is_quiet() && !in_check) {
 		reduction = static_cast<int>(lmr_table[depth][move_idx]);
 		reduction -= pv_node;
-		std::clamp(reduction, 0, depth - 1);
+		reduction = std::clamp(reduction, 0, depth - 1);
 	}
 	return reduction;
 }
