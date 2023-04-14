@@ -3,6 +3,9 @@
 //
 #pragma once
 
+#include <bit>
+#include <cstdint>
+
 typedef int Score;
 constexpr Score SCORE_ZERO = 0;
 
@@ -11,11 +14,11 @@ constexpr Score S(int mg, int eg) {
 }
 
 inline int eg_value(Score s) {
-	union { uint16_t u; int16_t s; } eg = { uint16_t(unsigned(s + 0x8000) >> 16) };
-	return int(eg.s);
+	const uint16_t eg = static_cast<uint16_t>(static_cast<uint32_t>(s + 0x8000) >> 16);
+	return static_cast<int>(std::bit_cast<int16_t>(eg));
 }
 
 inline int mg_value(Score s) {
-	union { uint16_t u; int16_t s; } mg = { uint16_t(unsigned(s)) };
-	return int(mg.s);
+	const uint16_t mg = static_cast<uint16_t>(s);
+	return static_cast<int>(std::bit_cast<int16_t>(mg));
 }
