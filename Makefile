@@ -37,7 +37,6 @@ ifeq ($(COMP), MINGW)
     LDFLAGS := -flto
 else
     MKDIR   := mkdir -p
-    LDFLAGS := -pthread
     uname_S := $(shell uname -s)
     SUFFIX  :=
     SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
