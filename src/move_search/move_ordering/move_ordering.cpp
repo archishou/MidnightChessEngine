@@ -32,7 +32,7 @@ int capture_move_score(Move move, Position& board) {
 	return MVV_LVA_BONUS + get_piece_value(to_type) - get_piece_value(from_type);
 }
 
-int promotion_move_score(Move move, Position& board) {
+int promotion_move_score(Move move) {
 	if (!move.is_promotion()) return 0;
 	MoveFlag flag = move.flag();
 	if (flag == PC_QUEEN || flag == PR_QUEEN) return ORDERING_QUEEN_VALUE + PROMOTION_BONUS;
@@ -45,7 +45,7 @@ int promotion_move_score(Move move, Position& board) {
 Move& select_move(ScoredMoves& scored_moves, int idx) {
 	int best_idx = idx;
 	int best_score = scored_moves[idx].score;
-	for (int i = idx + 1; i < scored_moves.size(); i++) {
+	for (int i = idx + 1; i < static_cast<int>(scored_moves.size()); i++) {
 		if (scored_moves[i].score < best_score) {
 			best_idx = i;
 			best_score = scored_moves[i].score;

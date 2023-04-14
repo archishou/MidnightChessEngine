@@ -17,7 +17,7 @@ int hash_move_score(Move& move, Move& previous_best_move);
 
 int capture_move_score(Move move, Position& board);
 
-int promotion_move_score(Move move, Position& board);
+int promotion_move_score(Move move);
 
 template<Color color>
 int history_score(Move &move, int ply) {
@@ -47,7 +47,7 @@ ScoredMoves order_moves(MoveList<color>& move_list, Position& board, int ply) {
 		int score = 0; //Higher score is likely a better move.
 		score += hash_move_score(move, previous_best_move);
 		score += capture_move_score(move, board);
-		score += promotion_move_score(move, board);
+		score += promotion_move_score(move);
 		score += history_score<color>(move, ply);
 		score += in_opponent_pawn_territory<color>(move, board);
 		// Score negated for sorting. We want to evaluate high scoring moves first.

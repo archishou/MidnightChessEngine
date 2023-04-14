@@ -16,7 +16,7 @@ void TranspositionTable::reset_table() {
 	default_entry.depth = 0;
 	default_entry.best_move = 0;
 	default_entry.node_type = EXACT;
-	for (int i = 0; i < transposition_table.size(); i++) {
+	for (int i = 0; i < static_cast<int>(transposition_table.size()); i++) {
 		transposition_table[i] = default_entry;
 	}
 }

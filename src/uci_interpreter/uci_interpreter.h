@@ -53,10 +53,10 @@ inline void parse_move_time(const Color side_to_play, const std::string& move_ti
 		return;
 	}
 	int wtime = 0, winc = 0, btime = 0, binc = 0, moves_to_go = -1;
-	for (int i = 1; i < tokens.size(); i += 2) {
+	for (int i = 1; i < static_cast<int>(tokens.size()); i += 2) {
 		std::string token = tokens[i];
 		int value = 0;
-		if (tokens.size() > i + 1) value = stoi(tokens[i + 1]);
+		if (static_cast<int>(tokens.size()) > i + 1) value = stoi(tokens[i + 1]);
 
 		if (token == "wtime") wtime = value;
 		else if (token == "winc") winc = value;
