@@ -72,10 +72,10 @@ enum Square : int {
 	NO_SQUARE
 };
 
-inline Square& operator++(Square& s) { return s = Square(int(s) + 1); }
-constexpr Square operator+(Square s, Direction d) { return Square(int(s) + int(d)); }
-constexpr Square operator-(Square s, Direction d) { return Square(int(s) - int(d)); }
-constexpr Square operator~(Square& s) {return Square(int(s) ^ 56); }
+inline Square& operator++(Square& s) { return s = Square(static_cast<int>(s) + 1); }
+constexpr Square operator+(Square s, Direction d) { return Square(static_cast<int>(s) + static_cast<int>(d)); }
+constexpr Square operator-(Square s, Direction d) { return Square(static_cast<int>(s) - static_cast<int>(d)); }
+constexpr Square operator~(Square& s) {return Square(static_cast<int>(s) ^ 56); }
 inline Square& operator+=(Square& s, Direction d) { return s = s + d; }
 inline Square& operator-=(Square& s, Direction d) { return s = s - d; }
 

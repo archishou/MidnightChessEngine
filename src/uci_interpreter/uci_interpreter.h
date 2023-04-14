@@ -104,7 +104,7 @@ inline void bench() {
 	}
 	auto end = std::chrono::steady_clock::now();
 	auto total_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-	double total_time = double(total_time_ms) / 1000.0;
+	double total_time = static_cast<double>(total_time_ms) / 1000.0;
 	std::cout << "Total Time: " << total_time << std::endl;
 	std::cout << "\n";
 	std::cout << total_nodes << " nodes " << signed(total_nodes / (total_time + 1)) << " nps" << std::endl;
@@ -116,7 +116,7 @@ unsigned long long perft(Position& p, unsigned int depth) {
 
 	MoveList<Us> list(p);
 
-	if (bulk && depth == 1) return (unsigned long long) list.size();
+	if (bulk && depth == 1) return static_cast<unsigned long long>(list.size());
 	if (!bulk && depth == 0) return 1;
 
 	for (Move move : list) {
@@ -157,7 +157,7 @@ void test_perft(Position& p, int depth) {
 
 	std::cout << "Nodes: " << n << "\n";
 	std::cout << "NPS: "
-			  << int(n * 1000000.0 / std::chrono::duration_cast<std::chrono::microseconds>(diff).count())
+			  << static_cast<int>(n * 1000000.0 / std::chrono::duration_cast<std::chrono::microseconds>(diff).count())
 			  << "\n";
 	std::cout << "Total Time = "
 			  << std::chrono::duration_cast<std::chrono::milliseconds>(diff).count() << " millseconds\n";
