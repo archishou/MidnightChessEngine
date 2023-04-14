@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 
-const size_t NCOLORS = 2;
+const int NCOLORS = 2;
 enum Color : int {
 	WHITE, BLACK
 };
@@ -16,7 +16,7 @@ constexpr Color operator~(Color c) {
 	return Color(c ^ BLACK);
 }
 
-const size_t NDIRS = 8;
+const int NDIRS = 8;
 enum Direction : int {
 	NORTH = 8, NORTH_EAST = 9, EAST = 1, SOUTH_EAST = -7,
 	SOUTH = -8, SOUTH_WEST = -9, WEST = -1, NORTH_WEST = 7,
@@ -25,7 +25,7 @@ enum Direction : int {
 
 typedef uint64_t ZobristHash;
 
-const size_t NPIECE_TYPES = 6;
+const int NPIECE_TYPES = 6;
 enum PieceType : int {
 	PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
 };
@@ -36,9 +36,9 @@ constexpr auto DEFAULT_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq
 
 constexpr auto  KIWIPETE = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -";
 
-const size_t NCASTLING_RIGHTS = 16;
+const int NCASTLING_RIGHTS = 16;
 
-const size_t NPIECES = 15;
+const int NPIECES = 15;
 enum Piece : int {
 	WHITE_PAWN, WHITE_KNIGHT, WHITE_BISHOP, WHITE_ROOK, WHITE_QUEEN, WHITE_KING,
 	BLACK_PAWN = 8, BLACK_KNIGHT, BLACK_BISHOP, BLACK_ROOK, BLACK_QUEEN, BLACK_KING,
@@ -59,7 +59,7 @@ constexpr Color color_of(Piece pc) {
 
 typedef uint64_t Bitboard;
 
-const size_t NSQUARES = 64;
+const int NSQUARES = 64;
 enum Square : int {
 	a1, b1, c1, d1, e1, f1, g1, h1,
 	a2, b2, c2, d2, e2, f2, g2, h2,
@@ -79,7 +79,7 @@ constexpr Square operator~(Square& s) {return Square(static_cast<int>(s) ^ 56); 
 inline Square& operator+=(Square& s, Direction d) { return s = s + d; }
 inline Square& operator-=(Square& s, Direction d) { return s = s - d; }
 
-const size_t NFILES = 8;
+const int NFILES = 8;
 
 using File = int;
 
@@ -92,7 +92,7 @@ constexpr File FFILE = 5;
 constexpr File GFILE = 6;
 constexpr File HFILE = 7;
 
-const size_t NRANKS = 8;
+const int NRANKS = 8;
 
 using Rank = int;
 

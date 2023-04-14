@@ -32,7 +32,7 @@ inline void uci_position(Position& board, const std::string& input_line) {
 		int fen_size = fen_end - fen_start;
 		const std::string& fen = input_line.substr(fen_start, fen_size);
 		std::string moves;
-		if (fen_end != std::string::npos) {
+		if (input_line.find(" moves") != std::string::npos) {
 			moves = input_line.substr(moves_start + 1, input_line.size() - moves_start);
 		}
 
