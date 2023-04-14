@@ -1,5 +1,4 @@
 #pragma once
-#pragma warning(disable : 26812)
 
 #include <cstdint>
 #include <string>
@@ -248,7 +247,6 @@ public:
 		return !is_capture() && !is_promotion();
 	}
 
-	void operator=(Move m) { move = m.move; }
 	bool operator==(Move a) const { return to_from() == a.to_from(); }
 	bool operator!=(Move a) const { return to_from() != a.to_from(); }
 };
