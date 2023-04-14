@@ -46,6 +46,13 @@ struct UndoInfo {
 
 	constexpr UndoInfo() : entry(0), captured(NO_PIECE), epsq(NO_SQUARE), fifty_mr_clock(0) {}
 	UndoInfo(const UndoInfo& prev) : entry(prev.entry), captured(NO_PIECE), epsq(NO_SQUARE), fifty_mr_clock(prev.fifty_mr_clock) {}
+	UndoInfo& operator=(const UndoInfo& other) {
+		entry = other.entry;
+		captured = other.captured;
+		epsq = other.epsq;
+		fifty_mr_clock = other.fifty_mr_clock;
+		return *this;
+	}
 };
 
 class Position {
