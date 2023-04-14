@@ -3,7 +3,7 @@
 //
 #pragma once
 
-#include <bit>
+#include <cstring>
 #include <cstdint>
 
 typedef int Score;
@@ -15,10 +15,18 @@ constexpr Score S(int mg, int eg) {
 
 inline int eg_value(Score s) {
 	const uint16_t eg = static_cast<uint16_t>(static_cast<uint32_t>(s + 0x8000) >> 16);
-	return static_cast<int>(std::bit_cast<int16_t>(eg));
+
+	int16_t v;
+	std::memcpy(&v, &eg, sizeof(eg));
+
+	return static_cast<int>(v);
 }
 
 inline int mg_value(Score s) {
 	const uint16_t mg = static_cast<uint16_t>(s);
-	return static_cast<int>(std::bit_cast<int16_t>(mg));
+
+	int16_t v;
+	std::memcpy(&v, &mg, sizeof(mg));
+
+	return static_cast<int>(v);
 }
