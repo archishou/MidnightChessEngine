@@ -19,6 +19,7 @@ endef
 ifeq ($(OS), Windows_NT)
     MKDIR    := mkdir
     CMD_SEP  := &
+    RM_R     := rmdir /s /q
     uname_S  := Windows
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
@@ -30,6 +31,7 @@ else
 ifeq ($(COMP), MINGW)
     MKDIR    := mkdir -p
     CMD_SEP  := &
+    RM_R     := rm -rf
     uname_S  := Windows
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
@@ -39,6 +41,7 @@ ifeq ($(COMP), MINGW)
 else
     MKDIR    := mkdir -p
     CMD_SEP  := ;
+    RM_R     := rm -rf
     uname_S  := $(shell uname -s)
     SUFFIX   :=
     SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
@@ -78,6 +81,6 @@ $(TMPDIR):
 	$(foreach dir,$(TMP_DIRS),$(MKDIR) $(dir) ${CMD_SEP})
 
 clean:
-	rm -rf $(TMPDIR)
+	$(RM_R) $(TMPDIR)
 
 -include $(DEPENDS)
