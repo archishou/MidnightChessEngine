@@ -45,7 +45,7 @@ else
 endif
 endif
 
-CXXFLAGS := -O3 -std=c++17 -march=native $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
+CXXFLAGS := -O3 -std=c++20 -march=native $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
 
 SRC_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
 
