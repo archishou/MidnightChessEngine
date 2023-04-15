@@ -17,7 +17,6 @@ endef
 
 # Detect Windows
 ifeq ($(OS), Windows_NT)
-    MKDIR    := mkdir
     CMD_SEP  := &
     RM_R     := rmdir /s /q
     uname_S  := Windows
@@ -28,8 +27,10 @@ ifeq ($(OS), Windows_NT)
     ifeq (,$(findstring msys2,$(SHELL)))
         SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
         TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
+        MKDIR    := mkdir
     else
         TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
+        MKDIR    := mkdir -p
     endif
     LDFLAGS  += -fuse-ld=lld-link
 else
