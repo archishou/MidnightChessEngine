@@ -17,7 +17,7 @@ endef
 
 # Detect Windows
 ifeq ($(OS), Windows_NT)
-    MKDIR    := mkdir --parents
+    MKDIR    := mkdir
     uname_S  := Windows
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
