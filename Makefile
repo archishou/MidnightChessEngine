@@ -18,27 +18,29 @@ endef
 # Detect Windows
 ifeq ($(OS), Windows_NT)
     MKDIR    := mkdir
+    CMD_SEP  := &
     uname_S  := Windows
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
 	SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
 	SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
 	TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
-	LDFLAGS := -flto -fuse-ld=lld-link
+	LDFLAGS  += -fuse-ld=lld-link
 else
 ifeq ($(COMP), MINGW)
-    MKDIR    := mkdir --parents
+    MKDIR    := mkdir -p
+    CMD_SEP  := &
     uname_S  := Windows
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
     SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
 	SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
     TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
-    LDFLAGS := -flto
 else
-    MKDIR   := mkdir -p
-    uname_S := $(shell uname -s)
-    SUFFIX  :=
+    MKDIR    := mkdir -p
+    CMD_SEP  := ;
+    uname_S  := $(shell uname -s)
+    SUFFIX   :=
     SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
     SRC_DIRECTORIES += $(shell find $(TESTDIR) -type d)
     TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
@@ -71,8 +73,9 @@ $(EXE): $(OBJECTS)
 $(TMPDIR)/%.o: %.cpp | $(TMPDIR)
 	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@ $(LDFLAGS)
 
+# dumb workaround for mysterious issue with msys2
 $(TMPDIR):
-	$(MKDIR) $(TMP_DIRS)
+	$(foreach dir,$(TMP_DIRS),$(MKDIR) $(dir) ${CMD_SEP})
 
 clean:
 	rm -rf $(TMPDIR)
