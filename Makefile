@@ -23,10 +23,15 @@ ifeq ($(OS), Windows_NT)
     uname_S  := Windows
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
-	SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
-	SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
-	TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
-	LDFLAGS  += -fuse-ld=lld-link
+    SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
+# dumb workaround for mysterious issue with msys2
+    ifeq (,$(findstring msys2,$(SHELL)))
+        SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
+        TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
+    else
+        TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
+    endif
+    LDFLAGS  += -fuse-ld=lld-link
 else
 ifeq ($(COMP), MINGW)
     MKDIR    := mkdir -p
@@ -76,7 +81,7 @@ $(EXE): $(OBJECTS)
 $(TMPDIR)/%.o: %.cpp | $(TMPDIR)
 	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@ $(LDFLAGS)
 
-# dumb workaround for mysterious issue with msys2
+# another msys2 workaround
 $(TMPDIR):
 	$(foreach dir,$(TMP_DIRS),$(MKDIR) $(dir) ${CMD_SEP})
 
