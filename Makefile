@@ -17,35 +17,49 @@ endef
 
 # Detect Windows
 ifeq ($(OS), Windows_NT)
-    MKDIR    := mkdir --parents
     uname_S  := Windows
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
-	SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
-	SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
-	TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
-	LDFLAGS := -flto -fuse-ld=lld-link
+    SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
+# dumb workaround for mysterious issue with msys2
+    ifeq (,$(findstring msys2,$(SHELL)))
+        SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
+        TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
+        CMD_SEP  := &
+        MKDIR    := mkdir
+        RM_R     := rmdir /s /q
+    else
+        TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
+        CMD_SEP  := ;
+        MKDIR    := mkdir -p
+        RM_R     := rm -rf
+    endif
+    LDFLAGS  += -fuse-ld=lld-link
 else
 ifeq ($(COMP), MINGW)
-    MKDIR    := mkdir --parents
+# god knows if this works we have no way to test it
+    MKDIR    := mkdir -p
+    CMD_SEP  := &
+    RM_R     := rm -rf
     uname_S  := Windows
     SUFFIX   := .exe
     SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
     SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
 	SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
     TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
-    LDFLAGS := -flto
 else
-    MKDIR   := mkdir -p
-    uname_S := $(shell uname -s)
-    SUFFIX  :=
+    MKDIR    := mkdir -p
+    CMD_SEP  := ;
+    RM_R     := rm -rf
+    uname_S  := $(shell uname -s)
+    SUFFIX   :=
     SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
     SRC_DIRECTORIES += $(shell find $(TESTDIR) -type d)
     TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
 endif
 endif
 
-CXXFLAGS := -O3 -std=c++17 -march=native $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
+CXXFLAGS := -O3 -std=c++20 -march=native $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
 
 SRC_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
 
@@ -71,10 +85,11 @@ $(EXE): $(OBJECTS)
 $(TMPDIR)/%.o: %.cpp | $(TMPDIR)
 	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@ $(LDFLAGS)
 
+# another msys2 workaround
 $(TMPDIR):
-	$(MKDIR) $(TMP_DIRS)
+	$(foreach dir,$(TMP_DIRS),$(MKDIR) $(dir) ${CMD_SEP})
 
 clean:
-	rm -rf $(TMPDIR)
+	$(RM_R) $(TMPDIR)
 
 -include $(DEPENDS)

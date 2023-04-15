@@ -10,3 +10,4 @@ build
 /tmp/
 midnight
 midnight-tests
+/*.exe
