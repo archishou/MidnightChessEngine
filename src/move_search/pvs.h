@@ -138,12 +138,12 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		if (alpha >= beta) return alpha;
 	}
 
-    int alpha_initial = alpha;
-    bool in_check = board.in_check<color>();
-    bool pv_node = alpha != beta - 1;
-    int static_eval = 0;
+	int alpha_initial = alpha;
+	bool in_check = board.in_check<color>();
+	bool pv_node = alpha != beta - 1;
+	int static_eval = 0;
 
-    if (in_check) depth++;
+	if (in_check) depth++;
 
 	if (depth == 0) {
 		return q_search<color>(board, ply, alpha, beta);
