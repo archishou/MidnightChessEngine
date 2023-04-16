@@ -7,6 +7,7 @@
 #include "utils/helpers.h"
 #include "engine.h"
 #include "fstream"
+#include "utils/clock.h"
 
 template<Color Us>
 unsigned long long perft_node_count(Position& p, unsigned int depth) {
@@ -75,11 +76,13 @@ TEST_CASE("PerftTestPositionKnightCheck"){
 	CHECK_EQ(test_perft_node_count("5n2/3KPk2/8/3p1N2/3P4/8/8/8 w - - 17 102", 8), 80433958);
 }
 
-TEST_CASE("Perft126") {
+TEST_CASE("perft-all") {
 	std::string perft_file_path = "/Users/archishmaan/Documents/CodeProjects/chess-engine/"
 								  "tests/move-gen-tests/perft_results.txt";
 	std::ifstream input_file(perft_file_path);
 	std::string input_line;
+	reset_clock();
+	unsigned long long total_nodes = 0;
 	while (std::getline(input_file, input_line)) {
 		std::vector<std::string> split_perft = split(input_line, ";");
 		std::string fen = split_perft[0];
@@ -89,9 +92,12 @@ TEST_CASE("Perft126") {
 			int expected_node_count = std::stoi(split(expected, " ")[2]);
 			//std::cout << "Running fen: " << fen << " depth " << depth << " expected node count " << expected_node_count << std::endl;
 			CHECK_EQ(test_perft_node_count(fen, depth), expected_node_count);
-			//std::cout << "Passed fen: " << fen << " depth " << depth << " expected node count " << expected_node_count << std::endl;
+			total_nodes += expected_node_count;
 		}
 	}
+	std::cout << "Total Nodes: " << total_nodes << std::endl;
+	std::cout << "Elapsed Time(ms): " << get_elapsed_time(TimeResolution::Milliseconds) << std::endl;
+	std::cout << "NPS: " << (total_nodes * 1000) / get_elapsed_time(TimeResolution::Milliseconds) << std::endl;
 	input_file.close();
 }
 
