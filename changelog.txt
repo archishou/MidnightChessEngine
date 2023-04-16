@@ -351,6 +351,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.99 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 1016 W: 338 L: 193 D: 485
 
+Threat Eval
+https://engineprogramming.pythonanywhere.com/test/57/
+ELO   | 31.10 +- 12.32 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 3.00 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 1736 W: 568 L: 413 D: 755
 
 Refactor Q MoveGen
 https://engineprogramming.pythonanywhere.com/test/68/
