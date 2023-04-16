@@ -144,8 +144,8 @@ public:
 	template<Color C> void undo(Move m);
 	template<Color c> void undo_null();
 
-	template<Color Us>
-	Move *generate_legals(Move *list, const MoveGenerationOptions &options);
+	template<Color Us, MoveGenType move_gen_type>
+	Move *generate_legals(Move *list);
 
 	int fifty_mr_clock() const { return history[game_ply].fifty_mr_clock; }
 	int half_move_clock;
@@ -375,215 +375,8 @@ void Position::undo_null() {
 	update_hash_board_features(old_castling_state, old_ep_file);
 }
 
-template<Color Us>
-Move* Position::generate_captures(Move *list) {
-	constexpr Color Them = ~Us;
-
-	const Bitboard us_bb = all_pieces<Us>();
-	const Bitboard them_bb = all_pieces<Them>();
-	const Bitboard all = us_bb | them_bb;
-
-	const Square our_king = bsf(bitboard_of(Us, KING));
-	const Square their_king = bsf(bitboard_of(Them, KING));
-
-	const Bitboard our_diag_sliders = diagonal_sliders<Us>();
-	const Bitboard their_diag_sliders = diagonal_sliders<Them>();
-	const Bitboard our_orth_sliders = orthogonal_sliders<Us>();
-	const Bitboard their_orth_sliders = orthogonal_sliders<Them>();
-
-	Bitboard b1, b2, b3;
-
-	Bitboard danger = 0;
-
-	danger |= pawn_attacks<Them>(bitboard_of(Them, PAWN)) | attacks<KING>(their_king, all);
-
-	b1 = bitboard_of(Them, KNIGHT);
-	while (b1) danger |= attacks<KNIGHT>(pop_lsb(&b1), all);
-
-	b1 = their_diag_sliders;
-	while (b1) danger |= attacks<BISHOP>(pop_lsb(&b1), all ^ SQUARE_BB[our_king]);
-
-	b1 = their_orth_sliders;
-	while (b1) danger |= attacks<ROOK>(pop_lsb(&b1), all ^ SQUARE_BB[our_king]);
-
-	b1 = attacks<KING>(our_king, all) & ~(us_bb | danger);
-	list = make<CAPTURE>(our_king, b1 & them_bb, list);
-
-	Bitboard capture_mask;
-
-	Bitboard quiet_mask;
-
-	Square s;
-
-	checkers = (attacks<KNIGHT>(our_king, all) & bitboard_of(Them, KNIGHT))
-			   | (pawn_attacks<Us>(our_king) & bitboard_of(Them, PAWN));
-
-	Bitboard candidates = (attacks<ROOK>(our_king, them_bb) & their_orth_sliders)
-						  | (attacks<BISHOP>(our_king, them_bb) & their_diag_sliders);
-
-	pinned = 0;
-	while (candidates) {
-		s = pop_lsb(&candidates);
-		b1 = SQUARES_BETWEEN_BB[our_king][s] & us_bb;
-		if (b1 == 0) checkers ^= SQUARE_BB[s];
-		else if ((b1 & b1 - 1) == 0) pinned ^= b1;
-	}
-
-	const Bitboard not_pinned = ~pinned;
-
-	switch (sparse_pop_count(checkers)) {
-		case 2:
-			return list;
-		case 1: {
-			Square checker_square = bsf(checkers);
-
-			switch (board[checker_square]) {
-				case make_piece(Them, PAWN):
-					if (checkers == shift<relative_dir<Us>(SOUTH)>(SQUARE_BB[history[game_ply].epsq])) {
-						b1 = pawn_attacks<Them>(history[game_ply].epsq) & bitboard_of(Us, PAWN) & not_pinned;
-						while (b1) *list++ = Move(pop_lsb(&b1), history[game_ply].epsq, EN_PASSANT);
-					}
-					[[fallthrough]];
-				case make_piece(Them, KNIGHT):
-					b1 = attackers_from<Us>(checker_square, all) & not_pinned;
-					while (b1) {
-						s = pop_lsb(&b1);
-						if (type_of(board[s]) == PAWN && rank_of(s) == relative_rank<Us>(RANK7)) {
-							*list++ = Move(s, checker_square, PC_QUEEN);
-							*list++ = Move(s, checker_square, PC_ROOK);
-							*list++ = Move(s, checker_square, PC_BISHOP);
-							*list++ = Move(s, checker_square, PC_KNIGHT);
-						}
-						else *list++ = Move(s, checker_square, CAPTURE);
-					}
-
-					return list;
-				default:
-					capture_mask = checkers;
-					quiet_mask = SQUARES_BETWEEN_BB[our_king][checker_square];
-					break;
-			}
-			break;
-		}
-
-		default:
-			capture_mask = them_bb;
-			quiet_mask = ~all;
-
-			if (history[game_ply].epsq != NO_SQUARE) {
-				b2 = pawn_attacks<Them>(history[game_ply].epsq) & bitboard_of(Us, PAWN);
-				b1 = b2 & not_pinned;
-				while (b1) {
-					s = pop_lsb(&b1);
-					if ((sliding_attacks(our_king, all ^ SQUARE_BB[s]
-												   ^ shift<relative_dir<Us>(SOUTH)>(SQUARE_BB[history[game_ply].epsq]),
-										 MASK_RANK[rank_of(our_king)]) &
-						 their_orth_sliders) == 0)
-						*list++ = Move(s, history[game_ply].epsq, EN_PASSANT);
-				}
-
-				b1 = b2 & pinned & LINE[history[game_ply].epsq][our_king];
-				if (b1) {
-					*list++ = Move(bsf(b1), history[game_ply].epsq, EN_PASSANT);
-				}
-			}
-
-			b1 = ~(not_pinned | bitboard_of(Us, KNIGHT));
-			while (b1) {
-				s = pop_lsb(&b1);
-				b2 = attacks(type_of(board[s]), s, all) & LINE[our_king][s];
-				list = make<CAPTURE>(s, b2 & capture_mask, list);
-			}
-
-			b1 = ~not_pinned & bitboard_of(Us, PAWN);
-			while (b1) {
-				s = pop_lsb(&b1);
-
-				if (rank_of(s) == relative_rank<Us>(RANK7)) {
-					b2 = pawn_attacks<Us>(s) & capture_mask & LINE[our_king][s];
-					list = make<PROMOTION_CAPTURES>(s, b2, list);
-				}
-				else {
-					b2 = pawn_attacks<Us>(s) & them_bb & LINE[s][our_king];
-					list = make<CAPTURE>(s, b2, list);
-				}
-			}
-			break;
-	}
-
-	b1 = bitboard_of(Us, KNIGHT) & not_pinned;
-	while (b1) {
-		s = pop_lsb(&b1);
-		b2 = attacks<KNIGHT>(s, all);
-		list = make<CAPTURE>(s, b2 & capture_mask, list);
-	}
-
-	b1 = our_diag_sliders & not_pinned;
-	while (b1) {
-		s = pop_lsb(&b1);
-		b2 = attacks<BISHOP>(s, all);
-		list = make<CAPTURE>(s, b2 & capture_mask, list);
-	}
-
-	b1 = our_orth_sliders & not_pinned;
-	while (b1) {
-		s = pop_lsb(&b1);
-		b2 = attacks<ROOK>(s, all);
-		list = make<CAPTURE>(s, b2 & capture_mask, list);
-	}
-
-	b1 = bitboard_of(Us, PAWN) & not_pinned & ~MASK_RANK[relative_rank<Us>(RANK7)];
-
-	b2 = shift<relative_dir<Us>(NORTH)>(b1) & ~all;
-
-	b3 = shift<relative_dir<Us>(NORTH)>(b2 & MASK_RANK[relative_rank<Us>(RANK3)]) & quiet_mask;
-
-	b2 &= quiet_mask;
-
-	b2 = shift<relative_dir<Us>(NORTH_WEST)>(b1) & capture_mask;
-	b3 = shift<relative_dir<Us>(NORTH_EAST)>(b1) & capture_mask;
-
-	while (b2) {
-		s = pop_lsb(&b2);
-		*list++ = Move(s - relative_dir<Us>(NORTH_WEST), s, CAPTURE);
-	}
-
-	while (b3) {
-		s = pop_lsb(&b3);
-		*list++ = Move(s - relative_dir<Us>(NORTH_EAST), s, CAPTURE);
-	}
-
-	b1 = bitboard_of(Us, PAWN) & not_pinned & MASK_RANK[relative_rank<Us>(RANK7)];
-	if (b1) {
-		b2 = shift<relative_dir<Us>(NORTH_WEST)>(b1) & capture_mask;
-		b3 = shift<relative_dir<Us>(NORTH_EAST)>(b1) & capture_mask;
-
-		while (b2) {
-			s = pop_lsb(&b2);
-			*list++ = Move(s - relative_dir<Us>(NORTH_WEST), s, PC_KNIGHT);
-			*list++ = Move(s - relative_dir<Us>(NORTH_WEST), s, PC_BISHOP);
-			*list++ = Move(s - relative_dir<Us>(NORTH_WEST), s, PC_ROOK);
-			*list++ = Move(s - relative_dir<Us>(NORTH_WEST), s, PC_QUEEN);
-		}
-
-		while (b3) {
-			s = pop_lsb(&b3);
-			*list++ = Move(s - relative_dir<Us>(NORTH_EAST), s, PC_KNIGHT);
-			*list++ = Move(s - relative_dir<Us>(NORTH_EAST), s, PC_BISHOP);
-			*list++ = Move(s - relative_dir<Us>(NORTH_EAST), s, PC_ROOK);
-			*list++ = Move(s - relative_dir<Us>(NORTH_EAST), s, PC_QUEEN);
-		}
-	}
-
-	return list;
-}
-
-//TODO: separate logic out for each MoveGenerationOption
-template<Color Us>
-Move* Position::generate_legals(Move* list, const MoveGenerationOptions &options) {
-	if (options.generate_captures && !options.generate_quiet && !options.generate_promotion && !options.generate_checks) {
-		return generate_captures<Us>(list);
-	}
+template<Color Us, MoveGenType move_gen_type>
+Move* Position::generate_legals(Move* list) {
 	constexpr Color Them = ~Us;
 
 	const Bitboard us_bb = all_pieces<Us>();
@@ -818,17 +611,10 @@ Move* Position::generate_legals(Move* list, const MoveGenerationOptions &options
 	return list;
 }
 
-template<Color Us>
+template<Color Us, MoveGenType move_gen_type>
 class MoveList {
 public:
-	const MoveGenerationOptions DefaultMoveGenerationOptions = {
-		.generate_captures = true,
-		.generate_checks = true,
-		.generate_promotion = true,
-		.generate_quiet = true,
-	};
-	explicit MoveList(Position& p) : last(p.generate_legals<Us>(list, DefaultMoveGenerationOptions)) {}
-	explicit MoveList(Position& p, const MoveGenerationOptions& options) : last(p.generate_legals<Us>(list, options)) {}
+	explicit MoveList(Position& p) : last(p.generate_legals<Us, move_gen_type>(list)) {}
 
 	const Move* begin() const { return list; }
 	const Move* end() const { return last; }

@@ -193,6 +193,11 @@ constexpr Bitboard file_fill(const Bitboard b) {
 	return fill<NORTH>(b) | fill<SOUTH>(b);
 }
 
+const int NMOVEGENS = 64;
+enum MoveGenType : int {
+	ALL, QSEARCH
+};
+
 //The type of the move
 enum MoveFlag : int {
 	QUIET = 0b0000, DOUBLE_PUSH = 0b0001,

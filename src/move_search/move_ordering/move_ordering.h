@@ -34,8 +34,8 @@ int in_opponent_pawn_territory(Move move, Position& board) {
 	return 0;
 }
 
-template<Color color>
-ScoredMoves order_moves(MoveList<color>& move_list, Position& board, int ply) {
+template<Color color, MoveGenType move_gen_type>
+ScoredMoves order_moves(MoveList<color, move_gen_type>& move_list, Position& board, int ply) {
 	ScoredMoves scored_moves;
 	scored_moves.reserve(move_list.size());
 	Move previous_best_move = Move();

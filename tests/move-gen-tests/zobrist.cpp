@@ -9,7 +9,7 @@
 
 template<Color Us>
 void perft_hash(Position& p, unsigned int depth) {
-	MoveList<Us> list(p);
+	MoveList<Us, ALL> list(p);
 	if (depth == 1) return;
 	for (Move move : list) {
 		ZobristHash initial_hash = p.get_hash();

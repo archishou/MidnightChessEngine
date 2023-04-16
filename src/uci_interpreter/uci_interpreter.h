@@ -115,7 +115,7 @@ template<Color Us, bool bulk>
 unsigned long long perft(Position& p, unsigned int depth) {
 	unsigned long long nodes = 0;
 
-	MoveList<Us> list(p);
+	MoveList<Us, ALL> list(p);
 
 	if (bulk && depth == 1) return static_cast<unsigned long long>(list.size());
 	if (!bulk && depth == 0) return 1;
@@ -133,7 +133,7 @@ template<Color Us, bool bulk>
 unsigned long long split_perft(Position& p, unsigned int depth) {
 	unsigned long long nodes = 0, pf;
 
-	MoveList<Us> list(p);
+	MoveList<Us, ALL> list(p);
 
 	for (Move move : list) {
 		std::cout << move;

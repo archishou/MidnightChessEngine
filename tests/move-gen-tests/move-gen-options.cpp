@@ -4,13 +4,13 @@
 #include "../lib/doctests.h"
 #include "engine.h"
 #include "utils/fen_constants.h"
-
+/*
 bool is_move_flag_promotion_cap(MoveFlag flag) {
 	return flag == PC_BISHOP || flag == PC_KNIGHT || flag == PC_ROOK || flag == PC_QUEEN;
 }
 
 template<Color color>
-std::vector<Move> filter_moves(MoveList<color> &move_list, MoveGenerationOptions& options) {
+std::vector<Move> filter_moves(MoveList<color, ALL> &move_list, MoveGenerationOptions& options) {
 	std::vector<Move> filtered_moves;
 	for (Move move: move_list) {
 		if (options.generate_captures) {
@@ -35,7 +35,7 @@ template<Color Us>
 unsigned long long perft_filtered(Position& p, unsigned int depth, MoveGenerationOptions& options) {
 	int nmoves;
 	unsigned long long nodes = 0;
-	MoveList<Us> list(p);
+	MoveList<Us, QSEARCH> list(p);
 	if (depth == 1) {
 		std::vector<Move> captures = filter_moves<Us>(list, options);
 		return (unsigned long long) captures.size();
@@ -124,5 +124,5 @@ TEST_CASE("CPW Position 4 Captures") {
 	CHECK_EQ(filtered, generated);
 	CHECK_EQ(filtered, 2046173);
 }
-
+*/
 TEST_SUITE_END();

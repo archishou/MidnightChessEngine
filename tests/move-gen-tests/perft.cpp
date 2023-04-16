@@ -14,7 +14,7 @@ unsigned long long perft_node_count(Position& p, unsigned int depth) {
 	int nmoves;
 	unsigned long long nodes = 0;
 
-	MoveList<Us> list(p);
+	MoveList<Us, ALL> list(p);
 	if (depth == 1) return (unsigned long long) list.size();
 	for (Move move : list) {
 		p.play<Us>(move);
