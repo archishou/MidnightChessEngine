@@ -350,3 +350,11 @@ ELO   | 49.93 +- 15.54 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.99 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 1016 W: 338 L: 193 D: 485
+
+
+Refactor Q MoveGen
+https://engineprogramming.pythonanywhere.com/test/68/
+ELO   | 2.32 +- 9.27 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.15 (-2.94, 2.94) [-10.00, 0.00]
+GAMES | N: 2848 W: 763 L: 744 D: 1341
