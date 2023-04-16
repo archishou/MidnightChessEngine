@@ -92,7 +92,7 @@ inline void bench() {
 		initialize_uci(p);
 		Position::set(BENCH_FENS[idx], p);
 
-		std::cout << "\nPosition: " << idx + 1 << std::endl;
+		std::cout << "\nPosition: " << idx + 1 << " " << BENCH_FENS[idx] << std::endl;
 
 		BestMoveSearchParameters parameters = {
 				.depth = 12,
