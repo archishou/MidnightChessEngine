@@ -248,10 +248,36 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 }
 
 template<Color color>
-PVSData pvs_root(Position& board, short depth, int time_limit) {
+PVSData aspiration_windows(Position& board, int prev_score, short depth, int time_limit) {
 	reset_data();
 	data.time_limit = time_limit;
-	pvs<color>(board, depth, 0, NEG_INF_CHESS, POS_INF_CHESS, false);
+
+	int alpha = NEG_INF_CHESS;
+	int beta = POS_INF_CHESS;
+	int delta = ASP_WINDOW_INIT_DELTA;
+
+	if (depth > ASP_WINDOW_MIN_DEPTH) {
+		alpha = std::max(prev_score - ASP_WINDOW_INIT_WINDOW, NEG_INF_CHESS);
+		beta  = std::min(prev_score + ASP_WINDOW_INIT_WINDOW, POS_INF_CHESS);
+	}
+
+	while (true) {
+		if (alpha < -ASP_WINDOW_FULL_SEARCH_BOUNDS) alpha = NEG_INF_CHESS;
+		if (beta  > -ASP_WINDOW_FULL_SEARCH_BOUNDS) beta  = POS_INF_CHESS;
+		std::cout << alpha << " " << beta << std::endl;
+
+		pvs<color>(board, depth, 0, alpha, beta, false);
+		int score = data.value;
+
+		if (score <= alpha) {
+			alpha = std::max(alpha - depth, NEG_INF_CHESS);
+			beta = (alpha + 3 * beta) / 4;
+		} else if (score >= beta) {
+			beta = std::min(beta + delta, POS_INF_CHESS);
+			depth -= 1;
+		} else break;
+		delta += delta * 2 / 3;
+	}
 	data.best_move = data.pv.table[0][0];
 	return data;
 }

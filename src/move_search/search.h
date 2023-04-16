@@ -28,7 +28,7 @@ BestMoveSearchResults iterative_deepening(Position& board, const BestMoveSearchP
 		if (time_elapsed_exceeds(params.soft_time_limit, TimeResolution::Milliseconds)) {
 			break;
 		}
-		struct PVSData ab_results = pvs_root<color>(board, sub_depth, params.hard_time_limit);
+		PVSData ab_results = aspiration_windows<color>(board, search_results.value, sub_depth, params.hard_time_limit);
 		if (ab_results.search_completed) {
 			std::memset(search_results.pv, 0, sizeof(search_results.pv));
 			update_best_move_results(search_results, ab_results, sub_depth, params.debug_info);
