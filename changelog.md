@@ -444,3 +444,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.15 (-2.94, 2.94) [-10.00, 0.00]
 GAMES | N: 2848 W: 763 L: 744 D: 1341
 ```
+
+### Generate Promotions in Q Search
+https://engineprogramming.pythonanywhere.com/test/73/
+```
+ELO | 6.46 +- 4.74 (95%)
+SPRT | 8.0+0.08s Threads=1 Hash=64MB
+LLR | 3.00 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 10968 W: 3028 L: 2824 D: 5116
+```
