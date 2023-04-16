@@ -1,6 +1,5 @@
 #include "tables.h"
 #include "types.h"
-#include <iostream>
 #include <cstring>
 
 const Bitboard KING_ATTACKS[64] = {

@@ -27,13 +27,6 @@ struct PVSData {
 	int time_limit{};
 };
 
-inline const MoveGenerationOptions QSearchMoveGenerationsOptions = {
-	.generate_captures = true,
-	.generate_checks = false,
-	.generate_promotion = false,
-	.generate_quiet = false,
-};
-
 static PVSData data;
 
 inline void reset_data() {

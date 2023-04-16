@@ -14,10 +14,10 @@ void TranspositionTable::reset_table() {
 	default_entry.value = 0;
 	default_entry.zobrist_hash = 0;
 	default_entry.depth = 0;
-	default_entry.best_move = 0;
+	default_entry.best_move = Move();
 	default_entry.node_type = EXACT;
-	for (int i = 0; i < static_cast<int>(transposition_table.size()); i++) {
-		transposition_table[i] = default_entry;
+	for (auto & i : transposition_table) {
+		i = default_entry;
 	}
 }
 

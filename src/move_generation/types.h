@@ -218,7 +218,7 @@ private:
 public:
 	inline Move() : move(0) {}
 	
-	inline Move(uint16_t m) { move = m; }
+	inline explicit Move(uint16_t m) { move = m; }
 
 	inline Move(Square from, Square to) : move(0) {
 		move = (from << 6) | to;
@@ -228,27 +228,27 @@ public:
 		move = (flags << 12) | (from << 6) | to;
 	}
 
-	Move(const std::string& m) {
+	explicit Move(const std::string& m) {
 		this->move = (create_square(File(m[0] - 'a'), Rank(m[1] - '1')) << 6) |
 			create_square(File(m[2] - 'a'), Rank(m[3] - '1'));
 	}
 
-	inline Square to() const { return Square(move & 0x3f); }
-	inline Square from() const { return Square((move >> 6) & 0x3f); }
-	inline int to_from() const { return move & 0xffff; }
-	inline MoveFlag flag() const { return MoveFlag((move >> 12) & 0xf); }
+	[[nodiscard]] inline Square to() const { return Square(move & 0x3f); }
+	[[nodiscard]] inline Square from() const { return Square((move >> 6) & 0x3f); }
+	[[nodiscard]] inline int to_from() const { return move & 0xffff; }
+	[[nodiscard]] inline MoveFlag flag() const { return MoveFlag((move >> 12) & 0xf); }
 
-	inline bool is_capture() const {
+	[[nodiscard]] inline bool is_capture() const {
 		return (move >> 12) & CAPTURE;
 	}
 
-	inline bool is_promotion() const {
+	[[nodiscard]] inline bool is_promotion() const {
 		MoveFlag flag = this->flag();
 		return flag == PR_KNIGHT || flag == PR_BISHOP || flag == PR_ROOK || flag == PR_QUEEN ||
 			flag == PC_KNIGHT || flag == PC_BISHOP || flag == PC_ROOK || flag == PC_QUEEN;
 	}
 
-	inline bool is_quiet() const {
+	[[nodiscard]] inline bool is_quiet() const {
 		return !is_capture() && !is_promotion();
 	}
 

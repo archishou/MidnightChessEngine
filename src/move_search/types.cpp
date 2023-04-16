@@ -4,7 +4,7 @@
 #include "types.h"
 std::ostream& operator<<(std::ostream& os, const Line& line) {
 	for(const Move & i : line) {
-		if (i == 0) break;
+		if (i == Move()) break;
 		os << i << " ";
 	}
 	return os;

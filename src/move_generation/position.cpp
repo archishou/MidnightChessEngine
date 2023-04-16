@@ -12,14 +12,14 @@ uint64_t zobrist::zobrist_color_key;
 
 void zobrist::initialise_zobrist_keys() {
 	PRNG rng(70026072);
-	for (int i = 0; i < NPIECES; i++)
+	for (auto & i : zobrist::zobrist_piece_table)
 		for (int j = 0; j < NSQUARES; j++)
-			zobrist::zobrist_piece_table[i][j] = rng.rand<uint64_t>();
-	for (int i = 0; i < NCASTLING_RIGHTS; i++) {
-		zobrist::zobrist_castling_rights_table[i] = rng.rand<uint64_t>();
+			i[j] = rng.rand<uint64_t>();
+	for (unsigned long long & i : zobrist::zobrist_castling_rights_table) {
+		i = rng.rand<uint64_t>();
 	}
-	for (int i = 0; i < NFILES + 1; i++) {
-		zobrist::zobrist_ep_file_table[i] = rng.rand<uint64_t>();
+	for (unsigned long long & i : zobrist::zobrist_ep_file_table) {
+		i = rng.rand<uint64_t>();
 	}
 	zobrist_color_key = rng.rand<uint64_t>();
 }
@@ -124,6 +124,8 @@ void Position::set(const std::string& fen, Position& p) {
 			case 'q':
 				p.history[p.game_ply].entry &= ~BLACK_OOO_MASK;
 				break;
+			default:
+				continue;
 		}
 	}
 
@@ -179,8 +181,8 @@ void Position::clear() {
     pinned = 0;
     checkers = 0;
 
-    for (int i = 0; i < 15; i++) { piece_bb[i] = 0; }
-    for (int i = 0; i < 64; i++) { board[i] = NO_PIECE; }
-	for (int i = 0; i < 300; i++) { history[i] = UndoInfo(); }
+    for (unsigned long long & i : piece_bb) { i = 0; }
+    for (auto & i : board) { i = NO_PIECE; }
+	for (int i = 0; i < 300; i++) history[i] = UndoInfo();
 	hash_history.clear();
 }

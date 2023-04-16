@@ -16,7 +16,7 @@ class PRNG {
 	}
 
 public:
-	PRNG(uint64_t seed) : s(seed) {}
+	explicit PRNG(uint64_t seed) : s(seed) {}
 	template<typename T> T rand() { return T(rand64()); }
 	template<typename T>
 	T sparse_rand() { return T(rand64() & rand64() & rand64()); }
@@ -30,13 +30,6 @@ namespace zobrist {
 	extern void initialise_zobrist_keys();
 }
 
-struct MoveGenerationOptions {
-	bool generate_captures;
-	bool generate_checks;
-	bool generate_promotion;
-	bool generate_quiet;
-};
-
 struct UndoInfo {
 	Bitboard entry;
 	Piece captured;
@@ -46,13 +39,7 @@ struct UndoInfo {
 
 	constexpr UndoInfo() : entry(0), captured(NO_PIECE), epsq(NO_SQUARE), fifty_mr_clock(0) {}
 	UndoInfo(const UndoInfo& prev) : entry(prev.entry), captured(NO_PIECE), epsq(NO_SQUARE), fifty_mr_clock(prev.fifty_mr_clock) {}
-	UndoInfo& operator=(const UndoInfo& other) {
-		entry = other.entry;
-		captured = other.captured;
-		epsq = other.epsq;
-		fifty_mr_clock = other.fifty_mr_clock;
-		return *this;
-	}
+	UndoInfo& operator=(const UndoInfo& other) = default;
 };
 
 class Position {
@@ -62,9 +49,6 @@ private:
 	Color side_to_play;
 	int game_ply;
 	ZobristHash hash;
-
-	template<Color Us>
-	Move *generate_captures(Move *list);
 
 public:
     //Longest game in history was
@@ -79,12 +63,11 @@ public:
 	Position() : piece_bb{ 0 }, board{}, side_to_play(WHITE), game_ply(0),
 				 hash(0), checkers(0), pinned(0), half_move_clock(1) {
 
-		for (int i = 0; i < 64; i++) board[i] = NO_PIECE;
+		for (auto & i : board) i = NO_PIECE;
 		history[0] = UndoInfo();
 	}
 
     void clear();
-    static bool equality(Position& p1, Position&p2);
 
     static void set(const std::string& fen, Position& p);
 
@@ -104,12 +87,12 @@ public:
 	void move_piece_quiet(Square from, Square to);
 
 	friend std::ostream& operator<<(std::ostream& os, const Position& p);
-	std::string fen() const;
+	[[nodiscard]] std::string fen() const;
 
 	Position& operator=(const Position&) = delete;
 	inline bool operator==(const Position& other) const { return hash == other.hash; }
 
-	inline Bitboard castling_state() const {
+	[[nodiscard]] inline Bitboard castling_state() const {
 		Bitboard entry = history[game_ply].entry;
 		int white_oo = !(entry & WHITE_OO_MASK) << 3;
 		int white_ooo = !(entry & WHITE_OOO_MASK) << 2;
@@ -118,24 +101,24 @@ public:
 		return white_ooo | black_oo | white_oo | black_ooo;
 	}
 
-	inline Bitboard bitboard_of(Piece pc) const { return piece_bb[pc]; }
-	inline Bitboard bitboard_of(Color c, PieceType pt) const { return piece_bb[make_piece(c, pt)]; }
-	inline Piece at(Square sq) const { return board[sq]; }
-	inline Color turn() const { return side_to_play; }
-	inline int ply() const { return game_ply; }
+	[[nodiscard]] inline Bitboard bitboard_of(Piece pc) const { return piece_bb[pc]; }
+	[[nodiscard]] inline Bitboard bitboard_of(Color c, PieceType pt) const { return piece_bb[make_piece(c, pt)]; }
+	[[nodiscard]] inline Piece at(Square sq) const { return board[sq]; }
+	[[nodiscard]] inline Color turn() const { return side_to_play; }
+	[[nodiscard]] inline int ply() const { return game_ply; }
 
-	inline Square ep_square() const { return history[game_ply].epsq; }
-	short ep_file() const { return ep_square() == NO_SQUARE ? NFILES : file_of(ep_square()); }
+	[[nodiscard]] inline Square ep_square() const { return history[game_ply].epsq; }
+	[[nodiscard]] short ep_file() const { return ep_square() == NO_SQUARE ? NFILES : file_of(ep_square()); }
 
 	void update_hash_board_features(Bitboard original_castle_state, int original_ep_file);
-	inline ZobristHash get_hash() const { return hash; }
+	[[nodiscard]] inline ZobristHash get_hash() const { return hash; }
 
-	template<Color C> inline Bitboard diagonal_sliders() const;
-	template<Color C> inline Bitboard orthogonal_sliders() const;
-	template<Color C> inline Bitboard all_pieces() const;
-	template<Color C> inline Bitboard attackers_from(Square s, Bitboard occ) const;
+	template<Color C> [[nodiscard]] inline Bitboard diagonal_sliders() const;
+	template<Color C> [[nodiscard]] inline Bitboard orthogonal_sliders() const;
+	template<Color C> [[nodiscard]] inline Bitboard all_pieces() const;
+	template<Color C> [[nodiscard]] inline Bitboard attackers_from(Square s, Bitboard occ) const;
 
-	template<Color C> inline bool in_check() const {
+	template<Color C> [[nodiscard]] inline bool in_check() const {
 		return attackers_from<~C>(bsf(bitboard_of(C, KING)), all_pieces<WHITE>() | all_pieces<BLACK>());
 	}
 
@@ -147,7 +130,7 @@ public:
 	template<Color Us, MoveGenType move_gen_type>
 	Move *generate_legals(Move *list);
 
-	int fifty_mr_clock() const { return history[game_ply].fifty_mr_clock; }
+	[[nodiscard]] int fifty_mr_clock() const { return history[game_ply].fifty_mr_clock; }
 	int half_move_clock;
 };
 
@@ -621,9 +604,9 @@ class MoveList {
 public:
 	explicit MoveList(Position& p) : last(p.generate_legals<Us, move_gen_type>(list)) {}
 
-	const Move* begin() const { return list; }
-	const Move* end() const { return last; }
-	size_t size() const { return last - list; }
+	[[nodiscard]] const Move* begin() const { return list; }
+	[[nodiscard]] const Move* end() const { return last; }
+	[[nodiscard]] size_t size() const { return last - list; }
 private:
     Move list[218];
 	Move *last;
