@@ -34,29 +34,19 @@ ifeq ($(OS), Windows_NT)
         MKDIR    := mkdir -p
         RM_R     := rm -rf
     endif
-    LDFLAGS  += -fuse-ld=lld-link
+    LDFLAGS  += -fuse-ld=lld
 else
-ifeq ($(COMP), MINGW)
-# god knows if this works we have no way to test it
-    MKDIR    := mkdir -p
-    CMD_SEP  := &
-    RM_R     := rm -rf
-    uname_S  := Windows
-    SUFFIX   := .exe
-    SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
-    SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
-	SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
-    TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
-else
-    MKDIR    := mkdir -p
     CMD_SEP  := ;
+    MKDIR    := mkdir -p
     RM_R     := rm -rf
     uname_S  := $(shell uname -s)
     SUFFIX   :=
     SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
     SRC_DIRECTORIES += $(shell find $(TESTDIR) -type d)
     TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
-endif
+    ifneq (,$(findstring clang,$(shell $(CXX) --version)))
+        LDFLAGS += -fuse-ld=lld
+    endif
 endif
 
 CXXFLAGS := -O3 -std=c++20 -march=native $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
