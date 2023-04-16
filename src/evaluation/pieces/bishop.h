@@ -33,7 +33,7 @@ constexpr Score evaluate_bishops(Position& board) {
 		const Bitboard attacking_pawns = them_pawns & pawn_attacks<color>(bishop_square);
 		score += ATTACKED_BY_PAWN[BISHOP] * pop_count(attacking_pawns);
 
-		const Bitboard attacked_knights = pseudo_legal_moves & board.bitboard_of(~color, BISHOP);
+		const Bitboard attacked_knights = pseudo_legal_moves & board.bitboard_of(~color, KNIGHT);
 		score += read_threat_bonus<BISHOP, KNIGHT>() * pop_count(attacked_knights);
 
 		const Bitboard attacked_rooks = pseudo_legal_moves & board.bitboard_of(~color, ROOK);
