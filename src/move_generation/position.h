@@ -516,10 +516,9 @@ Move* Position::generate_legals(Move* list) {
 				b2 = pawn_attacks<Us>(s) & them_bb & LINE[s][our_king];
 				list = make<CAPTURE>(s, b2, list);
 
-				b2 = shift<relative_dir<Us>(NORTH)>(SQUARE_BB[s]) & ~all & LINE[our_king][s];
-				b3 = shift<relative_dir<Us>(NORTH)>(b2 &
-					MASK_RANK[relative_rank<Us>(RANK3)]) & ~all & LINE[our_king][s];
 				if constexpr (move_gen_type == ALL) {
+					b2 = shift<relative_dir<Us>(NORTH)>(SQUARE_BB[s]) & ~all & LINE[our_king][s];
+					b3 = shift<relative_dir<Us>(NORTH)>(b2 & MASK_RANK[relative_rank<Us>(RANK3)]) & ~all & LINE[our_king][s];
 					list = make<QUIET>(s, b2, list);
 					list = make<DOUBLE_PUSH>(s, b3, list);
 				}
