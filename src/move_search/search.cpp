@@ -3,6 +3,7 @@
 //
 #include "search.h"
 void update_best_move_results(BestMoveSearchResults& search_results, PVSData& ab_results, int sub_depth, bool debug) {
+	std::memset(search_results.pv, 0, sizeof(search_results.pv));
 	search_results.value = ab_results.value;
 	search_results.best_move = ab_results.best_move;
 	search_results.depth_searched = sub_depth;
