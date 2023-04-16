@@ -407,7 +407,7 @@ Move* Position::generate_legals(Move* list) {
 	while (b1) danger |= attacks<ROOK>(pop_lsb(&b1), all ^ SQUARE_BB[our_king]);
 
 	b1 = attacks<KING>(our_king, all) & ~(us_bb | danger);
-	list = make<QUIET>(our_king, b1 & ~them_bb, list);
+	if constexpr (move_gen_type == ALL) list = make<QUIET>(our_king, b1 & ~them_bb, list);
 	list = make<CAPTURE>(our_king, b1 & them_bb, list);
 
 	Bitboard capture_mask;
@@ -489,17 +489,18 @@ Move* Position::generate_legals(Move* list) {
 				*list++ = Move(bsf(b1), history[game_ply].epsq, EN_PASSANT);
 			}
 		}
-		if (!((history[game_ply].entry & oo_mask<Us>()) | ((all | danger) & oo_blockers_mask<Us>())))
-			*list++ = Us == WHITE ? Move(e1, g1, OO) : Move(e8, g8, OO);
-		if (!((history[game_ply].entry & ooo_mask<Us>()) |
-			((all | (danger & ~ignore_ooo_danger<Us>())) & ooo_blockers_mask<Us>())))
-			*list++ = Us == WHITE ? Move(e1, c1, OOO) : Move(e8, c8, OOO);
+		if constexpr (move_gen_type == ALL) {
+			if (!((history[game_ply].entry & oo_mask<Us>()) | ((all | danger) & oo_blockers_mask<Us>())))
+				*list++ = Us == WHITE ? Move(e1, g1, OO) : Move(e8, g8, OO);
+			if (!((history[game_ply].entry & ooo_mask<Us>()) | ((all | (danger & ~ignore_ooo_danger<Us>())) & ooo_blockers_mask<Us>())))
+				*list++ = Us == WHITE ? Move(e1, c1, OOO) : Move(e8, c8, OOO);
+		}
 
 		b1 = ~(not_pinned | bitboard_of(Us, KNIGHT));
 		while (b1) {
 			s = pop_lsb(&b1);
 			b2 = attacks(type_of(board[s]), s, all) & LINE[our_king][s];
-			list = make<QUIET>(s, b2 & quiet_mask, list);
+			if (move_gen_type == ALL) list = make<QUIET>(s, b2 & quiet_mask, list);
 			list = make<CAPTURE>(s, b2 & capture_mask, list);
 		}
 
@@ -518,8 +519,10 @@ Move* Position::generate_legals(Move* list) {
 				b2 = shift<relative_dir<Us>(NORTH)>(SQUARE_BB[s]) & ~all & LINE[our_king][s];
 				b3 = shift<relative_dir<Us>(NORTH)>(b2 &
 					MASK_RANK[relative_rank<Us>(RANK3)]) & ~all & LINE[our_king][s];
-				list = make<QUIET>(s, b2, list);
-				list = make<DOUBLE_PUSH>(s, b3, list);
+				if constexpr (move_gen_type == ALL) {
+					list = make<QUIET>(s, b2, list);
+					list = make<DOUBLE_PUSH>(s, b3, list);
+				}
 			}
 		}
 		break;
@@ -529,7 +532,7 @@ Move* Position::generate_legals(Move* list) {
 	while (b1) {
 		s = pop_lsb(&b1);
 		b2 = attacks<KNIGHT>(s, all);
-		list = make<QUIET>(s, b2 & quiet_mask, list);
+		if constexpr (move_gen_type == ALL) list = make<QUIET>(s, b2 & quiet_mask, list);
 		list = make<CAPTURE>(s, b2 & capture_mask, list);
 	}
 
@@ -537,7 +540,7 @@ Move* Position::generate_legals(Move* list) {
 	while (b1) {
 		s = pop_lsb(&b1);
 		b2 = attacks<BISHOP>(s, all);
-		list = make<QUIET>(s, b2 & quiet_mask, list);
+		if constexpr (move_gen_type == ALL) list = make<QUIET>(s, b2 & quiet_mask, list);
 		list = make<CAPTURE>(s, b2 & capture_mask, list);
 	}
 
@@ -545,7 +548,7 @@ Move* Position::generate_legals(Move* list) {
 	while (b1) {
 		s = pop_lsb(&b1);
 		b2 = attacks<ROOK>(s, all);
-		list = make<QUIET>(s, b2 & quiet_mask, list);
+		if (move_gen_type == ALL) list = make<QUIET>(s, b2 & quiet_mask, list);
 		list = make<CAPTURE>(s, b2 & capture_mask, list);
 	}
 
@@ -553,15 +556,16 @@ Move* Position::generate_legals(Move* list) {
 	b2 = shift<relative_dir<Us>(NORTH)>(b1) & ~all;
 	b3 = shift<relative_dir<Us>(NORTH)>(b2 & MASK_RANK[relative_rank<Us>(RANK3)]) & quiet_mask;
 	b2 &= quiet_mask;
+	if constexpr (move_gen_type == ALL) {
+		while (b2) {
+			s = pop_lsb(&b2);
+			*list++ = Move(s - relative_dir<Us>(NORTH), s, QUIET);
+		}
 
-	while (b2) {
-		s = pop_lsb(&b2);
-		*list++ = Move(s - relative_dir<Us>(NORTH), s, QUIET);
-	}
-
-	while (b3) {
-		s = pop_lsb(&b3);
-		*list++ = Move(s - relative_dir<Us>(NORTH_NORTH), s, DOUBLE_PUSH);
+		while (b3) {
+			s = pop_lsb(&b3);
+			*list++ = Move(s - relative_dir<Us>(NORTH_NORTH), s, DOUBLE_PUSH);
+		}
 	}
 
 	b2 = shift<relative_dir<Us>(NORTH_WEST)>(b1) & capture_mask;
@@ -580,12 +584,14 @@ Move* Position::generate_legals(Move* list) {
 	b1 = bitboard_of(Us, PAWN) & not_pinned & MASK_RANK[relative_rank<Us>(RANK7)];
 	if (b1) {
 		b2 = shift<relative_dir<Us>(NORTH)>(b1) & quiet_mask;
-		while (b2) {
-			s = pop_lsb(&b2);
-			*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_KNIGHT);
-			*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_BISHOP);
-			*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_ROOK);
-			*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_QUEEN);
+		if constexpr (move_gen_type == ALL) {
+			while (b2) {
+				s = pop_lsb(&b2);
+				*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_KNIGHT);
+				*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_BISHOP);
+				*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_ROOK);
+				*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_QUEEN);
+			}
 		}
 
 		b2 = shift<relative_dir<Us>(NORTH_WEST)>(b1) & capture_mask;
