@@ -566,14 +566,12 @@ Move* Position::generate_legals(Move* list) {
 	b1 = bitboard_of(Us, PAWN) & not_pinned & MASK_RANK[relative_rank<Us>(RANK7)];
 	if (b1) {
 		b2 = shift<relative_dir<Us>(NORTH)>(b1) & quiet_mask;
-		if constexpr (move_gen_type == ALL) {
-			while (b2) {
-				s = pop_lsb(&b2);
-				*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_KNIGHT);
-				*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_BISHOP);
-				*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_ROOK);
-				*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_QUEEN);
-			}
+		while (b2) {
+			s = pop_lsb(&b2);
+			*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_KNIGHT);
+			*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_BISHOP);
+			*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_ROOK);
+			*list++ = Move(s - relative_dir<Us>(NORTH), s, PR_QUEEN);
 		}
 
 		b2 = shift<relative_dir<Us>(NORTH_WEST)>(b1) & capture_mask;
