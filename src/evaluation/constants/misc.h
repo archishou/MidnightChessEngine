@@ -22,6 +22,14 @@ constexpr Score PAWN_PROTECTION[] = {
 constexpr Score ATTACKED_BY_PAWN[] = {
 		S(0, 0),        S(-74, -33),    S(-81, -60),    S(-115, 1),     S(-86, -6),     S(0, 0)
 };
+constexpr Score THREATS[] = {
+		S(0, 0),        S(0, 0),    S(0, 0),    S(0, 0),     S(0, 0),     S(0, 0),
+		S(0, 0),        S(0, 0),    S(0, 0),    S(0, 0),     S(0, 0),     S(0, 0),
+		S(0, 0),        S(0, 0),    S(0, 0),    S(0, 0),     S(0, 0),     S(0, 0),
+		S(0, 0),        S(0, 0),    S(0, 0),    S(0, 0),     S(0, 0),     S(0, 0),
+		S(0, 0),        S(0, 0),    S(0, 0),    S(0, 0),     S(0, 0),     S(0, 0),
+		S(0, 0),        S(0, 0),    S(0, 0),    S(0, 0),     S(0, 0),     S(0, 0),
+};
 constexpr Score KING_RING_ATTACK_BONUS[] = {
 		S(20, -12),     S(30, -13),     S(19, -5),      S(34, -10),     S(31, 6),       S(0, 0)
 };
@@ -53,3 +61,8 @@ constexpr Score QUEEN_MOBILITY[] = {
 		S(44, -6),      S(126, -57),    S(66, -41),     S(287, -151)
 };
 constexpr Score TEMPO = S(23, 24);
+
+template<PieceType attacking, PieceType attacked>
+Score read_threat_bonus() {
+	return THREATS[attacking * NPIECE_TYPES + attacked];
+}
