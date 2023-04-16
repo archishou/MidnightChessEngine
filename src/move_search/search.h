@@ -21,7 +21,7 @@ void update_best_move_results(BestMoveSearchResults& search_results, PVSData& ab
 
 template<Color color>
 BestMoveSearchResults iterative_deepening(Position& board, const BestMoveSearchParameters& params) {
-	struct BestMoveSearchResults search_results;
+	BestMoveSearchResults search_results;
 
 	reset_clock();
 	for (int sub_depth = 1; sub_depth <= params.depth; sub_depth++) {
@@ -30,7 +30,6 @@ BestMoveSearchResults iterative_deepening(Position& board, const BestMoveSearchP
 		}
 		PVSData ab_results = aspiration_windows<color>(board, search_results.value, sub_depth, params.hard_time_limit);
 		if (ab_results.search_completed) {
-			std::memset(search_results.pv, 0, sizeof(search_results.pv));
 			update_best_move_results(search_results, ab_results, sub_depth, params.debug_info);
 		}
 	}

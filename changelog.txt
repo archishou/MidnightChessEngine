@@ -343,3 +343,10 @@ ELO   | 23.88 +- 10.74 (95%)
 SPRT  | 5.0+0.05s Threads=1 Hash=64MB
 LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 2288 W: 728 L: 571 D: 989
+
+Aspiration Windows
+https://engineprogramming.pythonanywhere.com/test/54/
+ELO   | 49.93 +- 15.54 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.99 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 1016 W: 338 L: 193 D: 485

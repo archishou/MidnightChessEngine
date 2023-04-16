@@ -118,7 +118,6 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 
 template<Color color>
 int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null) {
-
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
 	if ((data.q_nodes_searched + data.nodes_searched) % 1024 == 0) {
@@ -227,18 +226,24 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
 		}
 
-		value = std::max(value, new_value);
+
 		board.undo<color>(legal_move);
 		if (!data.search_completed) return 0;
-		if (value > alpha) {
-			if (ply == 0) data.value = value;
+
+		if (new_value > value) {
+			value = new_value;
+
 			update_pv(data.pv, ply, legal_move);
+			if (ply == 0) data.value = value;
 			best_move = legal_move;
-		}
-		alpha = std::max(alpha, value);
-		if (alpha >= beta) {
-			update_history<color>(scored_moves, best_move, depth, ply, move_idx);
-			break;
+
+			if (value > alpha) {
+				alpha = value;
+				if (alpha >= beta) {
+					update_history<color>(scored_moves, best_move, depth, ply, move_idx);
+					break;
+				}
+			}
 		}
 	}
 
@@ -251,7 +256,6 @@ template<Color color>
 PVSData aspiration_windows(Position& board, int prev_score, short depth, int time_limit) {
 	reset_data();
 	data.time_limit = time_limit;
-
 	int alpha = NEG_INF_CHESS;
 	int beta = POS_INF_CHESS;
 	int delta = ASP_WINDOW_INIT_DELTA;
@@ -263,14 +267,12 @@ PVSData aspiration_windows(Position& board, int prev_score, short depth, int tim
 
 	while (true) {
 		if (alpha < -ASP_WINDOW_FULL_SEARCH_BOUNDS) alpha = NEG_INF_CHESS;
-		if (beta  > -ASP_WINDOW_FULL_SEARCH_BOUNDS) beta  = POS_INF_CHESS;
-		std::cout << alpha << " " << beta << std::endl;
+		if (beta  > ASP_WINDOW_FULL_SEARCH_BOUNDS) beta  = POS_INF_CHESS;
 
 		pvs<color>(board, depth, 0, alpha, beta, false);
 		int score = data.value;
-
 		if (score <= alpha) {
-			alpha = std::max(alpha - depth, NEG_INF_CHESS);
+			alpha = std::max(alpha - delta, NEG_INF_CHESS);
 			beta = (alpha + 3 * beta) / 4;
 		} else if (score >= beta) {
 			beta = std::min(beta + delta, POS_INF_CHESS);
