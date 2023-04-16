@@ -31,6 +31,15 @@ constexpr Score evaluate_knight(Position& board) {
 		const Bitboard attacking_pawns = them_pawns & pawn_attacks<color>(knight_square);
 		score += ATTACKED_BY_PAWN[KNIGHT] * pop_count(attacking_pawns);
 
+		const Bitboard attacked_bishops = pseudo_legal_moves & board.bitboard_of(~color, BISHOP);
+		score += read_threat_bonus<KNIGHT, BISHOP>() * pop_count(attacked_bishops);
+
+		const Bitboard attacked_rooks = pseudo_legal_moves & board.bitboard_of(~color, ROOK);
+		score += read_threat_bonus<KNIGHT, ROOK>() * pop_count(attacked_rooks);
+
+		const Bitboard attacked_queens = pseudo_legal_moves & board.bitboard_of(~color, QUEEN);
+		score += read_threat_bonus<KNIGHT, QUEEN>() * pop_count(attacked_queens);
+
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
 		score += KING_RING_ATTACK_BONUS[KNIGHT] * pop_count(king_ring_attacks);
 
