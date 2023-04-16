@@ -45,7 +45,9 @@ else
     SRC_DIRECTORIES += $(shell find $(TESTDIR) -type d)
     TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
     ifneq (,$(findstring clang,$(shell $(CXX) --version)))
-        LDFLAGS += -fuse-ld=lld
+        ifneq ($(uname_S),Darwin)
+            LDFLAGS += -fuse-ld=lld
+        endif
     endif
 endif
 
