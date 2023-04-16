@@ -15,10 +15,10 @@ void zobrist::initialise_zobrist_keys() {
 	for (auto & i : zobrist::zobrist_piece_table)
 		for (int j = 0; j < NSQUARES; j++)
 			i[j] = rng.rand<uint64_t>();
-	for (unsigned long long & i : zobrist::zobrist_castling_rights_table) {
+	for (auto & i : zobrist::zobrist_castling_rights_table) {
 		i = rng.rand<uint64_t>();
 	}
-	for (unsigned long long & i : zobrist::zobrist_ep_file_table) {
+	for (auto & i : zobrist::zobrist_ep_file_table) {
 		i = rng.rand<uint64_t>();
 	}
 	zobrist_color_key = rng.rand<uint64_t>();
@@ -181,7 +181,7 @@ void Position::clear() {
     pinned = 0;
     checkers = 0;
 
-    for (unsigned long long & i : piece_bb) { i = 0; }
+    for (auto & i : piece_bb) { i = 0; }
     for (auto & i : board) { i = NO_PIECE; }
 	for (int i = 0; i < 300; i++) history[i] = UndoInfo();
 	hash_history.clear();

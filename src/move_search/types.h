@@ -1,10 +1,11 @@
 #pragma once
 #include "move_generation/types.h"
 #include "search_constants.h"
+#include "move_search/tables/pv_table.h"
 
 struct ScoredMove {
 	Move move;
-	int score;
+	int score{};
 };
 
 typedef std::vector<ScoredMove> ScoredMoves;
@@ -34,3 +35,16 @@ struct BestMoveSearchResults {
 };
 
 extern std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results);
+
+struct PVSData {
+	Move best_move;
+	bool search_completed{};
+	int value{};
+	// triangular-table-table
+	PV pv{};
+	uint64_t nodes_searched{};
+	uint64_t q_nodes_searched{};
+	int seldepth{};
+
+	int time_limit{};
+};
