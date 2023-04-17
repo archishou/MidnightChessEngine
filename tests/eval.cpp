@@ -70,7 +70,7 @@ TEST_CASE("attacked-by-pawn"){
 TEST_CASE("test") {
 	initialize_engine();
 	Position p;
-	Position::set("r1bq2n1/kpppp1pp/7n/3Q3b/6r1/1B6/PPPPPPPP/RNB1K1NR w KQ - 0 1", p);
+	Position::set("r1bq2n1/kpppp1pp/7n/3Q3b/2B3r1/1Q6/PPPPPPPP/RNB1K1NR w KQ - 0 1", p);
 	std::cout << "all pieces" << std::endl;
 	print_bitboard(p.all_pieces());
 	std::cout << std::endl;

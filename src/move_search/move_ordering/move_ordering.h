@@ -68,7 +68,7 @@ bool static_exchange_eval(Position& board, Move move, const int threshold) {
 			break;
 		}
 
-		occupied ^= SQUARE_BB[bsf(our_attackers) & board.all_pieces(piece_type)];
+		occupied ^= SQUARE_BB[bsf(our_attackers & board.all_pieces(piece_type))];
 
 		// Add discovered attacks.
 		if (piece_type == PAWN || piece_type == BISHOP || piece_type == QUEEN)
@@ -77,6 +77,15 @@ bool static_exchange_eval(Position& board, Move move, const int threshold) {
 			attackers |= attacks<ROOK>(to, occupied) & rooks;
 	}
 	return side_to_play != color_of(board.at(from));
+}
+
+template<Color color>
+int capture_move_score(Move move, Position& board) {
+	if (!move.is_capture()) return 0;
+	PieceType to_type = type_of(board.at(move.to()));
+	PieceType from_type = type_of(board.at(move.from()));
+	return MVV_LVA_BONUS * static_exchange_eval<color>(board, move, -107) +
+	        get_piece_value(to_type) - get_piece_value(from_type);
 }
 
 template<Color color>
@@ -106,7 +115,7 @@ ScoredMoves order_moves(MoveList<color, move_gen_type>& move_list, Position& boa
 		scored_move.move = move;
 		int score = 0; //Higher score is likely a better move.
 		score += hash_move_score(move, previous_best_move);
-		score += capture_move_score(move, board);
+		score += capture_move_score<color>(move, board);
 		score += promotion_move_score(move);
 		score += history_score<color>(move, ply);
 		score += in_opponent_pawn_territory<color>(move, board);
