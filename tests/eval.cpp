@@ -71,11 +71,21 @@ TEST_CASE("test") {
 	initialize_engine();
 	Position p;
 	Position::set("r1bq2n1/kpppp1pp/7n/3Q3b/2B3r1/1Q6/PPPPPPPP/RNB1K1NR w KQ - 0 1", p);
-	std::cout << "all pieces" << std::endl;
-	print_bitboard(p.all_pieces());
-	std::cout << std::endl;
-	std::cout << static_exchange_eval<WHITE>(p, Move(d5, g8, CAPTURE), 10) << std::endl;
+	std::cout << type_of(WHITE_PAWN) << std::endl;
+	std::cout << type_of(WHITE_KNIGHT) << std::endl;
+	std::cout << type_of(WHITE_BISHOP) << std::endl;
+	std::cout << type_of(WHITE_ROOK) << std::endl;
+	std::cout << type_of(WHITE_QUEEN) << std::endl;
+	std::cout << type_of(WHITE_KING) << std::endl;
 
+	std::cout << type_of(BLACK_PAWN) << std::endl;
+	std::cout << type_of(BLACK_KNIGHT) << std::endl;
+	std::cout << type_of(BLACK_BISHOP) << std::endl;
+	std::cout << type_of(BLACK_ROOK) << std::endl;
+	std::cout << type_of(BLACK_QUEEN) << std::endl;
+	std::cout << type_of(BLACK_KING) << std::endl;
+
+	std::cout << type_of(NO_PIECE) << std::endl;
 }
 
 TEST_SUITE_END();

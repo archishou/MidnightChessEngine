@@ -29,6 +29,8 @@ enum PieceType : int {
 	PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
 };
 
+constexpr int NO_PIECE_TYPE = 0b110;
+
 static const std::string PIECE_STR = "PNBRQK~>pnbrqk.";
 
 constexpr auto DEFAULT_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -";
