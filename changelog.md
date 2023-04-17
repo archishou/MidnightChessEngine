@@ -453,3 +453,12 @@ SPRT | 8.0+0.08s Threads=1 Hash=64MB
 LLR | 3.00 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 10968 W: 3028 L: 2824 D: 5116
 ```
+
+### Static Exchange Evaluation
+https://engineprogramming.pythonanywhere.com/test/91/
+```
+ELO   | 15.08 +- 8.19 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 3712 W: 1078 L: 917 D: 1717
+```

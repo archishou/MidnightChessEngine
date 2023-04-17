@@ -25,13 +25,6 @@ int hash_move_score(Move& move, Move& previous_best_move) {
 	return PREVIOUS_BEST_MOVE_BONUS;
 }
 
-int capture_move_score(Move move, Position& board) {
-	if (!move.is_capture()) return 0;
-	PieceType to_type = type_of(board.at(move.to()));
-	PieceType from_type = type_of(board.at(move.from()));
-	return MVV_LVA_BONUS + get_piece_value(to_type) - get_piece_value(from_type);
-}
-
 int promotion_move_score(Move move) {
 	if (!move.is_promotion()) return 0;
 	MoveFlag flag = move.flag();
