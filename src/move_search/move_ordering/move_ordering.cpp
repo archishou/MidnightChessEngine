@@ -35,6 +35,20 @@ int promotion_move_score(Move move) {
 	else return 0;
 }
 
+int estimated_static_exchange_eval(Position& board, const Move& move) {
+	int value = SEE_VALUES[type_of(board.at(move.to()))];
+	MoveFlag flag = move.flag();
+	if (move.is_promotion()) {
+		if (flag == PC_QUEEN || flag == PR_QUEEN) value += SEE_VALUES[QUEEN] - SEE_VALUES[PAWN];
+		else if (flag == PC_ROOK || flag == PR_ROOK) value += SEE_VALUES[ROOK] - SEE_VALUES[PAWN];
+		else if (flag == PC_BISHOP || flag == PR_BISHOP) value += SEE_VALUES[BISHOP] - SEE_VALUES[PAWN];
+		else if (flag == PC_KNIGHT || flag == PR_KNIGHT) value += SEE_VALUES[KNIGHT] - SEE_VALUES[PAWN];
+	} else if (flag == EN_PASSANT) {
+		value = SEE_VALUES[PAWN];
+	}
+	return value;
+}
+
 Move& select_move(ScoredMoves& scored_moves, int idx) {
 	int best_idx = idx;
 	int best_score = scored_moves[idx].score;

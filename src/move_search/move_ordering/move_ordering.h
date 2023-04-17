@@ -19,6 +19,8 @@ int capture_move_score(Move move, Position& board);
 
 int promotion_move_score(Move move);
 
+int estimated_static_exchange_eval(Position& board, const Move& move);
+
 template<Color color>
 bool static_exchange_eval(Position& board, Move move, const int threshold) {
 

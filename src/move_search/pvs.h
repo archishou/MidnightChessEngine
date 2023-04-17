@@ -51,10 +51,16 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	ScoredMoves scored_moves = order_moves<color, QSEARCH>(capture_moves, board, ply);
 	for (int move_idx = 0; move_idx < static_cast<int>(scored_moves.size()); move_idx++) {
 		const Move legal_move = select_move(scored_moves, move_idx);
+
+		int at_least = stand_pat + estimated_static_exchange_eval(board, legal_move) -
+				SEE_VALUES[type_of(board.at(legal_move.from()))];
+		if (at_least > beta) return at_least;
+
 		board.play<color>(legal_move);
 		data.q_nodes_searched += 1;
 		const int score = -q_search<~color>(board, ply + 1, -beta, -alpha);
 		board.undo<color>(legal_move);
+
 		if (score >= beta) {
 			alpha = beta;
 			best_move = legal_move;
