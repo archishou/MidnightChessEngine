@@ -115,8 +115,14 @@ public:
 
 	template<Color C> [[nodiscard]] inline Bitboard diagonal_sliders() const;
 	template<Color C> [[nodiscard]] inline Bitboard orthogonal_sliders() const;
+
 	template<Color C> [[nodiscard]] inline Bitboard all_pieces() const;
+	[[nodiscard]] inline Bitboard all_pieces(Color c) const;
+	[[nodiscard]] inline Bitboard all_pieces(const PieceType& piece_type) const;
+	[[nodiscard]] inline Bitboard all_pieces() const;
+
 	template<Color C> [[nodiscard]] inline Bitboard attackers_from(Square s, Bitboard occ) const;
+	[[nodiscard]] inline Bitboard attackers_from(Square s, Bitboard occ) const;
 
 	template<Color C> [[nodiscard]] inline bool in_check() const {
 		return attackers_from<~C>(bsf(bitboard_of(C, KING)), all_pieces<WHITE>() | all_pieces<BLACK>());
@@ -155,6 +161,18 @@ inline Bitboard Position::all_pieces() const {
 		piece_bb[BLACK_ROOK] | piece_bb[BLACK_QUEEN] | piece_bb[BLACK_KING];
 }
 
+inline Bitboard Position::all_pieces(Color c) const {
+	return c == WHITE ? all_pieces<WHITE>() : all_pieces<BLACK>();
+}
+
+inline Bitboard Position::all_pieces(const PieceType& piece_type) const {
+	return bitboard_of(BLACK, piece_type) | bitboard_of(WHITE, piece_type);
+}
+
+inline Bitboard Position::all_pieces() const {
+	return all_pieces<WHITE>() | all_pieces<BLACK>();
+}
+
 template<Color C>
 inline Bitboard Position::attackers_from(Square s, Bitboard occ) const {
 	return C == WHITE ? (pawn_attacks<BLACK>(s) & piece_bb[WHITE_PAWN]) |
@@ -166,6 +184,10 @@ inline Bitboard Position::attackers_from(Square s, Bitboard occ) const {
 		(attacks<KNIGHT>(s, occ) & piece_bb[BLACK_KNIGHT]) |
 		(attacks<BISHOP>(s, occ) & (piece_bb[BLACK_BISHOP] | piece_bb[BLACK_QUEEN])) |
 		(attacks<ROOK>(s, occ) & (piece_bb[BLACK_ROOK] | piece_bb[BLACK_QUEEN]));
+}
+
+inline Bitboard Position::attackers_from(Square s, Bitboard occ) const {
+	return attackers_from<BLACK>(s, occ) | attackers_from<WHITE>(s, occ);
 }
 
 template<Color C>

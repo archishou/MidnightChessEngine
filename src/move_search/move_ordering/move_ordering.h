@@ -20,6 +20,66 @@ int capture_move_score(Move move, Position& board);
 int promotion_move_score(Move move);
 
 template<Color color>
+bool static_exchange_eval(Position& board, Move move, const int threshold) {
+
+	if (move.is_promotion()) return true;
+
+	Square to = move.to();
+	Square from = move.from();
+	PieceType piece_capturing = type_of(board.at(to));
+	PieceType piece_captured = type_of(board.at(from));
+
+	// If we make the capture and don't loose our piece, we should beat the threshold.
+	// If we don't it's likely a bad exchange.
+	int value = ORDERING_PIECE_VALUES[piece_capturing] - threshold;
+	if (value < 0) return false;
+
+	// If we loose our piece and are still positive, this is a good exchange.
+	value -= ORDERING_PIECE_VALUES[piece_captured];
+	if (value >= 0) return true;
+
+	// We already know the piece on 'from' is an attacker. Ignore it. The piece on to will be captured. Ignore it.
+	Bitboard occupied = board.all_pieces() ^ SQUARE_BB[from] ^ SQUARE_BB[to];
+	// This will be updated to only contain pieces that only have pieces we are concerned with.
+	Bitboard attackers = board.attackers_from(to, occupied);
+
+	Bitboard bishops = board.all_pieces(BISHOP) | board.all_pieces(QUEEN);
+	Bitboard rooks   = board.all_pieces(ROOK)   | board.all_pieces(QUEEN);
+
+	Color side_to_play = ~color;
+
+	while (true) {
+		attackers &= occupied;
+
+		Bitboard our_attackers = attackers & board.all_pieces(side_to_play);
+		if (!our_attackers) break; // If no remaining attackers for us, break.
+
+		int ipt;
+		for (ipt = PAWN; ipt < KING; ipt++) { // pt == king when we break if all others didn't cause break.
+			if (our_attackers & board.bitboard_of(side_to_play, PieceType(ipt))) break;
+		}
+		auto piece_type = PieceType(ipt);
+
+		side_to_play = ~side_to_play;
+
+		value = -value - 1 - ORDERING_PIECE_VALUES[piece_type];
+		if (value >= 0) {
+			if (piece_type == KING && (attackers & board.all_pieces(side_to_play))) side_to_play = ~side_to_play;
+			break;
+		}
+
+		occupied ^= SQUARE_BB[bsf(our_attackers) & board.all_pieces(piece_type)];
+
+		// Add discovered attacks.
+		if (piece_type == PAWN || piece_type == BISHOP || piece_type == QUEEN)
+			attackers |= attacks<BISHOP>(to, occupied) & bishops;
+		if (piece_type == ROOK || piece_type == QUEEN)
+			attackers |= attacks<ROOK>(to, occupied) & rooks;
+	}
+	return side_to_play != color_of(board.at(from));
+}
+
+template<Color color>
 int history_score(Move &move, int ply) {
 	if (!move.is_quiet()) return 0;
 	if (move == killers[ply][0]) return KILLER_MOVE_BONUS + 2000;
