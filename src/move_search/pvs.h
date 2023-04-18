@@ -168,6 +168,11 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			break;
 		}
 
+		if (!pv_node && depth < SEE_PVS_MIN_DEPTH &&
+			!static_exchange_eval<color>(board, legal_move, legal_move.is_quiet() ? SEE_PVS_QUIET_MARGIN * depth : SEE_PVS_TACTICAL_MARGIN * depth)) {
+			continue;
+		}
+
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
 		int new_value = NEG_INF_CHESS;
