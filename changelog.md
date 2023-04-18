@@ -471,3 +471,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 2024 W: 616 L: 465 D: 943
 ```
+
+### Static Exchange Evaluation Pruning in PVS
+https://engineprogramming.pythonanywhere.com/test/125/
+```
+ELO | 26.39 +- 10.86 (95%)
+SPRT | 8.0+0.08s Threads=1 Hash=64MB
+LLR | 2.99 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 1952 W: 557 L: 409 D: 986
+```
