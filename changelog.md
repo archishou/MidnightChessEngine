@@ -462,3 +462,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 3712 W: 1078 L: 917 D: 1717
 ```
+
+### Static Exchange Evaluation Pruning in Q Search
+https://engineprogramming.pythonanywhere.com/test/110/
+```
+ELO   | 25.97 +- 11.08 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 2024 W: 616 L: 465 D: 943
+```
