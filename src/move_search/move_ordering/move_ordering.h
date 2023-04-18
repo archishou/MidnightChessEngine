@@ -26,16 +26,16 @@ bool static_exchange_eval(Position& board, Move move, const int threshold) {
 
 	Square to = move.to();
 	Square from = move.from();
-	PieceType piece_capturing = type_of(board.at(to));
-	PieceType piece_captured = type_of(board.at(from));
+	PieceType piece_captured = type_of(board.at(to));
+	PieceType piece_capturing = type_of(board.at(from));
 
 	// If we make the capture and don't loose our piece, we should beat the threshold.
 	// If we don't it's likely a bad exchange.
-	int value = ORDERING_PIECE_VALUES[piece_capturing] - threshold;
+	int value = ORDERING_PIECE_VALUES[piece_captured] - threshold;
 	if (value < 0) return false;
 
 	// If we loose our piece and are still positive, this is a good exchange.
-	value -= ORDERING_PIECE_VALUES[piece_captured];
+	value -= ORDERING_PIECE_VALUES[piece_capturing];
 	if (value >= 0) return true;
 
 	// We already know the piece on 'from' is an attacker. Ignore it. The piece on to will be captured. Ignore it.
