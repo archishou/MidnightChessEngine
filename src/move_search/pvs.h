@@ -245,7 +245,7 @@ PVSData aspiration_windows(Position& board, int prev_score, short depth, int tim
 			beta = (alpha + 3 * beta) / 4;
 		} else if (score >= beta) {
 			beta = std::min(beta + delta, POS_INF_CHESS);
-			depth -= 1;
+			depth = std::max(depth - 1, 1);
 		} else break;
 		delta += delta * 2 / 3;
 	}
