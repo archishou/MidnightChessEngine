@@ -134,6 +134,12 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		static_eval = evaluate<color>(board);
 	}
 
+	if (!in_check && !pv_node) {
+		if (depth < RFP_MAX_DEPTH && static_eval >= beta + RFP_MARGIN * depth) {
+			return static_eval;
+		}
+	}
+
 	if (depth >= NMP_MIN_DEPTH && !in_check && !pv_node && do_null) {
 		board.play_null<color>();
 
@@ -143,12 +149,6 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 		board.undo_null<color>();
 		if (null_eval >= beta) return null_eval;
-	}
-
-	if (!in_check && !pv_node) {
-		if (depth < RFP_MAX_DEPTH && static_eval >= beta + RFP_MARGIN * depth) {
-			return static_eval;
-		}
 	}
 
 	MoveList<color, ALL> all_legal_moves(board);

@@ -480,3 +480,12 @@ SPRT | 8.0+0.08s Threads=1 Hash=64MB
 LLR | 2.99 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 1952 W: 557 L: 409 D: 986
 ```
+
+### Move RFP to before NMP because it's cheaper to prune
+https://engineprogramming.pythonanywhere.com/test/168/
+```
+ELO   | 9.60 +- 6.09 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 3.00 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 6264 W: 1660 L: 1487 D: 3117
+```
