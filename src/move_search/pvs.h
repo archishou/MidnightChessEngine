@@ -49,11 +49,11 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	Move best_move = Move();
 	MoveList<color, QSEARCH> capture_moves(board);
 	ScoredMoves scored_moves = order_moves<color, QSEARCH>(capture_moves, board, ply);
-	int futility = stand_pat + 60;
+	int futility = stand_pat + Q_SEARCH_FUTILITY_MARGIN;
 	for (int move_idx = 0; move_idx < static_cast<int>(scored_moves.size()); move_idx++) {
 		const Move legal_move = select_move(scored_moves, move_idx);
 
-		if (futility <= alpha && !static_exchange_eval<color>(board, legal_move, 1)) {
+		if (futility <= alpha && !static_exchange_eval<color>(board, legal_move, SEE_Q_MARGIN)) {
 			alpha = std::max(alpha, futility);
 			continue;
 		}
