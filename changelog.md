@@ -489,3 +489,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 3.00 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 6264 W: 1660 L: 1487 D: 3117
 ```
+
+### Only NMP if our evaluation is greater than their best value
+https://engineprogramming.pythonanywhere.com/test/177/
+```
+ELO   | 11.79 +- 7.06 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 4984 W: 1421 L: 1252 D: 2311
+```
