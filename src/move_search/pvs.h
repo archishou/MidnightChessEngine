@@ -140,7 +140,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		}
 	}
 
-	if (depth >= NMP_MIN_DEPTH && !in_check && !pv_node && do_null) {
+	if (depth >= NMP_MIN_DEPTH && !in_check && !pv_node && do_null && static_eval >= beta) {
 		board.play_null<color>();
 
 		int reduction = nmp_reduction(depth, beta, static_eval);
