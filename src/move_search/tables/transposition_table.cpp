@@ -118,4 +118,8 @@ size_t TranspositionTable::entry_count() {
 	return transposition_table.size();
 }
 
+void TranspositionTable::prefetch(ZobristHash hash) {
+	__builtin_prefetch(&transposition_table[get_index(hash)]);
+}
+
 TranspositionTable t_table = TranspositionTable();

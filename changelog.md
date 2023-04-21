@@ -498,3 +498,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 4984 W: 1421 L: 1252 D: 2311
 ```
+
+### Prefetch Transposition Table Entry
+https://engineprogramming.pythonanywhere.com/test/190/
+```
+ELO   | 10.47 +- 6.48 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 3.01 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 5744 W: 1581 L: 1408 D: 2755
+```
