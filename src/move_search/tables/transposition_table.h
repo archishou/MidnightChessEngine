@@ -32,6 +32,7 @@ public:
 			 TranspositionTableEntryNodeType node_type);
 	void reset_table();
 	void resize(int mb);
+	void prefetch(ZobristHash hash);
 	TranspositionTableSearchResults probe_for_move_ordering(ZobristHash hash);
 	TranspositionTableSearchResults probe_for_search(ZobristHash hash, int depth, int ply);
 	TranspositionTableSearchResults probe_eval(ZobristHash hash, int ply);

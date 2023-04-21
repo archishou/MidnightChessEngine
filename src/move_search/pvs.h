@@ -22,6 +22,8 @@ bool position_is_draw(Position &board, const int ply);
 template<Color color>
 int q_search(Position &board, const int ply, int alpha, const int beta) {
 
+	t_table.prefetch(board.get_hash());
+
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
 	if ((data.q_nodes_searched + data.nodes_searched) % 1024 == 0) {
@@ -82,6 +84,9 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 
 template<Color color>
 int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null) {
+
+	t_table.prefetch(board.get_hash());
+
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
 	if ((data.q_nodes_searched + data.nodes_searched) % 1024 == 0) {
