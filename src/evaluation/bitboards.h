@@ -2,6 +2,8 @@
 
 #include "move_generation/position.h"
 
+constexpr Bitboard BOARD_CENTER = 0x3c3c3c3c0000;
+
 template<Color color>
 constexpr Bitboard pawn_attack_span(const Bitboard s) {
 	return shift<relative_dir<color>(NORTH)> (

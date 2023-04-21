@@ -45,6 +45,8 @@ constexpr Score evaluate_knight(Position& board) {
 
 		const bool king_in_check = pseudo_legal_moves & SQUARE_BB[them_king];
 		score += CHECK_BONUS[KNIGHT] * king_in_check;
+
+		score += CENTER_CONTROL[KNIGHT] * pop_count(pseudo_legal_moves & BOARD_CENTER);
 	}
 	return score;
 }

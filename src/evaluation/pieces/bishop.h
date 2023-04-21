@@ -47,6 +47,8 @@ constexpr Score evaluate_bishops(Position& board) {
 
 		const bool king_in_check = pseudo_legal_moves & SQUARE_BB[them_king];
 		score += CHECK_BONUS[BISHOP] * king_in_check;
+
+		score += CENTER_CONTROL[BISHOP] * pop_count(pseudo_legal_moves & BOARD_CENTER);
 	}
 	return score;
 }

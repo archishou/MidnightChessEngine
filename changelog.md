@@ -507,3 +507,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 3.01 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 5744 W: 1581 L: 1408 D: 2755
 ```
+
+### Add bonus for controlling the center of the board
+https://engineprogramming.pythonanywhere.com/test/197/
+```
+ELO   | 15.79 +- 8.41 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.96 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 3544 W: 1039 L: 878 D: 1627
+```
