@@ -9,7 +9,7 @@
 typedef int Score;
 constexpr Score SCORE_ZERO = 0;
 
-constexpr Score S(int mg, int eg) {
+consteval Score S(int mg, int eg) {
 	return Score(static_cast<int>(static_cast<unsigned int>(eg) << 16) + mg);
 }
 
