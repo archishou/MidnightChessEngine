@@ -49,3 +49,8 @@ template<Color c>
 inline Bitboard semi_open_files(Position& board) {
 	return ~file_fill(board.bitboard_of(c, PAWN)) ^ open_files(board);
 }
+
+template<Color c>
+inline Bitboard phalanx_pawns(Position& board) {
+	return board.bitboard_of(c, PAWN) & shift<WEST>(board.bitboard_of(c, PAWN));
+}
