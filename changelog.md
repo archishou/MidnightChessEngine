@@ -525,3 +525,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 3928 W: 1150 L: 987 D: 1791
 ```
+
+### Evaluate candidate passed pawns
+https://engineprogramming.pythonanywhere.com/test/208/
+```
+ELO   | 7.67 +- 5.38 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.98 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 8656 W: 2442 L: 2251 D: 3963
+```
