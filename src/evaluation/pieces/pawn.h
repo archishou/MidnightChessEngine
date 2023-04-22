@@ -9,12 +9,18 @@ template<Color c>
 constexpr Score evaluate_passed_pawns(Position& board) {
 	Score passed_pawn_score = SCORE_ZERO;
 	Bitboard passed_pawns_us = passed_pawns<c>(board);
+	Bitboard candidate_passed_pawns = candidate_pawns<c>(board, passed_pawns_us);
 	while (passed_pawns_us) {
 		Square pawn = pop_lsb(&passed_pawns_us);
 		const Square relative_pawn_square = c == WHITE ? ~pawn : pawn;
 		passed_pawn_score += PASSED_PAWN_BONUS[relative_pawn_square];
 		const bool blocked = shift<relative_dir<c>(NORTH)>(SQUARE_BB[pawn]) & board.all_pieces<~c>();
 		passed_pawn_score += BLOCKED_PASSED_PAWN_PENALTY[relative_pawn_square] * blocked;
+	}
+	while (candidate_passed_pawns) {
+		Square pawn = pop_lsb(&candidate_passed_pawns);
+		Rank relative_pawn_rank = relative_rank<c>(rank_of(pawn));
+		passed_pawn_score += CANDIDATE_PASSED_PAWN[relative_pawn_rank];
 	}
 	return passed_pawn_score;
 }

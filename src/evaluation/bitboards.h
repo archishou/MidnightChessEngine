@@ -32,7 +32,7 @@ inline Bitboard doubled_pawns(Position& board) {
 
 template<Color color>
 constexpr Bitboard pawn_passed_span(const Bitboard s) {
-	return shift<relative_dir<color>(NORTH)>(forward_files<color>(s) | pawn_attack_span<color>(s));
+	return forward_files<color>(s) | pawn_attack_span<color>(s);
 }
 
 template<Color c>
@@ -53,4 +53,10 @@ inline Bitboard semi_open_files(Position& board) {
 template<Color c>
 inline Bitboard phalanx_pawns(Position& board) {
 	return board.bitboard_of(c, PAWN) & shift<WEST>(board.bitboard_of(c, PAWN));
+}
+
+template<Color c>
+constexpr Bitboard candidate_pawns(Position& board, Bitboard passed_pawns) {
+	const Bitboard them_pawn_spawn = file_fill(board.bitboard_of(~c, PAWN));
+	return (board.bitboard_of(c, PAWN) ^ passed_pawns) & ~them_pawn_spawn;
 }
