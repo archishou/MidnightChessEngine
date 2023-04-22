@@ -30,6 +30,18 @@ inline constexpr Score evaluate_isolated_pawns(Position& board) {
 }
 
 template<Color c>
+inline constexpr Score evaluate_pawn_phalanx(Position& board) {
+	Score phalanx_pawn_score = SCORE_ZERO;
+	Bitboard all_phalanx_pawns = phalanx_pawns<c>(board);
+	while (all_phalanx_pawns) {
+		Square pawn = pop_lsb(&all_phalanx_pawns);
+		const Rank relative_pawn_rank = relative_rank<c>(rank_of(pawn));
+		phalanx_pawn_score += PHALANX_PAWN[relative_pawn_rank];
+	}
+	return phalanx_pawn_score;
+}
+
+template<Color c>
 inline constexpr Score evaluate_pawn_locations(Position& board) {
 	Score score = SCORE_ZERO;
 	Bitboard pawns = board.bitboard_of(c, PAWN);
@@ -64,5 +76,6 @@ constexpr Score evaluate_pawn_structure(Position& board) {
 	const Score passed_pawn_eval = evaluate_passed_pawns<c>(board);
 	const Score isolated_pawn_eval = evaluate_isolated_pawns<c>(board);
 	const Score doubled_pawn_eval = evaluate_doubled_pawns<c>(board);
-	return pawn_location_eval + passed_pawn_eval + isolated_pawn_eval + doubled_pawn_eval;
+	const Score phalanx_pawn_eval = evaluate_pawn_phalanx<c>(board);
+	return pawn_location_eval + passed_pawn_eval + isolated_pawn_eval + doubled_pawn_eval + phalanx_pawn_eval;
 }

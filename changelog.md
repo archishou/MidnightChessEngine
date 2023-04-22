@@ -516,3 +516,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.96 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 3544 W: 1039 L: 878 D: 1627
 ```
+
+### Add Pawn phalanx to evaluation
+https://engineprogramming.pythonanywhere.com/test/200/
+```
+ELO   | 14.43 +- 8.01 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 3928 W: 1150 L: 987 D: 1791
+```
