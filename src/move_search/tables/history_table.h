@@ -14,13 +14,11 @@ extern Move killers[MAX_PLY][NKILLERS];
 
 extern void init_history();
 extern void update_history_entry(int& history_entry, int bonus);
+extern void update_killers(Move &best_move, int ply);
 
 template<Color color>
-void update_history(ScoredMoves& ordered_moves, Move &best_move, int depth, int ply, int move_idx) {
+void update_history(ScoredMoves& ordered_moves, Move &best_move, int depth, int move_idx) {
 	if (!best_move.is_quiet()) return;
-
-	killers[ply][1] = killers[ply][0];
-	killers[ply][0] = best_move;
 
 	int history_bonus = depth * depth + depth - 1;
 

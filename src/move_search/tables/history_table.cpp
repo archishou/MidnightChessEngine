@@ -25,3 +25,8 @@ void update_history_entry(int& history_entry, int bonus) {
 	history_entry -= (history_entry * abs(bonus)) / 324;
 	history_entry += bonus * 32;
 }
+
+void update_killers(Move &best_move, int ply) {
+	killers[ply][1] = killers[ply][0];
+	killers[ply][0] = best_move;
+}
