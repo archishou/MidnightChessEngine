@@ -217,8 +217,9 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 			if (value > alpha) {
 				alpha = value;
+				update_history<color>(scored_moves, best_move, depth, move_idx);
 				if (alpha >= beta) {
-					update_history<color>(scored_moves, best_move, depth, ply, move_idx);
+					update_killers(best_move, ply);
 					break;
 				}
 			}

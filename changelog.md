@@ -543,3 +543,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=16MB
 LLR   | 2.99 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 2320 W: 784 L: 621 D: 915
 ```
+
+### Update history when alpha is raised
+https://engineprogramming.pythonanywhere.com/test/230/
+```
+ELO   | 12.18 +- 7.13 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.96 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 4680 W: 1285 L: 1121 D: 2274
+```
