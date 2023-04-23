@@ -534,3 +534,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.98 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 8656 W: 2442 L: 2251 D: 3963
 ```
+
+### Add LMP for quiet moves
+https://engineprogramming.pythonanywhere.com/test/227/
+```
+ELO   | 24.45 +- 11.02 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=16MB
+LLR   | 2.99 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 2320 W: 784 L: 621 D: 915
+```
