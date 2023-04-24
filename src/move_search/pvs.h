@@ -173,6 +173,11 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			break;
 		}
 
+		int fp_margin = depth * FP_COEFFICIENT + FP_MARGIN;
+		if (value > -MATE_BOUND && depth < FP_DEPTH && static_eval + fp_margin <= alpha) {
+			break;
+		}
+
 		if (!pv_node && depth <= 6 && legal_move.is_quiet() && move_idx > depth * 9) {
 			continue;
 		}
