@@ -552,3 +552,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.96 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 4680 W: 1285 L: 1121 D: 2274
 ```
+
+### Add futility pruning
+https://engineprogramming.pythonanywhere.com/test/248/
+```
+ELO   | 7.73 +- 5.31 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.98 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 8136 W: 2104 L: 1923 D: 4109
+```

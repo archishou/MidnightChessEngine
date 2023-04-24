@@ -24,3 +24,7 @@ constexpr int SEE_PVS_MIN_DEPTH = 7;
 constexpr int SEE_PVS_QUIET_MARGIN = -50;
 constexpr int SEE_PVS_TACTICAL_MARGIN = -90;
 constexpr int SEE_Q_MARGIN = 1;
+
+constexpr int FP_COEFFICIENT = 100;
+constexpr int FP_MARGIN = 75;
+constexpr int FP_DEPTH = 6;
