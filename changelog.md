@@ -561,3 +561,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.98 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 8136 W: 2104 L: 1923 D: 4109
 ```
+
+### Add History Pruning
+https://engineprogramming.pythonanywhere.com/test/270/
+```
+ELO   | 6.60 +- 4.84 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.96 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 10368 W: 2820 L: 2623 D: 4925
+```

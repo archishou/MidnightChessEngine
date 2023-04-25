@@ -182,6 +182,9 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			continue;
 		}
 
+		if (!pv_node && value > -MATE_BOUND && depth < 3 && history[color][legal_move.from()][legal_move.to()] < -1024 * depth)
+			continue;
+
 		if (!pv_node && depth < SEE_PVS_MIN_DEPTH && value > -MATE_BOUND &&
 			!static_exchange_eval<color>(board, legal_move, legal_move.is_quiet() ? SEE_PVS_QUIET_MARGIN * depth : SEE_PVS_TACTICAL_MARGIN * depth)) {
 			continue;
