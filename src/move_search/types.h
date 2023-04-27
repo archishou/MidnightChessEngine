@@ -46,5 +46,6 @@ struct PVSData {
 	uint64_t q_nodes_searched{};
 	int seldepth{};
 
+	Move moves_made[MAX_PLY];
 	int time_limit{};
 };

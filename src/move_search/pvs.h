@@ -50,7 +50,7 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 
 	Move best_move = Move();
 	MoveList<color, QSEARCH> capture_moves(board);
-	ScoredMoves scored_moves = order_moves<color, QSEARCH>(capture_moves, board, ply);
+	ScoredMoves scored_moves = order_moves<color, QSEARCH>(capture_moves, board, ply, data);
 	int futility = stand_pat + Q_SEARCH_FUTILITY_MARGIN;
 	for (int move_idx = 0; move_idx < static_cast<int>(scored_moves.size()); move_idx++) {
 		const Move legal_move = select_move(scored_moves, move_idx);
@@ -148,6 +148,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	if (depth >= NMP_MIN_DEPTH && !in_check && !pv_node && do_null && static_eval >= beta) {
 		board.play_null<color>();
 
+		data.moves_made[ply] = Move();
 		int reduction = nmp_reduction(depth, beta, static_eval);
 		int depth_prime = std::max(depth - reduction, 0);
 		int null_eval = -pvs<~color>(board, depth_prime, ply + 1, -beta, -beta + 1, false);
@@ -162,7 +163,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		return 0;
 	}
 
-	ScoredMoves scored_moves = order_moves<color, ALL>(all_legal_moves, board, ply);
+	ScoredMoves scored_moves = order_moves<color, ALL>(all_legal_moves, board, ply, data);
 
 	Move best_move = select_move(scored_moves, 0);
 	int value = NEG_INF_CHESS;
@@ -193,6 +194,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
 		int new_value = NEG_INF_CHESS;
+		data.moves_made[ply] = legal_move;
 
 		bool full_depth_zero_window;
 
@@ -225,7 +227,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 			if (value > alpha) {
 				alpha = value;
-				update_history<color>(scored_moves, best_move, depth, move_idx);
+				update_history<color>(board, scored_moves, best_move, depth, move_idx, ply, data);
 				if (alpha >= beta) {
 					update_killers(best_move, ply);
 					break;
