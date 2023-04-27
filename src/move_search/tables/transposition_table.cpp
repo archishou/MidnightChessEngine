@@ -79,9 +79,11 @@ TranspositionTable::probe_for_move_ordering(ZobristHash hash) {
 
 TranspositionTableSearchResults
 TranspositionTable::probe_for_search(ZobristHash hash, int depth, int ply) {
-	TranspositionTableEntry entry = transposition_table[get_index(hash)];
+
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
+
+	TranspositionTableEntry entry = transposition_table[get_index(hash)];
 	if (entry.zobrist_hash == hash && entry.depth >= depth && ply != 0) {
 		results.entry_found = true;
 		results.entry = entry;

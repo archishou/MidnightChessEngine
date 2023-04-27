@@ -109,6 +109,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	int alpha_initial = alpha;
 	bool in_check = board.in_check<color>();
 	bool pv_node = alpha != beta - 1;
+	bool excluding_move = data.excluded_moves[ply] != EMPTY_MOVE;
 	int static_eval = 0;
 
 	if (in_check) depth++;
@@ -117,9 +118,9 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		return q_search<color>(board, ply, alpha, beta);
 	}
 
-	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), depth, ply);
-	if (probe_results.entry_found && !pv_node) {
-		TranspositionTableEntry tt_entry = probe_results.entry;
+	TranspositionTableSearchResults tt_probe_results = t_table.probe_for_search(board.get_hash(), depth, ply);
+	if (tt_probe_results.entry_found && !pv_node && !excluding_move) {
+		TranspositionTableEntry tt_entry = tt_probe_results.entry;
 		if (tt_entry.node_type == EXACT) {
 			return tt_entry.value;
 		} else if (tt_entry.node_type == LOWER_NODE) {
@@ -132,20 +133,20 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		}
 	}
 
-	probe_results = t_table.probe_eval(board.get_hash(), ply);
-	if (probe_results.entry_found) {
-		static_eval = probe_results.entry.value;
+	TranspositionTableSearchResults static_eval_tt = t_table.probe_eval(board.get_hash(), ply);
+	if (static_eval_tt.entry_found) {
+		static_eval = static_eval_tt.entry.value;
 	} else {
 		static_eval = evaluate<color>(board);
 	}
 
-	if (!in_check && !pv_node) {
+	if (!in_check && !pv_node && !excluding_move) {
 		if (depth < RFP_MAX_DEPTH && static_eval >= beta + RFP_MARGIN * depth) {
 			return static_eval;
 		}
 	}
 
-	if (depth >= NMP_MIN_DEPTH && !in_check && !pv_node && do_null && static_eval >= beta) {
+	if (depth >= NMP_MIN_DEPTH && !in_check && !pv_node && !excluding_move && do_null && static_eval >= beta) {
 		board.play_null<color>();
 
 		data.moves_made[ply] = Move();
@@ -170,6 +171,8 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	for (int move_idx = 0; move_idx < static_cast<int>(scored_moves.size()); move_idx++) {
 		Move legal_move = select_move(scored_moves, move_idx);
 
+		if (legal_move == data.excluded_moves[ply]) continue;
+
 		if (!pv_node && depth <= LMP_MIN_DEPTH && move_idx > depth * LMP_DEPTH_MULTIPLIER) {
 			break;
 		}
@@ -191,27 +194,47 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			continue;
 		}
 
+		bool possible_singularity = !excluding_move && ply > 0 && tt_probe_results.entry_found &&
+									depth >= 8 && legal_move == tt_probe_results.entry.best_move &&
+									tt_probe_results.entry.depth >= depth - 3 &&
+									tt_probe_results.entry.node_type != UPPER_NODE;
+
+		int extension = 0;
+		if (possible_singularity) {
+			data.excluded_moves[ply] = legal_move;
+
+			int singularity_beta = std::max(tt_probe_results.entry.value - 2 * depth, -MATE_BOUND);
+			int singularity_depth = (depth - 1) >> 1;
+			int singularity_score = pvs<color>(board, singularity_depth, ply, singularity_beta - 1, singularity_beta, false);
+
+			extension = singularity_score < singularity_beta;
+
+			data.excluded_moves[ply] = EMPTY_MOVE;
+		}
+
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
+
 		int new_value = NEG_INF_CHESS;
 		data.moves_made[ply] = legal_move;
+		int search_depth = depth + extension;
 
 		bool full_depth_zero_window;
 
 		int reduction = lmr_reduction(pv_node, ply, in_check, move_idx, depth, legal_move);
 		if (reduction > 0) {
-			int new_depth = std::max(0, depth - reduction - 1);
+			int new_depth = std::max(0, search_depth - reduction - 1);
 			new_value = -pvs<~color>(board, new_depth, ply + 1, -alpha - 1, -alpha, true);
-			full_depth_zero_window = new_value > alpha && new_depth != depth - 1;
+			full_depth_zero_window = new_value > alpha && new_depth != search_depth - 1;
 		}
 		else full_depth_zero_window = !pv_node || move_idx > 0;
 
 		if (full_depth_zero_window) {
-			new_value = -pvs<~color>(board, depth - 1, ply + 1, -alpha - 1, -alpha, true);
+			new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -alpha - 1, -alpha, true);
 		}
 
 		if (new_value == NEG_INF_CHESS || (pv_node && ((new_value > alpha && new_value < beta) || move_idx == 0))) {
-			new_value = -pvs<~color>(board, depth - 1, ply + 1, -beta, -alpha, true);
+			new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -beta, -alpha, true);
 		}
 
 

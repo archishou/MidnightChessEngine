@@ -48,4 +48,6 @@ struct PVSData {
 
 	Move moves_made[MAX_PLY];
 	int time_limit{};
+
+	Move excluded_moves[MAX_PLY]{};
 };
