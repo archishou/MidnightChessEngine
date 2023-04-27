@@ -570,3 +570,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.96 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 10368 W: 2820 L: 2623 D: 4925
 ```
+
+### Add Continuation History
+https://chess.swehosting.se/test/309/
+```
+ELO   | 17.52 +- 8.73 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 3056 W: 845 L: 691 D: 1520
+```
