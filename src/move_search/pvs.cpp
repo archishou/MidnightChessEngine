@@ -12,6 +12,8 @@ void reset_data() {
 	data.seldepth = 0;
 	std::memset(data.pv.table, 0, sizeof(data.pv.table));
 	std::memset(data.pv.length, 0, sizeof(data.pv.length));
+	std::memset(data.moves_made, 0, sizeof(data.moves_made));
+	std::memset(data.excluded_moves, 0, sizeof(data.excluded_moves));
 	data.time_limit = 0;
 }
 

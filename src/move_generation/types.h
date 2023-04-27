@@ -258,6 +258,8 @@ public:
 	bool operator!=(Move a) const { return to_from() != a.to_from(); }
 };
 
+const Move EMPTY_MOVE = Move();
+
 template<MoveFlag F = QUIET>
 inline Move *make(Square from, Bitboard to, Move *list) {
 	while (to) *list++ = Move(from, pop_lsb(&to), F);
