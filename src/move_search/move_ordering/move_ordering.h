@@ -84,7 +84,8 @@ int capture_move_score(Move move, Position& board) {
 	if (!move.is_capture()) return 0;
 	PieceType to_type = type_of(board.at(move.to()));
 	PieceType from_type = type_of(board.at(move.from()));
-	return MVV_LVA_BONUS * static_exchange_eval<color>(board, move, -107) +
+	int cap_hist_score = capture_history[board.at(move.from())][move.to()][board.at(move.to())];
+	return (MVV_LVA_BONUS + cap_hist_score) * static_exchange_eval<color>(board, move, -107) +
 	        get_piece_value(to_type) - get_piece_value(from_type);
 }
 
