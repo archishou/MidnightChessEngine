@@ -167,6 +167,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 	ScoredMoves scored_moves = order_moves<color, ALL>(all_legal_moves, board, ply, data);
 
 	Move best_move = select_move(scored_moves, 0);
+	int moves_played = 0;
 	int value = NEG_INF_CHESS;
 	for (int move_idx = 0; move_idx < static_cast<int>(scored_moves.size()); move_idx++) {
 		Move legal_move = select_move(scored_moves, move_idx);
@@ -213,6 +214,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		}
 
 		board.play<color>(legal_move);
+		moves_played += 1;
 		data.nodes_searched += 1;
 
 		int new_value = NEG_INF_CHESS;
@@ -258,7 +260,13 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			}
 		}
 	}
-
+	if (moves_played == 0) {
+		if (excluding_move) return alpha;
+		else {
+			std::cout << "No Moves Played! Panic Exit" << std::endl;
+			exit(1);
+		}
+	}
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
 	t_table.put(board.get_hash(), depth, value, ply, best_move, pv_node, node_type);
 	return value;

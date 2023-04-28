@@ -597,3 +597,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 10280 W: 2572 L: 2382 D: 5326
 ```
+
+### Add Singular Extensions
+https://chess.swehosting.se/test/329/
+```
+ELO   | 12.37 +- 7.14 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.99 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 4608 W: 1249 L: 1085 D: 2274
+```
