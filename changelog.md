@@ -588,3 +588,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 3.02 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 1816 W: 561 L: 408 D: 847
 ```
+
+### More Aggressive LMR
+https://chess.swehosting.se/test/320/
+```
+ELO   | 6.42 +- 4.66 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 10280 W: 2572 L: 2382 D: 5326
+```
