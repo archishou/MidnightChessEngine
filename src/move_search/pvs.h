@@ -13,7 +13,6 @@
 #include "move_search/tables/lmr_table.h"
 #include "reductions.h"
 #include "pruning.h"
-#include "extensions.h"
 
 extern PVSData data;
 
