@@ -12,6 +12,8 @@
 #include "utils/clock.h"
 #include "move_search/tables/lmr_table.h"
 #include "reductions.h"
+#include "pruning.h"
+#include "extensions.h"
 
 extern PVSData data;
 
@@ -174,33 +176,17 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 		if (legal_move == data.excluded_moves[ply]) continue;
 
-		if (!pv_node && depth <= LMP_MIN_DEPTH && move_idx > depth * LMP_DEPTH_MULTIPLIER) {
-			break;
-		}
+		if (late_move_prune(pv_node, move_idx, depth)) break;
+		if (futility_prune(static_eval, alpha, value, depth)) break;
+		if (late_move_prune_quiet(pv_node, move_idx, legal_move, depth)) continue;
+		if (history_prune<color>(pv_node, value, depth, legal_move)) continue;
+		if (see_prune_pvs<color>(board, pv_node, depth, value, legal_move)) continue;
 
-		int fp_margin = depth * FP_COEFFICIENT + FP_MARGIN;
-		if (value > -MATE_BOUND && depth < FP_DEPTH && static_eval + fp_margin <= alpha) {
-			break;
-		}
-
-		if (!pv_node && depth <= 6 && legal_move.is_quiet() && move_idx > depth * 9) {
-			continue;
-		}
-
-		if (!pv_node && value > -MATE_BOUND && depth < 3 && history[color][legal_move.from()][legal_move.to()] < -1024 * depth)
-			continue;
-
-		if (!pv_node && depth < SEE_PVS_MIN_DEPTH && value > -MATE_BOUND &&
-			!static_exchange_eval<color>(board, legal_move, legal_move.is_quiet() ? SEE_PVS_QUIET_MARGIN * depth : SEE_PVS_TACTICAL_MARGIN * depth)) {
-			continue;
-		}
-
+		int extension = 0;
 		bool possible_singularity = !excluding_move && ply > 0 && tt_probe_results.entry_found &&
 									depth >= 8 && legal_move == tt_probe_results.entry.best_move &&
 									tt_probe_results.entry.depth >= depth - 3 &&
 									tt_probe_results.entry.node_type != UPPER_NODE;
-
-		int extension = 0;
 		if (possible_singularity) {
 			data.excluded_moves[ply] = legal_move;
 
@@ -242,7 +228,6 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		if (new_value == NEG_INF_CHESS || (pv_node && ((new_value > alpha && new_value < beta) || move_idx == 0))) {
 			new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -beta, -alpha, true);
 		}
-
 
 		board.undo<color>(legal_move);
 		if (!data.search_completed) return 0;
