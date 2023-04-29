@@ -4,7 +4,7 @@
 #include "lib/doctests.h"
 #include "move_search/types.h"
 
-TEST_SUITE_BEGIN("eval");
+TEST_SUITE_BEGIN("board-rep");
 
 TEST_CASE("piece-types") {
 	CHECK_EQ(PAWN, type_of(WHITE_PAWN));
