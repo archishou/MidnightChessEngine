@@ -50,11 +50,11 @@ inline constexpr Score evaluate_pawn_phalanx(Position& board) {
 template<Color c>
 inline constexpr Score evaluate_pawn_locations(Position& board) {
 	Score score = SCORE_ZERO;
-	Bitboard pawns = board.bitboard_of(c, PAWN);
+	Bitboard pawns = board.bitboard_of<c, PAWN>();
 	const Bitboard all_pawns = pawns;
 	const Bitboard us_pieces = board.all_pieces<c>();
 	const Bitboard them_pieces = board.all_pieces<~c>();
-	const Square them_king = bsf(board.bitboard_of(~c, KING));
+	const Square them_king = bsf(board.bitboard_of<~c, KING>());
 	const Bitboard them_king_ring = KING_ATTACKS[them_king] & ~them_pieces;
 
 	while (pawns) {

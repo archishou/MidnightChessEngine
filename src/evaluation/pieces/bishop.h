@@ -3,16 +3,16 @@ template<Color color>
 constexpr Score evaluate_bishops(Position& board) {
 	Score score = SCORE_ZERO;
 
-	Bitboard bishops = board.bitboard_of(color, BISHOP);
+	Bitboard bishops = board.bitboard_of<color, BISHOP>();
 	Bitboard us_pieces = board.all_pieces<color>();
 	Bitboard them_pieces = board.all_pieces<~color>();
-	const Bitboard all_pawns = board.bitboard_of(color, PAWN);
-	const Bitboard them_pawns = board.bitboard_of(~color, PAWN);
-	const Square them_king = bsf(board.bitboard_of(~color, KING));
+	const Bitboard all_pawns = board.bitboard_of<color, PAWN>();
+	const Bitboard them_pawns = board.bitboard_of<~color, PAWN>();
+	const Square them_king = bsf(board.bitboard_of<~color, KING>());
 	const Bitboard them_king_ring = KING_ATTACKS[them_king] & ~them_pieces;
 
 	const Bitboard them_pawn_attacks = pawn_attacks<~color>(them_pawns);
-	const Bitboard xray_occupancy = us_pieces ^ bishops ^ board.bitboard_of(color, QUEEN);
+	const Bitboard xray_occupancy = us_pieces ^ bishops ^ board.bitboard_of<color, QUEEN>();
 
 	const bool bishop_pair = pop_count(bishops) >> 1;
 	score += BISHOP_PAIR_BONUS * bishop_pair;
@@ -33,13 +33,13 @@ constexpr Score evaluate_bishops(Position& board) {
 		const Bitboard attacking_pawns = them_pawns & pawn_attacks<color>(bishop_square);
 		score += ATTACKED_BY_PAWN[BISHOP] * pop_count(attacking_pawns);
 
-		const Bitboard attacked_knights = pseudo_legal_moves & board.bitboard_of(~color, KNIGHT);
+		const Bitboard attacked_knights = pseudo_legal_moves & board.bitboard_of<~color, KNIGHT>();
 		score += read_threat_bonus<BISHOP, KNIGHT>() * pop_count(attacked_knights);
 
-		const Bitboard attacked_rooks = pseudo_legal_moves & board.bitboard_of(~color, ROOK);
+		const Bitboard attacked_rooks = pseudo_legal_moves & board.bitboard_of<~color, ROOK>();
 		score += read_threat_bonus<BISHOP, ROOK>() * pop_count(attacked_rooks);
 
-		const Bitboard attacked_queens = pseudo_legal_moves & board.bitboard_of(~color, QUEEN);
+		const Bitboard attacked_queens = pseudo_legal_moves & board.bitboard_of<~color, QUEEN>();
 		score += read_threat_bonus<BISHOP, QUEEN>() * pop_count(attacked_queens);
 
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;

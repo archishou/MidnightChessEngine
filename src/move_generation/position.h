@@ -103,6 +103,8 @@ public:
 
 	[[nodiscard]] inline Bitboard bitboard_of(Piece pc) const { return piece_bb[pc]; }
 	[[nodiscard]] inline Bitboard bitboard_of(Color c, PieceType pt) const { return piece_bb[make_piece(c, pt)]; }
+	template<Color c, PieceType pt> [[nodiscard]] inline Bitboard bitboard_of() const { return piece_bb[make_piece<c, pt>()]; }
+
 	[[nodiscard]] inline Piece at(Square sq) const { return board[sq]; }
 	[[nodiscard]] inline Color turn() const { return side_to_play; }
 	[[nodiscard]] inline int ply() const { return game_ply; }
@@ -117,6 +119,7 @@ public:
 	template<Color C> [[nodiscard]] inline Bitboard orthogonal_sliders() const;
 
 	template<Color C> [[nodiscard]] inline Bitboard all_pieces() const;
+	template<PieceType piece_type>[[nodiscard]] inline Bitboard all_pieces() const;
 	[[nodiscard]] inline Bitboard all_pieces(Color c) const;
 	[[nodiscard]] inline Bitboard all_pieces(const PieceType& piece_type) const;
 	[[nodiscard]] inline Bitboard all_pieces() const;
@@ -125,7 +128,7 @@ public:
 	[[nodiscard]] inline Bitboard attackers_from(Square s, Bitboard occ) const;
 
 	template<Color C> [[nodiscard]] inline bool in_check() const {
-		return attackers_from<~C>(bsf(bitboard_of(C, KING)), all_pieces<WHITE>() | all_pieces<BLACK>());
+		return attackers_from<~C>(bsf(bitboard_of<C, KING>()), all_pieces<WHITE>() | all_pieces<BLACK>());
 	}
 
 	template<Color C> void play(Move m);
@@ -163,6 +166,11 @@ inline Bitboard Position::all_pieces() const {
 
 inline Bitboard Position::all_pieces(Color c) const {
 	return c == WHITE ? all_pieces<WHITE>() : all_pieces<BLACK>();
+}
+
+template<PieceType piece_type>
+inline Bitboard Position::all_pieces() const {
+	return bitboard_of<BLACK, piece_type>() | bitboard_of<WHITE, piece_type>();
 }
 
 inline Bitboard Position::all_pieces(const PieceType& piece_type) const {
@@ -388,8 +396,8 @@ Move* Position::generate_legals(Move* list) {
 	const Bitboard them_bb = all_pieces<Them>();
 	const Bitboard all = us_bb | them_bb;
 
-	const Square our_king = bsf(bitboard_of(Us, KING));
-	const Square their_king = bsf(bitboard_of(Them, KING));
+	const Square our_king = bsf(bitboard_of<Us, KING>());
+	const Square their_king = bsf(bitboard_of<Them, KING>());
 
 	const Bitboard our_diag_sliders = diagonal_sliders<Us>();
 	const Bitboard their_diag_sliders = diagonal_sliders<Them>();
@@ -400,9 +408,9 @@ Move* Position::generate_legals(Move* list) {
 
 	Bitboard danger = 0;
 
-	danger |= pawn_attacks<Them>(bitboard_of(Them, PAWN)) | attacks<KING>(their_king, all);
+	danger |= pawn_attacks<Them>(bitboard_of<Them, PAWN>()) | attacks<KING>(their_king, all);
 	
-	b1 = bitboard_of(Them, KNIGHT); 
+	b1 = bitboard_of<Them, KNIGHT>();
 	while (b1) danger |= attacks<KNIGHT>(pop_lsb(&b1), all);
 	
 	b1 = their_diag_sliders;
@@ -421,8 +429,8 @@ Move* Position::generate_legals(Move* list) {
 	
 	Square s;
 
-	checkers = (attacks<KNIGHT>(our_king, all) & bitboard_of(Them, KNIGHT))
-		| (pawn_attacks<Us>(our_king) & bitboard_of(Them, PAWN));
+	checkers = (attacks<KNIGHT>(our_king, all) & bitboard_of<Them, KNIGHT>())
+		| (pawn_attacks<Us>(our_king) & bitboard_of<Them, PAWN>());
 	
 	Bitboard candidates = (attacks<ROOK>(our_king, them_bb) & their_orth_sliders)
 		| (attacks<BISHOP>(our_king, them_bb) & their_diag_sliders);
@@ -446,7 +454,7 @@ Move* Position::generate_legals(Move* list) {
 		switch (board[checker_square]) {
 		case make_piece(Them, PAWN):
 			if (checkers == shift<relative_dir<Us>(SOUTH)>(SQUARE_BB[history[game_ply].epsq])) {
-				b1 = pawn_attacks<Them>(history[game_ply].epsq) & bitboard_of(Us, PAWN) & not_pinned;
+				b1 = pawn_attacks<Them>(history[game_ply].epsq) & bitboard_of<Us, PAWN>() & not_pinned;
 				while (b1) *list++ = Move(pop_lsb(&b1), history[game_ply].epsq, EN_PASSANT);
 			}
 			[[fallthrough]];
@@ -478,7 +486,7 @@ Move* Position::generate_legals(Move* list) {
 		quiet_mask = ~all;
 
 		if (history[game_ply].epsq != NO_SQUARE) {
-			b2 = pawn_attacks<Them>(history[game_ply].epsq) & bitboard_of(Us, PAWN);
+			b2 = pawn_attacks<Them>(history[game_ply].epsq) & bitboard_of<Us, PAWN>();
 			b1 = b2 & not_pinned;
 			while (b1) {
 				s = pop_lsb(&b1);
@@ -501,7 +509,7 @@ Move* Position::generate_legals(Move* list) {
 				*list++ = Us == WHITE ? Move(e1, c1, OOO) : Move(e8, c8, OOO);
 		}
 
-		b1 = ~(not_pinned | bitboard_of(Us, KNIGHT));
+		b1 = ~(not_pinned | bitboard_of<Us, KNIGHT>());
 		while (b1) {
 			s = pop_lsb(&b1);
 			b2 = attacks(type_of(board[s]), s, all) & LINE[our_king][s];
@@ -509,7 +517,7 @@ Move* Position::generate_legals(Move* list) {
 			list = make<CAPTURE>(s, b2 & capture_mask, list);
 		}
 
-		b1 = ~not_pinned & bitboard_of(Us, PAWN);
+		b1 = ~not_pinned & bitboard_of<Us, PAWN>();
 		while (b1) {
 			s = pop_lsb(&b1);
 
@@ -532,7 +540,7 @@ Move* Position::generate_legals(Move* list) {
 		break;
 	}
 
-	b1 = bitboard_of(Us, KNIGHT) & not_pinned;
+	b1 = bitboard_of<Us, KNIGHT>() & not_pinned;
 	while (b1) {
 		s = pop_lsb(&b1);
 		b2 = attacks<KNIGHT>(s, all);
@@ -556,7 +564,7 @@ Move* Position::generate_legals(Move* list) {
 		list = make<CAPTURE>(s, b2 & capture_mask, list);
 	}
 
-	b1 = bitboard_of(Us, PAWN) & not_pinned & ~MASK_RANK[relative_rank<Us>(RANK7)];
+	b1 = bitboard_of<Us, PAWN>() & not_pinned & ~MASK_RANK[relative_rank<Us>(RANK7)];
 	b2 = shift<relative_dir<Us>(NORTH)>(b1) & ~all;
 	b3 = shift<relative_dir<Us>(NORTH)>(b2 & MASK_RANK[relative_rank<Us>(RANK3)]) & quiet_mask;
 	b2 &= quiet_mask;
@@ -585,7 +593,7 @@ Move* Position::generate_legals(Move* list) {
 		*list++ = Move(s - relative_dir<Us>(NORTH_EAST), s, CAPTURE);
 	}
 
-	b1 = bitboard_of(Us, PAWN) & not_pinned & MASK_RANK[relative_rank<Us>(RANK7)];
+	b1 = bitboard_of<Us, PAWN>() & not_pinned & MASK_RANK[relative_rank<Us>(RANK7)];
 	if (b1) {
 		b2 = shift<relative_dir<Us>(NORTH)>(b1) & quiet_mask;
 		while (b2) {

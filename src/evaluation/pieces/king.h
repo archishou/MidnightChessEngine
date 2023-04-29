@@ -1,5 +1,11 @@
 #pragma once
 
+#include "move_generation/types.h"
+#include "evaluation/types.h"
+#include "move_generation/position.h"
+#include "evaluation/constants/misc.h"
+#include "evaluation/bitboards.h"
+
 constexpr int NKING_SIDES = 2;
 
 constexpr Bitboard KING_SAFE_AREA[NCOLORS] = {
@@ -16,9 +22,9 @@ constexpr Score evaluate_king(Position& board) {
 	Score score = SCORE_ZERO;
 	const Bitboard board_open_files = open_files(board);
 	const Bitboard board_semi_open_files = semi_open_files<Us>(board);
-	const Bitboard pawns = board.bitboard_of(Us, PAWN);
+	const Bitboard pawns = board.bitboard_of<Us, PAWN>();
 
-	Bitboard king = board.bitboard_of(Us, KING);
+	Bitboard king = board.bitboard_of<Us, KING>();
 	Square king_square = pop_lsb(&king);
 	File file = file_of(king_square);
 	const int king_side = file >> 2;

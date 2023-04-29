@@ -46,6 +46,11 @@ enum Piece : int {
 	NO_PIECE
 };
 
+template<Color c, PieceType pt>
+constexpr Piece make_piece() {
+	return Piece((c << 3) + pt);
+}
+
 constexpr Piece make_piece(Color c, PieceType pt) {
 	return Piece((c << 3) + pt);
 }
@@ -152,16 +157,14 @@ constexpr Bitboard shift(Bitboard b) {
 
 template<Direction D>
 constexpr Bitboard fill(Bitboard b) {
-	switch (D) {
-		case NORTH:
-			b |= (b << 8);
-			b |= (b << 16);
-			return b | (b << 32);
-		case SOUTH:
-			b |= (b >> 8);
-			b |= (b >> 16);
-			return b | (b >> 32);
-		default: return b;
+	if constexpr (D == NORTH) {
+		b |= (b << 8);
+		b |= (b << 16);
+		return b | (b << 32);
+	} else if constexpr (D == SOUTH) {
+		b |= (b >> 8);
+		b |= (b >> 16);
+		return b | (b >> 32);
 	}
 }
 
