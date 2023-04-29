@@ -392,7 +392,7 @@ SPRT: llr 2.96 (100.7%), lbound -2.94, ubound 2.94 - H1 was accepted
 ```
 
 ### New LMR Constants: Base 1.0 Divisor 2.00
-https://engineprogramming.pythonanywhere.com/test/8/
+https://chess.swehosting.se/test/8/
 ```
 ELO   | 7.57 +- 6.08 (95%)
 SPRT  | 5.0+0.05s Threads=1 Hash=64MB
@@ -401,7 +401,7 @@ GAMES | N: 6792 W: 1915 L: 1767 D: 3110
 ```
 
 ### New LMR Constants: Base 1.2 Divisor 1.8
-https://engineprogramming.pythonanywhere.com/test/13/
+https://chess.swehosting.se/test/13/
 ```
 ELO   | 5.36 +- 4.35 (95%)
 SPRT  | 5.0+0.05s Threads=1 Hash=64MB
@@ -410,7 +410,7 @@ GAMES | N: 13352 W: 3752 L: 3546 D: 6054
 ```
 
 ### Tempo Bonus
-https://engineprogramming.pythonanywhere.com/test/33/
+https://chess.swehosting.se/test/33/
 ```
 ELO   | 23.88 +- 10.74 (95%)
 SPRT  | 5.0+0.05s Threads=1 Hash=64MB
@@ -419,7 +419,7 @@ GAMES | N: 2288 W: 728 L: 571 D: 989
 ```
 
 ### Aspiration Windows
-https://engineprogramming.pythonanywhere.com/test/54/
+https://chess.swehosting.se/test/54/
 ```
 ELO   | 49.93 +- 15.54 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -428,7 +428,7 @@ GAMES | N: 1016 W: 338 L: 193 D: 485
 ```
 
 ### Threat Eval
-https://engineprogramming.pythonanywhere.com/test/57/
+https://chess.swehosting.se/test/57/
 ```
 ELO   | 31.10 +- 12.32 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -437,7 +437,7 @@ GAMES | N: 1736 W: 568 L: 413 D: 755
 ```
 
 ### Refactor Q MoveGen
-https://engineprogramming.pythonanywhere.com/test/68/
+https://chess.swehosting.se/test/68/
 ```
 ELO   | 2.32 +- 9.27 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -446,7 +446,7 @@ GAMES | N: 2848 W: 763 L: 744 D: 1341
 ```
 
 ### Generate Promotions in Q Search
-https://engineprogramming.pythonanywhere.com/test/73/
+https://chess.swehosting.se/test/73/
 ```
 ELO | 6.46 +- 4.74 (95%)
 SPRT | 8.0+0.08s Threads=1 Hash=64MB
@@ -455,7 +455,7 @@ GAMES | N: 10968 W: 3028 L: 2824 D: 5116
 ```
 
 ### Static Exchange Evaluation
-https://engineprogramming.pythonanywhere.com/test/91/
+https://chess.swehosting.se/test/91/
 ```
 ELO   | 15.08 +- 8.19 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -464,7 +464,7 @@ GAMES | N: 3712 W: 1078 L: 917 D: 1717
 ```
 
 ### Static Exchange Evaluation Pruning in Q Search
-https://engineprogramming.pythonanywhere.com/test/110/
+https://chess.swehosting.se/test/110/
 ```
 ELO   | 25.97 +- 11.08 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -473,7 +473,7 @@ GAMES | N: 2024 W: 616 L: 465 D: 943
 ```
 
 ### Static Exchange Evaluation Pruning in PVS
-https://engineprogramming.pythonanywhere.com/test/125/
+https://chess.swehosting.se/test/125/
 ```
 ELO | 26.39 +- 10.86 (95%)
 SPRT | 8.0+0.08s Threads=1 Hash=64MB
@@ -482,7 +482,7 @@ GAMES | N: 1952 W: 557 L: 409 D: 986
 ```
 
 ### Move RFP to before NMP because it's cheaper to prune
-https://engineprogramming.pythonanywhere.com/test/168/
+https://chess.swehosting.se/test/168/
 ```
 ELO   | 9.60 +- 6.09 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -491,7 +491,7 @@ GAMES | N: 6264 W: 1660 L: 1487 D: 3117
 ```
 
 ### Only NMP if our evaluation is greater than their best value
-https://engineprogramming.pythonanywhere.com/test/177/
+https://chess.swehosting.se/test/177/
 ```
 ELO   | 11.79 +- 7.06 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -500,7 +500,7 @@ GAMES | N: 4984 W: 1421 L: 1252 D: 2311
 ```
 
 ### Prefetch Transposition Table Entry
-https://engineprogramming.pythonanywhere.com/test/190/
+https://chess.swehosting.se/test/190/
 ```
 ELO   | 10.47 +- 6.48 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -509,7 +509,7 @@ GAMES | N: 5744 W: 1581 L: 1408 D: 2755
 ```
 
 ### Add bonus for controlling the center of the board
-https://engineprogramming.pythonanywhere.com/test/197/
+https://chess.swehosting.se/test/197/
 ```
 ELO   | 15.79 +- 8.41 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -518,7 +518,7 @@ GAMES | N: 3544 W: 1039 L: 878 D: 1627
 ```
 
 ### Add Pawn phalanx to evaluation
-https://engineprogramming.pythonanywhere.com/test/200/
+https://chess.swehosting.se/test/200/
 ```
 ELO   | 14.43 +- 8.01 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -527,7 +527,7 @@ GAMES | N: 3928 W: 1150 L: 987 D: 1791
 ```
 
 ### Evaluate candidate passed pawns
-https://engineprogramming.pythonanywhere.com/test/208/
+https://chess.swehosting.se/test/208/
 ```
 ELO   | 7.67 +- 5.38 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -536,7 +536,7 @@ GAMES | N: 8656 W: 2442 L: 2251 D: 3963
 ```
 
 ### Add LMP for quiet moves
-https://engineprogramming.pythonanywhere.com/test/227/
+https://chess.swehosting.se/test/227/
 ```
 ELO   | 24.45 +- 11.02 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=16MB
@@ -545,7 +545,7 @@ GAMES | N: 2320 W: 784 L: 621 D: 915
 ```
 
 ### Update history when alpha is raised
-https://engineprogramming.pythonanywhere.com/test/230/
+https://chess.swehosting.se/test/230/
 ```
 ELO   | 12.18 +- 7.13 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -554,7 +554,7 @@ GAMES | N: 4680 W: 1285 L: 1121 D: 2274
 ```
 
 ### Add futility pruning
-https://engineprogramming.pythonanywhere.com/test/248/
+https://chess.swehosting.se/test/248/
 ```
 ELO   | 7.73 +- 5.31 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -563,7 +563,7 @@ GAMES | N: 8136 W: 2104 L: 1923 D: 4109
 ```
 
 ### Add History Pruning
-https://engineprogramming.pythonanywhere.com/test/270/
+https://chess.swehosting.se/test/270/
 ```
 ELO   | 6.60 +- 4.84 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
@@ -607,7 +607,8 @@ LLR   | 2.99 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 4608 W: 1249 L: 1085 D: 2274
 ```
 
-### Multicut and negative extensions
+### Multi-cut and negative extensions
+https://chess.swehosting.se/test/355/
 ```
 ELO   | 7.03 +- 4.95 (95%)
 SPRT  | 8.0+0.08s Threads=1 Hash=64MB
