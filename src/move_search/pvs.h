@@ -204,13 +204,17 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		if (possible_singularity) {
 			data.excluded_moves[ply] = legal_move;
 
-			int singularity_beta = std::max(tt_probe_results.entry.value - 2 * depth, -MATE_BOUND);
+			int tt_value = tt_probe_results.entry.value;
+			int singularity_beta = std::max(tt_value - 2 * depth, -MATE_BOUND);
 			int singularity_depth = (depth - 1) >> 1;
 			int singularity_score = pvs<color>(board, singularity_depth, ply, singularity_beta - 1, singularity_beta, false);
 
-			extension = singularity_score < singularity_beta;
-
 			data.excluded_moves[ply] = EMPTY_MOVE;
+
+			if (singularity_score >= singularity_beta && singularity_beta >= beta) return singularity_beta;
+			else if (singularity_score < singularity_beta) extension = 1;
+			else if (tt_value >= beta || tt_value <= alpha) extension = -1;
+			else extension = 0;
 		}
 
 		board.play<color>(legal_move);
@@ -219,7 +223,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 		int new_value = NEG_INF_CHESS;
 		data.moves_made[ply] = legal_move;
-		int search_depth = depth + extension;
+		int search_depth = std::max(depth + extension, 0);
 
 		bool full_depth_zero_window;
 
