@@ -615,3 +615,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.96 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 8992 W: 2230 L: 2048 D: 4714
 ```
+
+### Remove multi-cut
+https://chess.swehosting.se/test/371/
+```
+ELO   | -0.91 +- 2.88 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 0.31 (-2.94, 2.94) [-4.00, 1.00]
+GAMES | N: 26792 W: 6384 L: 6454 D: 13954
+```

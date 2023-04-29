@@ -196,8 +196,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 			data.excluded_moves[ply] = EMPTY_MOVE;
 
-			if (singularity_score >= singularity_beta && singularity_beta >= beta) return singularity_beta;
-			else if (singularity_score < singularity_beta) extension = 1;
+			if (singularity_score < singularity_beta) extension = 1;
 			else if (tt_value >= beta || tt_value <= alpha) extension = -1;
 			else extension = 0;
 		}
