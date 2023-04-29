@@ -251,7 +251,6 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 			value = new_value;
 
 			update_pv(data.pv, ply, legal_move);
-			if (ply == 0) data.value = value;
 			best_move = legal_move;
 
 			if (value > alpha) {
@@ -293,7 +292,7 @@ PVSData aspiration_windows(Position& board, int prev_score, short depth, int tim
 		if (alpha < -ASP_WINDOW_FULL_SEARCH_BOUNDS) alpha = NEG_INF_CHESS;
 		if (beta  > ASP_WINDOW_FULL_SEARCH_BOUNDS) beta  = POS_INF_CHESS;
 
-		pvs<color>(board, depth, 0, alpha, beta, false);
+		data.value = pvs<color>(board, depth, 0, alpha, beta, false);
 		int score = data.value;
 		if (score <= alpha) {
 			alpha = std::max(alpha - delta, NEG_INF_CHESS);

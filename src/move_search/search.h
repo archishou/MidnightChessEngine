@@ -35,7 +35,6 @@ BestMoveSearchResults iterative_deepening(Position& board, const BestMoveSearchP
 	}
 
 	search_results.time_searched = get_elapsed_time(TimeResolution::Seconds);
-	search_results.nodes_per_second = search_results.nodes_searched / (search_results.time_searched + 1);
 
 	return search_results;
 }

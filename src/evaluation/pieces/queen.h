@@ -1,20 +1,20 @@
 #pragma once
 template<Color color>
 constexpr Score evaluate_queens(Position& board) {
-	Bitboard queens = board.bitboard_of(color, QUEEN);
+	Bitboard queens = board.bitboard_of<color, QUEEN>();
 	const Bitboard us_pieces = board.all_pieces<color>();
 	const Bitboard them_pieces = board.all_pieces<~color>();
 
 	const Bitboard board_open_files = open_files(board);
 	const Bitboard board_semi_open_files = semi_open_files<color>(board);
 
-	const Square them_king = bsf(board.bitboard_of(~color, KING));
+	const Square them_king = bsf(board.bitboard_of<~color, KING>());
 	const Bitboard them_king_ring = KING_ATTACKS[them_king] & ~them_pieces;
 
-	const Bitboard them_pawns = board.bitboard_of(~color, PAWN);
+	const Bitboard them_pawns = board.bitboard_of<~color, PAWN>();
 
 	const Bitboard them_pawn_attacks = pawn_attacks<~color>(them_pawns);
-	const Bitboard xray_occupancy = us_pieces ^ queens ^ board.bitboard_of(color, ROOK) ^ board.bitboard_of(color, BISHOP);
+	const Bitboard xray_occupancy = us_pieces ^ queens ^ board.bitboard_of<color, ROOK>() ^ board.bitboard_of<color, BISHOP>();
 	Score score = SCORE_ZERO;
 
 	while (queens) {

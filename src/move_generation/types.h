@@ -46,6 +46,11 @@ enum Piece : int {
 	NO_PIECE
 };
 
+template<Color c, PieceType pt>
+constexpr Piece make_piece() {
+	return Piece((c << 3) + pt);
+}
+
 constexpr Piece make_piece(Color c, PieceType pt) {
 	return Piece((c << 3) + pt);
 }
@@ -137,31 +142,29 @@ constexpr Square create_square(File f, Rank r) { return Square(r << 3 | f); }
 
 template<Direction D>
 constexpr Bitboard shift(Bitboard b) {
-	return D == NORTH ? b << 8
-		: D == SOUTH ? b >> 8
-		: D == NORTH + NORTH ? b << 16
-		: D == SOUTH + SOUTH ? b >> 16
-		: D == EAST ? (b & ~MASK_FILE[HFILE]) << 1
-		: D == WEST ? (b & ~MASK_FILE[AFILE]) >> 1
-		: D == NORTH_EAST ? (b & ~MASK_FILE[HFILE]) << 9 
-		: D == NORTH_WEST ? (b & ~MASK_FILE[AFILE]) << 7
-		: D == SOUTH_EAST ? (b & ~MASK_FILE[HFILE]) >> 7 
-		: D == SOUTH_WEST ? (b & ~MASK_FILE[AFILE]) >> 9
-		: 0;	
+	if constexpr (D == NORTH) return b << 8;
+	else if constexpr (D == SOUTH) return b >> 8;
+	else if constexpr (D == NORTH + NORTH) return b << 16;
+	else if constexpr (D == SOUTH + SOUTH) return b >> 16;
+	else if constexpr (D == EAST) return (b & ~MASK_FILE[HFILE]) << 1;
+	else if constexpr (D == WEST) return (b & ~MASK_FILE[AFILE]) >> 1;
+	else if constexpr (D == NORTH_EAST) return (b & ~MASK_FILE[HFILE]) << 9;
+	else if constexpr (D == NORTH_WEST) return (b & ~MASK_FILE[AFILE]) << 7;
+	else if constexpr (D == SOUTH_EAST) return (b & ~MASK_FILE[HFILE]) >> 7;
+	else if constexpr (D == SOUTH_WEST) return (b & ~MASK_FILE[AFILE]) >> 9;
+	return 0;
 }
 
 template<Direction D>
 constexpr Bitboard fill(Bitboard b) {
-	switch (D) {
-		case NORTH:
-			b |= (b << 8);
-			b |= (b << 16);
-			return b | (b << 32);
-		case SOUTH:
-			b |= (b >> 8);
-			b |= (b >> 16);
-			return b | (b >> 32);
-		default: return b;
+	if constexpr (D == NORTH) {
+		b |= (b << 8);
+		b |= (b << 16);
+		return b | (b << 32);
+	} else if constexpr (D == SOUTH) {
+		b |= (b >> 8);
+		b |= (b >> 16);
+		return b | (b >> 32);
 	}
 }
 
@@ -195,7 +198,6 @@ constexpr Bitboard file_fill(const Bitboard b) {
 	return fill<NORTH>(b) | fill<SOUTH>(b);
 }
 
-const int NMOVEGENS = 64;
 enum MoveGenType : int {
 	ALL, QSEARCH
 };
@@ -205,7 +207,6 @@ enum MoveFlag : int {
 	QUIET = 0b0000, DOUBLE_PUSH = 0b0001,
 	OO = 0b0010, OOO = 0b0011,
 	CAPTURE = 0b1000,
-	CAPTURES = 0b1111,
 	EN_PASSANT = 0b1010,
 	PROMOTIONS = 0b0111,
 	PROMOTION_CAPTURES = 0b1100,

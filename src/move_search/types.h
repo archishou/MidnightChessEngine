@@ -31,7 +31,6 @@ struct BestMoveSearchResults {
 
 	uint64_t q_nodes_searched = 0;
 	uint64_t nodes_searched = 0;
-	double nodes_per_second = 0;
 };
 
 extern std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results);

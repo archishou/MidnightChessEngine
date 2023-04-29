@@ -18,7 +18,6 @@ std::ostream& operator<<(std::ostream& os, const BestMoveSearchResults& results)
 	os << "Evaluation: " << results.value << std::endl;
 	os << "Time Searched: " << results.time_searched << std::endl;
 	os << "Nodes Searched: " << results.nodes_searched << std::endl;
-	os << "Node / Second: " << results.nodes_per_second << std::endl;
 	os << "Q Nodes Searched: " << results.q_nodes_searched << std::endl;
 	return os;
 }
