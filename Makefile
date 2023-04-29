@@ -1,87 +1,34 @@
-CXX = g++
-INCLUDES = -Isrc
-DEPFLAGS = -MMD -MP
-SRCDIR = src
-TESTDIR = tests
-TMPDIR = tmp
-EXE = midnight
-
-LDFLAGS  := -flto
-# recursive wildcard
-rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
-
-#windows find, assumes no spaces in dir names
-define wfind
-$(foreach d,$1,$(wildcard $d**/) $(call wfind,$(wildcard $d**/)))
-endef
-
+EXE           = midnight
+ 
+SOURCES      := src/main.cpp src/move_generation/position.cpp src/move_generation/tables.cpp src/move_generation/types.cpp src/move_search/tables/transposition_table.cpp src/utils/helpers.cpp src/utils/clock.cpp src/move_search/tables/history_table.cpp src/move_search/tables/lmr_table.cpp src/move_search/move_ordering/move_ordering.cpp src/engine.cpp src/move_search/reductions.cpp src/move_search/search.cpp src/move_search/types.cpp src/move_search/pvs.cpp
+ 
+CXXFLAGS     := -O3 -Isrc -flto -std=c++20 -march=native -Wall -Wextra -pedantic -DNDEBUG
+LDFLAGS      :=
+ 
+CXX          := g++
+SUFFIX       :=
+ 
 # Detect Windows
 ifeq ($(OS), Windows_NT)
-    uname_S  := Windows
+    DETECTED_OS := Windows
     SUFFIX   := .exe
-    SRC_DIRECTORIES := $(call wfind,$(SRCDIR)/)
-    SRC_DIRECTORIES += $(call wfind,$(TESTDIR)/)
-# dumb workaround for mysterious issue with msys2
-    ifeq (,$(findstring msys2,$(SHELL)))
-        SRC_DIRECTORIES := $(subst /,\,$(SRC_DIRECTORIES))
-        TMP_DIRS := $(addprefix $(TMPDIR)\,$(SRC_DIRECTORIES))
-        CMD_SEP  := &
-        MKDIR    := mkdir
-        RM_R     := rmdir /s /q
-    else
-        TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
-        CMD_SEP  := ;
-        MKDIR    := mkdir -p
-        RM_R     := rm -rf
-    endif
-    LDFLAGS  += -fuse-ld=lld
+    CXXFLAGS += -static
 else
-    CMD_SEP  := ;
-    MKDIR    := mkdir -p
-    RM_R     := rm -rf
-    uname_S  := $(shell uname -s)
-    SUFFIX   :=
-    SRC_DIRECTORIES := $(shell find $(SRCDIR) -type d)
-    SRC_DIRECTORIES += $(shell find $(TESTDIR) -type d)
-    TMP_DIRS := $(addprefix $(TMPDIR)/,$(SRC_DIRECTORIES))
-    ifneq (,$(findstring clang,$(shell $(CXX) --version)))
-        ifneq ($(uname_S),Darwin)
-            LDFLAGS += -fuse-ld=lld
-        endif
+    DETECTED_OS := $(shell uname -s)
+    CXXFLAGS += -pthread
+endif
+
+ifneq (,$(findstring clang,$(shell $(CXX) --version)))
+    ifneq ($(DETECTED_OS),Darwin)
+        LDFLAGS += -fuse-ld=lld
     endif
 endif
-
-CXXFLAGS := -O3 -std=c++20 -march=native $(INCLUDES) -Wall -Wextra -pedantic -DNDEBUG
-
-SRC_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
-
-ifeq ($(MAKECMDGOALS),tests)
-	SRC_FILES := $(call rwildcard,$(SRCDIR)/,*.cpp)
-	SRC_FILES += $(call rwildcard,$(TESTDIR)/,*.cpp)
-	SRC_FILES := $(filter-out $(SRCDIR)/main.cpp, $(SRC_FILES))
-	EXE    = midnight-tests
-endif
-
-TARGET = $(addsuffix $(SUFFIX),$(EXE))
-
-OBJECTS   := $(patsubst %.cpp,$(TMPDIR)/%.o,$(SRC_FILES))
-DEPENDS   := $(patsubst %.cpp,$(TMPDIR)/%.d,$(SRC_FILES))
-
-.PHONY: clean all tests FORCE
-
+ 
+OUT := $(EXE)$(SUFFIX)
+ 
 all: $(EXE)
-tests: $(EXE)
-$(EXE): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -MMD -MP -o $(TARGET) $^ $(LDFLAGS)
-
-$(TMPDIR)/%.o: %.cpp | $(TMPDIR)
-	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@ $(LDFLAGS)
-
-# another msys2 workaround
-$(TMPDIR):
-	$(foreach dir,$(TMP_DIRS),$(MKDIR) $(dir) ${CMD_SEP})
-
+ 
+$(EXE) : $(SOURCES)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(OUT) $(SOURCES)
+ 
 clean:
-	$(RM_R) $(TMPDIR)
-
--include $(DEPENDS)
