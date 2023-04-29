@@ -606,3 +606,11 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.99 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 4608 W: 1249 L: 1085 D: 2274
 ```
+
+### Multicut and negative extensions
+```
+ELO   | 7.03 +- 4.95 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.96 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 8992 W: 2230 L: 2048 D: 4714
+```
