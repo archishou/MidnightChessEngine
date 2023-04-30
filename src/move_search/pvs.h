@@ -13,6 +13,7 @@
 #include "move_search/tables/lmr_table.h"
 #include "reductions.h"
 #include "pruning.h"
+#include "extensions.h"
 
 extern PVSData data;
 
@@ -181,25 +182,8 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		if (history_prune<color>(pv_node, value, depth, legal_move)) continue;
 		if (see_prune_pvs<color>(board, pv_node, depth, value, legal_move)) continue;
 
-		int extension = 0;
-		bool possible_singularity = !excluding_move && ply > 0 && tt_probe_results.entry_found &&
-									depth >= 8 && legal_move == tt_probe_results.entry.best_move &&
-									tt_probe_results.entry.depth >= depth - 3 &&
-									tt_probe_results.entry.node_type != UPPER_NODE;
-		if (possible_singularity) {
-			data.excluded_moves[ply] = legal_move;
-
-			int tt_value = tt_probe_results.entry.value;
-			int singularity_beta = std::max(tt_value - 2 * depth, -MATE_BOUND);
-			int singularity_depth = (depth - 1) >> 1;
-			int singularity_score = pvs<color>(board, singularity_depth, ply, singularity_beta - 1, singularity_beta, false);
-
-			data.excluded_moves[ply] = EMPTY_MOVE;
-
-			if (singularity_score < singularity_beta) extension = 1;
-			else if (tt_value >= beta || tt_value <= alpha) extension = -1;
-			else extension = 0;
-		}
+		int search_extension = singular_extension<color>(board, excluding_move, depth, ply, alpha, beta,
+														 legal_move, tt_probe_results, data);
 
 		board.play<color>(legal_move);
 		moves_played += 1;
@@ -207,7 +191,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 
 		int new_value = NEG_INF_CHESS;
 		data.moves_made[ply] = legal_move;
-		int search_depth = std::max(depth + extension, 0);
+		int search_depth = std::max(depth + search_extension, 0);
 
 		bool full_depth_zero_window;
 
