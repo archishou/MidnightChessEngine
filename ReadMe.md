@@ -22,41 +22,9 @@ make
 ```
 
 # Credits
-Thanks to [@Alex2262](https://github.com/Alex2262) for helping me debug a lot of the small bugs I had when I first started and then giving me validating ideas I had as my engine grew in strength.
+Thanks to [@Alex2262](https://github.com/Alex2262) for helping with lots of small improvements in my engine.
 
-Thanks to [@Ciekce](https://github.com/Ciekce) for helping me become a better C++ dev. He helped identify many of the places of undefined behavior in my code and generally pointed out many of the bad coding practices prevalent in my code.
-
-# Features
-- Search
-  - Principle Variation Search
-  - Alpha Beta Pruning
-  - Transposition Table
-  - Null Move Pruning
-  - Reverse Futility Pruning
-  - Late Move Reductions
-  - Late Move Pruning
-- Move Ordering
-  - Killer Moves
-  - History indexed by color-to-from
-- Evaluation
-  - Piece Material
-  - Piece Square Tables
-  - Tempo bonus
-  - Bishop Pair Bonus
-  - Piece Mobility
-  - Piece supported by pawn
-  - Piece attacked by pawn
-  - Rook/Queen/King on open/semi open files
-  - King pawn shield
-  - Threats from minor to minor/rook/queen
-  - Threats from rook to queen
-  - King Ring attack Bonus
-  - King check bonus
-  - Doubled pawns
-  - Isolated pawns
-  - Passed pawns
-  - Blocked passed pawns
-  - Pawns supported by pawns
+Thanks to [@Ciekce](https://github.com/Ciekce) for helping me become a better C++ dev. He helped me find code that produced undefined behavior and is responsible for helping me fix my Makefile numerous times.
 
 # Elo History
 - Midnight Rating 1500
@@ -89,6 +57,48 @@ Thanks to [@Ciekce](https://github.com/Ciekce) for helping me become a better C+
     - King Shield Pawn bonus
 - Midnight v4 Rating 2500
   - No functional changes just adds better tech stack.
+- Midnight v5
+  - Search Changes
+    - Adds Transposition Table entries for Q search
+    - Add soft/hard limits
+    - Adds History Gravity
+    - Adds incremental selection sort to sort moves
+    - Updates LMR with tuning
+    - Add Late Move Pruning
+  - Move Ordering Changes
+    - Updates definition of quiet to include to castling and double pushes
+  - Evaluation Changes
+    - King Ring Danger Eval
+    - Pawn Eval Attack
+    - New Score Style with S(x, y)
+    - Mobility includes XRAY squares
+    - Passed Pawn / Blocked Pawn PSTS
+- Midnight v6
+  - [New LMR Constants](https://chess.swehosting.se/test/8/)
+  - [New LMR Constants](https://chess.swehosting.se/test/13/)
+  - [Tempo Bonus](https://chess.swehosting.se/test/33/)
+  - [Aspiration Windows](https://chess.swehosting.se/test/54/)
+  - [Threat Eval](https://chess.swehosting.se/test/57/)
+  - [Refactor Movegen](https://chess.swehosting.se/test/68/)
+  - [Generate Promotions in Q Search](https://chess.swehosting.se/test/73/)
+  - [Static Exchange Evaluation in Move Ordering](https://chess.swehosting.se/test/91/)
+  - [Static Exchange Pruning in Q Search](https://chess.swehosting.se/test/110/)
+  - [Static Exchange Pruning in PVS](https://chess.swehosting.se/test/125/)
+  - [Move RFP to before NMP](https://chess.swehosting.se/test/168/)
+  - [Only do NMP if our Evaluation is greater than their best value](https://chess.swehosting.se/test/177/)
+  - [Prefetch TT Entry](https://chess.swehosting.se/test/190/)
+  - [Bonus for controlling board center](https://chess.swehosting.se/test/197/)
+  - [Pawn Phalanx Evaluation](https://chess.swehosting.se/test/200/)
+  - [Evaluate Candidate Passed Pawns](https://chess.swehosting.se/test/208/)
+  - [Add LMP for Quiet Moves](https://chess.swehosting.se/test/227/)
+  - [Update History when Alpha is Raised](https://chess.swehosting.se/test/230/)
+  - [Add Futility Pruning](https://chess.swehosting.se/test/248/)
+  - [Add History Pruning](https://chess.swehosting.se/test/270/)
+  - [Add Continuation History](https://chess.swehosting.se/test/309/)
+  - [Add Capture History](https://chess.swehosting.se/test/318/)
+  - [More Aggressive LMR](https://chess.swehosting.se/test/320/)
+  - [Singular Extensions](https://chess.swehosting.se/test/329/)
+  - [Multi-cut and negative extensions](https://chess.swehosting.se/test/355/)
 
 [commits-badge]:https://img.shields.io/github/commits-since/archishou/MidnightChessEngine/latest?style=for-the-badge
 [commits-link]:https://github.com/archishou/MidnightChessEngine/commits/master
