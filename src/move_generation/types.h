@@ -238,7 +238,6 @@ public:
 
 	[[nodiscard]] inline Square to() const { return Square(move & 0x3f); }
 	[[nodiscard]] inline Square from() const { return Square((move >> 6) & 0x3f); }
-	[[nodiscard]] inline int to_from() const { return move & 0xffff; }
 	[[nodiscard]] inline MoveFlag flag() const { return MoveFlag((move >> 12) & 0xf); }
 
 	[[nodiscard]] inline bool is_capture() const {
@@ -255,8 +254,8 @@ public:
 		return !is_capture() && !is_promotion();
 	}
 
-	bool operator==(Move a) const { return to_from() == a.to_from(); }
-	bool operator!=(Move a) const { return to_from() != a.to_from(); }
+	bool operator==(Move a) const { return move == a.move; }
+	bool operator!=(Move a) const { return move != a.move; }
 };
 
 const Move EMPTY_MOVE = Move();
