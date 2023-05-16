@@ -2,7 +2,8 @@
 // Created by Archishmaan Peyyety on 1/19/23.
 //
 #pragma once
-#include "move_generation/types.h"
+
+#include "move_gen/types/move.h"
 
 typedef Move PVTable[MAX_DEPTH][MAX_DEPTH];
 

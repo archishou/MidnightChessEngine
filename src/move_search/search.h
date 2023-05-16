@@ -5,7 +5,6 @@
 #include <fstream>
 #include <vector>
 #include <random>
-#include "move_generation/position.h"
 #include "pvs.h"
 #include "search_constants.h"
 #include "utils/fen_constants.h"

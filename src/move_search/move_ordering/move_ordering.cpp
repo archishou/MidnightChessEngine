@@ -27,11 +27,11 @@ int hash_move_score(Move& move, Move& previous_best_move) {
 
 int promotion_move_score(Move move) {
 	if (!move.is_promotion()) return 0;
-	MoveFlag flag = move.flag();
-	if (flag == PC_QUEEN || flag == PR_QUEEN) return ORDERING_QUEEN_VALUE + PROMOTION_BONUS;
-	else if (flag == PC_ROOK || flag == PR_ROOK) return ORDERING_ROOK_VALUE + PROMOTION_BONUS;
-	else if (flag == PC_BISHOP || flag == PR_BISHOP) return ORDERING_BISHOP_VALUE + PROMOTION_BONUS;
-	else if (flag == PC_KNIGHT || flag == PR_KNIGHT) return ORDERING_KNIGHT_VALUE + PROMOTION_BONUS;
+	MoveType flag = move.type();
+	if ((flag == (PR_QUEEN | CAPTURE_TYPE)) || flag == PR_QUEEN) return ORDERING_QUEEN_VALUE + PROMOTION_BONUS;
+	else if ((flag == (PR_ROOK | CAPTURE_TYPE)) || flag == PR_ROOK) return ORDERING_ROOK_VALUE + PROMOTION_BONUS;
+	else if ((flag == (PR_BISHOP | CAPTURE_TYPE)) || flag == PR_BISHOP) return ORDERING_BISHOP_VALUE + PROMOTION_BONUS;
+	else if ((flag == (PR_KNIGHT | CAPTURE_TYPE)) || flag == PR_KNIGHT) return ORDERING_KNIGHT_VALUE + PROMOTION_BONUS;
 	else return 0;
 }
 

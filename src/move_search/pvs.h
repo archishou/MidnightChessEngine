@@ -5,7 +5,6 @@
 #include <array>
 #include "cstring"
 #include "search_params.h"
-#include "move_generation/position.h"
 #include "move_search/move_ordering/move_ordering.h"
 #include "evaluation/evaluate.h"
 #include "move_search/tables/pv_table.h"
@@ -24,7 +23,7 @@ bool position_is_draw(Position &board, const int ply);
 template<Color color>
 int q_search(Position &board, const int ply, int alpha, const int beta) {
 
-	t_table.prefetch(board.get_hash());
+	t_table.prefetch(board.hash());
 
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
@@ -41,7 +40,7 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	if (stand_pat >= beta) return beta;
 	if (alpha < stand_pat) alpha = stand_pat;
 
-	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.get_hash(), QSEARCH_TT_DEPTH, ply);
+	TranspositionTableSearchResults probe_results = t_table.probe_for_search(board.hash(), QSEARCH_TT_DEPTH, ply);
 	if (probe_results.entry_found) {
 		if ((probe_results.entry.node_type == EXACT) ||
 			(probe_results.entry.node_type == LOWER_NODE && probe_results.entry.value >= beta) ||
@@ -51,8 +50,8 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	}
 
 	Move best_move = Move();
-	MoveList<color, QSEARCH> capture_moves(board);
-	ScoredMoves scored_moves = order_moves<color, QSEARCH>(capture_moves, board, ply, data);
+	MoveList<color, CAPTURES> capture_moves(board);
+	ScoredMoves scored_moves = order_moves<color, CAPTURES>(capture_moves, board, ply, data);
 	int futility = stand_pat + Q_SEARCH_FUTILITY_MARGIN;
 	for (int move_idx = 0; move_idx < static_cast<int>(scored_moves.size()); move_idx++) {
 		const Move legal_move = select_move(scored_moves, move_idx);
@@ -80,14 +79,14 @@ int q_search(Position &board, const int ply, int alpha, const int beta) {
 	TranspositionTableEntryNodeType node_type;
 	if (alpha >= beta) node_type = LOWER_NODE;
 	else node_type = UPPER_NODE;
-	t_table.put(board.get_hash(), QSEARCH_TT_DEPTH, alpha, ply, best_move, QSEARCH_TT_PV_NODE, node_type);
+	t_table.put(board.hash(), QSEARCH_TT_DEPTH, alpha, ply, best_move, QSEARCH_TT_PV_NODE, node_type);
 	return alpha;
 }
 
 template<Color color>
 int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null) {
 
-	t_table.prefetch(board.get_hash());
+	t_table.prefetch(board.hash());
 
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
@@ -120,7 +119,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		return q_search<color>(board, ply, alpha, beta);
 	}
 
-	TranspositionTableSearchResults tt_probe_results = t_table.probe_for_search(board.get_hash(), depth, ply);
+	TranspositionTableSearchResults tt_probe_results = t_table.probe_for_search(board.hash(), depth, ply);
 	if (tt_probe_results.entry_found && !pv_node && !excluding_move) {
 		TranspositionTableEntry tt_entry = tt_probe_results.entry;
 		if (tt_entry.node_type == EXACT) {
@@ -135,7 +134,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		}
 	}
 
-	TranspositionTableSearchResults static_eval_tt = t_table.probe_eval(board.get_hash(), ply);
+	TranspositionTableSearchResults static_eval_tt = t_table.probe_eval(board.hash(), ply);
 	if (static_eval_tt.entry_found) {
 		static_eval = static_eval_tt.entry.value;
 	} else {
@@ -238,7 +237,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		}
 	}
 	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
-	t_table.put(board.get_hash(), depth, value, ply, best_move, pv_node, node_type);
+	t_table.put(board.hash(), depth, value, ply, best_move, pv_node, node_type);
 	return value;
 }
 

@@ -54,15 +54,15 @@ void update_killers(Move &best_move, int ply) {
 void update_continuation_history(Position &board, Move previous_move, Move attempted_move, int bonus) {
 	update_history_entry(
 			continuation_history
-			[board.at(previous_move.from())][previous_move.to()]
-			[board.at(attempted_move.from())][attempted_move.to()],
+			[board.piece_at(previous_move.from())][previous_move.to()]
+			[board.piece_at(attempted_move.from())][attempted_move.to()],
 			bonus);
 }
 
 void update_capture_history(Position &board, Move attempted_move, int bonus) {
 	update_history_entry(
-			capture_history[board.at(attempted_move.from())]
+			capture_history[board.piece_at(attempted_move.from())]
 							[attempted_move.to()]
-							[board.at(attempted_move.to())],
+							[board.piece_at(attempted_move.to())],
 							bonus);
 }

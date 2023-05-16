@@ -16,14 +16,14 @@ struct ReadUCIParameters {
 
 inline void initialize_uci(Position& p) {
 	initialize_engine();
-	Position::set(INITIAL_BOARD_FEN, p);
+	p.set_fen(INITIAL_BOARD_FEN);
 }
 
 inline void uci_position(Position& board, const std::string& input_line) {
 	if (input_line.substr(0, 17) == "position startpos") {
 		std::string uci_moves;
 		if (input_line.size() > 17) uci_moves = input_line.substr(24, input_line.size() - 24);
-		Position::set(INITIAL_BOARD_FEN, board);
+		board.set_fen(INITIAL_BOARD_FEN);
 		uci_update_position_from_moves(board,  uci_moves);
 	} else {
 		int fen_start = static_cast<int>(input_line.find("position fen ")) + 13;
@@ -36,7 +36,7 @@ inline void uci_position(Position& board, const std::string& input_line) {
 			moves = input_line.substr(moves_start + 1, input_line.size() - moves_start);
 		}
 
-		Position::set(fen, board);
+		board.set_fen(fen);
 		uci_update_position_from_moves(board, moves);
 	}
 }
@@ -90,7 +90,7 @@ inline void bench() {
 	for (int idx = 0; idx < BENCH_SIZE; idx++) {
 		Position p;
 		initialize_uci(p);
-		Position::set(BENCH_FENS[idx], p);
+		p.set_fen(BENCH_FENS[idx]);
 
 		std::cout << "\nPosition: " << idx + 1 << " " << BENCH_FENS[idx] << std::endl;
 

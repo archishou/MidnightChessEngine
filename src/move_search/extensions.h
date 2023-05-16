@@ -1,6 +1,5 @@
 #pragma once
 #include "search_params.h"
-#include "move_generation/position.h"
 #include "move_search/tables/transposition_table.h"
 #include "search_constants.h"
 #include "types.h"

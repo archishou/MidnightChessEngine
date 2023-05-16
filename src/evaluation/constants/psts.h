@@ -1,6 +1,8 @@
 #pragma once
-#include "move_generation/types.h"
 #include "evaluation/types.h"
+#include "board/types/board_types.h"
+#include "board/types/square.h"
+
 constexpr Score PAWN_TABLE[] = {
 		S(0, 0),        S(0, 0),        S(0, 0),        S(0, 0),        S(0, 0),        S(0, 0),        S(0, 0),        S(0, 0),
 		S(114, 156),    S(86, 161),     S(62, 153),     S(92, 128),     S(53, 138),     S(89, 145),     S(13, 177),     S(33, 177),
@@ -85,7 +87,7 @@ constexpr Score BLOCKED_PASSED_PAWN_PENALTY[] = {
 // pretty ignore
 template<Color color, PieceType piece_type>
 constexpr Score read_psqt(Square square) {
-	if (color == WHITE) square = ~square;
+	if constexpr (color == WHITE) square = flip(square);
 	switch (piece_type) {
 		case PAWN: return PAWN_TABLE[square];
 		case KNIGHT: return KNIGHT_TABLE[square];
