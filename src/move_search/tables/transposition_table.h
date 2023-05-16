@@ -1,5 +1,7 @@
 #pragma once
-#include "move_generation/position.h"
+#include "board/types/board_types.h"
+#include "move_gen/types/move.h"
+
 enum TranspositionTableEntryNodeType {
 	EXACT,
 	UPPER_NODE,

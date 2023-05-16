@@ -1,8 +1,6 @@
 #pragma once
 
-#include "move_generation/types.h"
 #include "evaluation/types.h"
-#include "move_generation/position.h"
 #include "evaluation/constants/misc.h"
 #include "evaluation/bitboards.h"
 
@@ -22,14 +20,14 @@ constexpr Score evaluate_king(Position& board) {
 	Score score = SCORE_ZERO;
 	const Bitboard board_open_files = open_files(board);
 	const Bitboard board_semi_open_files = semi_open_files<Us>(board);
-	const Bitboard pawns = board.bitboard_of<Us, PAWN>();
+	const Bitboard pawns = board.occupancy<Us, PAWN>();
 
-	Bitboard king = board.bitboard_of<Us, KING>();
-	Square king_square = pop_lsb(&king);
+	Bitboard king = board.occupancy<Us, KING>();
+	Square king_square = pop_lsb(king);
 	File file = file_of(king_square);
 	const int king_side = file >> 2;
 
-	const Bitboard king_bb = SQUARE_BB[king_square];
+	const Bitboard king_bb = square_to_bitboard(king_square);
 	score += PIECE_VALUES[KING];
 	score += read_psqt<Us, KING>(king_square);
 
@@ -40,7 +38,7 @@ constexpr Score evaluate_king(Position& board) {
 	if (king_bb & KING_SAFE_AREA[Us]) {
 		const Bitboard pawn_shield = PAWN_SHIELD[king_side][Us];
 		score += KING_PAWN_SHIELD[0] * pop_count(pawns & pawn_shield);
-		score += KING_PAWN_SHIELD[1] * pop_count(pawns & shift<relative_dir<Us>(NORTH)>(pawn_shield));
+		score += KING_PAWN_SHIELD[1] * pop_count(pawns & shift_relative<Us, NORTH>(pawn_shield));
 	}
 	return score;
 }

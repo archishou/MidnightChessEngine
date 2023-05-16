@@ -1,7 +1,6 @@
 #pragma once
 #include "search_params.h"
 #include "search_constants.h"
-#include "move_generation/types.h"
 #include "move_search/tables/history_table.h"
 
 inline bool late_move_prune(bool pv_node, int move_idx, int depth) {

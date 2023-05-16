@@ -2,13 +2,12 @@
 // Created by Archishmaan Peyyety on 2/14/23.
 //
 #pragma once
-#include "move_generation/types.h"
-#include "move_generation/position.h"
 #include "move_search/move_ordering/ordering_constants.h"
 #include "move_search/search_params.h"
 #include "move_search/search_constants.h"
 #include "array"
 #include "move_search/types.h"
+#include "board/position.h"
 
 extern int history[NCOLORS][NSQUARES][NSQUARES];
 extern int continuation_history[NPIECES][NSQUARES][NPIECES][NSQUARES];
@@ -33,7 +32,7 @@ void update_history(Position& board, ScoredMoves& ordered_moves, Move &best_move
 		update_history_entry(history[color][best_move.from()][best_move.to()], history_bonus);
 		if (one_move_ago != Move()) update_continuation_history(board, one_move_ago, best_move, history_bonus);
 		if (two_move_ago != Move()) update_continuation_history(board, two_move_ago, best_move, history_bonus);
-	} else if (best_move.is_capture() && best_move.flag() != EN_PASSANT) {
+	} else if (best_move.is_capture() && best_move.type() != ENPASSANT) {
 		update_capture_history(board, best_move, history_bonus);
 	}
 
@@ -45,7 +44,7 @@ void update_history(Position& board, ScoredMoves& ordered_moves, Move &best_move
 			update_history_entry(history[color][move.from()][move.to()], -history_bonus);
 			if (one_move_ago != Move()) update_continuation_history(board, one_move_ago, move, -history_bonus);
 			if (two_move_ago != Move()) update_continuation_history(board, two_move_ago, move, -history_bonus);
-		} else if (move.is_capture() && best_move.flag() != EN_PASSANT) {
+		} else if (move.is_capture() && best_move.type() != ENPASSANT) {
 			update_capture_history(board, move, -history_bonus);
 		}
 	}

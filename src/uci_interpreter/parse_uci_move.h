@@ -2,7 +2,6 @@
 // Created by Archishmaan Peyyety on 2/1/23.
 //
 #pragma once
-#include "move_generation/position.h"
 #include "utils/helpers.h"
 #include <locale>
 
@@ -18,37 +17,37 @@ inline Move uci_to_move(const std::string& moveStr, Position& position) {
 	if (moveStr.size() == 5) {
 		// Quiet Promotion
 		char p_char = promotion_character(moveStr);
-		if (position.at(move.to()) == NO_PIECE) {
+		if (position.piece_at(move.to()) == NO_PIECE) {
 			if (p_char == 'q') return Move(move.from(), move.to(), PR_QUEEN);
 			if (p_char == 'b') return Move(move.from(), move.to(), PR_BISHOP);
 			if (p_char == 'n') return Move(move.from(), move.to(), PR_KNIGHT);
 			if (p_char == 'r') return Move(move.from(), move.to(), PR_ROOK);
 		}
-		if (p_char == 'q') return Move(move.from(), move.to(), PC_QUEEN);
-		if (p_char == 'b') return Move(move.from(), move.to(), PC_BISHOP);
-		if (p_char == 'n') return Move(move.from(), move.to(), PC_KNIGHT);
-		if (p_char == 'r') return Move(move.from(), move.to(), PC_ROOK);
+		if (p_char == 'q') return Move(move.from(), move.to(), PR_QUEEN | CAPTURE_TYPE);
+		if (p_char == 'b') return Move(move.from(), move.to(), PR_BISHOP | CAPTURE_TYPE);
+		if (p_char == 'n') return Move(move.from(), move.to(), PR_KNIGHT | CAPTURE_TYPE);
+		if (p_char == 'r') return Move(move.from(), move.to(), PR_ROOK | CAPTURE_TYPE);
 	}
 
 	// En Passant
-	if (position.at(move.to()) == NO_PIECE && type_of(position.at(move.from())) == PAWN &&
+	if (position.piece_at(move.to()) == NO_PIECE && type_of(position.piece_at(move.from())) == PAWN &&
 		file_of(move.to()) != file_of(move.from())) {
-		return Move(move.from(), move.to(), EN_PASSANT);
+		return Move(move.from(), move.to(), ENPASSANT);
 	}
 
-	if (type_of(position.at(move.from())) == PAWN && abs(rank_of(move.to()) - rank_of(move.from())) == 2) {
+	if (type_of(position.piece_at(move.from())) == PAWN && abs(rank_of(move.to()) - rank_of(move.from())) == 2) {
 		return Move(move.from(), move.to(), DOUBLE_PUSH);
 	}
 
 	// Castle
-	if (type_of(position.at(move.from())) == KING) {
+	if (type_of(position.piece_at(move.from())) == KING) {
 		if (moveStr == "e1g1" || moveStr == "e8g8") return Move(move.from(), move.to(), OO);
 		if (moveStr == "e1c1" || moveStr == "e8c8") return Move(move.from(), move.to(), OOO);
 	}
 
 	// Capture
-	if (position.at(move.to()) != NO_PIECE) {
-		return Move(move.from(), move.to(), CAPTURE);
+	if (position.piece_at(move.to()) != NO_PIECE) {
+		return Move(move.from(), move.to(), CAPTURE_TYPE);
 	}
 
 	return {move.from(), move.to(), QUIET};

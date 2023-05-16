@@ -1,5 +1,4 @@
 #pragma once
-#include "move_generation/position.h"
 #include "evaluation/constants/misc.h"
 #include "evaluation/constants/psts.h"
 #include "evaluation/pieces/pawn.h"
@@ -14,8 +13,8 @@ template<Color color>
 constexpr int compute_game_phase(Position& board) {
 	int game_phase = 0;
 	for (PieceType piece_type : { KNIGHT, BISHOP, ROOK, QUEEN }) {
-		Bitboard piece_bitboard_us = board.bitboard_of(color, piece_type);
-		Bitboard piece_bitboard_them = board.bitboard_of(~color, piece_type);
+		Bitboard piece_bitboard_us = board.occupancy(color, piece_type);
+		Bitboard piece_bitboard_them = board.occupancy(~color, piece_type);
 		game_phase += GAME_PHASE_BONUS[piece_type] * pop_count(piece_bitboard_us);
 		game_phase += GAME_PHASE_BONUS[piece_type] * pop_count(piece_bitboard_them);
 	}

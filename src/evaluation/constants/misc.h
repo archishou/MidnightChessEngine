@@ -1,6 +1,6 @@
 #pragma once
-#include "move_generation/types.h"
 #include "evaluation/types.h"
+#include "board/types/piece.h"
 
 // If this is updated be sure compute_game_phase loop is also updated. Currently only checks non-zeros.
 constexpr int GAME_PHASE_BONUS[NPIECE_TYPES] = {
@@ -73,5 +73,5 @@ constexpr Score TEMPO = S(25, 22);
 
 template<PieceType attacking, PieceType attacked>
 Score read_threat_bonus() {
-	return THREATS[attacking * NPIECE_TYPES + attacked];
+	return THREATS[attacking * (NPIECE_TYPES - 1)+ attacked];
 }

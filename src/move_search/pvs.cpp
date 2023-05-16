@@ -18,16 +18,16 @@ void reset_data() {
 }
 
 bool position_is_draw(Position &board, const int ply) {
-	uint64_t current_hash = board.get_hash();
-	if (board.fifty_mr_clock() >= 100) {
+	uint64_t current_hash = board.hash();
+	if (board.fifty_move_rule() >= 100) {
 		return true;
 	}
 	int count = ply == 0 ? 0 : 1; // If it's a root node, we check for three-fold repetition. Otherwise, just two fold.
-	const int hash_hist_size = static_cast<int>(board.hash_history.size());
+	const int hash_hist_size = static_cast<int>(board.state_history.size());
 	for (int idx = hash_hist_size - 3;
-		 idx >= 0 && idx >= hash_hist_size - board.fifty_mr_clock();
+		 idx >= 0 && idx >= hash_hist_size - board.fifty_move_rule();
 		 idx -= 2) {
-		ZobristHash hash = board.hash_history[idx];
+		ZobristHash hash = board.state_history[idx].hash;
 		if (hash == current_hash) count += 1;
 		if (count >= 2) return true;
 	}

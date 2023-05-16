@@ -1,12 +1,42 @@
 #pragma once
 
-#include "move_generation/position.h"
+#include "board/types/bitboard.h"
+#include "board/position.h"
 
 constexpr Bitboard BOARD_CENTER = 0x3c3c3c3c0000;
 
+template<Direction D>
+constexpr Bitboard fill(Bitboard b) {
+	if constexpr (D == NORTH) {
+		b |= (b << 8);
+		b |= (b << 16);
+		return b | (b << 32);
+	} else if constexpr (D == SOUTH) {
+		b |= (b >> 8);
+		b |= (b >> 16);
+		return b | (b >> 32);
+	}
+}
+
+template<Color C>
+constexpr Bitboard forward_files(const Bitboard b) {
+	if constexpr (C == WHITE) return fill<NORTH>(b);
+	return fill<SOUTH>(b);
+}
+
+constexpr Bitboard file_fill(const Bitboard b) {
+	return fill<NORTH>(b) | fill<SOUTH>(b);
+}
+
+template<Color C>
+constexpr Bitboard pawn_attacks(Bitboard p) {
+	if constexpr (C == WHITE) return shift<NORTH_WEST>(p) | shift<NORTH_EAST>(p);
+	return shift<SOUTH_WEST>(p) | shift<SOUTH_EAST>(p);
+}
+
 template<Color color>
 constexpr Bitboard pawn_attack_span(const Bitboard s) {
-	return shift<relative_dir<color>(NORTH)> (
+	return shift_relative<color, NORTH> (
 			shift<EAST>(forward_files<color>(s)) |
 			shift<WEST>(forward_files<color>(s))
 	);
@@ -20,14 +50,14 @@ constexpr Bitboard pawn_attack_files(const Bitboard s) {
 
 template<Color color>
 inline Bitboard isolated_pawns(Position& board) {
-	Bitboard us_pawns = board.bitboard_of<color, PAWN>();
+	Bitboard us_pawns = board.occupancy<color, PAWN>();
 	return us_pawns & ~pawn_attack_files<color>(us_pawns);
 }
 
 template<Color color>
 inline Bitboard doubled_pawns(Position& board) {
-	Bitboard us_pawns = board.bitboard_of<color, PAWN>();
-	return us_pawns & shift<relative_dir<color>(SOUTH)>(us_pawns);
+	Bitboard us_pawns = board.occupancy<color, PAWN>();
+	return us_pawns & shift_relative<color, SOUTH>(us_pawns);
 }
 
 template<Color color>
@@ -37,26 +67,26 @@ constexpr Bitboard pawn_passed_span(const Bitboard s) {
 
 template<Color c>
 inline Bitboard passed_pawns(Position& board) {
-	Bitboard them_pawn_occupants = pawn_passed_span<~c>(board.bitboard_of<~c, PAWN>());
-	return board.bitboard_of<c, PAWN>() & ~them_pawn_occupants;
+	Bitboard them_pawn_occupants = pawn_passed_span<~c>(board.occupancy<~c, PAWN>());
+	return board.occupancy<c, PAWN>() & ~them_pawn_occupants;
 }
 
 inline Bitboard open_files(Position& board) {
-	return ~file_fill(board.bitboard_of<WHITE, PAWN>()) & ~file_fill(board.bitboard_of<BLACK, PAWN>());
+	return ~file_fill(board.occupancy<WHITE, PAWN>()) & ~file_fill(board.occupancy<BLACK, PAWN>());
 }
 
 template<Color c>
 inline Bitboard semi_open_files(Position& board) {
-	return ~file_fill(board.bitboard_of<c, PAWN>()) ^ open_files(board);
+	return ~file_fill(board.occupancy<c, PAWN>()) ^ open_files(board);
 }
 
 template<Color c>
 inline Bitboard phalanx_pawns(Position& board) {
-	return board.bitboard_of<c, PAWN>() & shift<WEST>(board.bitboard_of<c, PAWN>());
+	return board.occupancy<c, PAWN>() & shift<WEST>(board.occupancy<c, PAWN>());
 }
 
 template<Color c>
 constexpr Bitboard candidate_pawns(Position& board, Bitboard passed_pawns) {
-	const Bitboard them_pawn_spawn = file_fill(board.bitboard_of<~c, PAWN>());
-	return (board.bitboard_of<c, PAWN>() ^ passed_pawns) & ~them_pawn_spawn;
+	const Bitboard them_pawn_spawn = file_fill(board.occupancy<~c, PAWN>());
+	return (board.occupancy<c, PAWN>() ^ passed_pawns) & ~them_pawn_spawn;
 }
