@@ -161,6 +161,20 @@ std::ostream& operator << (std::ostream& os, const Position& p) {
 	return os;
 }
 
+bool Position::has_repetition(Repetition fold) {
+	int count = fold == THREE_FOLD ? 0 : 1;
+	const i32 hash_hist_size = static_cast<int>(state_history.size());
+	const u64 current_hash = hash();
+	for (i32 idx = hash_hist_size - 3;
+		 idx >= 0 && idx >= hash_hist_size - fifty_move_rule();
+		 idx -= 2) {
+		ZobristHash stack_hash = state_history[idx].hash;
+		if (stack_hash == current_hash) count += 1;
+		if (count >= 2) return true;
+	}
+	return false;
+}
+
 template<Color color>
 void Position::play(Move move) {
 	PositionState next_state = {};
