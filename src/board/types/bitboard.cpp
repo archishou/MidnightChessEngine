@@ -87,7 +87,7 @@ Square msb(u64 b) {
 [[nodiscard]] uint32_t pop_count(Bitboard bitboard) {
 #if defined(_MSC_VER) || defined(__INTEL_COMPILER)
 
-	return (uint8_t)_mm_popcnt_u64(mask);
+	return (uint8_t)_mm_popcnt_u64(bitboard);
 
 #else // Assumed gcc or compatible compiler
 
