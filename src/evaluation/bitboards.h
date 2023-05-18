@@ -29,7 +29,7 @@ constexpr Bitboard file_fill(const Bitboard b) {
 }
 
 template<Color C>
-constexpr Bitboard pawn_attacks(Bitboard p) {
+constexpr Bitboard pawn_attacks(const Bitboard p) {
 	if constexpr (C == WHITE) return shift<NORTH_WEST>(p) | shift<NORTH_EAST>(p);
 	return shift<SOUTH_WEST>(p) | shift<SOUTH_EAST>(p);
 }
@@ -49,13 +49,13 @@ constexpr Bitboard pawn_attack_files(const Bitboard s) {
 }
 
 template<Color color>
-inline Bitboard isolated_pawns(Position& board) {
+inline Bitboard isolated_pawns(const Position& board) {
 	Bitboard us_pawns = board.occupancy<color, PAWN>();
 	return us_pawns & ~pawn_attack_files<color>(us_pawns);
 }
 
 template<Color color>
-inline Bitboard doubled_pawns(Position& board) {
+inline Bitboard doubled_pawns(const Position& board) {
 	Bitboard us_pawns = board.occupancy<color, PAWN>();
 	return us_pawns & shift_relative<color, SOUTH>(us_pawns);
 }
@@ -66,27 +66,27 @@ constexpr Bitboard pawn_passed_span(const Bitboard s) {
 }
 
 template<Color c>
-inline Bitboard passed_pawns(Position& board) {
+inline Bitboard passed_pawns(const Position& board) {
 	Bitboard them_pawn_occupants = pawn_passed_span<~c>(board.occupancy<~c, PAWN>());
 	return board.occupancy<c, PAWN>() & ~them_pawn_occupants;
 }
 
-inline Bitboard open_files(Position& board) {
+inline Bitboard open_files(const Position& board) {
 	return ~file_fill(board.occupancy<WHITE, PAWN>()) & ~file_fill(board.occupancy<BLACK, PAWN>());
 }
 
 template<Color c>
-inline Bitboard semi_open_files(Position& board) {
+inline Bitboard semi_open_files(const Position& board) {
 	return ~file_fill(board.occupancy<c, PAWN>()) ^ open_files(board);
 }
 
 template<Color c>
-inline Bitboard phalanx_pawns(Position& board) {
+inline Bitboard phalanx_pawns(const Position& board) {
 	return board.occupancy<c, PAWN>() & shift<WEST>(board.occupancy<c, PAWN>());
 }
 
 template<Color c>
-constexpr Bitboard candidate_pawns(Position& board, Bitboard passed_pawns) {
+constexpr Bitboard candidate_pawns(const Position& board, Bitboard passed_pawns) {
 	const Bitboard them_pawn_spawn = file_fill(board.occupancy<~c, PAWN>());
 	return (board.occupancy<c, PAWN>() ^ passed_pawns) & ~them_pawn_spawn;
 }
