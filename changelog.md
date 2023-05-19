@@ -624,3 +624,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 0.31 (-2.94, 2.94) [-4.00, 1.00]
 GAMES | N: 26792 W: 6384 L: 6454 D: 13954
 ```
+
+### Internal Iterative Reductions
+https://chess.swehosting.se/test/866/
+```
+ELO   | 5.46 +- 4.13 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 12736 W: 3091 L: 2891 D: 6754
+```
