@@ -141,6 +141,9 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		static_eval = evaluate<color>(board);
 	}
 
+	if (!static_eval_tt.entry_found && depth >= 4)
+		depth -= 1;
+
 	if (!in_check && !pv_node && !excluding_move) {
 		if (depth < RFP_MAX_DEPTH && static_eval >= beta + RFP_MARGIN * depth) {
 			return static_eval;
