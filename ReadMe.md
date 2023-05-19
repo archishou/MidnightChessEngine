@@ -10,9 +10,10 @@ A free and open source UCI chess engine written in C++.
 
 # Strength
 
-| Version      | CCRL 40/15 | CCRL Blitz         | MCERL        |
-|--------------|------------|--------------------| ------------ |
-| Midnight 5.0 |            | [2828±15 [#146]](http://ccrl.chessdom.com/ccrl/404/cgi/engine_details.cgi?print=Details&each_game=1&eng=Midnight%205%2064-bit#Midnight_5_64-bit) |              |
+| Version      | CCRL 40/15                                                                                                                                         | CCRL Blitz                                                                                                                                       | MCERL        |
+|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------| ------------ |
+| Midnight 6.0 | [2919±30 [#110]](https://ccrl.chessdom.com/ccrl/4040/cgi/engine_details.cgi?print=Details&each_game=0&eng=Midnight%206%2064-bit#Midnight_6_64-bit) | [3055±19 [#92]](https://ccrl.chessdom.com/ccrl/404/cgi/engine_details.cgi?print=Details&each_game=1&eng=Midnight%206%2064-bit#Midnight_6_64-bit)  |              |
+| Midnight 5.0 |                                                                                                                                                    | [2828±15 [#146]](http://ccrl.chessdom.com/ccrl/404/cgi/engine_details.cgi?print=Details&each_game=1&eng=Midnight%205%2064-bit#Midnight_5_64-bit) |              |
 
 # Compilation
 ```
