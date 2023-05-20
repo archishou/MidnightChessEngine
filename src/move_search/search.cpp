@@ -2,6 +2,9 @@
 // Created by Archishmaan Peyyety on 4/15/23.
 //
 #include "search.h"
+#include <iostream>
+#include "../utils/clock.h"
+
 void update_best_move_results(BestMoveSearchResults& search_results, PVSData& ab_results, int sub_depth, bool debug) {
 	std::memset(search_results.pv, 0, sizeof(search_results.pv));
 	search_results.value = ab_results.value;

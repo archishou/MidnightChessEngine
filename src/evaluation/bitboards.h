@@ -1,7 +1,7 @@
 #pragma once
 
-#include "board/types/bitboard.h"
-#include "board/position.h"
+#include "../board/types/bitboard.h"
+#include "../board/position.h"
 
 constexpr Bitboard BOARD_CENTER = 0x3c3c3c3c0000;
 

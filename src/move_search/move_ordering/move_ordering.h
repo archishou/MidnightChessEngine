@@ -3,12 +3,13 @@
 //
 #pragma once
 #include <algorithm>
-#include "move_search/tables/transposition_table.h"
-#include "move_search/tables/history_table.h"
-#include "move_search/types.h"
-#include "move_gen/types/move.h"
-#include "board/position.h"
-#include "move_gen/move_generator.h"
+#include "../../board/types/piece.h"
+#include "../../move_gen/types/move.h"
+#include "../../board/position.h"
+#include "ordering_constants.h"
+#include "../tables/history_table.h"
+#include "../tables/transposition_table.h"
+#include "../../move_gen/move_generator.h"
 
 void initialize_move_sort_tables();
 

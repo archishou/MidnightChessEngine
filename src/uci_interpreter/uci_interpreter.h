@@ -3,12 +3,13 @@
 //
 #pragma once
 #include "engine.h"
-#include "move_search/search.h"
 #include "parse_uci_move.h"
 #include "time_manager.h"
-#include "utils/helpers.h"
 #include "sstream"
 #include "bench_fens.h"
+#include "../utils/fen_constants.h"
+#include "../utils/helpers.h"
+#include "../move_search/search.h"
 
 struct ReadUCIParameters {
 	bool debug_info = true;

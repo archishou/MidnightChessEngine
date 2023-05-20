@@ -4,6 +4,7 @@
 
 #include "reductions.h"
 #include "tables/lmr_table.h"
+#include "../move_gen/types/move.h"
 #include <algorithm>
 
 int lmr_reduction(const bool& pv_node, const int& ply, const bool& in_check, const int& move_idx, const int& depth, const Move& legal_move) {

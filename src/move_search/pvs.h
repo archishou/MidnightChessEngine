@@ -5,14 +5,15 @@
 #include <array>
 #include "cstring"
 #include "search_params.h"
-#include "move_search/move_ordering/move_ordering.h"
-#include "evaluation/evaluate.h"
-#include "move_search/tables/pv_table.h"
-#include "utils/clock.h"
-#include "move_search/tables/lmr_table.h"
 #include "reductions.h"
 #include "pruning.h"
 #include "extensions.h"
+#include "../evaluation/evaluate.h"
+#include "../utils/clock.h"
+#include "../board/position.h"
+#include "tables/transposition_table.h"
+#include "../move_gen/move_generator.h"
+#include "move_ordering/move_ordering.h"
 
 extern PVSData data;
 

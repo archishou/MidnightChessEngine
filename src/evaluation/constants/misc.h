@@ -1,6 +1,7 @@
 #pragma once
-#include "evaluation/types.h"
-#include "board/types/piece.h"
+
+#include "../../board/types/piece.h"
+#include "../types.h"
 
 // If this is updated be sure compute_game_phase loop is also updated. Currently only checks non-zeros.
 constexpr int GAME_PHASE_BONUS[NPIECE_TYPES] = {

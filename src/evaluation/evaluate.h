@@ -1,13 +1,14 @@
 #pragma once
-#include "evaluation/constants/misc.h"
-#include "evaluation/constants/psts.h"
-#include "evaluation/pieces/pawn.h"
-#include "evaluation/pieces/knight.h"
-#include "evaluation/pieces/bishop.h"
-#include "evaluation/pieces/rook.h"
-#include "evaluation/pieces/queen.h"
-#include "evaluation/pieces/king.h"
 #include "types.h"
+#include "../board/position.h"
+#include "../board/types/bitboard.h"
+#include "constants/misc.h"
+#include "pieces/pawn.h"
+#include "pieces/knight.h"
+#include "pieces/bishop.h"
+#include "pieces/rook.h"
+#include "pieces/queen.h"
+#include "pieces/king.h"
 
 template<Color color>
 constexpr int compute_game_phase(Position& board) {

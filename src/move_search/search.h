@@ -7,7 +7,6 @@
 #include <random>
 #include "pvs.h"
 #include "search_constants.h"
-#include "utils/fen_constants.h"
 
 static const BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
 		.depth = MAX_DEPTH,
