@@ -30,7 +30,6 @@ Score evaluate_knight(const Position& board, Trace& trace) {
 		if constexpr (do_trace) {
 			trace.knight_pst[color == WHITE ? flip(knight_square) : knight_square][color] += 1;
 		}
-
 		Bitboard pseudo_legal_moves = tables::attacks<KNIGHT>(knight_square, them_pieces | us_pieces) & ~us_pieces;
 		Bitboard mobility_squares = pseudo_legal_moves & ~them_pawn_attacks;
 
@@ -47,16 +46,17 @@ Score evaluate_knight(const Position& board, Trace& trace) {
 
 		const Bitboard attacked_bishops = pseudo_legal_moves & board.occupancy<~color, BISHOP>();
 		score += read_threat_bonus<KNIGHT, BISHOP>() * pop_count(attacked_bishops);
-		if constexpr (do_trace) trace.threats[KNIGHT * NPIECE_TYPES + BISHOP][color] += pop_count(attacked_bishops);
+		if constexpr (do_trace) trace.threats[KNIGHT * (NPIECE_TYPES - 1) + BISHOP][color] += pop_count(attacked_bishops);
 
 		const Bitboard attacked_rooks = pseudo_legal_moves & board.occupancy<~color, ROOK>();
 		score += read_threat_bonus<KNIGHT, ROOK>() * pop_count(attacked_rooks);
-		if constexpr (do_trace) trace.threats[KNIGHT * NPIECE_TYPES + ROOK][color] += pop_count(attacked_rooks);
+		if constexpr (do_trace) trace.threats[KNIGHT * (NPIECE_TYPES - 1) + ROOK][color] += pop_count(attacked_rooks);
 
 		const Bitboard attacked_queens = pseudo_legal_moves & board.occupancy<~color, QUEEN>();
 		score += read_threat_bonus<KNIGHT, QUEEN>() * pop_count(attacked_queens);
-		if constexpr (do_trace) trace.threats[KNIGHT * NPIECE_TYPES + QUEEN][color] += pop_count(attacked_queens);
+		if constexpr (do_trace) trace.threats[KNIGHT * (NPIECE_TYPES - 1) + QUEEN][color] += pop_count(attacked_queens);
 
+		/*
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
 		score += KING_RING_ATTACK_BONUS[KNIGHT] * pop_count(king_ring_attacks);
 		if constexpr (do_trace) trace.king_ring_bonus[KNIGHT][color] += pop_count(king_ring_attacks);
@@ -67,6 +67,7 @@ Score evaluate_knight(const Position& board, Trace& trace) {
 
 		score += CENTER_CONTROL[KNIGHT] * pop_count(pseudo_legal_moves & BOARD_CENTER);
 		if constexpr (do_trace) trace.center_control[KNIGHT][color] += pop_count(pseudo_legal_moves & BOARD_CENTER);
+		*/
 	}
 	return score;
 }

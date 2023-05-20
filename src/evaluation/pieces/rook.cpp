@@ -48,8 +48,9 @@ Score evaluate_rooks(const Position& board, Trace& trace) {
 
 		const Bitboard attacked_queens = pseudo_legal_moves & board.occupancy<~color, QUEEN>();
 		score += read_threat_bonus<ROOK, QUEEN>() * pop_count(attacked_queens);
-		if constexpr (do_trace) trace.threats[ROOK * NPIECE_TYPES + QUEEN][color] += pop_count(attacked_queens);
+		if constexpr (do_trace) trace.threats[ROOK * (NPIECE_TYPES - 1) + QUEEN][color] += pop_count(attacked_queens);
 
+		/*
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
 		score += KING_RING_ATTACK_BONUS[ROOK] * pop_count(king_ring_attacks);
 		if constexpr (do_trace) trace.king_ring_bonus[ROOK][color] += pop_count(king_ring_attacks);
@@ -60,6 +61,7 @@ Score evaluate_rooks(const Position& board, Trace& trace) {
 
 		score += CENTER_CONTROL[ROOK] * pop_count(pseudo_legal_moves & BOARD_CENTER);
 		if constexpr (do_trace) trace.center_control[ROOK][color] += pop_count(pseudo_legal_moves & BOARD_CENTER);
+		 */
 	}
 	return score;
 }

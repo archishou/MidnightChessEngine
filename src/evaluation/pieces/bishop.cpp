@@ -49,15 +49,16 @@ Score evaluate_bishops(const Position &board, Trace &trace) {
 
 		const Bitboard attacked_knights = pseudo_legal_moves & board.occupancy<~color, KNIGHT>();
 		score += read_threat_bonus<BISHOP, KNIGHT>() * pop_count(attacked_knights);
-		if constexpr (do_trace) trace.threats[BISHOP * NPIECE_TYPES + KNIGHT][color] += pop_count(attacked_knights);
+		if constexpr (do_trace) trace.threats[BISHOP * (NPIECE_TYPES - 1) + KNIGHT][color] += pop_count(attacked_knights);
 
 		const Bitboard attacked_rooks = pseudo_legal_moves & board.occupancy<~color, ROOK>();
 		score += read_threat_bonus<BISHOP, ROOK>() * pop_count(attacked_rooks);
-		if constexpr (do_trace) trace.threats[BISHOP * NPIECE_TYPES + ROOK][color] += pop_count(attacked_rooks);
+		if constexpr (do_trace) trace.threats[BISHOP * (NPIECE_TYPES - 1) + ROOK][color] += pop_count(attacked_rooks);
 
 		const Bitboard attacked_queens = pseudo_legal_moves & board.occupancy<~color, QUEEN>();
 		score += read_threat_bonus<BISHOP, QUEEN>() * pop_count(attacked_queens);
-		if constexpr (do_trace) trace.threats[BISHOP * NPIECE_TYPES + QUEEN][color] += pop_count(attacked_queens);
+		if constexpr (do_trace) trace.threats[BISHOP * (NPIECE_TYPES - 1) + QUEEN][color] += pop_count(attacked_queens);
+		/*
 
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
 		score += KING_RING_ATTACK_BONUS[BISHOP] * pop_count(king_ring_attacks);
@@ -69,6 +70,7 @@ Score evaluate_bishops(const Position &board, Trace &trace) {
 
 		score += CENTER_CONTROL[BISHOP] * pop_count(pseudo_legal_moves & BOARD_CENTER);
 		if constexpr (do_trace) trace.center_control[BISHOP][color] += pop_count(pseudo_legal_moves & BOARD_CENTER);
+		 */
 	}
 	return score;
 }

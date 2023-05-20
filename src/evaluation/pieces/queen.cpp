@@ -49,6 +49,7 @@ Score evaluate_queens(const Position& board, Trace& trace) {
 		score += ATTACKED_BY_PAWN[QUEEN] * pop_count(attacking_pawns);
 		if constexpr (do_trace) trace.attacked_by_pawn[QUEEN][color] += pop_count(attacking_pawns);
 
+		/*
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
 		score += KING_RING_ATTACK_BONUS[QUEEN] * pop_count(king_ring_attacks);
 		if constexpr (do_trace) trace.king_ring_bonus[QUEEN][color] += pop_count(king_ring_attacks);
@@ -59,6 +60,7 @@ Score evaluate_queens(const Position& board, Trace& trace) {
 
 		score += CENTER_CONTROL[QUEEN] * pop_count(pseudo_legal_moves & BOARD_CENTER);
 		if constexpr (do_trace) trace.center_control[QUEEN][color] += pop_count(pseudo_legal_moves & BOARD_CENTER);
+		 */
 	}
 	return score;
 }

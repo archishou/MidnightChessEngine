@@ -40,15 +40,15 @@ parameters_t Midnight::MidnightEval::get_initial_parameters() {
 	add_params(parameters, PAWN_PROTECTION, NPIECE_TYPES);
 	add_params(parameters, ATTACKED_BY_PAWN, NPIECE_TYPES);
 	add_params(parameters, THREATS, NPIECE_TYPES * NPIECE_TYPES);
+/*
 	add_params(parameters, KING_RING_ATTACK_BONUS, NPIECE_TYPES);
 	add_params(parameters, CHECK_BONUS, NPIECE_TYPES);
 	add_params(parameters, CENTER_CONTROL, NPIECE_TYPES);
+ */
 	add_params(parameters, KING_PAWN_SHIELD, 2);
-
 	add_param(parameters, ISOLATED_PAWN_PENALTY);
 	add_param(parameters, DOUBLED_PAWN_PENALTY);
 	add_param(parameters, BISHOP_PAIR_BONUS);
-
 	add_params(parameters, KNIGHT_MOBILITY, 9);
 	add_params(parameters, BISHOP_MOBILITY, 14);
 	add_params(parameters, ROOK_MOBILITY, 15);
@@ -58,16 +58,15 @@ parameters_t Midnight::MidnightEval::get_initial_parameters() {
 	add_params(parameters, CANDIDATE_PASSED_PAWN, NRANKS);
 
 	add_param(parameters, TEMPO);
-
 	return parameters;
 }
 
 EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	Position p(fen);
-	Trace trace = {};
+	Trace trace;
 
-	if (p.turn() == BLACK) evaluate<BLACK, EnableTrace>(p);
-	else evaluate<WHITE, EnableTrace>(p);
+	if (p.turn() == BLACK) trace = evaluate<BLACK, EnableTrace>(p);
+	else trace = evaluate<WHITE, EnableTrace>(p);
 
 	coefficients_t coefficients;
 	get_coefficient_array(coefficients, trace.material, NPIECE_TYPES);
@@ -86,11 +85,12 @@ EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	get_coefficient_array(coefficients, trace.pawn_protection, NPIECE_TYPES);
 	get_coefficient_array(coefficients, trace.attacked_by_pawn, NPIECE_TYPES);
 	get_coefficient_array(coefficients, trace.threats, NPIECE_TYPES * NPIECE_TYPES);
+/*
 	get_coefficient_array(coefficients, trace.king_ring_bonus, NPIECE_TYPES);
 	get_coefficient_array(coefficients, trace.check_bonus, NPIECE_TYPES);
 	get_coefficient_array(coefficients, trace.center_control, NPIECE_TYPES);
+ */
 	get_coefficient_array(coefficients, trace.king_pawn_shield, 2);
-
 	get_coefficient_single(coefficients, trace.isolated_pawns);
 	get_coefficient_single(coefficients, trace.doubled_pawns);
 	get_coefficient_single(coefficients, trace.bishop_bonus);
@@ -104,20 +104,22 @@ EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	get_coefficient_array(coefficients, trace.candidate_pawns, NRANKS);
 
 	get_coefficient_single(coefficients, trace.tempo);
-
 	EvalResult result;
 	result.score = trace.score;
 	result.coefficients = coefficients;
 	return result;
 }
+
 static int32_t round_value(tune_t value) {
 	return static_cast<int32_t>(round(value));
 }
+
 static void print_parameter(std::stringstream& ss, const pair_t parameter) {
 	const auto mg = round(parameter[static_cast<int32_t>(PhaseStages::Midgame)]);
 	const auto eg = round(parameter[static_cast<int32_t>(PhaseStages::Endgame)]);
 	ss << "S(" << mg << ", " << eg << ")";
 }
+
 static void print_parameter(std::stringstream& ss, const tune_t parameter) {
 	ss << round_value(std::round(parameter));
 }
@@ -217,11 +219,12 @@ void Midnight::MidnightEval::print_parameters(const parameters_t &parameters) {
 	print_array(ss, parameters_copy, index, "PAWN_PROTECTION", NPIECE_TYPES);
 	print_array(ss, parameters_copy, index, "ATTACKED_BY_PAWN", NPIECE_TYPES);
 	print_threats(ss, parameters_copy, index, "THREATS", NPIECE_TYPES * NPIECE_TYPES);
+	/*
 	print_array(ss, parameters_copy, index, "KING_RING_ATTACK_BONUS", NPIECE_TYPES);
 	print_array(ss, parameters_copy, index, "CHECK_BONUS", NPIECE_TYPES);
 	print_array(ss, parameters_copy, index, "CENTER_CONTROL", NPIECE_TYPES);
+	 */
 	print_array(ss, parameters_copy, index, "KING_PAWN_SHIELD", 2);
-
 	print_single(ss, parameters_copy, index, "ISOLATED_PAWN_PENALTY");
 	print_single(ss, parameters_copy, index, "DOUBLED_PAWN_PENALTY");
 	print_single(ss, parameters_copy, index, "BISHOP_PAIR_BONUS");
@@ -235,6 +238,5 @@ void Midnight::MidnightEval::print_parameters(const parameters_t &parameters) {
 	print_array(ss, parameters_copy, index, "CANDIDATE_PASSED_PAWN", NRANKS);
 
 	print_single(ss, parameters_copy, index, "TEMPO");
-
 	std::cout << ss.str() << "\n";
 }
