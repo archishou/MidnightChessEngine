@@ -22,8 +22,14 @@ Score evaluate_knight(const Position& board, Trace& trace) {
 
 	while (knights) {
 		Square knight_square = pop_lsb(knights);
+
 		score += PIECE_VALUES[KNIGHT];
+		if constexpr (do_trace) trace.material[KNIGHT][color] += 1;
+
 		score += read_psqt<color, KNIGHT>(knight_square);
+		if constexpr (do_trace) {
+			trace.knight_pst[color == WHITE ? flip(knight_square) : knight_square][color] += 1;
+		}
 
 		Bitboard pseudo_legal_moves = tables::attacks<KNIGHT>(knight_square, them_pieces | us_pieces) & ~us_pieces;
 		Bitboard mobility_squares = pseudo_legal_moves & ~them_pawn_attacks;

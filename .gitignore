@@ -10,4 +10,5 @@ build
 /tmp/
 midnight
 midnight-tests
+midnight-tune
 /*.exe

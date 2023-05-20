@@ -52,6 +52,7 @@ constexpr do_trace evaluate(Position& board) {
 	const int eval = (mg_score * mg_phase + eg_score * eg_phase) / 24;
 
 	if constexpr (trace_enabled) {
+		trace.score = eval;
 		return trace;
 	} else {
 		return eval;

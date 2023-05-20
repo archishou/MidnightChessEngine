@@ -20,6 +20,7 @@ int main(int argc, char** argv) {
 	vector<DataSource> sources;
 	const string csv_path = argv[1];
 	ifstream csv(csv_path);
+	std::cout << csv_path << std::endl;
 	if(!csv) {
 		cout << "Unable to open data source list " << csv_path << endl;
 	}
@@ -29,7 +30,6 @@ int main(int argc, char** argv) {
 		getline(csv, line);
 
 		if(line.empty()) {
-			std::cout << "quuu"  << std::endl;
 			continue;
 		}
 
