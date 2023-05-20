@@ -2,7 +2,8 @@
 // Created by Archishmaan Peyyety on 2/1/23.
 //
 #pragma once
-#include "utils/helpers.h"
+#include "../board/position.h"
+#include "../utils/helpers.h"
 #include <locale>
 
 inline char promotion_character(std::string uci_move) {

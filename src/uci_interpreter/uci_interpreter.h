@@ -2,7 +2,7 @@
 // Created by Archishmaan Peyyety on 1/9/23.
 //
 #pragma once
-#include "engine.h"
+#include "../engine.h"
 #include "parse_uci_move.h"
 #include "time_manager.h"
 #include "sstream"
