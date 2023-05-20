@@ -7,8 +7,8 @@
 #include "iostream"
 #include "cmath"
 #include "midnight.h"
-#include "board/position.h"
-#include "evaluation/evaluate.h"
+#include "../src/board/position.h"
+#include "../src/evaluation/evaluate.h"
 
 void add_param(parameters_t& params, const Score score) {
 	pair_t pair = { (double) mg_score(score), (double) eg_score(score) };
