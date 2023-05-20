@@ -4,9 +4,9 @@ SOURCES      := $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(wildcard src/*/*
 SOURCES 	 := $(filter-out src/tuner.cpp, $(SOURCES))
 
 ifeq ($(MAKECMDGOALS),tune)
+	SOURCES += $(wildcard texel-tuner/*.cpp)
 	SOURCES := $(filter-out src/main.cpp, $(SOURCES))
-	SOURCES += src/tuner.cpp
-	EXE = midnight-tests
+	EXE = midnight-tune
 endif
 
 ifeq ($(MAKECMDGOALS),tests)
