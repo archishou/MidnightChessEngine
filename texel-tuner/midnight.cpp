@@ -10,6 +10,8 @@
 #include "../src/board/position.h"
 #include "../src/evaluation/evaluate.h"
 
+constexpr int NEVAL_PTYPES = NPIECE_TYPES - 1;
+
 void add_param(parameters_t& params, const Score score) {
 	pair_t pair = { (double) mg_score(score), (double) eg_score(score) };
 	params.push_back(pair);
@@ -24,7 +26,7 @@ void add_params(parameters_t& params, const Score scores[], int size) {
 parameters_t Midnight::MidnightEval::get_initial_parameters() {
 	parameters_t parameters;
 
-	add_params(parameters, PIECE_VALUES, NPIECE_TYPES);
+	add_params(parameters, PIECE_VALUES, NEVAL_PTYPES);
 
 	add_params(parameters, PAWN_TABLE, NSQUARES);
 	add_params(parameters, KNIGHT_TABLE, NSQUARES);
@@ -35,14 +37,14 @@ parameters_t Midnight::MidnightEval::get_initial_parameters() {
 	add_params(parameters, PASSED_PAWN_BONUS, NSQUARES);
 	add_params(parameters, BLOCKED_PASSED_PAWN_PENALTY, NSQUARES);
 
-	add_params(parameters, OPEN_FILE_BONUS, NPIECE_TYPES);
-	add_params(parameters, SEMI_OPEN_FILE_BONUS, NPIECE_TYPES);
-	add_params(parameters, PAWN_PROTECTION, NPIECE_TYPES);
-	add_params(parameters, ATTACKED_BY_PAWN, NPIECE_TYPES);
-	add_params(parameters, THREATS, NPIECE_TYPES * NPIECE_TYPES);
-	add_params(parameters, KING_RING_ATTACK_BONUS, NPIECE_TYPES);
-	add_params(parameters, CHECK_BONUS, NPIECE_TYPES);
-	add_params(parameters, CENTER_CONTROL, NPIECE_TYPES);
+	add_params(parameters, OPEN_FILE_BONUS, NEVAL_PTYPES);
+	add_params(parameters, SEMI_OPEN_FILE_BONUS, NEVAL_PTYPES);
+	add_params(parameters, PAWN_PROTECTION, NEVAL_PTYPES);
+	add_params(parameters, ATTACKED_BY_PAWN, NEVAL_PTYPES);
+	add_params(parameters, THREATS, NEVAL_PTYPES * NEVAL_PTYPES);
+	add_params(parameters, KING_RING_ATTACK_BONUS, NEVAL_PTYPES);
+	add_params(parameters, CHECK_BONUS, NEVAL_PTYPES);
+	add_params(parameters, CENTER_CONTROL, NEVAL_PTYPES);
 	add_params(parameters, KING_PAWN_SHIELD, 2);
 	add_param(parameters, ISOLATED_PAWN_PENALTY);
 	add_param(parameters, DOUBLED_PAWN_PENALTY);
@@ -67,7 +69,7 @@ EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	else trace = evaluate<WHITE, EnableTrace>(p);
 
 	coefficients_t coefficients;
-	get_coefficient_array(coefficients, trace.material, NPIECE_TYPES);
+	get_coefficient_array(coefficients, trace.material, NEVAL_PTYPES);
 
 	get_coefficient_array(coefficients, trace.pawn_pst, NSQUARES);
 	get_coefficient_array(coefficients, trace.knight_pst, NSQUARES);
@@ -78,14 +80,14 @@ EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	get_coefficient_array(coefficients, trace.passed_pawns, NSQUARES);
 	get_coefficient_array(coefficients, trace.blocked_passed_pawns, NSQUARES);
 
-	get_coefficient_array(coefficients, trace.open_files, NPIECE_TYPES);
-	get_coefficient_array(coefficients, trace.semi_open_files, NPIECE_TYPES);
-	get_coefficient_array(coefficients, trace.pawn_protection, NPIECE_TYPES);
-	get_coefficient_array(coefficients, trace.attacked_by_pawn, NPIECE_TYPES);
-	get_coefficient_array(coefficients, trace.threats, NPIECE_TYPES * NPIECE_TYPES);
-	get_coefficient_array(coefficients, trace.king_ring_bonus, NPIECE_TYPES);
-	get_coefficient_array(coefficients, trace.check_bonus, NPIECE_TYPES);
-	get_coefficient_array(coefficients, trace.center_control, NPIECE_TYPES);
+	get_coefficient_array(coefficients, trace.open_files, NEVAL_PTYPES);
+	get_coefficient_array(coefficients, trace.semi_open_files, NEVAL_PTYPES);
+	get_coefficient_array(coefficients, trace.pawn_protection, NEVAL_PTYPES);
+	get_coefficient_array(coefficients, trace.attacked_by_pawn, NEVAL_PTYPES);
+	get_coefficient_array(coefficients, trace.threats, NEVAL_PTYPES * NEVAL_PTYPES);
+	get_coefficient_array(coefficients, trace.king_ring_bonus, NEVAL_PTYPES);
+	get_coefficient_array(coefficients, trace.check_bonus, NEVAL_PTYPES);
+	get_coefficient_array(coefficients, trace.center_control, NEVAL_PTYPES);
 	get_coefficient_array(coefficients, trace.king_pawn_shield, 2);
 	get_coefficient_single(coefficients, trace.isolated_pawns);
 	get_coefficient_single(coefficients, trace.doubled_pawns);
@@ -200,7 +202,7 @@ void Midnight::MidnightEval::print_parameters(const parameters_t &parameters) {
 
 	int index = 0;
 	std::stringstream ss;
-	print_array(ss, parameters_copy, index, "PIECE_VALUES", NPIECE_TYPES);
+	print_array(ss, parameters_copy, index, "PIECE_VALUES", NEVAL_PTYPES);
 	print_pst(ss, parameters_copy, index, "PAWN_TABLE", NSQUARES);
 	print_pst(ss, parameters_copy, index, "KNIGHT_TABLE", NSQUARES);
 	print_pst(ss, parameters_copy, index, "BISHOP_TABLE", NSQUARES);
@@ -210,14 +212,14 @@ void Midnight::MidnightEval::print_parameters(const parameters_t &parameters) {
 	print_pst(ss, parameters_copy, index, "PASSED_PAWN_BONUS", NSQUARES);
 	print_pst(ss, parameters_copy, index, "BLOCKED_PASSED_PAWN_PENALTY", NSQUARES);
 
-	print_array(ss, parameters_copy, index, "OPEN_FILE_BONUS", NPIECE_TYPES);
-	print_array(ss, parameters_copy, index, "SEMI_OPEN_FILE_BONUS", NPIECE_TYPES);
-	print_array(ss, parameters_copy, index, "PAWN_PROTECTION", NPIECE_TYPES);
-	print_array(ss, parameters_copy, index, "ATTACKED_BY_PAWN", NPIECE_TYPES);
-	print_threats(ss, parameters_copy, index, "THREATS", NPIECE_TYPES * NPIECE_TYPES);
-	print_array(ss, parameters_copy, index, "KING_RING_ATTACK_BONUS", NPIECE_TYPES);
-	print_array(ss, parameters_copy, index, "CHECK_BONUS", NPIECE_TYPES);
-	print_array(ss, parameters_copy, index, "CENTER_CONTROL", NPIECE_TYPES);
+	print_array(ss, parameters_copy, index, "OPEN_FILE_BONUS", NEVAL_PTYPES);
+	print_array(ss, parameters_copy, index, "SEMI_OPEN_FILE_BONUS", NEVAL_PTYPES);
+	print_array(ss, parameters_copy, index, "PAWN_PROTECTION", NEVAL_PTYPES);
+	print_array(ss, parameters_copy, index, "ATTACKED_BY_PAWN", NEVAL_PTYPES);
+	print_threats(ss, parameters_copy, index, "THREATS", NEVAL_PTYPES * NEVAL_PTYPES);
+	print_array(ss, parameters_copy, index, "KING_RING_ATTACK_BONUS", NEVAL_PTYPES);
+	print_array(ss, parameters_copy, index, "CHECK_BONUS", NEVAL_PTYPES);
+	print_array(ss, parameters_copy, index, "CENTER_CONTROL", NEVAL_PTYPES);
 	print_array(ss, parameters_copy, index, "KING_PAWN_SHIELD", 2);
 	print_single(ss, parameters_copy, index, "ISOLATED_PAWN_PENALTY");
 	print_single(ss, parameters_copy, index, "DOUBLED_PAWN_PENALTY");
