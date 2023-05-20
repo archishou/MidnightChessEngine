@@ -1,6 +1,7 @@
 #pragma once
-#include "board/types/board_types.h"
-#include "move_gen/types/move.h"
+#include "../../board/types/board_types.h"
+#include "../search_constants.h"
+#include "../../move_gen/types/move.h"
 
 enum TranspositionTableEntryNodeType {
 	EXACT,

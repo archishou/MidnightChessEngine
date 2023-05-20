@@ -1,7 +1,9 @@
 #pragma once
 
-#include "board/position.h"
-#include "evaluation/types.h"
+#include "../bitboards.h"
+#include "../../board/position.h"
+#include "../constants/misc.h"
+#include "../constants/psts.h"
 
 template<Color color, DoTrace do_trace>
 Score evaluate_knight(const Position& board, Trace& trace);

@@ -2,6 +2,7 @@
 // Created by Archishmaan Peyyety on 4/16/23.
 //
 #include "pvs.h"
+#include "../board/position.h"
 
 PVSData data;
 

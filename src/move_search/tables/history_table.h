@@ -2,12 +2,14 @@
 // Created by Archishmaan Peyyety on 2/14/23.
 //
 #pragma once
-#include "move_search/move_ordering/ordering_constants.h"
-#include "move_search/search_params.h"
-#include "move_search/search_constants.h"
-#include "array"
-#include "move_search/types.h"
-#include "board/position.h"
+
+#include "../../board/types/board_types.h"
+#include "../../board/types/square.h"
+#include "../../board/types/piece.h"
+#include "../search_constants.h"
+#include "../move_ordering/ordering_constants.h"
+#include "../../board/position.h"
+#include "../types.h"
 
 extern int history[NCOLORS][NSQUARES][NSQUARES];
 extern int continuation_history[NPIECES][NSQUARES][NPIECES][NSQUARES];

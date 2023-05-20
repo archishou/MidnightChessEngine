@@ -1,8 +1,8 @@
 #pragma once
 #include "search_params.h"
-#include "move_search/tables/transposition_table.h"
 #include "search_constants.h"
 #include "types.h"
+#include "tables/transposition_table.h"
 
 template<Color color>
 int singular_extension(Position& board, bool excluding_move, int depth, int ply, int alpha, int beta,

@@ -1,7 +1,8 @@
 #pragma once
 #include "search_params.h"
 #include "search_constants.h"
-#include "move_search/tables/history_table.h"
+#include "../move_gen/types/move.h"
+#include "tables/history_table.h"
 
 inline bool late_move_prune(bool pv_node, int move_idx, int depth) {
 	return !pv_node && depth <= LMP_MIN_DEPTH && move_idx > depth * LMP_DEPTH_MULTIPLIER;

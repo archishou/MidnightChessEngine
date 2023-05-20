@@ -5,8 +5,8 @@
 
 #include <cstring>
 #include <cstdint>
-#include "board/types/piece.h"
-#include "board/types/square.h"
+#include "../board/types/piece.h"
+#include "../board/types/square.h"
 
 typedef int Score;
 constexpr Score SCORE_ZERO = 0;

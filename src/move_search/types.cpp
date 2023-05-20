@@ -3,6 +3,7 @@
 //
 #include "types.h"
 #include "iostream"
+#include "../move_gen/types/move.h"
 
 std::ostream& operator<<(std::ostream& os, const Line& line) {
 	for(const Move & i : line) {

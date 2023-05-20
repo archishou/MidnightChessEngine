@@ -2,8 +2,7 @@
 // Created by Archishmaan Peyyety on 1/19/23.
 //
 #pragma once
-
-#include "move_gen/types/move.h"
+#include "../search_constants.h"
 
 typedef Move PVTable[MAX_DEPTH][MAX_DEPTH];
 

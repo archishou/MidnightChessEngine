@@ -1,7 +1,8 @@
 #pragma once
 #include "search_constants.h"
-#include "move_search/tables/pv_table.h"
-#include "move_gen/types/move.h"
+#include "../move_gen/types/move.h"
+#include "tables/pv_table.h"
+#include <vector>
 
 struct ScoredMove {
 	Move move;

@@ -1,7 +1,7 @@
 #pragma once
-#include "evaluation/types.h"
-#include "board/types/board_types.h"
-#include "board/types/square.h"
+
+#include "../../board/types/piece.h"
+#include "../types.h"
 
 constexpr Score PAWN_TABLE[] = {
 		S(0, 0),        S(0, 0),        S(0, 0),        S(0, 0),        S(0, 0),        S(0, 0),        S(0, 0),        S(0, 0),

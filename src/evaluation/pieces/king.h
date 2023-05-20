@@ -1,9 +1,9 @@
 #pragma once
 
-#include "evaluation/types.h"
-#include "evaluation/constants/misc.h"
-#include "evaluation/bitboards.h"
-#include "evaluation/constants/psts.h"
+#include "../bitboards.h"
+#include "../../board/position.h"
+#include "../constants/misc.h"
+#include "../constants/psts.h"
 
 constexpr int NKING_SIDES = 2;
 
