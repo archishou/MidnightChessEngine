@@ -6,7 +6,7 @@
 #include "sstream"
 #include "cmath"
 #include "midnight.h"
-#include "move_generation/position.h"
+#include "../../board/position.h"
 #include "evaluation/evaluate.h"
 
 void add_param(parameters_t& params, const Score score) {
@@ -62,8 +62,7 @@ parameters_t Midnight::MidnightEval::get_initial_parameters() {
 }
 
 EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
-	Position p;
-	Position::set(fen, p);
+	Position p(fen);
 	Trace trace = {};
 
 	if (p.turn() == BLACK) evaluate<BLACK>(p, trace);
