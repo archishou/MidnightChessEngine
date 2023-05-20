@@ -9,6 +9,15 @@ else()
     set(CMAKE_CXX_FLAGS "-fconstexpr-ops-limit=900000000")
 endif()
 
+include(CheckIPOSupported)
+check_ipo_supported(RESULT LTO_SUPPORTED)
+if(LTO_SUPPORTED)
+    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
+    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELWITHDEBINFO OFF)
+    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_DEBUG OFF)
+endif()
+
+
 set(MIDNIGHT_LIB src/engine.cpp src/utils/helpers.cpp src/utils/clock.cpp src/move_search/types.cpp src/move_search/search.cpp src/move_search/reductions.cpp src/move_search/pvs.cpp src/move_search/tables/transposition_table.cpp src/move_search/tables/history_table.cpp src/board/position.cpp src/board/types/bitboard.cpp src/evaluation/pieces/knight.cpp src/evaluation/pieces/pawn.cpp src/evaluation/pieces/queen.cpp src/evaluation/pieces/rook.cpp src/evaluation/pieces/king.cpp src/move_search/tables/lmr_table.cpp src/move_search/move_ordering/move_ordering.cpp src/evaluation/pieces/bishop.cpp)
 
 add_executable(Midnight src/main.cpp ${MIDNIGHT_LIB})
