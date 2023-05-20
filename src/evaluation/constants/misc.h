@@ -74,5 +74,5 @@ constexpr Score TEMPO = S(25, 22);
 
 template<PieceType attacking, PieceType attacked>
 Score read_threat_bonus() {
-	return THREATS[attacking * (NPIECE_TYPES - 1)+ attacked];
+	return THREATS[attacking * (NPIECE_TYPES - 1) + attacked];
 }

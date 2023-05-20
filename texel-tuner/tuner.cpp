@@ -453,23 +453,14 @@ void Tuner::run(const std::vector<DataSource>& sources)
 
     vector<Entry> entries;
 
-    // Debug entry
-    //const string debug_fen = "rnb1kbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK1NR w KQkq - 0 1; 1.0";
-    //Entry debug_entry;
-    //debug_entry.wdl = get_fen_wdl(debug_fen);
-    //debug_entry.white_to_move = get_fen_color_to_move(debug_fen);
-    //get_coefficient_entries(debug_fen, debug_entry.coefficients);
-    //debug_entry.initial_eval = linear_eval(debug_entry, parameters);
-    //entries.push_back(debug_entry);
-
-    for (const auto& source : sources)
-    {
+    for (const auto& source : sources) {
         load_fens(source, parameters, start, entries);
     }
     cout << "Data loading complete" << endl << endl;
 
     print_statistics(parameters, entries);
 
+	/*
     if constexpr (retune_from_zero)
     {
         for (auto& parameter : parameters)
@@ -559,4 +550,5 @@ void Tuner::run(const std::vector<DataSource>& sources)
             learning_rate *= lr_drop_ratio;
         }
     }
+    */
 }

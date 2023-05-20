@@ -9,6 +9,7 @@
 #include "pieces/rook.h"
 #include "pieces/queen.h"
 #include "pieces/king.h"
+#include "iostream"
 
 template<Color color>
 constexpr int compute_game_phase(Position& board) {
@@ -43,15 +44,17 @@ constexpr do_trace evaluate(Position& board) {
 	Score us = evaluate_single_side<color, trace_enabled>(board, trace);
 	Score them = evaluate_single_side<~color, trace_enabled>(board, trace);
 	Score total = us - them + TEMPO;
+	if constexpr (trace_enabled) trace.tempo[color] += 1;
 
 	int mg_phase = std::min(game_phase, 24);
 	int eg_phase = 24 - mg_phase;
 
 	const int mg_score = mg_value(total);
 	const int eg_score = eg_value(total);
-	const int eval = (mg_score * mg_phase + eg_score * eg_phase) / 24;
+	int eval = (mg_score * mg_phase + eg_score * eg_phase) / 24;
 
 	if constexpr (trace_enabled) {
+		if constexpr (color == BLACK) eval = -eval;
 		trace.score = eval;
 		return trace;
 	} else {

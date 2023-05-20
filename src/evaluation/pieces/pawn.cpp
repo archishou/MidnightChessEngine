@@ -40,6 +40,7 @@ Score evaluate_pawn_structure(const Position& board, Trace& trace) {
 		score += PAWN_PROTECTION[PAWN] * pop_count(supporting_pawns) * rank;
 		if constexpr (do_trace) trace.pawn_protection[PAWN][color] += pop_count(supporting_pawns) * rank;
 
+		/*
 		const Bitboard pseudo_legal_moves = tables::attacks<PAWN, color>(pawn_square) & ~us_pieces;
 
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
@@ -49,6 +50,7 @@ Score evaluate_pawn_structure(const Position& board, Trace& trace) {
 		const bool king_in_check = pseudo_legal_moves & square_to_bitboard(them_king);
 		score += CHECK_BONUS[PAWN] * king_in_check;
 		if constexpr (do_trace) trace.check_bonus[PAWN][color] += king_in_check;
+		 */
 	}
 
 	// Pawn Phalanx Eval
