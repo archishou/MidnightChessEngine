@@ -4,9 +4,10 @@
 
 #include "string"
 #include "sstream"
+#include "iostream"
 #include "cmath"
 #include "midnight.h"
-#include "../../board/position.h"
+#include "board/position.h"
 #include "evaluation/evaluate.h"
 
 void add_param(parameters_t& params, const Score score) {
@@ -65,8 +66,8 @@ EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	Position p(fen);
 	Trace trace = {};
 
-	if (p.turn() == BLACK) evaluate<BLACK>(p, trace);
-	else evaluate<WHITE>(p, trace);
+	if (p.turn() == BLACK) evaluate<BLACK, EnableTrace>(p);
+	else evaluate<WHITE, EnableTrace>(p);
 
 	coefficients_t coefficients;
 	get_coefficient_array(coefficients, trace.material, NPIECE_TYPES);

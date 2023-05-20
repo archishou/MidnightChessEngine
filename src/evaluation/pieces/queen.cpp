@@ -6,8 +6,8 @@
 #include "evaluation/constants/misc.h"
 #include "evaluation/constants/psts.h"
 
-template<Color color>
-Score evaluate_queens(const Position& board) {
+template<Color color, DoTrace do_trace>
+Score evaluate_queens(const Position& board, Trace& trace) {
 	Bitboard queens = board.occupancy<color, QUEEN>();
 	const Bitboard us_pieces = board.occupancy<color>();
 	const Bitboard them_pieces = board.occupancy<~color>();
@@ -53,5 +53,7 @@ Score evaluate_queens(const Position& board) {
 	return score;
 }
 
-template Score evaluate_queens<WHITE>(const Position& board);
-template Score evaluate_queens<BLACK>(const Position& board);
+template Score evaluate_queens<WHITE, TRACE_EVAL>(const Position& board, Trace& trace);
+template Score evaluate_queens<BLACK, TRACE_EVAL>(const Position& board, Trace& trace);
+template Score evaluate_queens<WHITE, COMPUTE_EVAL>(const Position& board, Trace& trace);
+template Score evaluate_queens<BLACK, COMPUTE_EVAL>(const Position& board, Trace& trace);

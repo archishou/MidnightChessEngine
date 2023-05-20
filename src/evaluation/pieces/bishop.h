@@ -4,5 +4,5 @@
 #include "evaluation/types.h"
 #include "board/position.h"
 
-template<Color color>
-Score evaluate_bishops(const Position& board);
+template<Color color, DoTrace do_trace>
+Score evaluate_bishops(const Position &board, Trace &trace);

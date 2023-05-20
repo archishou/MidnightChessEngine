@@ -6,8 +6,8 @@
 #include "evaluation/bitboards.h"
 #include "evaluation/constants/psts.h"
 
-template<Color color>
-Score evaluate_bishops(const Position& board) {
+template<Color color, DoTrace do_trace>
+Score evaluate_bishops(const Position &board, Trace &trace) {
 	Score score = SCORE_ZERO;
 
 	Bitboard bishops = board.occupancy<color, BISHOP>();
@@ -60,5 +60,7 @@ Score evaluate_bishops(const Position& board) {
 	return score;
 }
 
-template Score evaluate_bishops<WHITE>(const Position& board);
-template Score evaluate_bishops<BLACK>(const Position& board);
+template Score evaluate_bishops<WHITE, TRACE_EVAL>(const Position &board, Trace &trace);
+template Score evaluate_bishops<BLACK, TRACE_EVAL>(const Position &board, Trace &trace);
+template Score evaluate_bishops<WHITE, COMPUTE_EVAL>(const Position &board, Trace &trace);
+template Score evaluate_bishops<BLACK, COMPUTE_EVAL>(const Position &board, Trace &trace);
