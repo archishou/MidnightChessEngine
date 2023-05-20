@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MidnightTune" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="~/Documents/CodeProjects/sources.csv" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Midnight" TARGET_NAME="MidnightTune" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Midnight" RUN_TARGET_NAME="MidnightTune">
+    <method v="2">
+      <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+    </method>
+  </configuration>
+</component>
