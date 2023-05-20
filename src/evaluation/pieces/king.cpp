@@ -34,10 +34,10 @@ Score evaluate_king(const Position& board, Trace& trace) {
 		const Bitboard pawn_shield = PAWN_SHIELD[king_side][color];
 
 		score += KING_PAWN_SHIELD[0] * pop_count(pawns & pawn_shield);
-		if constexpr (do_trace) score += KING_PAWN_SHIELD[0] * pop_count(pawns & pawn_shield);
+		if constexpr (do_trace) trace.king_pawn_shield[0][color] += pop_count(pawns & pawn_shield);
 
 		score += KING_PAWN_SHIELD[1] * pop_count(pawns & shift_relative<color, NORTH>(pawn_shield));
-		if constexpr (do_trace) score += KING_PAWN_SHIELD[1] * pop_count(pawns & shift_relative<color, NORTH>(pawn_shield));
+		if constexpr (do_trace) trace.king_pawn_shield[1][color] += pop_count(pawns & shift_relative<color, NORTH>(pawn_shield));
 	}
 	return score;
 }
