@@ -21,22 +21,26 @@ constexpr int compute_game_phase(Position& board) {
 	return game_phase;
 }
 
-template<Color color>
-constexpr Score evaluate_single_side(Position& board) {
-	return 	evaluate_pawn_structure<color>(board) +
-			evaluate_knight<color>(board) +
-			evaluate_bishops<color>(board) +
-			evaluate_rooks<color>(board) +
-			evaluate_queens<color>(board) +
-			evaluate_king<color>(board);
+template<Color color, DoTrace do_trace>
+constexpr Score evaluate_single_side(Position& board, Trace& trace) {
+	return evaluate_pawn_structure<color, do_trace>(board, trace) +
+		   evaluate_knight<color, do_trace>(board, trace) +
+		   evaluate_bishops<color, do_trace>(board, trace) +
+		   evaluate_rooks<color, do_trace>(board, trace) +
+		   evaluate_queens<color, do_trace>(board, trace) +
+		   evaluate_king<color, do_trace>(board, trace);
 }
 
-template<Color color>
-constexpr int evaluate(Position& board) {
+template<Color color, typename do_trace = DisableTrace>
+constexpr do_trace evaluate(Position& board) {
+	Trace trace{};
+
+	constexpr bool trace_enabled = std::is_same_v<do_trace, EnableTrace>;
+
 	const int game_phase = compute_game_phase<color>(board);
 
-	Score us = evaluate_single_side<color>(board);
-	Score them = evaluate_single_side<~color>(board);
+	Score us = evaluate_single_side<color, trace_enabled>(board, trace);
+	Score them = evaluate_single_side<~color, trace_enabled>(board, trace);
 	Score total = us - them + TEMPO;
 
 	int mg_phase = std::min(game_phase, 24);
@@ -44,5 +48,11 @@ constexpr int evaluate(Position& board) {
 
 	const int mg_score = mg_value(total);
 	const int eg_score = eg_value(total);
-	return (mg_score * mg_phase + eg_score * eg_phase) / 24;
+	const int eval = (mg_score * mg_phase + eg_score * eg_phase) / 24;
+
+	if constexpr (trace_enabled) {
+		return trace;
+	} else {
+		return eval;
+	}
 }

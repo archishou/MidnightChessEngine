@@ -1,6 +1,13 @@
 EXE           = midnight
  
 SOURCES      := $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(wildcard src/*/*/*.cpp)
+SOURCES 	 := $(filter-out src/tuner.cpp, $(SOURCES))
+
+ifeq ($(MAKECMDGOALS),tune)
+	SOURCES := $(filter-out src/main.cpp, $(SOURCES))
+	SOURCES += src/tuner.cpp
+	EXE = midnight-tests
+endif
 
 ifeq ($(MAKECMDGOALS),tests)
 	SOURCES += $(wildcard tests/*.cpp) $(wildcard tests/*/*.cpp)
@@ -11,7 +18,7 @@ endif
 CXXFLAGS     := -O3 -Isrc -flto -std=c++20 -march=native -Wall -Wextra -pedantic -DNDEBUG
 LDFLAGS      :=
  
-CXX          := g++
+CXX          := clang++
 SUFFIX       :=
  
 # Detect Windows
@@ -42,6 +49,7 @@ OUT := $(EXE)$(SUFFIX)
  
 all: $(EXE)
 tests: $(EXE)
+tune: $(EXE)
 $(EXE) : $(SOURCES)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(OUT) $(SOURCES)
  

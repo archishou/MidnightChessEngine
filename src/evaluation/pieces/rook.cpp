@@ -6,8 +6,8 @@
 #include "evaluation/constants/misc.h"
 #include "evaluation/constants/psts.h"
 
-template<Color color>
-Score evaluate_rooks(const Position& board) {
+template<Color color, DoTrace do_trace>
+Score evaluate_rooks(const Position& board, Trace& trace) {
 	Score score = SCORE_ZERO;
 	Bitboard rooks = board.occupancy<color, ROOK>();
 
@@ -53,5 +53,7 @@ Score evaluate_rooks(const Position& board) {
 	return score;
 }
 
-template Score evaluate_rooks<WHITE>(const Position& board);
-template Score evaluate_rooks<BLACK>(const Position& board);
+template Score evaluate_rooks<WHITE, TRACE_EVAL>(const Position& board, Trace& trace);
+template Score evaluate_rooks<BLACK, TRACE_EVAL>(const Position& board, Trace& trace);
+template Score evaluate_rooks<WHITE, COMPUTE_EVAL>(const Position& board, Trace& trace);
+template Score evaluate_rooks<BLACK, COMPUTE_EVAL>(const Position& board, Trace& trace);

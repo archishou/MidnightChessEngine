@@ -1,7 +1,7 @@
 #ifndef MIDNIGHT_H
 #define MIDNIGHT_H
 
-#include "evaluation/texel-tuner/base.h"
+#include "base.h"
 #include <string>
 #include <vector>
 

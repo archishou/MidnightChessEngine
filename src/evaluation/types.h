@@ -6,6 +6,7 @@
 #include <cstring>
 #include <cstdint>
 #include "board/types/piece.h"
+#include "board/types/square.h"
 
 typedef int Score;
 constexpr Score SCORE_ZERO = 0;
@@ -70,3 +71,9 @@ struct Trace {
 
 	short tempo[NCOLORS]{};
 };
+
+using DoTrace = bool;
+constexpr DoTrace TRACE_EVAL = true;
+constexpr DoTrace COMPUTE_EVAL = false;
+using EnableTrace = Trace;
+using DisableTrace = int;

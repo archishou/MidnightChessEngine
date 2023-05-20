@@ -4,8 +4,8 @@
 #include "king.h"
 
 
-template<Color Us>
-Score evaluate_king(const Position& board) {
+template<Color Us, DoTrace do_trace>
+Score evaluate_king(const Position& board, Trace& trace) {
 	Score score = SCORE_ZERO;
 	const Bitboard board_open_files = open_files(board);
 	const Bitboard board_semi_open_files = semi_open_files<Us>(board);
@@ -32,5 +32,7 @@ Score evaluate_king(const Position& board) {
 	return score;
 }
 
-template Score evaluate_king<WHITE>(const Position& board);
-template Score evaluate_king<BLACK>(const Position& board);
+template Score evaluate_king<WHITE, TRACE_EVAL>(const Position& board, Trace& trace);
+template Score evaluate_king<BLACK, TRACE_EVAL>(const Position& board, Trace& trace);
+template Score evaluate_king<WHITE, COMPUTE_EVAL>(const Position& board, Trace& trace);
+template Score evaluate_king<BLACK, COMPUTE_EVAL>(const Position& board, Trace& trace);
