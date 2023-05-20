@@ -40,11 +40,9 @@ parameters_t Midnight::MidnightEval::get_initial_parameters() {
 	add_params(parameters, PAWN_PROTECTION, NPIECE_TYPES);
 	add_params(parameters, ATTACKED_BY_PAWN, NPIECE_TYPES);
 	add_params(parameters, THREATS, NPIECE_TYPES * NPIECE_TYPES);
-/*
 	add_params(parameters, KING_RING_ATTACK_BONUS, NPIECE_TYPES);
 	add_params(parameters, CHECK_BONUS, NPIECE_TYPES);
 	add_params(parameters, CENTER_CONTROL, NPIECE_TYPES);
- */
 	add_params(parameters, KING_PAWN_SHIELD, 2);
 	add_param(parameters, ISOLATED_PAWN_PENALTY);
 	add_param(parameters, DOUBLED_PAWN_PENALTY);
@@ -85,11 +83,9 @@ EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	get_coefficient_array(coefficients, trace.pawn_protection, NPIECE_TYPES);
 	get_coefficient_array(coefficients, trace.attacked_by_pawn, NPIECE_TYPES);
 	get_coefficient_array(coefficients, trace.threats, NPIECE_TYPES * NPIECE_TYPES);
-/*
 	get_coefficient_array(coefficients, trace.king_ring_bonus, NPIECE_TYPES);
 	get_coefficient_array(coefficients, trace.check_bonus, NPIECE_TYPES);
 	get_coefficient_array(coefficients, trace.center_control, NPIECE_TYPES);
- */
 	get_coefficient_array(coefficients, trace.king_pawn_shield, 2);
 	get_coefficient_single(coefficients, trace.isolated_pawns);
 	get_coefficient_single(coefficients, trace.doubled_pawns);
@@ -219,11 +215,9 @@ void Midnight::MidnightEval::print_parameters(const parameters_t &parameters) {
 	print_array(ss, parameters_copy, index, "PAWN_PROTECTION", NPIECE_TYPES);
 	print_array(ss, parameters_copy, index, "ATTACKED_BY_PAWN", NPIECE_TYPES);
 	print_threats(ss, parameters_copy, index, "THREATS", NPIECE_TYPES * NPIECE_TYPES);
-	/*
 	print_array(ss, parameters_copy, index, "KING_RING_ATTACK_BONUS", NPIECE_TYPES);
 	print_array(ss, parameters_copy, index, "CHECK_BONUS", NPIECE_TYPES);
 	print_array(ss, parameters_copy, index, "CENTER_CONTROL", NPIECE_TYPES);
-	 */
 	print_array(ss, parameters_copy, index, "KING_PAWN_SHIELD", 2);
 	print_single(ss, parameters_copy, index, "ISOLATED_PAWN_PENALTY");
 	print_single(ss, parameters_copy, index, "DOUBLED_PAWN_PENALTY");

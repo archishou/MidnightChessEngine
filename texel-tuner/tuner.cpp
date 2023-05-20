@@ -460,7 +460,6 @@ void Tuner::run(const std::vector<DataSource>& sources)
 
     print_statistics(parameters, entries);
 
-	/*
     if constexpr (retune_from_zero)
     {
         for (auto& parameter : parameters)
@@ -550,5 +549,4 @@ void Tuner::run(const std::vector<DataSource>& sources)
             learning_rate *= lr_drop_ratio;
         }
     }
-    */
 }
