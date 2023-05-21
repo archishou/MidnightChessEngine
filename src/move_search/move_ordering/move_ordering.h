@@ -125,7 +125,7 @@ ScoredMoves order_moves(MoveList<color, move_gen_type>& move_list, Position& boa
 	TranspositionTableSearchResults search_results = t_table.probe_for_move_ordering(board.hash());
 	if (search_results.entry_found) previous_best_move = search_results.entry.best_move;
 	for (Move move : move_list) {
-		struct ScoredMove scored_move;
+		ScoredMove scored_move;
 		scored_move.move = move;
 		int score = 0; //Higher score is likely a better move.
 		score += hash_move_score(move, previous_best_move);
