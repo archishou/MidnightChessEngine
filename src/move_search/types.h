@@ -9,7 +9,7 @@ struct ScoredMove {
 	int score{};
 };
 
-typedef std::vector<ScoredMove> ScoredMoves;
+using ScoredMoves = std::vector<ScoredMove>;
 
 struct BestMoveSearchParameters {
 	short depth = MAX_DEPTH;

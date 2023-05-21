@@ -6,6 +6,7 @@
 #include <bitset>
 #include "../../types.h"
 #include "bitboard.h"
+#include <algorithm>
 
 void print_bitboard(Bitboard bitboard) {
 	std::bitset<64> b(bitboard);

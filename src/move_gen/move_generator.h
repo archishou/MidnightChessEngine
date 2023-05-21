@@ -7,6 +7,7 @@
 #include "tables/square_tables.h"
 #include "move_gen_masks.h"
 #include "iostream"
+#include <tuple>
 
 template<Color color, MoveGenerationType move_gen_type = ALL>
 class MoveList {
