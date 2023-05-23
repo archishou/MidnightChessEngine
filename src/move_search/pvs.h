@@ -186,32 +186,28 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		if (see_prune_pvs<color>(board, pv_node, depth, value, legal_move)) continue;
 
 		int search_extension = singular_extension<color>(board, excluding_move, depth, ply, alpha, beta,
-														 legal_move, tt_probe_results, data);
+														legal_move, tt_probe_results, data);
 
 		board.play<color>(legal_move);
 		moves_played += 1;
 		data.nodes_searched += 1;
 
-		int new_value = NEG_INF_CHESS;
+		int new_value{};
 		data.moves_made[ply] = legal_move;
 		int search_depth = std::max(depth + search_extension, 0);
 
-		bool full_depth_zero_window;
-
 		int reduction = lmr_reduction(pv_node, ply, in_check, move_idx, depth, legal_move);
-		if (reduction > 0) {
-			int new_depth = std::max(0, search_depth - reduction - 1);
-			new_value = -pvs<~color>(board, new_depth, ply + 1, -alpha - 1, -alpha, true);
-			full_depth_zero_window = new_value > alpha && new_depth != search_depth - 1;
-		}
-		else full_depth_zero_window = !pv_node || move_idx > 0;
 
-		if (full_depth_zero_window) {
-			new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -alpha - 1, -alpha, true);
-		}
+		if (pv_node && move_idx == 0) {
+			new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -beta, -alpha, false);
+		} else {
+			new_value = -pvs<~color>(board, search_depth - reduction - 1, ply + 1, -alpha - 1, -alpha, true);
 
-		if (new_value == NEG_INF_CHESS || (pv_node && ((new_value > alpha && new_value < beta) || move_idx == 0))) {
-			new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -beta, -alpha, true);
+			if (new_value > alpha && reduction > 0)
+				new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -alpha - 1, -alpha, true);
+
+			if (new_value > alpha && new_value < beta)
+				new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -beta, -alpha, false);
 		}
 
 		board.undo<color>(legal_move);
