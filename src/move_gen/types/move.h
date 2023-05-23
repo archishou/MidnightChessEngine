@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <ostream>
 #include "../../types.h"
 #include "../../board/types/board_types.h"
 #include "../../board/types/square.h"
