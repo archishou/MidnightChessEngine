@@ -40,7 +40,7 @@ private:
 	static constexpr u8 PROMOTION_BITMASK	= 0b0100;
 
 public:
-	consteval Move() : move(0) {}
+	constexpr Move() : move(0) {}
 
 	constexpr explicit Move(uint16_t m) { move = m; }
 
