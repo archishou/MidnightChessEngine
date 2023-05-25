@@ -2,5 +2,5 @@
 #include "../search_constants.h"
 #include "../search_params.h"
 
-extern double lmr_table[MAX_DEPTH + 1][MAX_DEPTH + 1];
+extern double lmr_table[2][MAX_DEPTH + 1][MAX_DEPTH + 1];
 extern void init_lmr_table();
