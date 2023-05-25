@@ -5,8 +5,8 @@
 constexpr int RFP_MARGIN = 75;
 constexpr int RFP_MAX_DEPTH = 9;
 
-constexpr double LMR_BASE_CAPTURE = 0.00;
-constexpr double LMR_DIVISOR_CAPTURE = 3.25;
+constexpr double LMR_BASE_CAPTURE = 1.40;
+constexpr double LMR_DIVISOR_CAPTURE = 1.80;
 constexpr double LMR_BASE_QUIET = 1.50;
 constexpr double LMR_DIVISOR_QUIET = 1.75;
 
