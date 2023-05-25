@@ -2,16 +2,18 @@
 // Created by Archishmaan Peyyety on 1/1/23.
 //
 #pragma once
-const int RFP_MARGIN = 75;
-const int RFP_MAX_DEPTH = 9;
+constexpr int RFP_MARGIN = 75;
+constexpr int RFP_MAX_DEPTH = 9;
 
-const double LMR_BASE = 1.4;
-const double LMR_DIVISOR = 1.8;
+constexpr double LMR_BASE_CAPTURE = 0.00;
+constexpr double LMR_DIVISOR_CAPTURE = 3.25;
+constexpr double LMR_BASE_QUIET = 1.50;
+constexpr double LMR_DIVISOR_QUIET = 1.75;
 
-const int NMP_MIN_DEPTH = 3;
+constexpr int NMP_MIN_DEPTH = 3;
 
-const int LMP_MIN_DEPTH = 3;
-const int LMP_DEPTH_MULTIPLIER = 12;
+constexpr int LMP_MIN_DEPTH = 3;
+constexpr int LMP_DEPTH_MULTIPLIER = 12;
 
 constexpr int Q_SEARCH_FUTILITY_MARGIN = 60;
 

@@ -633,3 +633,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 12736 W: 3091 L: 2891 D: 6754
 ```
+
+### Quiet Late Move Reduction
+https://chess.swehosting.se/test/1014/
+```
+ELO   | 6.42 +- 4.65 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 10224 W: 2539 L: 2350 D: 5335
+```
