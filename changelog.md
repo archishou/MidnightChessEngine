@@ -642,3 +642,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 10224 W: 2539 L: 2350 D: 5335
 ```
+
+### Razoring
+https://chess.swehosting.se/test/1058/
+```
+ELO   | 2.35 +- 1.60 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 3.00 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 83728 W: 19766 L: 19200 D: 44762
+```
