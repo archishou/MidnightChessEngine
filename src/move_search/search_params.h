@@ -2,6 +2,7 @@
 // Created by Archishmaan Peyyety on 1/1/23.
 //
 #pragma once
+
 constexpr int RFP_MARGIN = 75;
 constexpr int RFP_MAX_DEPTH = 9;
 

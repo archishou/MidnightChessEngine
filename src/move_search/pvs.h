@@ -151,6 +151,12 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		}
 	}
 
+	if (!pv_node && !in_check && !excluding_move) {
+		if (depth <= 3 && static_eval - 63 + 182 * depth <= alpha) {
+			return q_search<color>(board, ply, alpha, beta);
+		}
+	}
+
 	if (depth >= NMP_MIN_DEPTH && !in_check && !pv_node && !excluding_move && do_null && static_eval >= beta) {
 		board.play_null<color>();
 
