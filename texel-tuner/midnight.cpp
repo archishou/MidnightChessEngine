@@ -53,6 +53,7 @@ parameters_t Midnight::MidnightEval::get_initial_parameters() {
 	add_params(parameters, BISHOP_MOBILITY, 14);
 	add_params(parameters, ROOK_MOBILITY, 15);
 	add_params(parameters, QUEEN_MOBILITY, 28);
+	add_params(parameters, KING_LINE_SAFETY, 28);
 
 	add_params(parameters, PHALANX_PAWN, NRANKS);
 	add_params(parameters, CANDIDATE_PASSED_PAWN, NRANKS);
@@ -97,6 +98,7 @@ EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	get_coefficient_array(coefficients, trace.bishop_mobility, 14);
 	get_coefficient_array(coefficients, trace.rook_mobility, 15);
 	get_coefficient_array(coefficients, trace.queen_mobility, 28);
+	get_coefficient_array(coefficients, trace.king_safe_line, 28);
 
 	get_coefficient_array(coefficients, trace.pawn_phalanx, NRANKS);
 	get_coefficient_array(coefficients, trace.candidate_pawns, NRANKS);
@@ -229,6 +231,7 @@ void Midnight::MidnightEval::print_parameters(const parameters_t &parameters) {
 	print_array(ss, parameters_copy, index, "BISHOP_MOBILITY", 14);
 	print_array(ss, parameters_copy, index, "ROOK_MOBILITY", 15);
 	print_array(ss, parameters_copy, index, "QUEEN_MOBILITY", 28);
+	print_array(ss, parameters_copy, index, "KING_LINE_SAFETY", 28);
 
 	print_array(ss, parameters_copy, index, "PHALANX_PAWN", NRANKS);
 	print_array(ss, parameters_copy, index, "CANDIDATE_PASSED_PAWN", NRANKS);
