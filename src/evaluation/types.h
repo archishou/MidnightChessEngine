@@ -65,6 +65,7 @@ struct Trace {
 	short bishop_mobility[14][NCOLORS]{};
 	short rook_mobility[15][NCOLORS]{};
 	short queen_mobility[28][NCOLORS]{};
+	short king_safe_line[28][NCOLORS]{};
 
 	short pawn_phalanx[NRANKS][NCOLORS]{};
 	short candidate_pawns[NRANKS][NCOLORS]{};

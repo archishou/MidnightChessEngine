@@ -30,6 +30,14 @@ Score evaluate_king(const Position& board, Trace& trace) {
 		trace.semi_open_files[KING][color] += on_semi_open_file;
 	}
 
+	const Bitboard queen_attacks = tables::attacks<QUEEN>(king_square, board.occupancy<color>() | board.occupancy<PAWN>());
+	const Bitboard safe_rank = MASK_RANK[relative_rank<color>(RANK1)];
+	score += KING_LINE_SAFETY[pop_count(~safe_rank & queen_attacks)];
+	if constexpr (do_trace) {
+		trace.king_safe_line[pop_count(~safe_rank & queen_attacks)][color] += 1;
+	}
+
+
 	if (king_bb & KING_SAFE_AREA[color]) {
 		const Bitboard pawn_shield = PAWN_SHIELD[king_side][color];
 

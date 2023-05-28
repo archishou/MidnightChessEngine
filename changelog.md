@@ -651,3 +651,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 3.00 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 83728 W: 19766 L: 19200 D: 44762
 ```
+
+### King Line Evaluation
+https://chess.swehosting.se/test/1105/
+```
+ELO   | 7.66 +- 5.19 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 7936 W: 1923 L: 1748 D: 4265
+```
