@@ -4,6 +4,7 @@
 #include "board_types.h"
 
 constexpr u32 NPIECE_TYPES = 7;
+/*
 enum PieceType : u32 {
 	PAWN,
 	KNIGHT,
@@ -13,23 +14,48 @@ enum PieceType : u32 {
 	KING,
 	NO_PIECE_TYPE
 };
+ */
+class PieceType {
+public:
+	constexpr PieceType() : m_value{0} {}
+	constexpr explicit PieceType(u32 v) : m_value{v} {}
+
+	[[nodiscard]] constexpr operator u32() const { return m_value; }
+	[[nodiscard]] constexpr bool operator==(const PieceType&) const = default;
+	u32 m_value;
+};
+constexpr PieceType PAWN{0};
+constexpr PieceType KNIGHT{1};
+constexpr PieceType BISHOP{2};
+constexpr PieceType ROOK{3};
+constexpr PieceType QUEEN{4};
+constexpr PieceType KING{5};
+constexpr PieceType NO_PIECE_TYPE{6};
+
 
 constexpr i8 NPIECES = 15;
-enum Piece : u32 {
-	WHITE_PAWN,
-	WHITE_KNIGHT,
-	WHITE_BISHOP,
-	WHITE_ROOK,
-	WHITE_QUEEN,
-	WHITE_KING,
-	BLACK_PAWN = 8,
-	BLACK_KNIGHT,
-	BLACK_BISHOP,
-	BLACK_ROOK,
-	BLACK_QUEEN,
-	BLACK_KING,
-	NO_PIECE,
+class Piece {
+public:
+	constexpr Piece() : m_value{0} {}
+	constexpr explicit Piece(u32 v) : m_value{v} {}
+
+	[[nodiscard]] constexpr operator u32() const { return m_value; }
+	[[nodiscard]] constexpr bool operator==(const Piece&) const = default;
+	u32 m_value;
 };
+constexpr Piece WHITE_PAWN{0};
+constexpr Piece WHITE_KNIGHT{1};
+constexpr Piece WHITE_BISHOP{2};
+constexpr Piece WHITE_ROOK{3};
+constexpr Piece WHITE_QUEEN{4};
+constexpr Piece WHITE_KING{5};
+constexpr Piece BLACK_PAWN{8};
+constexpr Piece BLACK_KNIGHT{9};
+constexpr Piece BLACK_BISHOP{10};
+constexpr Piece BLACK_ROOK{11};
+constexpr Piece BLACK_QUEEN{12};
+constexpr Piece BLACK_KING{13};
+constexpr Piece NO_PIECE{14};
 
 template<Color color, PieceType piece_type>
 consteval Piece make_piece() {

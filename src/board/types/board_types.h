@@ -5,14 +5,18 @@ using ZobristHash = u64;
 using Bitboard = u64;
 
 constexpr i32 NCOLORS = 2;
-enum Color : i32 {
-	WHITE,
-	BLACK,
+class Color {
+public:
+	constexpr explicit Color(u32 v) : m_value{v} {}
+
+	[[nodiscard]] constexpr operator u32() const { return m_value; }
+	[[nodiscard]] constexpr bool operator==(const Color&) const = default;
+	[[nodiscard]] constexpr Color operator~() const { return Color{m_value ^ 1}; }
+	u32 m_value;
 };
 
-constexpr Color operator~(Color c) {
-	return Color(c ^ BLACK);
-}
+constexpr Color WHITE{0};
+constexpr Color BLACK{1};
 
 constexpr i32 NDIRS = 8;
 enum Direction : i32 {
