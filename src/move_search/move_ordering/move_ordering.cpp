@@ -10,12 +10,12 @@ void initialize_move_sort_tables() {
 
 int get_piece_value(PieceType piece_type) {
 	switch (piece_type) {
-		case PieceType::PAWN: return ORDERING_PAWN_VALUE;
-		case PieceType::KNIGHT: return ORDERING_KNIGHT_VALUE;
-		case PieceType::BISHOP: return ORDERING_BISHOP_VALUE;
-		case PieceType::ROOK: return ORDERING_ROOK_VALUE;
-		case PieceType::QUEEN: return ORDERING_QUEEN_VALUE;
-		case PieceType::KING: return ORDERING_KING_VALUE;
+		case PAWN: return ORDERING_PAWN_VALUE;
+		case KNIGHT: return ORDERING_KNIGHT_VALUE;
+		case BISHOP: return ORDERING_BISHOP_VALUE;
+		case ROOK: return ORDERING_ROOK_VALUE;
+		case QUEEN: return ORDERING_QUEEN_VALUE;
+		case KING: return ORDERING_KING_VALUE;
 		default: return 0;
 	}
 }
