@@ -9,7 +9,7 @@ inline int time_iterative_deepening(int time_remaining, int increment, int moves
 		double eight = 0.95 * time_remaining;
 		return static_cast<int>(std::min(scale * time_remaining, eight));
 	}
-	return (time_remaining / 10) + (increment / 2);
+	return (time_remaining / 10) + (3 * increment / 4);
 }
 
 inline int time_search(int time_remaining, int increment, int moves_to_go) {
@@ -20,5 +20,5 @@ inline int time_search(int time_remaining, int increment, int moves_to_go) {
 		int opt_time = static_cast<int>(std::min(scale * time_remaining, eight));
 		return static_cast<int>(std::min(5.0 * opt_time, eight));
 	}
-	return (time_remaining / 40) + (increment / 2);
+	return (time_remaining / 40) + (3 * increment / 4);
 }

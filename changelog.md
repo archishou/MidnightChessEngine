@@ -660,3 +660,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 7936 W: 1923 L: 1748 D: 4265
 ```
+
+### Use more increment time
+https://chess.swehosting.se/test/1487/
+```
+ELO   | 4.39 +- 3.46 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 17640 W: 4137 L: 3914 D: 9589
+```
