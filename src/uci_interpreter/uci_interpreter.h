@@ -6,6 +6,7 @@
 #include "parse_uci_move.h"
 #include "time_manager.h"
 #include "sstream"
+#include <tuple>
 #include "bench_fens.h"
 #include "../utils/fen_constants.h"
 #include "../utils/helpers.h"
@@ -66,12 +67,10 @@ inline void parse_move_time(const Color side_to_play, const std::string& move_ti
 		else if (token == "movestogo") moves_to_go = value;
 	}
 	if (side_to_play == WHITE) {
-		params.soft_time_limit = time_search(wtime, winc, moves_to_go);
-		params.hard_time_limit = time_iterative_deepening(wtime, winc, moves_to_go);
-		return;
+		std::tie(params.soft_time_limit, params.hard_time_limit) = allocate_time(wtime, winc, moves_to_go);
+	} else {
+		std::tie(params.soft_time_limit, params.hard_time_limit) = allocate_time(btime, binc, moves_to_go);
 	}
-	params.soft_time_limit = time_search(btime, binc, moves_to_go);
-	params.hard_time_limit = time_iterative_deepening(btime, binc, moves_to_go);
 }
 
 inline void uci_go(Position& board, const std::string& input_line, ReadUCIParameters& uci_parameters) {

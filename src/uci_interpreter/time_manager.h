@@ -2,23 +2,12 @@
 // Created by Archishmaan Peyyety on 2/23/23.
 //
 #pragma once
-inline int time_iterative_deepening(int time_remaining, int increment, int moves_to_go) {
-	if (moves_to_go != -1) {
-		moves_to_go = std::min(moves_to_go, 50);
-		double scale = 0.7 / moves_to_go;
-		double eight = 0.95 * time_remaining;
-		return static_cast<int>(std::min(scale * time_remaining, eight));
-	}
-	return (time_remaining / 10) + (3 * increment / 4);
-}
+#include <algorithm>
+#include <utility>
 
-inline int time_search(int time_remaining, int increment, int moves_to_go) {
-	if (moves_to_go != -1) {
-		moves_to_go = std::min(moves_to_go, 50);
-		double scale = 0.7 / moves_to_go;
-		double eight = 0.95 * time_remaining;
-		int opt_time = static_cast<int>(std::min(scale * time_remaining, eight));
-		return static_cast<int>(std::min(5.0 * opt_time, eight));
-	}
-	return (time_remaining / 40) + (3 * increment / 4);
-}
+// {Soft Limit, Hard Limit}
+using TimeBounds = std::pair<int, int>;
+
+TimeBounds allocate_time_moves_to_go(int time_remaining, int moves_to_go);
+TimeBounds allocate_time_standard(int time_remaining, int increment);
+TimeBounds allocate_time(int time_remaining, int increment, int moves_to_go);
