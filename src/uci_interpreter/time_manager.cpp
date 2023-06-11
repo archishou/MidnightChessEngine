@@ -11,10 +11,9 @@ TimeBounds allocate_time(int time_remaining, int increment, int moves_to_go) {
 }
 
 TimeBounds allocate_time_standard(int time_remaining, int increment) {
-	TimeBounds bounds{};
-	bounds.first = (time_remaining / 40) + (3 * increment / 4);
-	bounds.second = (time_remaining / 10) + (3 * increment / 4);
-	return bounds;
+	const int soft_limit = (time_remaining / 40) + (3 * increment / 4);
+	const int hard_limit = (time_remaining / 5) + (3 * increment / 4);
+	return {soft_limit, hard_limit};
 }
 
 TimeBounds allocate_time_moves_to_go(int time_remaining, int moves_to_go) {
