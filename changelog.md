@@ -677,3 +677,29 @@ ELO   | 91.34 +- 5.13 (95%)
 CONF  | 40/4.0+0.00s Threads=1 Hash=64MB
 GAMES | N: 10000 W: 4075 L: 1505 D: 4420
 ```
+
+### Use nodes spent to scale soft time bounds
+#### STC
+https://chess.swehosting.se/test/1595/
+```
+ELO   | 11.99 +- 7.03 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 4696 W: 1258 L: 1096 D: 2342
+```
+#### LTC
+https://chess.swehosting.se/test/1597/
+```
+ELO   | 16.79 +- 7.94 (95%)
+SPRT  | 40.0+0.40s Threads=1 Hash=128MB
+LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 2920 W: 651 L: 510 D: 1759
+```
+#### MTG
+https://chess.swehosting.se/test/1596/
+```
+ELO   | 30.08 +- 12.20 (95%)
+SPRT  | 40/4.0+0.00s Threads=1 Hash=64MB
+LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 1760 W: 570 L: 418 D: 772
+```

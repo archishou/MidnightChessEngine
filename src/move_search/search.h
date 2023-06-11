@@ -8,7 +8,7 @@
 #include "pvs.h"
 #include "search_constants.h"
 
-static const BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
+static BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
 		.depth = MAX_DEPTH,
 		.hard_time_limit = DEFAULT_SEARCH_TIME,
 		.soft_time_limit = DEFAULT_SEARCH_TIME,
@@ -16,14 +16,18 @@ static const BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
 };
 
 void update_best_move_results(BestMoveSearchResults& search_results, PVSData& ab_results, int sub_depth, bool debug);
+double scale_soft_time_limit(BestMoveSearchParameters &params, PVSData& ab_results, int depth);
 
 template<Color color>
-BestMoveSearchResults iterative_deepening(Position& board, const BestMoveSearchParameters& params) {
+BestMoveSearchResults iterative_deepening(Position& board, BestMoveSearchParameters& params) {
 	BestMoveSearchResults search_results;
 
 	reset_clock();
+	std::memset(data.nodes_spend, 0, sizeof(data.nodes_spend));
+	data.nodes_searched = 0;
 	for (int sub_depth = 1; sub_depth <= params.depth; sub_depth++) {
-		if (time_elapsed_exceeds(params.soft_time_limit, TimeResolution::Milliseconds)) {
+		int soft_limit = static_cast<int>(std::min(params.soft_time_limit * scale_soft_time_limit(params, data, sub_depth), static_cast<double>(params.hard_time_limit)));
+		if (time_elapsed_exceeds(soft_limit, TimeResolution::Milliseconds)) {
 			break;
 		}
 		PVSData ab_results = aspiration_windows<color>(board, search_results.value, sub_depth, params.hard_time_limit);
@@ -38,7 +42,7 @@ BestMoveSearchResults iterative_deepening(Position& board, const BestMoveSearchP
 }
 
 template<Color color>
-BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters& parameters) {
+BestMoveSearchResults best_move(Position& board, BestMoveSearchParameters& parameters) {
 	return iterative_deepening<color>(board, parameters);
 }
 
@@ -47,7 +51,7 @@ BestMoveSearchResults best_move(Position& board) {
 	return best_move<color>(board, DEFAULT_BEST_MOVE_SEARCH_PARAMS);
 }
 
-inline BestMoveSearchResults best_move(Position& board, const BestMoveSearchParameters& parameters) {
+inline BestMoveSearchResults best_move(Position& board, BestMoveSearchParameters& parameters) {
 	if (board.turn() == BLACK) return best_move<BLACK>(board, parameters);
 	return best_move<WHITE>(board, parameters);
 }
