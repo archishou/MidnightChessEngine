@@ -7,8 +7,6 @@
 PVSData data;
 
 void reset_data() {
-	data.nodes_searched = 0;
-	data.q_nodes_searched = 0;
 	data.search_completed = true;
 	data.seldepth = 0;
 	std::memset(data.pv.table, 0, sizeof(data.pv.table));

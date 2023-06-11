@@ -43,11 +43,11 @@ struct PVSData {
 	// triangular-table-table
 	PV pv{};
 	uint64_t nodes_searched{};
-	uint64_t q_nodes_searched{};
 	int seldepth{};
 
 	Move moves_made[MAX_PLY];
 	int time_limit{};
 
 	Move excluded_moves[MAX_PLY]{};
+	uint64_t nodes_spend[NSQUARES][NSQUARES]{};
 };
