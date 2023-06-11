@@ -24,8 +24,8 @@ TimeBounds allocate_time_moves_to_go(int time_remaining, int moves_to_go) {
 	int optimum = static_cast<int>(std::min(scale * time_remaining, eight));
 
 	TimeBounds bounds{};
-	bounds.first = static_cast<int>(std::min(5.0 * optimum, eight));
-	bounds.second = optimum;
+	bounds.second = static_cast<int>(std::min(5.0 * optimum, eight));
+	bounds.first = optimum;
 	return bounds;
 }
 

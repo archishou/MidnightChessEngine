@@ -669,3 +669,11 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 17640 W: 4137 L: 3914 D: 9589
 ```
+
+### Bug fix MTG Time Allocation
+https://chess.swehosting.se/test/1552/
+```
+ELO   | 91.34 +- 5.13 (95%)
+CONF  | 40/4.0+0.00s Threads=1 Hash=64MB
+GAMES | N: 10000 W: 4075 L: 1505 D: 4420
+```
