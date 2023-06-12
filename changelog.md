@@ -643,6 +643,15 @@ LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 10224 W: 2539 L: 2350 D: 5335
 ```
 
+### Better LMR Constants
+https://chess.swehosting.se/test/1020/
+```
+ELO | 4.52 +- 3.54 (95%)
+SPRT | 8.0+0.08s Threads=1 Hash=64MB
+LLR | 3.00 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 17456 W: 4234 L: 4007 D: 9215
+```
+
 ### Razoring
 https://chess.swehosting.se/test/1058/
 ```
@@ -676,6 +685,15 @@ https://chess.swehosting.se/test/1552/
 ELO   | 91.34 +- 5.13 (95%)
 CONF  | 40/4.0+0.00s Threads=1 Hash=64MB
 GAMES | N: 10000 W: 4075 L: 1505 D: 4420
+```
+
+### Smaller Divisor for hard limit
+https://chess.swehosting.se/test/1569/
+```
+ELO   | 18.78 +- 8.79 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.96 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 2704 W: 683 L: 537 D: 1484
 ```
 
 ### Use nodes spent to scale soft time bounds
