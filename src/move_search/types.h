@@ -50,4 +50,5 @@ struct PVSData {
 
 	Move excluded_moves[MAX_PLY]{};
 	uint64_t nodes_spend[NSQUARES][NSQUARES]{};
+	int evals[MAX_PLY]{};
 };
