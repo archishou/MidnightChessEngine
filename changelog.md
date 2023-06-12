@@ -721,3 +721,12 @@ SPRT  | 40/4.0+0.00s Threads=1 Hash=64MB
 LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 1760 W: 570 L: 418 D: 772
 ```
+
+### Improving heuristic for LMP
+https://chess.swehosting.se/test/1613/
+```
+ELO   | 16.36 +- 8.51 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 3.01 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 3464 W: 1019 L: 856 D: 1589
+```

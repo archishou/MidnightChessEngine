@@ -2,10 +2,22 @@
 #include "search_params.h"
 #include "search_constants.h"
 #include "../move_gen/types/move.h"
+#include <array>
 #include "tables/history_table.h"
 
-inline bool late_move_prune(bool pv_node, int move_idx, int depth) {
-	return !pv_node && depth <= LMP_MIN_DEPTH && move_idx > depth * LMP_DEPTH_MULTIPLIER;
+constexpr array<array<int32_t, 2>, MAX_DEPTH> generate_lmp_table() {
+	array<array<int32_t, 2>, MAX_DEPTH> lmp_table{};
+	for (int depth = 0; depth < MAX_DEPTH; depth++) {
+		lmp_table[depth][0] = (3 + depth * depth) / 2;
+		lmp_table[depth][1] = 3 + depth * depth;
+	}
+	return lmp_table;
+}
+
+constexpr auto lmp_table = generate_lmp_table();
+
+inline bool late_move_prune(bool pv_node, int move_idx, int depth, bool improving) {
+	return !pv_node && depth <= LMP_MIN_DEPTH && move_idx > lmp_table[depth][improving];
 }
 
 inline bool late_move_prune_quiet(bool pv_node, int move_idx, Move legal_move, int depth) {
