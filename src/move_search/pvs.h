@@ -142,6 +142,9 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		static_eval = evaluate<color>(board);
 	}
 
+	data.evals[ply] = static_eval;
+	bool improving = !in_check && ply >= 2 && static_eval >= data.evals[ply - 2];
+
 	if (!static_eval_tt.entry_found && depth >= 4)
 		depth -= 1;
 
