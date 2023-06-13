@@ -730,3 +730,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 3.01 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 3464 W: 1019 L: 856 D: 1589
 ```
+
+### Improving for LMR
+https://chess.swehosting.se/test/1626/
+```
+ELO   | 7.91 +- 5.47 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 7992 W: 2153 L: 1971 D: 3868
+```
