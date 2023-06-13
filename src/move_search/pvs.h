@@ -206,7 +206,7 @@ int pvs(Position &board, short depth, int ply, int alpha, int beta, bool do_null
 		data.moves_made[ply] = legal_move;
 		int search_depth = std::max(depth + search_extension, 0);
 
-		int reduction = lmr_reduction(pv_node, ply, in_check, move_idx, depth, legal_move);
+		int reduction = lmr_reduction(pv_node, ply, in_check, improving, move_idx, depth, legal_move);
 
 		if (pv_node && move_idx == 0) {
 			new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -beta, -alpha, false);
