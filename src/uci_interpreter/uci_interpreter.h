@@ -74,14 +74,13 @@ inline void parse_move_time(const Color side_to_play, const std::string& move_ti
 }
 
 inline void uci_go(Position& board, const std::string& input_line, ReadUCIParameters& uci_parameters) {
-	BestMoveSearchResults results;
 	BestMoveSearchParameters params = BestMoveSearchParameters {
 		.depth = MAX_DEPTH,
 		.debug_info = uci_parameters.debug_info
 	};
 	parse_move_time(board.turn(), input_line, params);
-	results = best_move(board, params);
-	std::cout << "bestmove " << results.best_move << std::endl;
+	search(board, params);
+	std::cout << "bestmove " << data.final_best_move << std::endl;
 }
 
 inline void bench() {
@@ -100,8 +99,9 @@ inline void bench() {
 				.soft_time_limit = 86'400'000,
 				.debug_info = true,
 		};
-		BestMoveSearchResults results = best_move(p, parameters);
-		total_nodes += results.nodes_searched;
+		search(p, parameters);
+		std::cout << "bestmove " << data.final_best_move << std::endl;
+		total_nodes += data.nodes_searched;
 	}
 	auto end = std::chrono::steady_clock::now();
 	auto total_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();

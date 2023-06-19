@@ -8,20 +8,11 @@
 #include "pvs.h"
 #include "search_constants.h"
 
-static BestMoveSearchParameters DEFAULT_BEST_MOVE_SEARCH_PARAMS = {
-		.depth = MAX_DEPTH,
-		.hard_time_limit = DEFAULT_SEARCH_TIME,
-		.soft_time_limit = DEFAULT_SEARCH_TIME,
-		.debug_info = true
-};
-
-void update_best_move_results(BestMoveSearchResults& search_results, PVSData& ab_results, int sub_depth, bool debug);
+void update_best_move_results(int sub_depth, bool debug);
 double scale_soft_time_limit(BestMoveSearchParameters &params, PVSData& ab_results, int depth);
 
 template<Color color>
-BestMoveSearchResults iterative_deepening(Position& board, BestMoveSearchParameters& params) {
-	BestMoveSearchResults search_results;
-
+void iterative_deepening(Position& board, BestMoveSearchParameters& params) {
 	reset_clock();
 	std::memset(data.nodes_spend, 0, sizeof(data.nodes_spend));
 	data.nodes_searched = 0;
@@ -30,32 +21,14 @@ BestMoveSearchResults iterative_deepening(Position& board, BestMoveSearchParamet
 		if (time_elapsed_exceeds(soft_limit, TimeResolution::Milliseconds)) {
 			break;
 		}
-		PVSData ab_results = aspiration_windows<color>(board, search_results.value, sub_depth, params.hard_time_limit);
-		if (ab_results.search_completed) {
-			update_best_move_results(search_results, ab_results, sub_depth, params.debug_info);
+		aspiration_windows<color>(board, data.value, sub_depth, params.hard_time_limit);
+		if (data.search_completed) {
+			update_best_move_results(sub_depth, params.debug_info);
 		}
 	}
-
-	search_results.time_searched = get_elapsed_time(TimeResolution::Seconds);
-
-	return search_results;
 }
 
-template<Color color>
-BestMoveSearchResults best_move(Position& board, BestMoveSearchParameters& parameters) {
-	return iterative_deepening<color>(board, parameters);
-}
-
-template<Color color>
-BestMoveSearchResults best_move(Position& board) {
-	return best_move<color>(board, DEFAULT_BEST_MOVE_SEARCH_PARAMS);
-}
-
-inline BestMoveSearchResults best_move(Position& board, BestMoveSearchParameters& parameters) {
-	if (board.turn() == BLACK) return best_move<BLACK>(board, parameters);
-	return best_move<WHITE>(board, parameters);
-}
-
-inline BestMoveSearchResults best_move(Position& board) {
-	return best_move(board, DEFAULT_BEST_MOVE_SEARCH_PARAMS);
+inline void search(Position& board, BestMoveSearchParameters& parameters) {
+	if (board.turn() == BLACK) iterative_deepening<BLACK>(board, parameters);
+	else iterative_deepening<WHITE>(board, parameters);
 }
