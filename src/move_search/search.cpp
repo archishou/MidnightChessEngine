@@ -10,7 +10,7 @@ void update_best_move_results(BestMoveSearchResults& search_results, PVSData& ab
 	search_results.value = ab_results.value;
 	search_results.best_move = ab_results.best_move;
 	search_results.depth_searched = sub_depth;
-	search_results.nodes_searched += ab_results.nodes_searched;
+	search_results.nodes_searched = ab_results.nodes_searched;
 	search_results.seldepth = ab_results.seldepth;
 	search_results.time_searched = get_elapsed_time(TimeResolution::Milliseconds);
 	for (int i = 0; i < ab_results.pv.length[0]; i++) {
