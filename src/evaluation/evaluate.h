@@ -2,7 +2,7 @@
 #include "types.h"
 #include "../board/position.h"
 #include "../board/types/bitboard.h"
-#include "constants/misc.h"
+#include "constants/constants.h"
 #include "pieces/pawn.h"
 #include "pieces/knight.h"
 #include "pieces/bishop.h"

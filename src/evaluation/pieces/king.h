@@ -2,8 +2,7 @@
 
 #include "../bitboards.h"
 #include "../../board/position.h"
-#include "../constants/misc.h"
-#include "../constants/psts.h"
+#include "../constants/constants.h"
 
 constexpr int NKING_SIDES = 2;
 
