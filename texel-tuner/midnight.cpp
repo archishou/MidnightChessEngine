@@ -2,31 +2,13 @@
 // Created by Archishmaan Peyyety on 3/2/23.
 //
 
-#include "string"
-#include "sstream"
-#include "iostream"
-#include "cmath"
-#include "midnight.h"
-#include "../src/board/position.h"
-#include "../src/evaluation/evaluate.h"
+#include "helper.h"
+#include <fstream>
 
 constexpr int NEVAL_PTYPES = NPIECE_TYPES - 1;
 
-void add_param(parameters_t& params, const Score score) {
-	pair_t pair = { (double) mg_score(score), (double) eg_score(score) };
-	params.push_back(pair);
-}
-
-void add_params(parameters_t& params, const Score scores[], int size) {
-	for (int i = 0; i < size; i++) {
-		add_param(params, scores[i]);
-	}
-}
-
 parameters_t Midnight::MidnightEval::get_initial_parameters() {
 	parameters_t parameters;
-
-	add_params(parameters, PIECE_VALUES, NEVAL_PTYPES);
 
 	add_params(parameters, PAWN_TABLE, NSQUARES);
 	add_params(parameters, KNIGHT_TABLE, NSQUARES);
@@ -36,6 +18,8 @@ parameters_t Midnight::MidnightEval::get_initial_parameters() {
 	add_params(parameters, KING_TABLE, NSQUARES);
 	add_params(parameters, PASSED_PAWN_BONUS, NSQUARES);
 	add_params(parameters, BLOCKED_PASSED_PAWN_PENALTY, NSQUARES);
+
+	add_params(parameters, PIECE_VALUES, NEVAL_PTYPES);
 
 	add_params(parameters, OPEN_FILE_BONUS, NEVAL_PTYPES);
 	add_params(parameters, SEMI_OPEN_FILE_BONUS, NEVAL_PTYPES);
@@ -77,8 +61,6 @@ EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	else trace = evaluate<WHITE, EnableTrace>(p);
 
 	coefficients_t coefficients;
-	get_coefficient_array(coefficients, trace.material, NEVAL_PTYPES);
-
 	get_coefficient_array(coefficients, trace.pawn_pst, NSQUARES);
 	get_coefficient_array(coefficients, trace.knight_pst, NSQUARES);
 	get_coefficient_array(coefficients, trace.bishop_pst, NSQUARES);
@@ -87,6 +69,8 @@ EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	get_coefficient_array(coefficients, trace.king_pst, NSQUARES);
 	get_coefficient_array(coefficients, trace.passed_pawns, NSQUARES);
 	get_coefficient_array(coefficients, trace.blocked_passed_pawns, NSQUARES);
+
+	get_coefficient_array(coefficients, trace.material, NEVAL_PTYPES);
 
 	get_coefficient_array(coefficients, trace.open_files, NEVAL_PTYPES);
 	get_coefficient_array(coefficients, trace.semi_open_files, NEVAL_PTYPES);
@@ -117,144 +101,63 @@ EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	get_coefficient_array(coefficients, trace.candidate_pawns, NRANKS);
 
 	get_coefficient_single(coefficients, trace.tempo);
+
 	EvalResult result;
 	result.score = trace.score;
 	result.coefficients = coefficients;
 	return result;
 }
 
-static int32_t round_value(tune_t value) {
-	return static_cast<int32_t>(round(value));
-}
-
-static void print_parameter(std::stringstream& ss, const pair_t parameter) {
-	const auto mg = round(parameter[static_cast<int32_t>(PhaseStages::Midgame)]);
-	const auto eg = round(parameter[static_cast<int32_t>(PhaseStages::Endgame)]);
-	ss << "S(" << mg << ", " << eg << ")";
-}
-
-static void print_parameter(std::stringstream& ss, const tune_t parameter) {
-	ss << round_value(std::round(parameter));
-}
-
-static void print_single(std::stringstream& ss, const parameters_t& parameters, int& index, const std::string& name) {
-	ss << "constexpr Score " << name << " = ";
-	print_parameter(ss, parameters[index]);
-	index++;
-
-	ss << ";" << std::endl;
-}
-
-static void print_array(std::stringstream& ss, const parameters_t& parameters, int& index, const std::string& name, int count) {
-	ss << "constexpr Score " << name << "[] = {";
-	for (auto i = 0; i < count; i++)
-	{
-		if (i % 8 == 0) ss << "\n\t";
-		print_parameter(ss, parameters[index]);
-		index++;
-
-		if (i != count - 1)
-		{
-			ss << ",\t";
-		}
-	}
-	ss << "\n};" << std::endl;
-}
-
-static void print_threats(std::stringstream& ss, const parameters_t& parameters, int& index, const std::string& name, int count) {
-	ss << "constexpr Score " << name << "[] = {";
-	for (auto i = 0; i < count; i++)
-	{
-		if (i % 6 == 0) ss << "\n\t";
-		print_parameter(ss, parameters[index]);
-		index++;
-
-		if (i != count - 1)
-		{
-			ss << ",\t";
-		}
-	}
-	ss << "\n};" << std::endl;
-}
-
-static void print_pst(std::stringstream& ss, const parameters_t& parameters, int& index, const std::string& name, int count) {
-	ss << "constexpr Score " << name << "[] = {\n";
-	for (auto row = 0; row < 8; row++) {
-		for (auto j = 0; j < 8; j++) {
-			auto i = (row * 8) + j;
-			if (j == 0) ss << "\t";
-			const auto mg = round(parameters[index][static_cast<int32_t>(PhaseStages::Midgame)]);
-			const auto eg = round(parameters[index][static_cast<int32_t>(PhaseStages::Endgame)]);
-			ss << "S(" << mg << ", " << eg << ")";
-			index++;
-
-			if (i != 64 - 1) {
-				ss << ",";
-			}
-			if (j != 7) {
-				ss << "\t";
-			}
-		}
-		if (row != 7) ss << "\n";
-	}
-	ss << "\n};" << std::endl;
-}
-
-static void print_max_material(std::stringstream& ss, const parameters_t& parameters) {
-	ss << "const int max_material[] = {";
-	for (auto i = 0; i < 6; i++)
-	{
-		const auto mg = parameters[i][static_cast<int>(PhaseStages::Midgame)];
-		const auto eg = parameters[i][static_cast<int>(PhaseStages::Endgame)];
-		const auto max_material = round_value(std::max(mg, eg));
-		ss << max_material << ", ";
-	}
-	ss << "0};" << std::endl;
-}
-
 void Midnight::MidnightEval::print_parameters(const parameters_t &parameters) {
-	parameters_t parameters_copy = parameters;
-
 	int index = 0;
-	std::stringstream ss;
-	print_array(ss, parameters_copy, index, "PIECE_VALUES", NEVAL_PTYPES);
-	print_pst(ss, parameters_copy, index, "PAWN_TABLE", NSQUARES);
-	print_pst(ss, parameters_copy, index, "KNIGHT_TABLE", NSQUARES);
-	print_pst(ss, parameters_copy, index, "BISHOP_TABLE", NSQUARES);
-	print_pst(ss, parameters_copy, index, "ROOK_TABLE", NSQUARES);
-	print_pst(ss, parameters_copy, index, "QUEEN_TABLE", NSQUARES);
-	print_pst(ss, parameters_copy, index, "KING_TABLE", NSQUARES);
-	print_pst(ss, parameters_copy, index, "PASSED_PAWN_BONUS", NSQUARES);
-	print_pst(ss, parameters_copy, index, "BLOCKED_PASSED_PAWN_PENALTY", NSQUARES);
+	std::stringstream psts_ss, misc_ss;
+	print_constant_header(psts_ss);
+	print_constant_header(misc_ss);
 
-	print_array(ss, parameters_copy, index, "OPEN_FILE_BONUS", NEVAL_PTYPES);
-	print_array(ss, parameters_copy, index, "SEMI_OPEN_FILE_BONUS", NEVAL_PTYPES);
-	print_array(ss, parameters_copy, index, "PAWN_PROTECTION", NEVAL_PTYPES);
-	print_array(ss, parameters_copy, index, "ATTACKED_BY_PAWN", NEVAL_PTYPES);
-	print_threats(ss, parameters_copy, index, "THREATS", NEVAL_PTYPES * NEVAL_PTYPES);
-	print_array(ss, parameters_copy, index, "KING_RING_ATTACK_BONUS", NEVAL_PTYPES);
-	print_array(ss, parameters_copy, index, "CHECK_BONUS", NEVAL_PTYPES);
-	print_array(ss, parameters_copy, index, "CENTER_CONTROL", NEVAL_PTYPES);
-	print_array(ss, parameters_copy, index, "KING_PAWN_SHIELD", 2);
-	print_single(ss, parameters_copy, index, "ISOLATED_PAWN_PENALTY");
-	print_single(ss, parameters_copy, index, "DOUBLED_PAWN_PENALTY");
-	print_single(ss, parameters_copy, index, "BISHOP_PAIR_BONUS");
+	print_pst(psts_ss, parameters, index, "PAWN_TABLE", NSQUARES);
+	print_pst(psts_ss, parameters, index, "KNIGHT_TABLE", NSQUARES);
+	print_pst(psts_ss, parameters, index, "BISHOP_TABLE", NSQUARES);
+	print_pst(psts_ss, parameters, index, "ROOK_TABLE", NSQUARES);
+	print_pst(psts_ss, parameters, index, "QUEEN_TABLE", NSQUARES);
+	print_pst(psts_ss, parameters, index, "KING_TABLE", NSQUARES);
+	print_pst(psts_ss, parameters, index, "PASSED_PAWN_BONUS", NSQUARES);
+	print_pst(psts_ss, parameters, index, "BLOCKED_PASSED_PAWN_PENALTY", NSQUARES);
 
-	print_array(ss, parameters_copy, index, "KNIGHT_MOBILITY", 9);
-	print_array(ss, parameters_copy, index, "BISHOP_MOBILITY", 14);
-	print_array(ss, parameters_copy, index, "ROOK_MOBILITY", 15);
-	print_array(ss, parameters_copy, index, "QUEEN_MOBILITY", 28);
+	print_array(misc_ss, parameters, index, "PIECE_VALUES", NEVAL_PTYPES);
 
-	print_array(ss, parameters_copy, index, "KNIGHT_FORWARD_MOBILITY", 9);
-	print_array(ss, parameters_copy, index, "BISHOP_FORWARD_MOBILITY", 14);
-	print_array(ss, parameters_copy, index, "ROOK_FORWARD_MOBILITY", 15);
-	print_array(ss, parameters_copy, index, "QUEEN_FORWARD_MOBILITY", 28);
+	print_array(misc_ss, parameters, index, "OPEN_FILE_BONUS", NEVAL_PTYPES);
+	print_array(misc_ss, parameters, index, "SEMI_OPEN_FILE_BONUS", NEVAL_PTYPES);
+	print_array(misc_ss, parameters, index, "PAWN_PROTECTION", NEVAL_PTYPES);
+	print_array(misc_ss, parameters, index, "ATTACKED_BY_PAWN", NEVAL_PTYPES);
+	print_threats(misc_ss, parameters, index, "THREATS", NEVAL_PTYPES * NEVAL_PTYPES);
+	print_array(misc_ss, parameters, index, "KING_RING_ATTACK_BONUS", NEVAL_PTYPES);
+	print_array(misc_ss, parameters, index, "CHECK_BONUS", NEVAL_PTYPES);
+	print_array(misc_ss, parameters, index, "CENTER_CONTROL", NEVAL_PTYPES);
+	print_array(misc_ss, parameters, index, "KING_PAWN_SHIELD", 2);
+	print_single(misc_ss, parameters, index, "ISOLATED_PAWN_PENALTY");
+	print_single(misc_ss, parameters, index, "DOUBLED_PAWN_PENALTY");
+	print_single(misc_ss, parameters, index, "BISHOP_PAIR_BONUS");
 
-	print_array(ss, parameters_copy, index, "KING_LINE_SAFETY", 28);
+	print_array(misc_ss, parameters, index, "KNIGHT_MOBILITY", 9);
+	print_array(misc_ss, parameters, index, "BISHOP_MOBILITY", 14);
+	print_array(misc_ss, parameters, index, "ROOK_MOBILITY", 15);
+	print_array(misc_ss, parameters, index, "QUEEN_MOBILITY", 28);
 
-	print_array(ss, parameters_copy, index, "PHALANX_PAWN", NRANKS);
-	print_array(ss, parameters_copy, index, "CANDIDATE_PASSED_PAWN", NRANKS);
+	print_array(misc_ss, parameters, index, "KNIGHT_FORWARD_MOBILITY", 9);
+	print_array(misc_ss, parameters, index, "BISHOP_FORWARD_MOBILITY", 14);
+	print_array(misc_ss, parameters, index, "ROOK_FORWARD_MOBILITY", 15);
+	print_array(misc_ss, parameters, index, "QUEEN_FORWARD_MOBILITY", 28);
 
-	print_single(ss, parameters_copy, index, "TEMPO");
-	std::cout << ss.str() << "\n";
+	print_array(misc_ss, parameters, index, "KING_LINE_SAFETY", 28);
+
+	print_array(misc_ss, parameters, index, "PHALANX_PAWN", NRANKS);
+	print_array(misc_ss, parameters, index, "CANDIDATE_PASSED_PAWN", NRANKS);
+
+	print_single(misc_ss, parameters, index, "TEMPO");
+
+	std::ofstream psts("/Users/archishmaan/Documents/CodeProjects/chess-engine/src/evaluation/constants/psts.h", std::ofstream::trunc);
+	std::ofstream misc("/Users/archishmaan/Documents/CodeProjects/chess-engine/src/evaluation/constants/misc.h", std::ofstream::trunc);
+
+	psts << psts_ss.str() << "\n";
+	misc << misc_ss.str() << "\n";
 }

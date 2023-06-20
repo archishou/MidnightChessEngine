@@ -1,6 +1,4 @@
-#ifndef THREADPOOL_H
-#define THREADPOOL_H 1
-
+#pragma once
 #include <condition_variable>
 #include <functional>
 #include <mutex>
@@ -28,4 +26,3 @@ private:
     void thread_loop();
 };
 
-#endif // !THREADPOOL_H
