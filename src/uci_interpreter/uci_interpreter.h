@@ -10,7 +10,8 @@
 #include "bench_fens.h"
 #include "../utils/fen_constants.h"
 #include "../utils/helpers.h"
-#include "../move_search/search.h"
+#include "../move_search/types.h"
+#include "../move_search/pvs.h"
 
 struct ReadUCIParameters {
 	bool debug_info = true;
