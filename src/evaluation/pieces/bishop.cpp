@@ -24,6 +24,7 @@ Score evaluate_bishops(const Position &board, Trace &trace) {
 
 	while (bishops) {
 		Square bishop_square = pop_lsb(bishops);
+		Rank rank = rank_of(bishop_square);
 
 		score += PIECE_VALUES[BISHOP];
 		if constexpr (do_trace) trace.material[BISHOP][color] += 1;
@@ -35,9 +36,13 @@ Score evaluate_bishops(const Position &board, Trace &trace) {
 
 		Bitboard pseudo_legal_moves = tables::attacks<BISHOP>(bishop_square, them_pieces | us_pieces) & ~us_pieces;
 		Bitboard mobility_squares = tables::attacks<BISHOP>(bishop_square, them_pieces | xray_occupancy) & ~(xray_occupancy | them_pawn_attacks);
+		Bitboard forward_mobility = mobility_squares & forward_rank_table[rank][color];
 
 		score += BISHOP_MOBILITY[pop_count(mobility_squares)];
 		if constexpr (do_trace) trace.bishop_mobility[pop_count(mobility_squares)][color] += 1;
+
+		score += BISHOP_FORWARD_MOBILITY[pop_count(forward_mobility)];
+		if constexpr (do_trace) trace.bishop_forward_mobility[pop_count(forward_mobility)][color] += 1;
 
 		const Bitboard supporting_pawns = all_pawns & tables::attacks<PAWN, ~color>(bishop_square);
 		score += PAWN_PROTECTION[BISHOP] * pop_count(supporting_pawns);

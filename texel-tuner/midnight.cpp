@@ -49,10 +49,17 @@ parameters_t Midnight::MidnightEval::get_initial_parameters() {
 	add_param(parameters, ISOLATED_PAWN_PENALTY);
 	add_param(parameters, DOUBLED_PAWN_PENALTY);
 	add_param(parameters, BISHOP_PAIR_BONUS);
+
 	add_params(parameters, KNIGHT_MOBILITY, 9);
 	add_params(parameters, BISHOP_MOBILITY, 14);
 	add_params(parameters, ROOK_MOBILITY, 15);
 	add_params(parameters, QUEEN_MOBILITY, 28);
+
+	add_params(parameters, KNIGHT_FORWARD_MOBILITY, 9);
+	add_params(parameters, BISHOP_FORWARD_MOBILITY, 14);
+	add_params(parameters, ROOK_FORWARD_MOBILITY, 15);
+	add_params(parameters, QUEEN_FORWARD_MOBILITY, 28);
+
 	add_params(parameters, KING_LINE_SAFETY, 28);
 
 	add_params(parameters, PHALANX_PAWN, NRANKS);
@@ -98,6 +105,12 @@ EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 	get_coefficient_array(coefficients, trace.bishop_mobility, 14);
 	get_coefficient_array(coefficients, trace.rook_mobility, 15);
 	get_coefficient_array(coefficients, trace.queen_mobility, 28);
+
+	get_coefficient_array(coefficients, trace.knight_forward_mobility, 9);
+	get_coefficient_array(coefficients, trace.bishop_forward_mobility, 14);
+	get_coefficient_array(coefficients, trace.rook_forward_mobility, 15);
+	get_coefficient_array(coefficients, trace.queen_forward_mobility, 28);
+
 	get_coefficient_array(coefficients, trace.king_safe_line, 28);
 
 	get_coefficient_array(coefficients, trace.pawn_phalanx, NRANKS);
@@ -231,6 +244,12 @@ void Midnight::MidnightEval::print_parameters(const parameters_t &parameters) {
 	print_array(ss, parameters_copy, index, "BISHOP_MOBILITY", 14);
 	print_array(ss, parameters_copy, index, "ROOK_MOBILITY", 15);
 	print_array(ss, parameters_copy, index, "QUEEN_MOBILITY", 28);
+
+	print_array(ss, parameters_copy, index, "KNIGHT_FORWARD_MOBILITY", 9);
+	print_array(ss, parameters_copy, index, "BISHOP_FORWARD_MOBILITY", 14);
+	print_array(ss, parameters_copy, index, "ROOK_FORWARD_MOBILITY", 15);
+	print_array(ss, parameters_copy, index, "QUEEN_FORWARD_MOBILITY", 28);
+
 	print_array(ss, parameters_copy, index, "KING_LINE_SAFETY", 28);
 
 	print_array(ss, parameters_copy, index, "PHALANX_PAWN", NRANKS);

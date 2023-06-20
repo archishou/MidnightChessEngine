@@ -23,6 +23,7 @@ Score evaluate_queens(const Position& board, Trace& trace) {
 
 	while (queens) {
 		Square queen_square = pop_lsb(queens);
+		Rank rank = rank_of(queen_square);
 		const Bitboard queen_square_bb = square_to_bitboard(queen_square);
 
 		score += PIECE_VALUES[QUEEN];
@@ -33,9 +34,13 @@ Score evaluate_queens(const Position& board, Trace& trace) {
 
 		Bitboard pseudo_legal_moves = tables::attacks<QUEEN>(queen_square, them_pieces | us_pieces) & ~us_pieces;
 		Bitboard mobility_squares = tables::attacks<QUEEN>(queen_square, them_pieces | xray_occupancy) & ~(xray_occupancy | them_pawn_attacks);
+		Bitboard forward_mobility = mobility_squares & forward_rank_table[rank][color];
 
 		score += QUEEN_MOBILITY[pop_count(mobility_squares)];
 		if constexpr (do_trace) trace.queen_mobility[pop_count(mobility_squares)][color] += 1;
+
+		score += QUEEN_FORWARD_MOBILITY[pop_count(forward_mobility)];
+		if constexpr (do_trace) trace.queen_forward_mobility[pop_count(forward_mobility)][color] += 1;
 
 		const bool on_open_file = queen_square_bb & board_open_files;
 		const bool on_semi_open_file = queen_square_bb & board_semi_open_files;

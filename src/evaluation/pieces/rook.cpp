@@ -20,6 +20,7 @@ Score evaluate_rooks(const Position& board, Trace& trace) {
 	const Bitboard xray_occupancy = us_pieces ^ rooks ^ board.occupancy<color, QUEEN>();
 	while (rooks) {
 		Square rook_square = pop_lsb(rooks);
+		Rank rank = rank_of(rook_square);
 		const Bitboard rook_square_bb = square_to_bitboard(rook_square);
 
 		score += PIECE_VALUES[ROOK];
@@ -30,9 +31,13 @@ Score evaluate_rooks(const Position& board, Trace& trace) {
 
 		Bitboard pseudo_legal_moves = tables::attacks<ROOK>(rook_square, them_pieces | us_pieces) & ~us_pieces;
 		Bitboard mobility_squares = tables::attacks<ROOK>(rook_square, them_pieces | xray_occupancy) & ~(xray_occupancy | them_pawn_attacks);
+		Bitboard forward_mobility = mobility_squares & forward_rank_table[rank][color];
 
 		score += ROOK_MOBILITY[pop_count(mobility_squares)];
 		if constexpr (do_trace) trace.rook_mobility[pop_count(mobility_squares)][color] += 1;
+
+		score += ROOK_FORWARD_MOBILITY[pop_count(forward_mobility)];
+		if constexpr (do_trace) trace.rook_forward_mobility[pop_count(forward_mobility)][color] += 1;
 
 		const bool on_open_file = rook_square_bb & board_open_files;
 		const bool on_semi_open_file = rook_square_bb & board_semi_open_files;
