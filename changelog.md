@@ -739,3 +739,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.95 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 7992 W: 2153 L: 1971 D: 3868
 ```
+
+### Forward Mobility Evaluation
+https://chess.swehosting.se/test/1802/
+```
+ELO   | 10.15 +- 6.15 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=64MB
+LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 5480 W: 1305 L: 1145 D: 3030
+```

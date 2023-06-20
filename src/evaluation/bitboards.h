@@ -18,6 +18,18 @@ constexpr Bitboard fill(Bitboard b) {
 	}
 }
 
+constexpr array<array<Bitboard, 2>, NRANKS> generate_forward_rank_table() {
+	array<array<Bitboard, 2>, NRANKS> forward_rank_table{};
+	for (auto rank = RANK1; rank < NRANKS; rank++) {
+		auto rank_mask = MASK_RANK[rank];
+		forward_rank_table[rank][WHITE] = fill<NORTH>(rank_mask) ^ rank_mask;
+		forward_rank_table[rank][BLACK] = fill<SOUTH>(rank_mask) ^ rank_mask;
+	}
+	return forward_rank_table;
+}
+
+constexpr auto forward_rank_table = generate_forward_rank_table();
+
 template<Color C>
 constexpr Bitboard forward_files(const Bitboard b) {
 	if constexpr (C == WHITE) return fill<NORTH>(b);
