@@ -16,7 +16,7 @@ consteval Score S(int mg, int eg) {
 }
 
 inline int eg_value(Score s) {
-	const uint16_t eg = static_cast<uint16_t>(static_cast<uint32_t>(s + 0x8000) >> 16);
+	auto eg = static_cast<uint16_t>(static_cast<uint32_t>(s + 0x8000) >> 16);
 
 	int16_t v;
 	std::memcpy(&v, &eg, sizeof(eg));
@@ -25,7 +25,7 @@ inline int eg_value(Score s) {
 }
 
 inline int mg_value(Score s) {
-	const uint16_t mg = static_cast<uint16_t>(s);
+	auto mg = static_cast<uint16_t>(s);
 
 	int16_t v;
 	std::memcpy(&v, &mg, sizeof(mg));

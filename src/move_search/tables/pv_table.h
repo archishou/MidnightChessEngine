@@ -4,11 +4,11 @@
 #pragma once
 #include "../search_constants.h"
 
-typedef Move PVTable[MAX_DEPTH][MAX_DEPTH];
+using PVTable = array<array<Move, MAX_DEPTH>, MAX_DEPTH>;
 
 struct PV {
-	int length[MAX_DEPTH];
-	PVTable table;
+	array<i32, MAX_DEPTH> length{};
+	PVTable table{};
 };
 
 inline void init_pv(PV& pv, i32 ply) {

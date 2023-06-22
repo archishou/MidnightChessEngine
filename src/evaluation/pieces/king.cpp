@@ -17,7 +17,7 @@ Score evaluate_king(const Position& board, Trace& trace) {
 	const int king_side = file >> 2;
 
 	const Bitboard king_bb = square_to_bitboard(king_square);
-	score += read_psqt<color, KING>(king_square);
+	score += read_pst<color, KING>(king_square);
 	if constexpr (do_trace) {
 		trace.king_pst[color == WHITE ? flip(king_square) : king_square][color] += 1;
 	}

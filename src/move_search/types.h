@@ -31,10 +31,10 @@ struct PVSData {
 	u64 nodes_searched{};
 	i32 seldepth{};
 
-	Move moves_made[MAX_PLY];
+	array<Move, MAX_PLY> moves_made{};
 	i32 time_limit{};
 
-	Move excluded_moves[MAX_PLY]{};
-	u64 nodes_spend[NSQUARES][NSQUARES]{};
-	i32 evals[MAX_PLY]{};
+	array<Move, MAX_PLY> excluded_moves{};
+	array<array<u64, NSQUARES>, NSQUARES> nodes_spend{};
+	array<i32, MAX_PLY> evals{};
 };

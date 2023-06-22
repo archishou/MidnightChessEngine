@@ -6,4 +6,4 @@
 #include "../types.h"
 #include "vector"
 
-std::vector<std::string> split(const string& s, const string& delimiter);
+std::vector<std::string> split(const string& s, const string& delimiter = " ");

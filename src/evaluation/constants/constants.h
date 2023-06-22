@@ -13,7 +13,7 @@ Score read_threat_bonus() {
 }
 
 template<Color color, PieceType piece_type>
-constexpr Score read_psqt(Square square) {
+constexpr Score read_pst(Square square) {
 	if constexpr (color == WHITE) square = flip(square);
 	switch (piece_type) {
 		case PAWN: return PAWN_TABLE[square];

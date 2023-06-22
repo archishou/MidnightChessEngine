@@ -3,10 +3,10 @@
 //
 #include "history_table.h"
 
-int history[NCOLORS][NSQUARES][NSQUARES];
-int continuation_history[NPIECES][NSQUARES][NPIECES][NSQUARES];
-int capture_history[NPIECES][NSQUARES][NPIECES];
-Move killers[MAX_PLY][NKILLERS];
+array<array<array<i32, NSQUARES>, NSQUARES>, NCOLORS> history;
+array<array<array<array<i32, NSQUARES>, NPIECES>, NSQUARES>, NPIECES> continuation_history;
+array<array<array<i32, NPIECES>, NSQUARES>, NPIECES> capture_history;
+array<array<Move, NKILLERS>, MAX_PLY> killers;
 
 void init_history() {
 	for (int i = 0; i < NSQUARES; i++) {

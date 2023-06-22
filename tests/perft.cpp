@@ -78,7 +78,7 @@ TEST_CASE("perft-all-bulk") {
 			std::string expected = split_perft[i];
 
 			i32 depth = static_cast<i32>(i);
-			i32 expected_node_count = std::stoi(split(expected, " ")[2]);
+			i32 expected_node_count = std::stoi(split(expected)[2]);
 
 			CHECK_EQ(test_perft_node_count(fen, depth), expected_node_count);
 

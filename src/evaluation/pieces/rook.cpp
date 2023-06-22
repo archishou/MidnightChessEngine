@@ -26,7 +26,7 @@ Score evaluate_rooks(const Position& board, Trace& trace) {
 		score += PIECE_VALUES[ROOK];
 		if constexpr (do_trace) trace.material[ROOK][color] += 1;
 
-		score += read_psqt<color, ROOK>(rook_square);
+		score += read_pst<color, ROOK>(rook_square);
 		if constexpr (do_trace) trace.rook_pst[color == WHITE ? flip(rook_square) : rook_square][color] += 1;
 
 		Bitboard pseudo_legal_moves = tables::attacks<ROOK>(rook_square, them_pieces | us_pieces) & ~us_pieces;

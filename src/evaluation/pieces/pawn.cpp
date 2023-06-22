@@ -33,7 +33,7 @@ Score evaluate_pawn_structure(const Position& board, Trace& trace) {
 		score += PIECE_VALUES[PAWN];
 		if constexpr (do_trace) trace.material[PAWN][color] += 1;
 
-		score += read_psqt<color, PAWN>(pawn_square);
+		score += read_pst<color, PAWN>(pawn_square);
 		if constexpr (do_trace) trace.pawn_pst[color == WHITE ? flip(pawn_square) : pawn_square][color] += 1;
 
 		const Bitboard supporting_pawns = all_pawns & tables::attacks<PAWN, ~color>(pawn_square);

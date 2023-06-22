@@ -6,13 +6,15 @@
 
 PVSData data;
 
+using enum TTNodeType;
+
 void reset_data() {
 	data.search_completed = true;
 	data.seldepth = 0;
-	std::memset(data.pv.table, 0, sizeof(data.pv.table));
-	std::memset(data.pv.length, 0, sizeof(data.pv.length));
-	std::memset(data.moves_made, 0, sizeof(data.moves_made));
-	std::memset(data.excluded_moves, 0, sizeof(data.excluded_moves));
+	data.pv.table.fill({});
+	data.pv.length.fill(0);
+	std::fill(data.moves_made.begin(), data.moves_made.end(), EMPTY_MOVE);
+	std::fill(data.excluded_moves.begin(), data.excluded_moves.end(), EMPTY_MOVE);
 	data.time_limit = 0;
 }
 
@@ -53,11 +55,11 @@ i32 q_search(Position &board, i32 ply, i32 alpha, i32 beta) {
 
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
-	if (data.nodes_searched % 1024 == 0) {
-		if (time_elapsed_exceeds(data.time_limit, TimeResolution::Milliseconds)) {
-			data.search_completed = false;
-			return 0;
-		}
+	if (data.nodes_searched % 1024 == 0 &&
+		time_elapsed_exceeds(data.time_limit, TimeResolution::Milliseconds)) {
+
+		data.search_completed = false;
+		return 0;
 	}
 
 	data.seldepth = std::max(data.seldepth, ply);
@@ -75,9 +77,9 @@ i32 q_search(Position &board, i32 ply, i32 alpha, i32 beta) {
 		}
 	}
 
-	Move best_move = Move();
-	MoveList<color, CAPTURES> capture_moves(board);
-	ScoredMoves scored_moves = order_moves<color, CAPTURES>(capture_moves, board, ply, data);
+	auto best_move = EMPTY_MOVE;
+	MoveList<color, MoveGenerationType::CAPTURES> capture_moves(board);
+	ScoredMoves scored_moves = order_moves<color, MoveGenerationType::CAPTURES>(capture_moves, board, ply, data);
 	i32 futility = stand_pat + Q_SEARCH_FUTILITY_MARGIN;
 	for (i32 move_idx = 0; move_idx < static_cast<i32>(scored_moves.size()); move_idx++) {
 		const Move legal_move = select_move(scored_moves, move_idx);
@@ -89,7 +91,7 @@ i32 q_search(Position &board, i32 ply, i32 alpha, i32 beta) {
 
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
-		const i32 score = -q_search<~color>(board, ply + 1, -beta, -alpha);
+		const auto score = -q_search<~color>(board, ply + 1, -beta, -alpha);
 		board.undo<color>(legal_move);
 
 		if (score >= beta) {
@@ -102,7 +104,7 @@ i32 q_search(Position &board, i32 ply, i32 alpha, i32 beta) {
 			alpha = score;
 		}
 	}
-	TranspositionTableEntryNodeType node_type;
+	TTNodeType node_type{};
 	if (alpha >= beta) node_type = LOWER_NODE;
 	else node_type = UPPER_NODE;
 	t_table.put(board.hash(), QSEARCH_TT_DEPTH, alpha, ply, best_move, QSEARCH_TT_PV_NODE, node_type);
@@ -116,11 +118,11 @@ i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) 
 
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
-	if (data.nodes_searched % 1024 == 0) {
-		if (time_elapsed_exceeds(data.time_limit, TimeResolution::Milliseconds)) {
-			data.search_completed = false;
-			return 0;
-		}
+	if (data.nodes_searched % 1024 == 0 &&
+		time_elapsed_exceeds(data.time_limit, TimeResolution::Milliseconds)) {
+
+		data.search_completed = false;
+		return 0;
 	}
 
 	init_pv(data.pv, ply);
@@ -197,13 +199,13 @@ i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) 
 		if (null_eval >= beta) return null_eval;
 	}
 
-	MoveList<color, ALL> all_legal_moves(board);
+	MoveList<color, MoveGenerationType::ALL> all_legal_moves(board);
 	if (all_legal_moves.size() == 0) {
 		if (in_check) return -(MATE_SCORE - ply);
 		return 0;
 	}
 
-	ScoredMoves scored_moves = order_moves<color, ALL>(all_legal_moves, board, ply, data);
+	ScoredMoves scored_moves = order_moves<color, MoveGenerationType::ALL>(all_legal_moves, board, ply, data);
 
 	Move best_move = select_move(scored_moves, 0);
 	i32 moves_played = 0;
@@ -275,7 +277,7 @@ i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) 
 			exit(1);
 		}
 	}
-	TranspositionTableEntryNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
+	TTNodeType node_type = t_table.get_node_type(alpha_initial, beta, value);
 	t_table.put(board.hash(), depth, value, ply, best_move, pv_node, node_type);
 	return value;
 }
@@ -315,7 +317,7 @@ PVSData aspiration_windows(Position& board, i32 prev_score, i16 depth, i32 time_
 template<Color color>
 void iterative_deepening(Position& board, BestMoveSearchParameters& params) {
 	reset_clock();
-	std::memset(data.nodes_spend, 0, sizeof(data.nodes_spend));
+	std::memset(data.nodes_spend.data(), 0, sizeof(data.nodes_spend));
 	data.nodes_searched = 0;
 	for (i32 sub_depth = 1; sub_depth <= params.depth; sub_depth++) {
 		i32 soft_limit = scale_soft_time_limit(params, data, sub_depth);

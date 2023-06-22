@@ -99,7 +99,7 @@ void Position::set_fen(const std::string& fen_string) {
 	// Push empty state to state history.
 	state_history.push({});
 
-	std::vector<std::string> fen_tokens = split(fen_string, " ");
+	std::vector<std::string> fen_tokens = split(fen_string);
 
 	if (fen_tokens.size() < 4) {
 		throw std::invalid_argument("Fen is missing fields. ");
@@ -163,7 +163,7 @@ std::ostream& operator << (std::ostream& os, const Position& p) {
 
 bool Position::has_repetition(Repetition fold) {
 	int count = fold == THREE_FOLD ? 0 : 1;
-	const i32 hash_hist_size = static_cast<int>(state_history.size());
+	const auto hash_hist_size = static_cast<i32>(state_history.size());
 	const u64 current_hash = hash();
 	for (i32 idx = hash_hist_size - 3;
 		 idx >= 0 && idx >= hash_hist_size - fifty_move_rule();
@@ -214,22 +214,22 @@ void Position::play(Move move) {
 			remove_piece<ENABLE_HASH_UPDATE>(move.to() + relative_dir<color, SOUTH>());
 			state_history.top().captured = make_piece<~color, PAWN>();
 			break;
-		case PR_KNIGHT | CAPTURE_TYPE:
+		case PR_KNIGHT | CAPTURE_TYPE: [[fallthrough]];
 		case PR_KNIGHT:
 			remove_piece<ENABLE_HASH_UPDATE>(move.to());
 			place_piece<ENABLE_HASH_UPDATE>(make_piece<color, KNIGHT>(), move.to());
 			break;
-		case PR_BISHOP | CAPTURE_TYPE:
+		case PR_BISHOP | CAPTURE_TYPE: [[fallthrough]];
 		case PR_BISHOP:
 			remove_piece<ENABLE_HASH_UPDATE>(move.to());
 			place_piece<ENABLE_HASH_UPDATE>(make_piece<color, BISHOP>(), move.to());
 			break;
-		case PR_ROOK | CAPTURE_TYPE:
+		case PR_ROOK | CAPTURE_TYPE: [[fallthrough]];
 		case PR_ROOK:
 			remove_piece<ENABLE_HASH_UPDATE>(move.to());
 			place_piece<ENABLE_HASH_UPDATE>(make_piece<color, ROOK>(), move.to());
 			break;
-		case PR_QUEEN | CAPTURE_TYPE:
+		case PR_QUEEN | CAPTURE_TYPE: [[fallthrough]];
 		case PR_QUEEN:
 			remove_piece<ENABLE_HASH_UPDATE>(move.to());
 			place_piece<ENABLE_HASH_UPDATE>(make_piece<color, QUEEN>(), move.to());
