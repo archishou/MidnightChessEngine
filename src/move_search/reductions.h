@@ -3,6 +3,6 @@
 
 #include "../move_gen/types/move.h"
 
-int lmr_reduction(const bool &pv_node, const int &ply, const bool &in_check, const bool improving, const int &move_idx,
-				  const int &depth, const Move &legal_move);
-int nmp_reduction(const int& depth, const int& beta, const int& static_eval);
+i32 lmr_reduction(bool pv_node, i32 ply, bool in_check, bool improving, i32 move_idx,
+				  i32 depth, Move legal_move);
+i32 nmp_reduction(i32 depth, i32 beta, i32 static_eval);

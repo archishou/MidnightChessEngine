@@ -3,7 +3,7 @@
 //
 #include "transposition_table.h"
 
-TranspositionTable::TranspositionTable(int mb) {
+TranspositionTable::TranspositionTable(i32 mb) {
 	resize(mb);
 }
 
@@ -19,24 +19,24 @@ void TranspositionTable::reset_table() {
 	}
 }
 
-int TranspositionTable::correct_mate_for_retrieval(int score, int ply) {
+i32 TranspositionTable::correct_mate_for_retrieval(i32 score, i32 ply) {
 	if (score < -MATE_BOUND) score += ply;
 	else if (score > MATE_BOUND) score -= ply;
 	return score;
 }
 
-int TranspositionTable::correct_mate_for_storage(int score, int ply) {
+i32 TranspositionTable::correct_mate_for_storage(i32 score, i32 ply) {
 	if (score < -MATE_BOUND) score -= ply;
 	else if (score > MATE_BOUND) score += ply;
 	return score;
 }
 
-uint64_t TranspositionTable::get_index(uint64_t zobrist_hash) {
+u64 TranspositionTable::get_index(u64 zobrist_hash) {
 	return zobrist_hash % entry_count();
 }
 
 TranspositionTableEntryNodeType
-TranspositionTable::get_node_type(const int &alpha_initial, const int &beta, const int &value) {
+TranspositionTable::get_node_type(i32 alpha_initial, i32 beta, i32 value) {
 	TranspositionTableEntryNodeType node_type;
 	if (value <= alpha_initial) node_type = UPPER_NODE;
 	else if (value >= beta) node_type = LOWER_NODE;
@@ -44,7 +44,7 @@ TranspositionTable::get_node_type(const int &alpha_initial, const int &beta, con
 	return node_type;
 }
 
-void TranspositionTable::put(ZobristHash hash, short depth, int score, int ply, Move best_move, bool pv_node,
+void TranspositionTable::put(ZobristHash hash, i16 depth, i32 score, i32 ply, Move best_move, bool pv_node,
 							 TranspositionTableEntryNodeType node_type) {
 
 	score = correct_mate_for_storage(score, ply);
@@ -76,7 +76,7 @@ TranspositionTable::probe_for_move_ordering(ZobristHash hash) {
 }
 
 TranspositionTableSearchResults
-TranspositionTable::probe_for_search(ZobristHash hash, int depth, int ply) {
+TranspositionTable::probe_for_search(ZobristHash hash, i32 depth, i32 ply) {
 
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
@@ -90,7 +90,7 @@ TranspositionTable::probe_for_search(ZobristHash hash, int depth, int ply) {
 	return results;
 }
 
-TranspositionTableSearchResults TranspositionTable::probe_eval(ZobristHash hash, int ply) {
+TranspositionTableSearchResults TranspositionTable::probe_eval(ZobristHash hash, i32 ply) {
 	TranspositionTableEntry entry = transposition_table[get_index(hash)];
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
@@ -102,13 +102,13 @@ TranspositionTableSearchResults TranspositionTable::probe_eval(ZobristHash hash,
 	return results;
 }
 
-int TranspositionTable::mb_to_entries(int mb) {
-	int bytes = mb * 1'048'576;
-	return static_cast<int>(bytes / sizeof(TranspositionTableEntry));
+i32 TranspositionTable::mb_to_entries(i32 mb) {
+	i32 bytes = mb * 1'048'576;
+	return static_cast<i32>(bytes / sizeof(TranspositionTableEntry));
 }
 
-void TranspositionTable::resize(int mb) {
-	int entries = mb_to_entries(mb);
+void TranspositionTable::resize(i32 mb) {
+	i32 entries = mb_to_entries(mb);
 	transposition_table.resize(entries);
 	transposition_table.shrink_to_fit();
 	reset_table();

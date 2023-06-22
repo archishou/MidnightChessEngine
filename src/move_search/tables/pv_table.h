@@ -11,11 +11,11 @@ struct PV {
 	PVTable table;
 };
 
-inline void init_pv(PV& pv, int ply) {
+inline void init_pv(PV& pv, i32 ply) {
 	pv.length[ply] = ply;
 }
 
-inline void update_pv(PV& pv, int ply, Move best_move) {
+inline void update_pv(PV& pv, i32 ply, Move best_move) {
 	pv.table[ply][ply] = best_move;
 	for (int next_ply = ply + 1; next_ply < pv.length[ply + 1]; next_ply++) {
 		pv.table[ply][next_ply] = pv.table[ply + 1][next_ply];
