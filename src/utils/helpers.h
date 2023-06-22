@@ -3,6 +3,7 @@
 //
 #pragma once
 #include <iostream>
+#include "../types.h"
 #include "vector"
 
-std::vector<std::string> split(const std::string& s, const std::string& delimiter);
+std::vector<std::string> split(const string& s, const string& delimiter);

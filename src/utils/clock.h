@@ -4,6 +4,7 @@
 #pragma once
 #include <iostream>
 #include <chrono>
+#include "../types.h"
 
 static auto start_time = std::chrono::high_resolution_clock::now();
 enum class TimeResolution {
