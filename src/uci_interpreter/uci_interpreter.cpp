@@ -31,7 +31,7 @@ void uci_position(Position& board, const string& input_line) {
 }
 
 void parse_move_time(Color side_to_play, const string& move_time_s, BestMoveSearchParameters& params) {
-	std::vector<string> tokens = split(move_time_s, " ");
+	std::vector<string> tokens = split(move_time_s);
 	// Possible inputs to parse
 	// input --> go movetime xxx
 	// input --> go xtime ### xinc ### ytime ### yinc ###
@@ -134,7 +134,7 @@ void read_uci() {
 		} else if (input_line == "bench") {
 			bench();
 		} else if (input_line.substr(0, 14) == "setoption name") {
-			std::vector<string> parsed_options = split(input_line, " ");
+			std::vector<string> parsed_options = split(input_line);
 			std::transform(parsed_options[2].begin(), parsed_options[2].end(), parsed_options[2].begin(),
 						   [](unsigned char c){ return std::tolower(c); });
 			if (parsed_options[2] == "hash") {

@@ -52,8 +52,8 @@ Move uci_to_move(const string& moveStr, Position& position) {
 }
 
 void uci_update_position_from_moves(Position& board, const string& uci_move_string) {
-	std::vector<string> uci_moves = split(uci_move_string, " ");
-	for (const string& uci_move : uci_moves) {
+	std::vector<string> uci_moves = split(uci_move_string);
+	for (const auto& uci_move : uci_moves) {
 		if (uci_move.empty()) return;
 		Move nextMove = uci_to_move(uci_move, board);
 		if (board.turn() == BLACK) board.play<BLACK>(nextMove);

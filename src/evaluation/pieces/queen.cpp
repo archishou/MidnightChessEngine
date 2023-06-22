@@ -29,7 +29,7 @@ Score evaluate_queens(const Position& board, Trace& trace) {
 		score += PIECE_VALUES[QUEEN];
 		if constexpr (do_trace) trace.material[QUEEN][color] += 1;
 
-		score += read_psqt<color, QUEEN>(queen_square);
+		score += read_pst<color, QUEEN>(queen_square);
 		if constexpr (do_trace) trace.queen_pst[color == WHITE ? flip(queen_square) : queen_square][color] += 1;
 
 		Bitboard pseudo_legal_moves = tables::attacks<QUEEN>(queen_square, them_pieces | us_pieces) & ~us_pieces;

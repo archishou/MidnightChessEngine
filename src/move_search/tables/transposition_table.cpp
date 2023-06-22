@@ -3,6 +3,7 @@
 //
 #include "transposition_table.h"
 
+using enum TTNodeType;
 TranspositionTable::TranspositionTable(i32 mb) {
 	resize(mb);
 }
@@ -35,9 +36,8 @@ u64 TranspositionTable::get_index(u64 zobrist_hash) {
 	return zobrist_hash % entry_count();
 }
 
-TranspositionTableEntryNodeType
-TranspositionTable::get_node_type(i32 alpha_initial, i32 beta, i32 value) {
-	TranspositionTableEntryNodeType node_type;
+TTNodeType TranspositionTable::get_node_type(i32 alpha_initial, i32 beta, i32 value) {
+	TTNodeType node_type;
 	if (value <= alpha_initial) node_type = UPPER_NODE;
 	else if (value >= beta) node_type = LOWER_NODE;
 	else node_type = EXACT;
@@ -45,7 +45,7 @@ TranspositionTable::get_node_type(i32 alpha_initial, i32 beta, i32 value) {
 }
 
 void TranspositionTable::put(ZobristHash hash, i16 depth, i32 score, i32 ply, Move best_move, bool pv_node,
-							 TranspositionTableEntryNodeType node_type) {
+							 TTNodeType node_type) {
 
 	score = correct_mate_for_storage(score, ply);
 	TranspositionTableEntry previous_entry = transposition_table[get_index(hash)];

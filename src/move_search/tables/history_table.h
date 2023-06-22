@@ -10,11 +10,12 @@
 #include "../move_ordering/ordering_constants.h"
 #include "../../board/position.h"
 #include "../types.h"
+#include "../../types.h"
 
-extern int history[NCOLORS][NSQUARES][NSQUARES];
-extern int continuation_history[NPIECES][NSQUARES][NPIECES][NSQUARES];
-extern int capture_history[NPIECES][NSQUARES][NPIECES];
-extern Move killers[MAX_PLY][NKILLERS];
+extern array<array<array<i32, NSQUARES>, NSQUARES>, NCOLORS> history;
+extern array<array<array<array<i32, NSQUARES>, NPIECES>, NSQUARES>, NPIECES> continuation_history;
+extern array<array<array<i32, NPIECES>, NSQUARES>, NPIECES> capture_history;
+extern array<array<Move, NKILLERS>, MAX_PLY> killers;
 
 extern void init_history();
 extern void update_history_entry(int& history_entry, int bonus);

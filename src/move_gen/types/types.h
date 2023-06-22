@@ -2,7 +2,7 @@
 
 #include "../../types.h"
 
-enum MoveGenerationType : i32 {
+enum class MoveGenerationType {
 	ALL,
 	CAPTURES
 };

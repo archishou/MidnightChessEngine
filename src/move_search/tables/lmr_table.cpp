@@ -5,7 +5,7 @@
 #include <cmath>
 #include "lmr_table.h"
 
-double lmr_table[2][MAX_DEPTH + 1][MAX_DEPTH + 1];
+array<array<array<double, MAX_DEPTH + 1>, MAX_DEPTH + 1>, 2> lmr_table;
 
 void init_lmr_table() {
 	for (int depth = 0; depth < MAX_DEPTH; depth++) {

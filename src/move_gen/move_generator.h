@@ -8,7 +8,7 @@
 #include "move_gen_masks.h"
 #include "iostream"
 
-template<Color color, MoveGenerationType move_gen_type = ALL>
+template<Color color, MoveGenerationType move_gen_type = MoveGenerationType::ALL>
 class MoveList {
 private:
 	Stack<Move, 218> move_list{};
@@ -106,7 +106,7 @@ MoveList<color, move_gen_type>::push_promotions(Bitboard pinned, Bitboard quiet_
 		push_single<PROMOTION_TYPE | CAPTURE_TYPE>(s - relative_dir<color, NORTH_EAST>(), s);
 	}
 
-	if constexpr (move_gen_type == CAPTURES) return;
+	if constexpr (move_gen_type == MoveGenerationType::CAPTURES) return;
 
 	Bitboard quiet_promos = shift_relative<color, NORTH>(promotion_candidates) & quiet_mask;
 	while (quiet_promos) {
@@ -118,7 +118,7 @@ MoveList<color, move_gen_type>::push_promotions(Bitboard pinned, Bitboard quiet_
 template<Color color, MoveGenerationType move_gen_type>
 constexpr void MoveList<color, move_gen_type>::push_check_evasions(const MoveList::SharedData &data, Bitboard danger) {
 	Bitboard evasions = tables::attacks<KING>(data.us_king_square, data.all) & ~(data.us_occupancy | danger);
-	if constexpr (move_gen_type == ALL) push<QUIET>(data.us_king_square, evasions & ~data.them_occupancy);
+	if constexpr (move_gen_type == MoveGenerationType::ALL) push<QUIET>(data.us_king_square, evasions & ~data.them_occupancy);
 	push<CAPTURE_TYPE>(data.us_king_square, evasions & data.them_occupancy);
 }
 
@@ -177,7 +177,7 @@ constexpr void MoveList<color, move_gen_type>::push_pinned(const MoveList::Share
 		const Square s = pop_lsb(pinned_pieces);
 		Bitboard pinned_to = tables::attacks(type_of(board_.piece_at(s)), s, data.all) & tables::line_of(data.us_king_square, s);
 
-		if constexpr (move_gen_type == ALL) push<QUIET>(s, pinned_to & quiet_mask);
+		if constexpr (move_gen_type == MoveGenerationType::ALL) push<QUIET>(s, pinned_to & quiet_mask);
 		push<CAPTURE_TYPE>(s, pinned_to & capture_mask);
 	}
 
@@ -193,7 +193,7 @@ constexpr void MoveList<color, move_gen_type>::push_pinned(const MoveList::Share
 		Bitboard pinned_pawn_to = tables::attacks<PAWN, color>(s) & data.them_occupancy & line_of_s_king;
 		push<CAPTURE_TYPE>(s, pinned_pawn_to);
 
-		if constexpr (move_gen_type == CAPTURES) continue;
+		if constexpr (move_gen_type == MoveGenerationType::CAPTURES) continue;
 
 		pinned_pawn_to = shift_relative<color, NORTH>(square_to_bitboard(s)) & ~data.all & line_of_s_king;
 
@@ -207,7 +207,7 @@ constexpr void MoveList<color, move_gen_type>::push_pinned(const MoveList::Share
 
 template<Color color, MoveGenerationType move_gen_type>
 constexpr void MoveList<color, move_gen_type>::push_castle(const MoveList::SharedData &data, Bitboard danger) {
-	if constexpr (move_gen_type == CAPTURES) return;
+	if constexpr (move_gen_type == MoveGenerationType::CAPTURES) return;
 
 	Bitboard oo_path_in_danger = (data.all | danger) & oo_blockers_mask<color>();
 
@@ -294,7 +294,7 @@ constexpr void MoveList<color, move_gen_type>::push_non_pinned_pieces(const Move
 	while (un_pinned_knights) {
 		Square s = pop_lsb(un_pinned_knights);
 		Bitboard knight_attacks = tables::attacks<KNIGHT>(s, data.all);
-		if constexpr (move_gen_type == ALL) push<QUIET>(s, knight_attacks & quiet_mask);
+		if constexpr (move_gen_type == MoveGenerationType::ALL) push<QUIET>(s, knight_attacks & quiet_mask);
 		push<CAPTURE_TYPE>(s, knight_attacks & capture_mask);
 	}
 
@@ -303,7 +303,7 @@ constexpr void MoveList<color, move_gen_type>::push_non_pinned_pieces(const Move
 		Square s = pop_lsb(non_pinned_diag);
 		Bitboard non_pinned_diag_attacks = tables::attacks<BISHOP>(s, data.all);
 
-		if constexpr (move_gen_type == ALL) push<QUIET>(s, non_pinned_diag_attacks & quiet_mask);
+		if constexpr (move_gen_type == MoveGenerationType::ALL) push<QUIET>(s, non_pinned_diag_attacks & quiet_mask);
 		push<CAPTURE_TYPE>(s, non_pinned_diag_attacks & capture_mask);
 	}
 
@@ -312,7 +312,7 @@ constexpr void MoveList<color, move_gen_type>::push_non_pinned_pieces(const Move
 		Square s = pop_lsb(non_pinned_ortho);
 		Bitboard non_pinned_ortho_attacks = tables::attacks<ROOK>(s, data.all);
 
-		if constexpr (move_gen_type == ALL) push<QUIET>(s, non_pinned_ortho_attacks & quiet_mask);
+		if constexpr (move_gen_type == MoveGenerationType::ALL) push<QUIET>(s, non_pinned_ortho_attacks & quiet_mask);
 		push<CAPTURE_TYPE>(s, non_pinned_ortho_attacks & capture_mask);
 	}
 }
@@ -336,7 +336,7 @@ constexpr void MoveList<color, move_gen_type>::push_non_pinned_pawns(const MoveL
 		push_single<CAPTURE_TYPE>(s - relative_dir<color, NORTH_EAST>(), s);
 	}
 
-	if constexpr (move_gen_type == CAPTURES) return;
+	if constexpr (move_gen_type == MoveGenerationType::CAPTURES) return;
 
 	Bitboard single_pawn_pushes = shift_relative<color, NORTH>(non_pinned_pawns) & ~data.all;
 

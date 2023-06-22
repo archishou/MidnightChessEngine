@@ -29,7 +29,7 @@ Score evaluate_bishops(const Position &board, Trace &trace) {
 		score += PIECE_VALUES[BISHOP];
 		if constexpr (do_trace) trace.material[BISHOP][color] += 1;
 
-		score += read_psqt<color, BISHOP>(bishop_square);
+		score += read_pst<color, BISHOP>(bishop_square);
 		if constexpr (do_trace) {
 			trace.bishop_pst[color == WHITE ? flip(bishop_square) : bishop_square][color] += 1;
 		}

@@ -12,7 +12,7 @@ i32 singular_extension(Position& board, bool excluding_move, i32 depth, i32 ply,
 	bool possible_singularity = !excluding_move && ply > 0 && tt_probe_results.entry_found &&
 								depth >= 8 && legal_move == tt_probe_results.entry.best_move &&
 								tt_probe_results.entry.depth >= depth - 3 &&
-								tt_probe_results.entry.node_type != UPPER_NODE;
+								tt_probe_results.entry.node_type != TTNodeType::UPPER_NODE;
 	if (possible_singularity) {
 		data.excluded_moves[ply] = legal_move;
 

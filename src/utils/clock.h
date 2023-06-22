@@ -13,5 +13,5 @@ enum class TimeResolution {
 };
 
 void reset_clock();
-int get_elapsed_time(TimeResolution resolution);
-bool time_elapsed_exceeds(int magnitude, TimeResolution resolution);
+i32 get_elapsed_time(TimeResolution resolution);
+bool time_elapsed_exceeds(i32 magnitude, TimeResolution resolution);
