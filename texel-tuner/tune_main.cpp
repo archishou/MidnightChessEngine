@@ -6,6 +6,7 @@
 #include "string"
 #include "sstream"
 #include "vector"
+#include "midnight.h"
 
 using namespace std;
 using namespace Tuner;
