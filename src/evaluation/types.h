@@ -8,7 +8,7 @@
 #include "../board/types/piece.h"
 #include "../board/types/square.h"
 
-typedef int Score;
+using Score = int;
 constexpr Score SCORE_ZERO = 0;
 
 consteval Score S(int mg, int eg) {

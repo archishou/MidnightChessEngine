@@ -2,162 +2,120 @@
 // Created by Archishmaan Peyyety on 3/2/23.
 //
 
-#include "helper.h"
+#include "midnight.h"
 #include <fstream>
+#include <utility>
+#include <tuple>
 
-constexpr int NEVAL_PTYPES = NPIECE_TYPES - 1;
+namespace Midnight {
+	using enum EvalOutputs;
 
-parameters_t Midnight::MidnightEval::get_initial_parameters() {
-	parameters_t parameters;
+	template <bool run_trace = false>
+	static auto fetch_texel_features(const string &fen = "") {
+		Position p;
+		Trace trace{};
+		if (!fen.empty()) {
+			p.set_fen(fen);
+			if (p.turn() == BLACK) trace = evaluate<BLACK, EnableTrace>(p);
+			else trace = evaluate<WHITE, EnableTrace>(p);
+		}
 
-	add_params(parameters, PAWN_TABLE, NSQUARES);
-	add_params(parameters, KNIGHT_TABLE, NSQUARES);
-	add_params(parameters, BISHOP_TABLE, NSQUARES);
-	add_params(parameters, ROOK_TABLE, NSQUARES);
-	add_params(parameters, QUEEN_TABLE, NSQUARES);
-	add_params(parameters, KING_TABLE, NSQUARES);
-	add_params(parameters, PASSED_PAWN_BONUS, NSQUARES);
-	add_params(parameters, BLOCKED_PASSED_PAWN_PENALTY, NSQUARES);
+		std::tuple features = {
+			TexelFeatures{"PAWN_TABLE", PSTS, PAWN_TABLE, trace.pawn_pst, NSQUARES},
+			TexelFeatures{"KNIGHT_TABLE", PSTS, KNIGHT_TABLE, trace.knight_pst, NSQUARES},
+			TexelFeatures{"BISHOP_TABLE", PSTS, BISHOP_TABLE, trace.bishop_pst, NSQUARES},
+			TexelFeatures{"ROOK_TABLE", PSTS, ROOK_TABLE, trace.rook_pst, NSQUARES},
+			TexelFeatures{"QUEEN_TABLE", PSTS, QUEEN_TABLE, trace.queen_pst, NSQUARES},
+			TexelFeatures{"KING_TABLE", PSTS, KING_TABLE, trace.king_pst, NSQUARES},
+			TexelFeatures{"PASSED_PAWN_BONUS", PSTS, PASSED_PAWN_BONUS, trace.passed_pawns, NSQUARES},
+			TexelFeatures{"BLOCKED_PASSED_PAWN_PENALTY", PSTS, BLOCKED_PASSED_PAWN_PENALTY,
+						  trace.blocked_passed_pawns, NSQUARES},
 
-	add_params(parameters, PIECE_VALUES, NEVAL_PTYPES);
+			TexelFeatures{"PIECE_VALUES", MISC, PIECE_VALUES, trace.material, NEVAL_PTYPES},
 
-	add_params(parameters, OPEN_FILE_BONUS, NEVAL_PTYPES);
-	add_params(parameters, SEMI_OPEN_FILE_BONUS, NEVAL_PTYPES);
-	add_params(parameters, PAWN_PROTECTION, NEVAL_PTYPES);
-	add_params(parameters, ATTACKED_BY_PAWN, NEVAL_PTYPES);
-	add_params(parameters, THREATS, NEVAL_PTYPES * NEVAL_PTYPES);
-	add_params(parameters, KING_RING_ATTACK_BONUS, NEVAL_PTYPES);
-	add_params(parameters, CHECK_BONUS, NEVAL_PTYPES);
-	add_params(parameters, CENTER_CONTROL, NEVAL_PTYPES);
-	add_params(parameters, KING_PAWN_SHIELD, 2);
-	add_param(parameters, ISOLATED_PAWN_PENALTY);
-	add_param(parameters, DOUBLED_PAWN_PENALTY);
-	add_param(parameters, BISHOP_PAIR_BONUS);
+			TexelFeatures{"OPEN_FILE_BONUS", MISC, OPEN_FILE_BONUS, trace.open_files, NEVAL_PTYPES},
+			TexelFeatures{"SEMI_OPEN_FILE_BONUS", MISC, SEMI_OPEN_FILE_BONUS, trace.semi_open_files, NEVAL_PTYPES},
+			TexelFeatures{"PAWN_PROTECTION", MISC, PAWN_PROTECTION, trace.pawn_protection, NEVAL_PTYPES},
+			TexelFeatures{"ATTACKED_BY_PAWN", MISC, ATTACKED_BY_PAWN, trace.attacked_by_pawn, NEVAL_PTYPES},
+			TexelFeatures{"THREATS", MISC, THREATS, trace.threats, NEVAL_PTYPES * NEVAL_PTYPES, NTHREAT_COLS},
+			TexelFeatures{"KING_RING_ATTACK_BONUS", MISC, KING_RING_ATTACK_BONUS, trace.king_ring_bonus, NEVAL_PTYPES},
+			TexelFeatures{"CHECK_BONUS", MISC, CHECK_BONUS, trace.check_bonus, NEVAL_PTYPES},
+			TexelFeatures{"CENTER_CONTROL", MISC, CENTER_CONTROL, trace.center_control, NEVAL_PTYPES},
+			TexelFeatures{"KING_PAWN_SHIELD", MISC, KING_PAWN_SHIELD, trace.king_pawn_shield, 2},
+			TexelFeatures{"ISOLATED_PAWN_PENALTY", MISC, ISOLATED_PAWN_PENALTY, trace.isolated_pawns},
+			TexelFeatures{"DOUBLED_PAWN_PENALTY", MISC, DOUBLED_PAWN_PENALTY, trace.doubled_pawns},
+			TexelFeatures{"BISHOP_PAIR_BONUS", MISC, BISHOP_PAIR_BONUS, trace.bishop_bonus},
 
-	add_params(parameters, KNIGHT_MOBILITY, 9);
-	add_params(parameters, BISHOP_MOBILITY, 14);
-	add_params(parameters, ROOK_MOBILITY, 15);
-	add_params(parameters, QUEEN_MOBILITY, 28);
+			TexelFeatures{"KNIGHT_MOBILITY", MISC, KNIGHT_MOBILITY, trace.knight_mobility, NKNIGHT_MOBILITY},
+			TexelFeatures{"BISHOP_MOBILITY", MISC, BISHOP_MOBILITY, trace.bishop_mobility, NBISHOP_MOBILITY},
+			TexelFeatures{"ROOK_MOBILITY", MISC, ROOK_MOBILITY, trace.rook_mobility, NROOK_MOBILITY},
+			TexelFeatures{"QUEEN_MOBILITY", MISC, QUEEN_MOBILITY, trace.queen_mobility, NQUEEN_MOBILITY},
 
-	add_params(parameters, KNIGHT_FORWARD_MOBILITY, 9);
-	add_params(parameters, BISHOP_FORWARD_MOBILITY, 14);
-	add_params(parameters, ROOK_FORWARD_MOBILITY, 15);
-	add_params(parameters, QUEEN_FORWARD_MOBILITY, 28);
+			TexelFeatures{"KNIGHT_FORWARD_MOBILITY", MISC, KNIGHT_FORWARD_MOBILITY, trace.knight_forward_mobility, NKNIGHT_MOBILITY},
+			TexelFeatures{"BISHOP_FORWARD_MOBILITY", MISC, BISHOP_FORWARD_MOBILITY, trace.bishop_forward_mobility, NBISHOP_MOBILITY},
+			TexelFeatures{"ROOK_FORWARD_MOBILITY", MISC, ROOK_FORWARD_MOBILITY, trace.rook_forward_mobility, NROOK_MOBILITY},
+			TexelFeatures{"QUEEN_FORWARD_MOBILITY", MISC, QUEEN_FORWARD_MOBILITY, trace.queen_forward_mobility, NQUEEN_MOBILITY},
 
-	add_params(parameters, KING_LINE_SAFETY, 28);
+			TexelFeatures{"KING_LINE_SAFETY", MISC, KING_LINE_SAFETY, trace.king_safe_line, NQUEEN_MOBILITY},
 
-	add_params(parameters, PHALANX_PAWN, NRANKS);
-	add_params(parameters, CANDIDATE_PASSED_PAWN, NRANKS);
+			TexelFeatures{"PHALANX_PAWN", MISC, PHALANX_PAWN, trace.pawn_phalanx, NRANKS},
+			TexelFeatures{"CANDIDATE_PASSED_PAWN", MISC, CANDIDATE_PASSED_PAWN, trace.candidate_pawns, NRANKS},
 
-	add_param(parameters, TEMPO);
-	return parameters;
-}
+			TexelFeatures{"TEMPO", MISC, TEMPO, trace.tempo},
+		};
 
-EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
-	Position p(fen);
-	Trace trace;
+		if constexpr (run_trace) {
+			return std::pair {
+				features,
+				trace.score
+			};
+		} else {
+			return features;
+		}
+	}
 
-	if (p.turn() == BLACK) trace = evaluate<BLACK, EnableTrace>(p);
-	else trace = evaluate<WHITE, EnableTrace>(p);
+	parameters_t Midnight::MidnightEval::get_initial_parameters() {
+		parameters_t parameters;
 
-	coefficients_t coefficients;
-	get_coefficient_array(coefficients, trace.pawn_pst, NSQUARES);
-	get_coefficient_array(coefficients, trace.knight_pst, NSQUARES);
-	get_coefficient_array(coefficients, trace.bishop_pst, NSQUARES);
-	get_coefficient_array(coefficients, trace.rook_pst, NSQUARES);
-	get_coefficient_array(coefficients, trace.queen_pst, NSQUARES);
-	get_coefficient_array(coefficients, trace.king_pst, NSQUARES);
-	get_coefficient_array(coefficients, trace.passed_pawns, NSQUARES);
-	get_coefficient_array(coefficients, trace.blocked_passed_pawns, NSQUARES);
+		auto features = fetch_texel_features();
+		std::apply([&parameters](auto&&... args) {
+			(push_param(parameters, std::forward<decltype(args)>(args)), ...);
+		}, features);
 
-	get_coefficient_array(coefficients, trace.material, NEVAL_PTYPES);
+		return parameters;
+	}
 
-	get_coefficient_array(coefficients, trace.open_files, NEVAL_PTYPES);
-	get_coefficient_array(coefficients, trace.semi_open_files, NEVAL_PTYPES);
-	get_coefficient_array(coefficients, trace.pawn_protection, NEVAL_PTYPES);
-	get_coefficient_array(coefficients, trace.attacked_by_pawn, NEVAL_PTYPES);
-	get_coefficient_array(coefficients, trace.threats, NEVAL_PTYPES * NEVAL_PTYPES);
-	get_coefficient_array(coefficients, trace.king_ring_bonus, NEVAL_PTYPES);
-	get_coefficient_array(coefficients, trace.check_bonus, NEVAL_PTYPES);
-	get_coefficient_array(coefficients, trace.center_control, NEVAL_PTYPES);
-	get_coefficient_array(coefficients, trace.king_pawn_shield, 2);
-	get_coefficient_single(coefficients, trace.isolated_pawns);
-	get_coefficient_single(coefficients, trace.doubled_pawns);
-	get_coefficient_single(coefficients, trace.bishop_bonus);
+	EvalResult Midnight::MidnightEval::get_fen_eval_result(const std::string &fen) {
 
-	get_coefficient_array(coefficients, trace.knight_mobility, 9);
-	get_coefficient_array(coefficients, trace.bishop_mobility, 14);
-	get_coefficient_array(coefficients, trace.rook_mobility, 15);
-	get_coefficient_array(coefficients, trace.queen_mobility, 28);
+		coefficients_t coefficients;
+		auto features = fetch_texel_features<true>(fen);
+		std::apply([&coefficients](auto&&... args) {
+			(push_coeff(coefficients, std::forward<decltype(args)>(args)), ...);
+		}, features.first);
 
-	get_coefficient_array(coefficients, trace.knight_forward_mobility, 9);
-	get_coefficient_array(coefficients, trace.bishop_forward_mobility, 14);
-	get_coefficient_array(coefficients, trace.rook_forward_mobility, 15);
-	get_coefficient_array(coefficients, trace.queen_forward_mobility, 28);
+		EvalResult result;
+		result.score = features.second;
+		result.coefficients = coefficients;
+		return result;
+	}
 
-	get_coefficient_array(coefficients, trace.king_safe_line, 28);
+	void Midnight::MidnightEval::print_parameters(const parameters_t &parameters) {
+		int index = 0;
+		auto features = fetch_texel_features();
 
-	get_coefficient_array(coefficients, trace.pawn_phalanx, NRANKS);
-	get_coefficient_array(coefficients, trace.candidate_pawns, NRANKS);
+		std::vector<std::stringstream> outputs{};
+		for (usize i = 0; i < NOUTPUTS; i++) {
+			outputs.emplace_back();
+			print_constant_header(outputs[i]);
+		}
 
-	get_coefficient_single(coefficients, trace.tempo);
+		std::apply([&outputs, &parameters, &index](auto&&... args) {
+			(print_feature(outputs[static_cast<usize>(args.output)], parameters, index, args), ...);
+		}, features);
 
-	EvalResult result;
-	result.score = trace.score;
-	result.coefficients = coefficients;
-	return result;
-}
-
-void Midnight::MidnightEval::print_parameters(const parameters_t &parameters) {
-	int index = 0;
-	std::stringstream psts_ss, misc_ss;
-	print_constant_header(psts_ss);
-	print_constant_header(misc_ss);
-
-	print_pst(psts_ss, parameters, index, "PAWN_TABLE", NSQUARES);
-	print_pst(psts_ss, parameters, index, "KNIGHT_TABLE", NSQUARES);
-	print_pst(psts_ss, parameters, index, "BISHOP_TABLE", NSQUARES);
-	print_pst(psts_ss, parameters, index, "ROOK_TABLE", NSQUARES);
-	print_pst(psts_ss, parameters, index, "QUEEN_TABLE", NSQUARES);
-	print_pst(psts_ss, parameters, index, "KING_TABLE", NSQUARES);
-	print_pst(psts_ss, parameters, index, "PASSED_PAWN_BONUS", NSQUARES);
-	print_pst(psts_ss, parameters, index, "BLOCKED_PASSED_PAWN_PENALTY", NSQUARES);
-
-	print_array(misc_ss, parameters, index, "PIECE_VALUES", NEVAL_PTYPES);
-
-	print_array(misc_ss, parameters, index, "OPEN_FILE_BONUS", NEVAL_PTYPES);
-	print_array(misc_ss, parameters, index, "SEMI_OPEN_FILE_BONUS", NEVAL_PTYPES);
-	print_array(misc_ss, parameters, index, "PAWN_PROTECTION", NEVAL_PTYPES);
-	print_array(misc_ss, parameters, index, "ATTACKED_BY_PAWN", NEVAL_PTYPES);
-	print_threats(misc_ss, parameters, index, "THREATS", NEVAL_PTYPES * NEVAL_PTYPES);
-	print_array(misc_ss, parameters, index, "KING_RING_ATTACK_BONUS", NEVAL_PTYPES);
-	print_array(misc_ss, parameters, index, "CHECK_BONUS", NEVAL_PTYPES);
-	print_array(misc_ss, parameters, index, "CENTER_CONTROL", NEVAL_PTYPES);
-	print_array(misc_ss, parameters, index, "KING_PAWN_SHIELD", 2);
-	print_single(misc_ss, parameters, index, "ISOLATED_PAWN_PENALTY");
-	print_single(misc_ss, parameters, index, "DOUBLED_PAWN_PENALTY");
-	print_single(misc_ss, parameters, index, "BISHOP_PAIR_BONUS");
-
-	print_array(misc_ss, parameters, index, "KNIGHT_MOBILITY", 9);
-	print_array(misc_ss, parameters, index, "BISHOP_MOBILITY", 14);
-	print_array(misc_ss, parameters, index, "ROOK_MOBILITY", 15);
-	print_array(misc_ss, parameters, index, "QUEEN_MOBILITY", 28);
-
-	print_array(misc_ss, parameters, index, "KNIGHT_FORWARD_MOBILITY", 9);
-	print_array(misc_ss, parameters, index, "BISHOP_FORWARD_MOBILITY", 14);
-	print_array(misc_ss, parameters, index, "ROOK_FORWARD_MOBILITY", 15);
-	print_array(misc_ss, parameters, index, "QUEEN_FORWARD_MOBILITY", 28);
-
-	print_array(misc_ss, parameters, index, "KING_LINE_SAFETY", 28);
-
-	print_array(misc_ss, parameters, index, "PHALANX_PAWN", NRANKS);
-	print_array(misc_ss, parameters, index, "CANDIDATE_PASSED_PAWN", NRANKS);
-
-	print_single(misc_ss, parameters, index, "TEMPO");
-
-	std::ofstream psts("/Users/archishmaan/Documents/CodeProjects/chess-engine/src/evaluation/constants/psts.h", std::ofstream::trunc);
-	std::ofstream misc("/Users/archishmaan/Documents/CodeProjects/chess-engine/src/evaluation/constants/misc.h", std::ofstream::trunc);
-
-	psts << psts_ss.str() << "\n";
-	misc << misc_ss.str() << "\n";
+		for (usize i = 0; i < NOUTPUTS; i++) {
+			std::ofstream stream(paths[static_cast<EvalOutputs>(i)], std::ofstream::trunc);
+			stream << outputs[i].str() << "\n";
+		}
+	}
 }
