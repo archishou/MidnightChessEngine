@@ -42,9 +42,6 @@ namespace Midnight {
 			TexelFeatures{"CHECK_BONUS", MISC, CHECK_BONUS, trace.check_bonus, NEVAL_PTYPES},
 			TexelFeatures{"CENTER_CONTROL", MISC, CENTER_CONTROL, trace.center_control, NEVAL_PTYPES},
 			TexelFeatures{"KING_PAWN_SHIELD", MISC, KING_PAWN_SHIELD, trace.king_pawn_shield, 2},
-			TexelFeatures{"ISOLATED_PAWN_PENALTY", MISC, ISOLATED_PAWN_PENALTY, trace.isolated_pawns},
-			TexelFeatures{"DOUBLED_PAWN_PENALTY", MISC, DOUBLED_PAWN_PENALTY, trace.doubled_pawns},
-			TexelFeatures{"BISHOP_PAIR_BONUS", MISC, BISHOP_PAIR_BONUS, trace.bishop_bonus},
 
 			TexelFeatures{"KNIGHT_MOBILITY", MISC, KNIGHT_MOBILITY, trace.knight_mobility, NKNIGHT_MOBILITY},
 			TexelFeatures{"BISHOP_MOBILITY", MISC, BISHOP_MOBILITY, trace.bishop_mobility, NBISHOP_MOBILITY},
@@ -60,6 +57,12 @@ namespace Midnight {
 
 			TexelFeatures{"PHALANX_PAWN", MISC, PHALANX_PAWN, trace.pawn_phalanx, NRANKS},
 			TexelFeatures{"CANDIDATE_PASSED_PAWN", MISC, CANDIDATE_PASSED_PAWN, trace.candidate_pawns, NRANKS},
+
+			TexelFeatures{"ISOLATED_PAWN_PENALTY", MISC, ISOLATED_PAWN_PENALTY, trace.isolated_pawns},
+			TexelFeatures{"DOUBLED_PAWN_PENALTY", MISC, DOUBLED_PAWN_PENALTY, trace.doubled_pawns},
+			TexelFeatures{"BISHOP_PAIR_BONUS", MISC, BISHOP_PAIR_BONUS, trace.bishop_bonus},
+			TexelFeatures{"PAWNLESS_KING_FLANK", MISC, PAWNLESS_KING_FLANK, trace.pawnless_king_flank},
+
 
 			TexelFeatures{"TEMPO", MISC, TEMPO, trace.tempo},
 		};

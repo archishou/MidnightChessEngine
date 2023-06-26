@@ -59,6 +59,7 @@ struct Trace {
 	short blocked_passed_pawns[NSQUARES][NCOLORS]{};
 	short isolated_pawns[NCOLORS]{};
 	short doubled_pawns[NCOLORS]{};
+	short pawnless_king_flank[NCOLORS]{};
 	short bishop_bonus[NCOLORS]{};
 
 	short knight_mobility[9][NCOLORS]{};

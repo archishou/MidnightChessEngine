@@ -31,7 +31,7 @@ Score evaluate_rooks(const Position& board, Trace& trace) {
 
 		Bitboard pseudo_legal_moves = tables::attacks<ROOK>(rook_square, them_pieces | us_pieces) & ~us_pieces;
 		Bitboard mobility_squares = tables::attacks<ROOK>(rook_square, them_pieces | xray_occupancy) & ~(xray_occupancy | them_pawn_attacks);
-		Bitboard forward_mobility = mobility_squares & forward_rank_table[rank][color];
+		Bitboard forward_mobility = mobility_squares & FORWARD_RANK_TABLE[rank][color];
 
 		score += ROOK_MOBILITY[pop_count(mobility_squares)];
 		if constexpr (do_trace) trace.rook_mobility[pop_count(mobility_squares)][color] += 1;

@@ -37,6 +37,10 @@ Score evaluate_king(const Position& board, Trace& trace) {
 		trace.king_safe_line[pop_count(~safe_rank & queen_attacks)][color] += 1;
 	}
 
+	if (!(board.occupancy<color, PAWN>() & KING_FLANKS[file_of(king_square)])) {
+		score += PAWNLESS_KING_FLANK;
+		if constexpr (do_trace) trace.pawnless_king_flank[color] += 1;
+	}
 
 	if (king_bb & KING_SAFE_AREA[color]) {
 		const Bitboard pawn_shield = PAWN_SHIELD[king_side][color];

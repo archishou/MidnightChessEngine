@@ -748,3 +748,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=64MB
 LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 5480 W: 1305 L: 1145 D: 3030
 ```
+
+### King Flank Pawn Evaluation
+https://chess.swehosting.se/test/1990/
+```
+ELO   | 5.21 +- 4.07 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=32MB
+LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 15472 W: 4404 L: 4172 D: 6896
+```
