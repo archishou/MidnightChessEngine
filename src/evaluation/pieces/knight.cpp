@@ -33,7 +33,7 @@ Score evaluate_knight(const Position& board, Trace& trace) {
 		}
 		Bitboard pseudo_legal_moves = tables::attacks<KNIGHT>(knight_square, them_pieces | us_pieces) & ~us_pieces;
 		Bitboard mobility_squares = pseudo_legal_moves & ~them_pawn_attacks;
-		Bitboard forward_mobility = mobility_squares & forward_rank_table[rank][color];
+		Bitboard forward_mobility = mobility_squares & FORWARD_RANK_TABLE[rank][color];
 
 		score += KNIGHT_MOBILITY[pop_count(mobility_squares)];
 		if constexpr (do_trace) trace.knight_mobility[pop_count(mobility_squares)][color] += 1;

@@ -28,7 +28,22 @@ constexpr array<array<Bitboard, 2>, NRANKS> generate_forward_rank_table() {
 	return forward_rank_table;
 }
 
-constexpr auto forward_rank_table = generate_forward_rank_table();
+constexpr auto FORWARD_RANK_TABLE = generate_forward_rank_table();
+
+constexpr array<Bitboard, NFILES> KING_FLANKS = {
+		MASK_FILE[AFILE] | MASK_FILE[BFILE] | MASK_FILE[CFILE],
+
+		MASK_FILE[AFILE] | MASK_FILE[BFILE] | MASK_FILE[CFILE] | MASK_FILE[DFILE],
+		MASK_FILE[AFILE] | MASK_FILE[BFILE] | MASK_FILE[CFILE] | MASK_FILE[DFILE],
+
+		MASK_FILE[CFILE] | MASK_FILE[DFILE] | MASK_FILE[EFILE] | MASK_FILE[FFILE],
+		MASK_FILE[CFILE] | MASK_FILE[DFILE] | MASK_FILE[EFILE] | MASK_FILE[FFILE],
+
+		MASK_FILE[EFILE] | MASK_FILE[FFILE] | MASK_FILE[GFILE] | MASK_FILE[HFILE],
+		MASK_FILE[EFILE] | MASK_FILE[FFILE] | MASK_FILE[GFILE] | MASK_FILE[HFILE],
+
+		MASK_FILE[FFILE] | MASK_FILE[GFILE] | MASK_FILE[HFILE]
+};
 
 template<Color C>
 constexpr Bitboard forward_files(const Bitboard b) {
