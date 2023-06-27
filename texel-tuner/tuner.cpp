@@ -313,7 +313,7 @@ static void update_single_gradient(parameters_t& gradient, const Entry& entry, c
     const tune_t res = (entry.wdl - sig) * sig * (1 - sig);
 
     const auto mg_base = res * (entry.phase / static_cast<tune_t>(24));
-    const auto eg_base = res * (1 - mg_base);
+    const auto eg_base = res - mg_base;
 
     for (const auto& coefficient : entry.coefficients) {
         gradient[coefficient.index][static_cast<int32_t>(PhaseStages::Midgame)] += mg_base * coefficient.value;
