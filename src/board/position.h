@@ -117,15 +117,15 @@ public:
 		return occupancy<BLACK>();
 	}
 
-	inline Bitboard occupancy(Color color, PieceType pt) {
+	inline Bitboard occupancy(Color color, PieceType pt) const {
 		return pieces[make_piece(color, pt)];
 	}
 
-	inline Bitboard occupancy(PieceType pt) {
+	inline Bitboard occupancy(PieceType pt) const {
 		return pieces[make_piece(WHITE, pt)] | pieces[make_piece(BLACK, pt)];
 	}
 
-	[[nodiscard]] inline Bitboard occupancy() {
+	[[nodiscard]] inline Bitboard occupancy() const {
 		return occupancy<WHITE>() | occupancy<BLACK>();
 	}
 

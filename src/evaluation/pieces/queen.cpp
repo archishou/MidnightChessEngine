@@ -4,7 +4,7 @@
 #include "queen.h"
 
 template<Color color, DoTrace do_trace>
-Score evaluate_queens(const Position& board, Trace& trace) {
+Score evaluate_queens(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace) {
 	Bitboard queens = board.occupancy<color, QUEEN>();
 	const Bitboard us_pieces = board.occupancy<color>();
 	const Bitboard them_pieces = board.occupancy<~color>();
@@ -14,6 +14,7 @@ Score evaluate_queens(const Position& board, Trace& trace) {
 
 	const Square them_king = lsb(board.occupancy<~color, KING>());
 	const Bitboard them_king_ring = tables::attacks<KING>(them_king) & ~them_pieces;
+	const u64 them_king_virtual_mobility = eval_features.king_virtual_mobility[~color];
 
 	const Bitboard them_pawns = board.occupancy<~color, PAWN>();
 
@@ -55,8 +56,8 @@ Score evaluate_queens(const Position& board, Trace& trace) {
 		if constexpr (do_trace) trace.attacked_by_pawn[QUEEN][color] += pop_count(attacking_pawns);
 
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
-		score += KING_RING_ATTACK_BONUS[QUEEN] * pop_count(king_ring_attacks);
-		if constexpr (do_trace) trace.king_ring_bonus[QUEEN][color] += pop_count(king_ring_attacks);
+		score += KING_RING_ATTACK_QUEEN[pop_count(them_king_virtual_mobility)] * pop_count(king_ring_attacks);
+		if constexpr (do_trace) trace.king_ring_queen[pop_count(them_king_virtual_mobility)][color] += pop_count(king_ring_attacks);
 
 		const bool king_in_check = pseudo_legal_moves & square_to_bitboard(them_king);
 		score += CHECK_BONUS[QUEEN] * king_in_check;
@@ -68,7 +69,11 @@ Score evaluate_queens(const Position& board, Trace& trace) {
 	return score;
 }
 
-template Score evaluate_queens<WHITE, TRACE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_queens<BLACK, TRACE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_queens<WHITE, COMPUTE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_queens<BLACK, COMPUTE_EVAL>(const Position& board, Trace& trace);
+template Score
+evaluate_queens<WHITE, TRACE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_queens<BLACK, TRACE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_queens<WHITE, COMPUTE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_queens<BLACK, COMPUTE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
