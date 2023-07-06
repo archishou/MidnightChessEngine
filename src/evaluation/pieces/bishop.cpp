@@ -4,7 +4,7 @@
 #include "bishop.h"
 
 template<Color color, DoTrace do_trace>
-Score evaluate_bishops(const Position &board, Trace &trace) {
+Score evaluate_bishops(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace) {
 	Score score = SCORE_ZERO;
 
 	Bitboard bishops = board.occupancy<color, BISHOP>();
@@ -17,6 +17,7 @@ Score evaluate_bishops(const Position &board, Trace &trace) {
 
 	const Bitboard them_pawn_attacks = pawn_attacks<~color>(them_pawns);
 	const Bitboard xray_occupancy = us_pieces ^ bishops ^ board.occupancy<color, QUEEN>();
+	const u64 them_king_virtual_mobility = eval_features.king_virtual_mobility[~color];
 
 	const bool bishop_pair = pop_count(bishops) >> 1;
 	score += BISHOP_PAIR_BONUS * bishop_pair;
@@ -65,8 +66,8 @@ Score evaluate_bishops(const Position &board, Trace &trace) {
 		if constexpr (do_trace) trace.threats[BISHOP * (NPIECE_TYPES - 1) + QUEEN][color] += pop_count(attacked_queens);
 
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
-		score += KING_RING_ATTACK_BONUS[BISHOP] * pop_count(king_ring_attacks);
-		if constexpr (do_trace) trace.king_ring_bonus[BISHOP][color] += pop_count(king_ring_attacks);
+		score += KING_RING_ATTACK_BISHOP[pop_count(them_king_virtual_mobility)] * pop_count(king_ring_attacks);
+		if constexpr (do_trace) trace.king_ring_bishop[pop_count(them_king_virtual_mobility)][color] += pop_count(king_ring_attacks);
 
 		const bool king_in_check = pseudo_legal_moves & square_to_bitboard(them_king);
 		score += CHECK_BONUS[BISHOP] * king_in_check;
@@ -78,7 +79,11 @@ Score evaluate_bishops(const Position &board, Trace &trace) {
 	return score;
 }
 
-template Score evaluate_bishops<WHITE, TRACE_EVAL>(const Position &board, Trace &trace);
-template Score evaluate_bishops<BLACK, TRACE_EVAL>(const Position &board, Trace &trace);
-template Score evaluate_bishops<WHITE, COMPUTE_EVAL>(const Position &board, Trace &trace);
-template Score evaluate_bishops<BLACK, COMPUTE_EVAL>(const Position &board, Trace &trace);
+template Score
+evaluate_bishops<WHITE, TRACE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_bishops<BLACK, TRACE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_bishops<WHITE, COMPUTE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_bishops<BLACK, COMPUTE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);

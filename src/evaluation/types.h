@@ -33,6 +33,10 @@ inline int mg_value(Score s) {
 	return static_cast<int>(v);
 }
 
+struct SharedEvalFeatures {
+	array<Bitboard, NCOLORS> king_virtual_mobility{};
+};
+
 struct Trace {
 	int score={};
 
@@ -50,7 +54,6 @@ struct Trace {
 	short pawn_protection[NPIECE_TYPES][NCOLORS]{};
 	short attacked_by_pawn[NPIECE_TYPES][NCOLORS]{};
 	short threats[NPIECE_TYPES * NPIECE_TYPES][NCOLORS]{};
-	short king_ring_bonus[NPIECE_TYPES][NCOLORS]{};
 	short check_bonus[NPIECE_TYPES][NCOLORS]{};
 	short center_control[NPIECE_TYPES][NCOLORS]{};
 
@@ -71,6 +74,12 @@ struct Trace {
 	short bishop_forward_mobility[14][NCOLORS]{};
 	short rook_forward_mobility[15][NCOLORS]{};
 	short queen_forward_mobility[28][NCOLORS]{};
+
+	short king_ring_pawn[28][NCOLORS]{};
+	short king_ring_knight[28][NCOLORS]{};
+	short king_ring_bishop[28][NCOLORS]{};
+	short king_ring_rook[28][NCOLORS]{};
+	short king_ring_queen[28][NCOLORS]{};
 
 	short king_safe_line[28][NCOLORS]{};
 

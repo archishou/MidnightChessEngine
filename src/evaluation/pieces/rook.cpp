@@ -4,7 +4,7 @@
 #include "rook.h"
 
 template<Color color, DoTrace do_trace>
-Score evaluate_rooks(const Position& board, Trace& trace) {
+Score evaluate_rooks(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace) {
 	Score score = SCORE_ZERO;
 	Bitboard rooks = board.occupancy<color, ROOK>();
 
@@ -15,6 +15,7 @@ Score evaluate_rooks(const Position& board, Trace& trace) {
 	const Bitboard board_semi_open_files = semi_open_files<color>(board);
 	const Square them_king = lsb(board.occupancy<~color, KING>());
 	const Bitboard them_king_ring = tables::attacks<KING>(them_king) & ~them_pieces;
+	const u64 them_king_virtual_mobility = eval_features.king_virtual_mobility[~color];
 
 	const Bitboard them_pawn_attacks = pawn_attacks<~color>(them_pawns);
 	const Bitboard xray_occupancy = us_pieces ^ rooks ^ board.occupancy<color, QUEEN>();
@@ -56,8 +57,8 @@ Score evaluate_rooks(const Position& board, Trace& trace) {
 		if constexpr (do_trace) trace.threats[ROOK * (NPIECE_TYPES - 1) + QUEEN][color] += pop_count(attacked_queens);
 
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
-		score += KING_RING_ATTACK_BONUS[ROOK] * pop_count(king_ring_attacks);
-		if constexpr (do_trace) trace.king_ring_bonus[ROOK][color] += pop_count(king_ring_attacks);
+		score += KING_RING_ATTACK_ROOK[pop_count(them_king_virtual_mobility)] * pop_count(king_ring_attacks);
+		if constexpr (do_trace) trace.king_ring_rook[pop_count(them_king_virtual_mobility)][color] += pop_count(king_ring_attacks);
 
 		const bool king_in_check = pseudo_legal_moves & square_to_bitboard(them_king);
 		score += CHECK_BONUS[ROOK] * king_in_check;
@@ -69,7 +70,11 @@ Score evaluate_rooks(const Position& board, Trace& trace) {
 	return score;
 }
 
-template Score evaluate_rooks<WHITE, TRACE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_rooks<BLACK, TRACE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_rooks<WHITE, COMPUTE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_rooks<BLACK, COMPUTE_EVAL>(const Position& board, Trace& trace);
+template Score
+evaluate_rooks<WHITE, TRACE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_rooks<BLACK, TRACE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_rooks<WHITE, COMPUTE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_rooks<BLACK, COMPUTE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);

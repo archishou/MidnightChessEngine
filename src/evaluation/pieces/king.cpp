@@ -2,10 +2,11 @@
 // Created by Archishmaan Peyyety on 5/17/23.
 //
 #include "king.h"
+#include <iostream>
 
 
 template<Color color, DoTrace do_trace>
-Score evaluate_king(const Position& board, Trace& trace) {
+Score evaluate_king(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace) {
 	Score score = SCORE_ZERO;
 	const Bitboard board_open_files = open_files(board);
 	const Bitboard board_semi_open_files = semi_open_files<color>(board);
@@ -30,7 +31,7 @@ Score evaluate_king(const Position& board, Trace& trace) {
 		trace.semi_open_files[KING][color] += on_semi_open_file;
 	}
 
-	const Bitboard queen_attacks = tables::attacks<QUEEN>(king_square, board.occupancy<color>() | board.occupancy<PAWN>());
+	const Bitboard queen_attacks = eval_features.king_virtual_mobility[color];
 	const Bitboard safe_rank = MASK_RANK[relative_rank<color>(RANK1)];
 	score += KING_LINE_SAFETY[pop_count(~safe_rank & queen_attacks)];
 	if constexpr (do_trace) {
@@ -54,7 +55,11 @@ Score evaluate_king(const Position& board, Trace& trace) {
 	return score;
 }
 
-template Score evaluate_king<WHITE, TRACE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_king<BLACK, TRACE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_king<WHITE, COMPUTE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_king<BLACK, COMPUTE_EVAL>(const Position& board, Trace& trace);
+template Score
+evaluate_king<WHITE, TRACE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_king<BLACK, TRACE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_king<WHITE, COMPUTE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_king<BLACK, COMPUTE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);

@@ -757,3 +757,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=32MB
 LLR   | 2.97 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 15472 W: 4404 L: 4172 D: 6896
 ```
+
+### King Ring Attacks based on Enemy Openness
+https://chess.swehosting.se/test/2336/
+```
+ELO   | 6.17 +- 4.67 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=32MB
+LLR   | 2.96 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 12160 W: 3600 L: 3384 D: 5176
+```

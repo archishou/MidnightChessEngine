@@ -16,4 +16,4 @@ constexpr Bitboard PAWN_SHIELD[NKING_SIDES][NCOLORS] = {
 };
 
 template<Color Us, DoTrace do_trace>
-Score evaluate_king(const Position& board, Trace& trace);
+Score evaluate_king(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);

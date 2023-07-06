@@ -38,7 +38,6 @@ namespace Midnight {
 			TexelFeatures{"PAWN_PROTECTION", MISC, PAWN_PROTECTION, trace.pawn_protection, NEVAL_PTYPES},
 			TexelFeatures{"ATTACKED_BY_PAWN", MISC, ATTACKED_BY_PAWN, trace.attacked_by_pawn, NEVAL_PTYPES},
 			TexelFeatures{"THREATS", MISC, THREATS, trace.threats, NEVAL_PTYPES * NEVAL_PTYPES, NTHREAT_COLS},
-			TexelFeatures{"KING_RING_ATTACK_BONUS", MISC, KING_RING_ATTACK_BONUS, trace.king_ring_bonus, NEVAL_PTYPES},
 			TexelFeatures{"CHECK_BONUS", MISC, CHECK_BONUS, trace.check_bonus, NEVAL_PTYPES},
 			TexelFeatures{"CENTER_CONTROL", MISC, CENTER_CONTROL, trace.center_control, NEVAL_PTYPES},
 			TexelFeatures{"KING_PAWN_SHIELD", MISC, KING_PAWN_SHIELD, trace.king_pawn_shield, 2},
@@ -52,6 +51,12 @@ namespace Midnight {
 			TexelFeatures{"BISHOP_FORWARD_MOBILITY", MISC, BISHOP_FORWARD_MOBILITY, trace.bishop_forward_mobility, NBISHOP_MOBILITY},
 			TexelFeatures{"ROOK_FORWARD_MOBILITY", MISC, ROOK_FORWARD_MOBILITY, trace.rook_forward_mobility, NROOK_MOBILITY},
 			TexelFeatures{"QUEEN_FORWARD_MOBILITY", MISC, QUEEN_FORWARD_MOBILITY, trace.queen_forward_mobility, NQUEEN_MOBILITY},
+
+			TexelFeatures{"KING_RING_ATTACK_PAWN", MISC, KING_RING_ATTACK_PAWN, trace.king_ring_pawn, NQUEEN_MOBILITY},
+			TexelFeatures{"KING_RING_ATTACK_KNIGHT", MISC, KING_RING_ATTACK_KNIGHT, trace.king_ring_knight, NQUEEN_MOBILITY},
+			TexelFeatures{"KING_RING_ATTACK_BISHOP", MISC, KING_RING_ATTACK_BISHOP, trace.king_ring_bishop, NQUEEN_MOBILITY},
+			TexelFeatures{"KING_RING_ATTACK_ROOK", MISC, KING_RING_ATTACK_ROOK, trace.king_ring_rook, NQUEEN_MOBILITY},
+			TexelFeatures{"KING_RING_ATTACK_QUEEN", MISC, KING_RING_ATTACK_QUEEN, trace.king_ring_queen, NQUEEN_MOBILITY},
 
 			TexelFeatures{"KING_LINE_SAFETY", MISC, KING_LINE_SAFETY, trace.king_safe_line, NQUEEN_MOBILITY},
 

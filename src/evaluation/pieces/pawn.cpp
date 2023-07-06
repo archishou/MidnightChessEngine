@@ -7,7 +7,7 @@
 #include "pawn.h"
 
 template<Color color, DoTrace do_trace>
-Score evaluate_pawn_structure(const Position& board, Trace& trace) {
+Score evaluate_pawn_structure(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace) {
 	Score score = SCORE_ZERO;
 
 	Bitboard pawns = board.occupancy<color, PAWN>();
@@ -16,6 +16,7 @@ Score evaluate_pawn_structure(const Position& board, Trace& trace) {
 	const Bitboard them_pieces = board.occupancy<~color>();
 	const Square them_king = lsb(board.occupancy<~color, KING>());
 	const Bitboard them_king_ring = tables::attacks<KING>(them_king) & ~them_pieces;
+	const u64 them_king_virtual_mobility = eval_features.king_virtual_mobility[~color];
 
 	// Doubled pawn eval
 	score += DOUBLED_PAWN_PENALTY * pop_count(doubled_pawns<color>(board));
@@ -43,8 +44,8 @@ Score evaluate_pawn_structure(const Position& board, Trace& trace) {
 		const Bitboard pseudo_legal_moves = tables::attacks<PAWN, color>(pawn_square) & ~us_pieces;
 
 		const Bitboard king_ring_attacks = pseudo_legal_moves & them_king_ring;
-		score += KING_RING_ATTACK_BONUS[PAWN] * pop_count(king_ring_attacks);
-		if constexpr (do_trace) trace.king_ring_bonus[PAWN][color] += pop_count(king_ring_attacks);
+		score += KING_RING_ATTACK_PAWN[pop_count(them_king_virtual_mobility)] * pop_count(king_ring_attacks);
+		if constexpr (do_trace) trace.king_ring_pawn[pop_count(them_king_virtual_mobility)][color] += pop_count(king_ring_attacks);
 
 		const bool king_in_check = pseudo_legal_moves & square_to_bitboard(them_king);
 		score += CHECK_BONUS[PAWN] * king_in_check;
@@ -87,7 +88,11 @@ Score evaluate_pawn_structure(const Position& board, Trace& trace) {
 	return score;
 }
 
-template Score evaluate_pawn_structure<WHITE, TRACE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_pawn_structure<BLACK, TRACE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_pawn_structure<WHITE, COMPUTE_EVAL>(const Position& board, Trace& trace);
-template Score evaluate_pawn_structure<BLACK, COMPUTE_EVAL>(const Position& board, Trace& trace);
+template Score
+evaluate_pawn_structure<WHITE, TRACE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_pawn_structure<BLACK, TRACE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_pawn_structure<WHITE, COMPUTE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+template Score
+evaluate_pawn_structure<BLACK, COMPUTE_EVAL>(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
