@@ -16,8 +16,8 @@ namespace Midnight {
 		Trace trace{};
 		if (!fen.empty()) {
 			p.set_fen(fen);
-			if (p.turn() == BLACK) trace = evaluate<BLACK, EnableTrace>(p);
-			else trace = evaluate<WHITE, EnableTrace>(p);
+			if (p.turn() == BLACK) trace = evaluate<BLACK, TRACE_EVAL>(p);
+			else trace = evaluate<WHITE, TRACE_EVAL>(p);
 		}
 
 		std::tuple features = {
