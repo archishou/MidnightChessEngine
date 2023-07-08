@@ -12,65 +12,43 @@
 #include "iostream"
 
 template<Color color>
-constexpr int compute_game_phase(const Position& board) {
-	int game_phase = 0;
-	for (PieceType piece_type : { KNIGHT, BISHOP, ROOK, QUEEN }) {
-		Bitboard piece_bitboard_us = board.occupancy(color, piece_type);
-		Bitboard piece_bitboard_them = board.occupancy(~color, piece_type);
-		game_phase += GAME_PHASE_BONUS[piece_type] * pop_count(piece_bitboard_us);
-		game_phase += GAME_PHASE_BONUS[piece_type] * pop_count(piece_bitboard_them);
-	}
-	return game_phase;
-}
+std::pair<Score, i32>compute_piece_count_phase(const Position& board);
 
-inline SharedEvalFeatures generate_shared_eval(const Position& board) {
-	SharedEvalFeatures eval_features{};
+SharedEvalFeatures generate_shared_eval(const Position& board);
 
-	const Square white_king_square = lsb(board.occupancy<WHITE, KING>());
-	const Square black_king_square = lsb(board.occupancy<BLACK, KING>());
-	const Bitboard pawn_occ = board.occupancy<PAWN>();
-
-	eval_features.king_virtual_mobility[WHITE] = tables::attacks<QUEEN>(white_king_square, board.occupancy<WHITE>() | pawn_occ);
-	eval_features.king_virtual_mobility[BLACK] = tables::attacks<QUEEN>(black_king_square, board.occupancy<BLACK>() | pawn_occ);
-	return eval_features;
-}
+i32 scale_eval(i32 eval, i32 piece_count);
 
 template<Color color, DoTrace do_trace>
-constexpr Score evaluate_single_side(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace) {
-	return evaluate_pawn_structure<color, do_trace>(board, eval_features, trace) +
-		   evaluate_knight<color, do_trace>(board, eval_features, trace) +
-		   evaluate_bishops<color, do_trace>(board, eval_features, trace) +
-		   evaluate_rooks<color, do_trace>(board, eval_features, trace) +
-			evaluate_queens<color, do_trace>(board, eval_features, trace) +
-			evaluate_king<color, do_trace>(board, eval_features, trace);
-}
+Score evaluate_single_side(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
 
-template<Color color, typename do_trace = DisableTrace>
-constexpr do_trace evaluate(const Position& board) {
+template<Color color, bool do_trace = COMPUTE_EVAL>
+auto evaluate(const Position& board) {
 	Trace trace{};
 
-	constexpr bool trace_enabled = std::is_same_v<do_trace, EnableTrace>;
-
-	const int game_phase = compute_game_phase<color>(board);
+	const auto [material, game_phase] = compute_piece_count_phase<color>(board);
 	const SharedEvalFeatures eval_features = generate_shared_eval(board);
 
-	Score us = evaluate_single_side<color, trace_enabled>(board, eval_features, trace);
-	Score them = evaluate_single_side<~color, trace_enabled>(board, eval_features, trace);
+	Score us = evaluate_single_side<color, do_trace>(board, eval_features, trace);
+	Score them = evaluate_single_side<~color, do_trace>(board, eval_features, trace);
 	Score total = us - them + TEMPO;
-	if constexpr (trace_enabled) trace.tempo[color] += 1;
+	if constexpr (do_trace) trace.tempo[color] += 1;
 
-	int mg_phase = std::min(game_phase, 24);
-	int eg_phase = 24 - mg_phase;
+	i32 mg_phase = std::min(game_phase, 24);
+	i32 eg_phase = 24 - mg_phase;
 
-	const int mg_score = mg_value(total);
-	const int eg_score = eg_value(total);
-	int eval = (mg_score * mg_phase + eg_score * eg_phase) / 24;
+	const i32 mg_score = mg_value(total);
+	const i32 eg_score = eg_value(total);
+	const i32 mg_material = mg_value(material);
+	const i32 eg_material = eg_value(material);
 
-	if constexpr (trace_enabled) {
+	i32 eval = (mg_score * mg_phase + eg_score * eg_phase) / 24;
+	i32 scaled_material = (mg_material * mg_phase + eg_material * eg_phase) / 24;
+
+	if constexpr (do_trace) {
 		if constexpr (color == BLACK) eval = -eval;
 		trace.score = eval;
 		return trace;
 	} else {
-		return eval;
+		return scale_eval(eval, scaled_material);
 	}
 }

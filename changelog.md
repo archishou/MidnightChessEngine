@@ -766,3 +766,12 @@ SPRT  | 8.0+0.08s Threads=1 Hash=32MB
 LLR   | 2.96 (-2.94, 2.94) [0.00, 5.00]
 GAMES | N: 12160 W: 3600 L: 3384 D: 5176
 ```
+
+### Scale eval based on remaining material
+https://chess.swehosting.se/test/2430/
+```
+ELO   | 8.99 +- 5.97 (95%)
+SPRT  | 8.0+0.08s Threads=1 Hash=32MB
+LLR   | 2.98 (-2.94, 2.94) [0.00, 5.00]
+GAMES | N: 7000 W: 1974 L: 1793 D: 3233
+```

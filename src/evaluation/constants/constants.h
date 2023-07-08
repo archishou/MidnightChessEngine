@@ -2,7 +2,7 @@
 #include "misc.h"
 #include "psts.h"
 
-// If this is updated be sure compute_game_phase loop is also updated. Currently only checks non-zeros.
+// If this is updated be sure compute_piece_count_phase loop is also updated. Currently only checks non-zeros.
 constexpr int GAME_PHASE_BONUS[NPIECE_TYPES] = {
 		0, 1, 1, 2, 4, 0
 };

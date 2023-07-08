@@ -92,5 +92,3 @@ struct Trace {
 using DoTrace = bool;
 constexpr DoTrace TRACE_EVAL = true;
 constexpr DoTrace COMPUTE_EVAL = false;
-using EnableTrace = Trace;
-using DisableTrace = int;
