@@ -18,6 +18,11 @@ void TranspositionTable::reset_table() {
 	for (auto & i : transposition_table) {
 		i = default_entry;
 	}
+
+	PawnCacheEntry default_pawn_entry{};
+	for (auto &i : pawn_cache) {
+		i = default_pawn_entry;
+	}
 }
 
 i32 TranspositionTable::correct_mate_for_retrieval(i32 score, i32 ply) {
@@ -32,9 +37,9 @@ i32 TranspositionTable::correct_mate_for_storage(i32 score, i32 ply) {
 	return score;
 }
 
-u64 TranspositionTable::get_index(u64 zobrist_hash) {
-	return zobrist_hash % entry_count();
-}
+u64 TranspositionTable::tt_get_index(u64 zobrist_hash) { return zobrist_hash % tt_entry_count(); }
+
+u64 TranspositionTable::pawn_cache_get_index(u64 zobrist_hash) { return zobrist_hash % pawn_cache_entry_count(); }
 
 TTNodeType TranspositionTable::get_node_type(i32 alpha_initial, i32 beta, i32 value) {
 	TTNodeType node_type;
@@ -44,11 +49,10 @@ TTNodeType TranspositionTable::get_node_type(i32 alpha_initial, i32 beta, i32 va
 	return node_type;
 }
 
-void TranspositionTable::put(ZobristHash hash, i16 depth, i32 score, i32 ply, Move best_move, bool pv_node,
-							 TTNodeType node_type) {
-
+void TranspositionTable::put(ZobristHash hash, i16 depth, i32 score, i32 ply,
+							 Move best_move, bool pv_node, TTNodeType node_type) {
 	score = correct_mate_for_storage(score, ply);
-	TranspositionTableEntry previous_entry = transposition_table[get_index(hash)];
+	TranspositionTableEntry previous_entry = transposition_table[tt_get_index(hash)];
 
 	if (node_type == EXACT ||
 		previous_entry.zobrist_hash != hash ||
@@ -59,13 +63,20 @@ void TranspositionTable::put(ZobristHash hash, i16 depth, i32 score, i32 ply, Mo
 		entry.value = score;
 		entry.node_type = node_type;
 		entry.best_move = best_move;
-		transposition_table[get_index(hash)] = entry;
+		transposition_table[tt_get_index(hash)] = entry;
 	}
+}
+
+void TranspositionTable::pawn_table_put(ZobristHash hash, Score score) {
+	PawnCacheEntry entry{};
+	entry.score = score;
+	entry.zobrist_hash = hash;
+	pawn_cache[pawn_cache_get_index(hash)] = entry;
 }
 
 TranspositionTableSearchResults
 TranspositionTable::probe_for_move_ordering(ZobristHash hash) {
-	TranspositionTableEntry entry = transposition_table[get_index(hash)];
+	TranspositionTableEntry entry = transposition_table[tt_get_index(hash)];
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
 	if (entry.zobrist_hash == hash) {
@@ -77,11 +88,10 @@ TranspositionTable::probe_for_move_ordering(ZobristHash hash) {
 
 TranspositionTableSearchResults
 TranspositionTable::probe_for_search(ZobristHash hash, i32 depth, i32 ply) {
-
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
 
-	TranspositionTableEntry entry = transposition_table[get_index(hash)];
+	TranspositionTableEntry entry = transposition_table[tt_get_index(hash)];
 	if (entry.zobrist_hash == hash && entry.depth >= depth && ply != 0) {
 		results.entry_found = true;
 		results.entry = entry;
@@ -91,13 +101,25 @@ TranspositionTable::probe_for_search(ZobristHash hash, i32 depth, i32 ply) {
 }
 
 TranspositionTableSearchResults TranspositionTable::probe_eval(ZobristHash hash, i32 ply) {
-	TranspositionTableEntry entry = transposition_table[get_index(hash)];
 	TranspositionTableSearchResults results;
 	results.entry_found = false;
+
+	TranspositionTableEntry entry = transposition_table[tt_get_index(hash)];
 	if (entry.zobrist_hash == hash) {
 		results.entry_found = true;
 		results.entry = entry;
 		results.entry.value = correct_mate_for_retrieval(results.entry.value, ply);
+	}
+	return results;
+}
+
+PawnCacheProbeResults TranspositionTable::probe_pawn_cache(ZobristHash pawn_hash) {
+	PawnCacheEntry entry = pawn_cache[pawn_cache_get_index(pawn_hash)];
+	PawnCacheProbeResults results{};
+	results.entry_found = false;
+	if (entry.zobrist_hash == pawn_hash) {
+		results.entry_found = true;
+		results.entry = entry;
 	}
 	return results;
 }
@@ -114,12 +136,16 @@ void TranspositionTable::resize(i32 mb) {
 	reset_table();
 }
 
-size_t TranspositionTable::entry_count() {
+usize TranspositionTable::tt_entry_count() {
 	return transposition_table.size();
 }
 
+usize TranspositionTable::pawn_cache_entry_count() {
+	return pawn_cache.size();
+}
+
 void TranspositionTable::prefetch(ZobristHash hash) {
-	__builtin_prefetch(&transposition_table[get_index(hash)]);
+	__builtin_prefetch(&transposition_table[tt_get_index(hash)]);
 }
 
 TranspositionTable t_table = TranspositionTable();

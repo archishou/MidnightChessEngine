@@ -31,6 +31,7 @@ private:
 	u16 fifty_move_rule{};
 public:
 	ZobristHash hash{};
+	ZobristHash pawn_hash{};
 
 public:
 	PositionState() = default;
@@ -70,6 +71,7 @@ public:
 	[[nodiscard]] inline u16 fifty_move_rule() const { return state_history.peek().fifty_move_rule; }
 	[[nodiscard]] inline Square ep_square() const { return state_history.peek().ep_square; }
 	[[nodiscard]] inline ZobristHash hash() const { return state_history.peek().hash; }
+	[[nodiscard]] inline ZobristHash pawn_hash() const { return state_history.peek().pawn_hash; }
 	[[nodiscard]] inline Bitboard from_to() const { return state_history.peek().from_to; }
 	[[nodiscard]] inline Color turn() const { return side; }
 

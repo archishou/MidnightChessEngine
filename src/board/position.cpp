@@ -29,16 +29,19 @@ void Position::place_piece(Piece piece, Square square) {
 	pieces[piece] |= square_to_bitboard(square);
 	board[square] = piece;
 	if constexpr (update_hash) {
+		if (type_of(piece) == PAWN) state_history.top().pawn_hash ^= ZOBRIST_PIECE_SQUARE[piece][square];
 		state_history.top().hash ^= ZOBRIST_PIECE_SQUARE[piece][square];
 	}
 }
 
 template<bool update_hash>
 void Position::remove_piece(Square square) {
+	Piece piece = piece_at(square);
 	if constexpr (update_hash) {
-		state_history.top().hash ^= ZOBRIST_PIECE_SQUARE[piece_at(square)][square];
+		if (type_of(piece) == PAWN) state_history.top().pawn_hash ^= ZOBRIST_PIECE_SQUARE[piece][square];
+		state_history.top().hash ^= ZOBRIST_PIECE_SQUARE[piece][square];
 	}
-	pieces[piece_at(square)] &= ~square_to_bitboard(square);
+	pieces[piece] &= ~square_to_bitboard(square);
 	board[square] = NO_PIECE;
 }
 
@@ -181,6 +184,7 @@ void Position::play(Move move) {
 	next_state.from_to = state_history.peek().from_to | square_to_bitboard(move.from()) | square_to_bitboard(move.to());
 	next_state.captured = piece_at(move.to());
 	next_state.hash = state_history.peek().hash;
+	next_state.pawn_hash = state_history.peek().pawn_hash;
 	next_state.fifty_move_rule = state_history.peek().fifty_move_rule + 1;
 	next_state.ep_square = NO_SQUARE;
 
@@ -283,6 +287,7 @@ void Position::play_null() {
 	next_state.from_to = state_history.peek().from_to;
 	next_state.captured = NO_PIECE;
 	next_state.hash = state_history.peek().hash;
+	next_state.pawn_hash = state_history.peek().pawn_hash;
 	next_state.fifty_move_rule = state_history.peek().fifty_move_rule + 1;
 	next_state.ep_square = NO_SQUARE;
 

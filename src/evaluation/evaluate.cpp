@@ -38,7 +38,7 @@ i32 scale_eval(i32 eval, Score material) {
 
 template<Color color, DoTrace do_trace>
 Score evaluate_single_side(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace) {
-	return evaluate_pawn_structure<color, do_trace>(board, eval_features, trace) +
+	return evaluate_un_cachable_pawn_struct<color, do_trace>(board, eval_features, trace) +
 		   evaluate_knight<color, do_trace>(board, eval_features, trace) +
 		   evaluate_bishops<color, do_trace>(board, eval_features, trace) +
 		   evaluate_rooks<color, do_trace>(board, eval_features, trace) +

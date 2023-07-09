@@ -7,4 +7,7 @@
 #include "../constants/constants.h"
 
 template<Color color, DoTrace do_trace>
-Score evaluate_pawn_structure(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+Score evaluate_un_cachable_pawn_struct(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);
+
+template<Color color, DoTrace do_trace>
+Score evaluate_cachable_pawn_struct(const Position &board, const SharedEvalFeatures &eval_features, Trace &trace);

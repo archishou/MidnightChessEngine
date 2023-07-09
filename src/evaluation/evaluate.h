@@ -10,6 +10,7 @@
 #include "pieces/queen.h"
 #include "pieces/king.h"
 #include "iostream"
+#include "../move_search/tables/transposition_table.h"
 
 template<Color color>
 std::pair<Score, i32>compute_piece_count_phase(const Position& board);
@@ -28,9 +29,22 @@ auto evaluate(const Position& board) {
 	const auto [material, game_phase] = compute_piece_count_phase<color>(board);
 	const SharedEvalFeatures eval_features = generate_shared_eval(board);
 
+	Score cached_pawn_score;
+	auto pawn_probe_results = t_table.probe_pawn_cache(board.pawn_hash());
+	if (pawn_probe_results.entry_found && pawn_probe_results.entry.zobrist_hash == board.pawn_hash()) {
+		cached_pawn_score = pawn_probe_results.entry.score;
+		if (color == BLACK) cached_pawn_score = -cached_pawn_score;
+	} else {
+		Score us_cached = evaluate_cachable_pawn_struct<color, do_trace>(board, eval_features, trace);
+		Score them_cached = evaluate_cachable_pawn_struct<~color, do_trace>(board, eval_features, trace);
+		cached_pawn_score = us_cached - them_cached;
+		t_table.pawn_table_put(board.pawn_hash(), color == WHITE ? cached_pawn_score : -cached_pawn_score);
+	}
+
 	Score us = evaluate_single_side<color, do_trace>(board, eval_features, trace);
 	Score them = evaluate_single_side<~color, do_trace>(board, eval_features, trace);
-	Score total = us - them + TEMPO;
+
+	Score total = cached_pawn_score + us - them + TEMPO;
 	if constexpr (do_trace) trace.tempo[color] += 1;
 
 	i32 mg_phase = std::min(game_phase, 24);

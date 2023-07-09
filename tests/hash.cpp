@@ -11,10 +11,11 @@ TEST_SUITE_BEGIN("hash");
 
 template<Color Us>
 void perft_hash(Position& p, unsigned int depth) {
-	MoveList<Us, ALL> list(p);
+	MoveList<Us, MoveGenerationType::ALL> list(p);
 	if (depth == 1) return;
 	for (Move move : list) {
 		ZobristHash initial_hash = p.hash();
+		ZobristHash pawn_hash = p.pawn_hash();
 		Position b2(p.fen());
 		CHECK_EQ(p.hash(), b2.hash());
 
@@ -24,6 +25,8 @@ void perft_hash(Position& p, unsigned int depth) {
 
 		CHECK_EQ(initial_hash, p.hash());
 		CHECK_EQ(initial_hash, b2.hash());
+		CHECK_EQ(pawn_hash, p.pawn_hash());
+		CHECK_EQ(pawn_hash, b2.pawn_hash());
 	}
 }
 

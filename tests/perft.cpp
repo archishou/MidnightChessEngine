@@ -10,7 +10,7 @@ template<Color Us>
 u64 perft_node_count(Position& p, i32 depth) {
 	u64 nodes = 0;
 
-	MoveList<Us, ALL> list(p);
+	MoveList<Us, MoveGenerationType::ALL> list(p);
 	if (depth == 1) return list.size();
 	for (Move move : list) {
 		p.play<Us>(move);
