@@ -33,12 +33,14 @@ auto evaluate(const Position& board) {
 	auto pawn_probe_results = t_table.probe_pawn_cache(board.pawn_hash());
 	if (pawn_probe_results.entry_found && pawn_probe_results.entry.zobrist_hash == board.pawn_hash()) {
 		cached_pawn_score = pawn_probe_results.entry.score;
-		if (color == BLACK) cached_pawn_score = -cached_pawn_score;
+		if constexpr (color == BLACK) cached_pawn_score = -cached_pawn_score;
 	} else {
 		Score us_cached = evaluate_cachable_pawn_struct<color, do_trace>(board, eval_features, trace);
 		Score them_cached = evaluate_cachable_pawn_struct<~color, do_trace>(board, eval_features, trace);
 		cached_pawn_score = us_cached - them_cached;
-		t_table.pawn_table_put(board.pawn_hash(), color == WHITE ? cached_pawn_score : -cached_pawn_score);
+		Score push_to_cache = cached_pawn_score;
+		if constexpr (color == BLACK) push_to_cache = -push_to_cache;
+		t_table.pawn_table_put(board.pawn_hash(), push_to_cache);
 	}
 
 	Score us = evaluate_single_side<color, do_trace>(board, eval_features, trace);

@@ -81,7 +81,7 @@ void bench() {
 		std::cout << "\nPosition: " << idx + 1 << " " << BENCH_FENS[idx] << std::endl;
 
 		BestMoveSearchParameters parameters = {
-				.depth = 14,
+				.depth = 21,
 				.hard_time_limit = 86'400'000, // 1 Day
 				.soft_time_limit = 86'400'000,
 				.debug_info = true,
