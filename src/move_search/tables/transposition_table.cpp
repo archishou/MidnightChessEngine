@@ -144,8 +144,9 @@ usize TranspositionTable::pawn_cache_entry_count() {
 	return pawn_cache.size();
 }
 
-void TranspositionTable::prefetch(ZobristHash hash) {
-	__builtin_prefetch(&transposition_table[tt_get_index(hash)]);
+void TranspositionTable::prefetch(Position &board) {
+	__builtin_prefetch(&transposition_table[tt_get_index(board.hash())]);
+	__builtin_prefetch(&pawn_cache[pawn_cache_get_index(board.pawn_hash())]);
 }
 
 TranspositionTable t_table = TranspositionTable();

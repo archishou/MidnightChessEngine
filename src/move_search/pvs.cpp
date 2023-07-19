@@ -51,7 +51,7 @@ int scale_soft_time_limit(BestMoveSearchParameters &params, PVSData& ab_results,
 template<Color color>
 i32 q_search(Position &board, i32 ply, i32 alpha, i32 beta) {
 
-	t_table.prefetch(board.hash());
+	t_table.prefetch(board);
 
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
@@ -114,7 +114,7 @@ i32 q_search(Position &board, i32 ply, i32 alpha, i32 beta) {
 template<Color color>
 i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) {
 
-	t_table.prefetch(board.hash());
+	t_table.prefetch(board);
 
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 

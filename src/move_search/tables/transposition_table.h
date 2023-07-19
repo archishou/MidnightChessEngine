@@ -3,6 +3,7 @@
 #include "../search_constants.h"
 #include "../../move_gen/types/move.h"
 #include "../../evaluation/types.h"
+#include "../../board/position.h"
 #include <vector>
 
 enum class TTNodeType {
@@ -48,7 +49,7 @@ public:
 
 	void reset_table();
 	void resize(i32 mb);
-	void prefetch(ZobristHash hash);
+	void prefetch(Position &board);
 
 	TranspositionTableSearchResults probe_for_move_ordering(ZobristHash hash);
 	TranspositionTableSearchResults probe_for_search(ZobristHash hash, i32 depth, i32 ply);
