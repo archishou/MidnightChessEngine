@@ -11,6 +11,7 @@ using ScoredMoves = std::vector<ScoredMove>;
 
 struct SearchParameters {
 	i16 depth = MAX_DEPTH;
+	i64 node_limit = -1;
 	i32 hard_time_limit = DEFAULT_SEARCH_TIME;
 	i32 soft_time_limit = DEFAULT_SEARCH_TIME;
 	bool debug_info = false;
@@ -39,11 +40,13 @@ struct SearchData {
 	Move final_best_move;
 	bool search_completed{};
 	i32 value{};
+	i32 final_value{};
 	// triangular-table-table
 	PV pv{};
 	u64 nodes_searched{};
 	i32 seldepth{};
 
 	i32 time_limit{};
-
+	i64 hard_node_limit = -1;
+	i64 soft_node_limit = -1;
 };

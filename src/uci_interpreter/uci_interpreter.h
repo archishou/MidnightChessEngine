@@ -13,13 +13,11 @@
 #include "../move_search/types.h"
 #include "../move_search/pvs.h"
 
-struct ReadUCIParameters {
-	bool debug_info = true;
-};
-
 void initialize_uci(Position& p);
 void uci_position(Position& board, const string& input_line);
 void parse_move_time(Color side_to_play, const string& move_time_s, SearchParameters& params);
-void uci_go(ThreadData &tdata, Position &board, const string &input_line, ReadUCIParameters &uci_parameters);
+void uci_go(ThreadData &tdata, Position &board, const string &input_line, SearchParameters &sparams);
 void bench();
+Position datagen_random_game();
+void single_thread_datagen(const string& output_file_path);
 void read_uci();

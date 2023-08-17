@@ -23,6 +23,7 @@ bool position_is_draw(Position &board, const int ply) {
 void update_best_move_results(SearchData &sdata, int sub_depth, bool debug) {
 	Line pv{};
 	sdata.final_best_move = sdata.best_move;
+	sdata.final_value = sdata.value;
 	for (auto i = 0; i < sdata.pv.length[0]; i++) {
 		pv[i] = sdata.pv.table[0][i];
 	}
@@ -52,8 +53,8 @@ i32 q_search(SearchData &sdata, ThreadData &tdata, Position &board, i32 ply, i32
 
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
-	if (sdata.nodes_searched % 1024 == 0 &&
-		time_elapsed_exceeds(sdata.time_limit, TimeResolution::Milliseconds)) {
+	if ((sdata.nodes_searched % 1024 == 0 && time_elapsed_exceeds(sdata.time_limit, TimeResolution::Milliseconds)) ||
+		(sdata.nodes_searched > sdata.hard_node_limit && sdata.hard_node_limit != -1)) {
 
 		sdata.search_completed = false;
 		return 0;
@@ -115,8 +116,8 @@ i32 pvs(SearchData &sdata, ThreadData &tdata, Position &board, i16 depth, i32 pl
 
 	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
 
-	if (sdata.nodes_searched % 1024 == 0 &&
-		time_elapsed_exceeds(sdata.time_limit, TimeResolution::Milliseconds)) {
+	if ((sdata.nodes_searched % 1024 == 0 && time_elapsed_exceeds(sdata.time_limit, TimeResolution::Milliseconds)) ||
+		(sdata.nodes_searched > sdata.hard_node_limit && sdata.hard_node_limit != -1)) {
 
 		sdata.search_completed = false;
 		return 0;
@@ -235,16 +236,16 @@ i32 pvs(SearchData &sdata, ThreadData &tdata, Position &board, i16 depth, i32 pl
 		if (pv_node && move_idx == 0) {
 			new_value = -pvs<~color>(sdata, tdata, board, search_depth - 1, ply + 1, -beta, -alpha, false);
 		} else {
-			new_value = -pvs<~color>(sdata, tdata, board, search_depth - reduction - 1, ply + 1, -alpha - 1,
-									 -alpha, true);
+			new_value = -pvs<~color>(sdata, tdata, board, search_depth - reduction - 1,
+									 ply + 1, -alpha - 1, -alpha, true);
 
 			if (new_value > alpha && reduction > 0)
-				new_value = -pvs<~color>(sdata, tdata, board, search_depth - 1, ply + 1, -alpha - 1, -alpha,
-										 true);
+				new_value = -pvs<~color>(sdata, tdata, board, search_depth - 1,
+										 ply + 1, -alpha - 1, -alpha, true);
 
 			if (new_value > alpha && new_value < beta)
-				new_value = -pvs<~color>(sdata, tdata, board, search_depth - 1, ply + 1, -beta, -alpha,
-										 false);
+				new_value = -pvs<~color>(sdata, tdata, board, search_depth - 1,
+										 ply + 1, -beta, -alpha, false);
 		}
 
 		board.undo<color>(legal_move);
@@ -322,7 +323,8 @@ void iterative_deepening(SearchData &sdata, ThreadData &tdata, Position &board, 
 	sdata.nodes_searched = 0;
 	for (i32 sub_depth = 1; sub_depth <= params.depth; sub_depth++) {
 		i32 soft_limit = scale_soft_time_limit(params, sdata, sub_depth);
-		if (time_elapsed_exceeds(soft_limit, TimeResolution::Milliseconds)) {
+		if (time_elapsed_exceeds(soft_limit, TimeResolution::Milliseconds) ||
+			(sdata.nodes_searched > sdata.soft_node_limit && sdata.soft_node_limit != -1)) {
 			break;
 		}
 		aspiration_windows<color>(sdata, tdata, board, sdata.value, sub_depth, params.hard_time_limit);
