@@ -5,6 +5,9 @@
 #include <algorithm>
 #include <utility>
 #include "../types.h"
+#include "../board/types/square.h"
+
+extern array<array<u64, NSQUARES>, NSQUARES> nodes_spent;
 
 // {Soft Limit, Hard Limit}
 using TimeBounds = std::pair<i32, i32>;
