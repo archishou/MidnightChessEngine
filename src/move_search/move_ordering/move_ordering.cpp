@@ -4,10 +4,6 @@
 
 #include "move_ordering.h"
 
-void initialize_move_sort_tables() {
-	init_history();
-}
-
 int get_piece_value(PieceType piece_type) {
 	switch (piece_type) {
 		case PAWN: return ORDERING_PAWN_VALUE;

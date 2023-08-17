@@ -11,13 +11,11 @@
 #include "../tables/transposition_table.h"
 #include "../../move_gen/move_generator.h"
 
-void initialize_move_sort_tables();
-
 int get_piece_value(PieceType piece_type);
 
 int hash_move_score(Move& move, Move& previous_best_move);
 
-int capture_move_score(Move move, Position& board);
+int capture_move_score(Move move, Position &board, ThreadData &tdata);
 
 int promotion_move_score(Move move);
 
@@ -82,31 +80,31 @@ bool static_exchange_eval(Position& board, Move move, const int threshold) {
 }
 
 template<Color color>
-int capture_move_score(Move move, Position& board) {
+int capture_move_score(Move move, Position &board, ThreadData &tdata) {
 	if (!move.is_capture()) return 0;
 	PieceType to_type = type_of(board.piece_at(move.to()));
 	PieceType from_type = type_of(board.piece_at(move.from()));
-	int cap_hist_score = capture_history[board.piece_at(move.from())][move.to()][board.piece_at(move.to())];
+	int cap_hist_score = tdata.capture_history[board.piece_at(move.from())][move.to()][board.piece_at(move.to())];
 	return (MVV_LVA_BONUS + cap_hist_score) * static_exchange_eval<color>(board, move, -107) +
 	        get_piece_value(to_type) - get_piece_value(from_type);
 }
 
 template<Color color>
-int history_score(Move &move, int ply, Position& board, PVSData& data) {
+int history_score(Move &move, int ply, Position &board, PVSData &data, ThreadData &tdata) {
 	if (!move.is_quiet()) return 0;
-	if (move == killers[ply][0]) return KILLER_MOVE_BONUS + 2000;
-	else if (move == killers[ply][1]) return KILLER_MOVE_BONUS + 1000;
+	if (move == tdata.killers[ply][0]) return KILLER_MOVE_BONUS + 2000;
+	else if (move == tdata.killers[ply][1]) return KILLER_MOVE_BONUS + 1000;
 
 	Move one_mv_ago = ply > 0 ? data.moves_made[ply - 1] : Move();
 	Move two_mv_ago = ply > 1 ? data.moves_made[ply - 2] : Move();
 
-	int one_mv_ago_score = continuation_history[board.piece_at(one_mv_ago.from())][one_mv_ago.to()][board.piece_at(move.from())][move.to()];
+	int one_mv_ago_score = tdata.continuation_history[board.piece_at(one_mv_ago.from())][one_mv_ago.to()][board.piece_at(move.from())][move.to()];
 	one_mv_ago_score = one_mv_ago != Move() ? one_mv_ago_score : 0;
 
-	int two_mv_ago_score = continuation_history[board.piece_at(two_mv_ago.from())][two_mv_ago.to()][board.piece_at(move.from())][move.to()];
+	int two_mv_ago_score = tdata.continuation_history[board.piece_at(two_mv_ago.from())][two_mv_ago.to()][board.piece_at(move.from())][move.to()];
 	two_mv_ago_score = two_mv_ago != Move() ? two_mv_ago_score : 0;
 
-	return history[color][move.from()][move.to()] + one_mv_ago_score + two_mv_ago_score;
+	return tdata.history[color][move.from()][move.to()] + one_mv_ago_score + two_mv_ago_score;
 }
 
 template<Color color>
@@ -118,7 +116,7 @@ int in_opponent_pawn_territory(Move move, Position& board) {
 }
 
 template<Color color, MoveGenerationType move_gen_type>
-ScoredMoves order_moves(MoveList<color, move_gen_type>& move_list, Position& board, int ply, PVSData& data) {
+ScoredMoves order_moves(MoveList<color, move_gen_type>& move_list, Position& board, int ply, PVSData& data, ThreadData& tdata) {
 	ScoredMoves scored_moves;
 	scored_moves.reserve(move_list.size());
 	Move previous_best_move = Move();
@@ -129,9 +127,9 @@ ScoredMoves order_moves(MoveList<color, move_gen_type>& move_list, Position& boa
 		scored_move.move = move;
 		int score = 0; //Higher score is likely a better move.
 		score += hash_move_score(move, previous_best_move);
-		score += capture_move_score<color>(move, board);
+		score += capture_move_score<color>(move, board, tdata);
 		score += promotion_move_score(move);
-		score += history_score<color>(move, ply, board, data);
+		score += history_score<color>(move, ply, board, data, tdata);
 		score += in_opponent_pawn_territory<color>(move, board);
 		// Score negated for sorting. We want to evaluate high scoring moves first.
 		scored_move.score = -score;

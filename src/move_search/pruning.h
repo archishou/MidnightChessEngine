@@ -30,8 +30,8 @@ inline bool futility_prune(i32 static_eval, i32 alpha, i32 value, i32 depth) {
 }
 
 template<Color color>
-inline bool history_prune(bool pv_node, i32 value, i32 depth, Move legal_move) {
-	return !pv_node && value > -MATE_BOUND && depth < 3 && history[color][legal_move.from()][legal_move.to()] < -1024 * depth;
+inline bool history_prune(ThreadData &tdata, bool pv_node, i32 value, i32 depth, Move legal_move) {
+	return !pv_node && value > -MATE_BOUND && depth < 3 && tdata.history[color][legal_move.from()][legal_move.to()] < -1024 * depth;
 }
 
 template<Color color>

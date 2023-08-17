@@ -49,7 +49,7 @@ int scale_soft_time_limit(BestMoveSearchParameters &params, PVSData& ab_results,
 }
 
 template<Color color>
-i32 q_search(Position &board, i32 ply, i32 alpha, i32 beta) {
+i32 q_search(ThreadData &tdata, Position &board, i32 ply, i32 alpha, i32 beta) {
 
 	t_table.prefetch(board.hash());
 
@@ -79,7 +79,7 @@ i32 q_search(Position &board, i32 ply, i32 alpha, i32 beta) {
 
 	auto best_move = EMPTY_MOVE;
 	MoveList<color, MoveGenerationType::CAPTURES> capture_moves(board);
-	ScoredMoves scored_moves = order_moves<color, MoveGenerationType::CAPTURES>(capture_moves, board, ply, data);
+	ScoredMoves scored_moves = order_moves<color, MoveGenerationType::CAPTURES>(capture_moves, board, ply, data, tdata);
 	i32 futility = stand_pat + Q_SEARCH_FUTILITY_MARGIN;
 	for (i32 move_idx = 0; move_idx < static_cast<i32>(scored_moves.size()); move_idx++) {
 		const Move legal_move = select_move(scored_moves, move_idx);
@@ -91,7 +91,7 @@ i32 q_search(Position &board, i32 ply, i32 alpha, i32 beta) {
 
 		board.play<color>(legal_move);
 		data.nodes_searched += 1;
-		const auto score = -q_search<~color>(board, ply + 1, -beta, -alpha);
+		const auto score = -q_search<~color>(tdata, board, ply + 1, -beta, -alpha);
 		board.undo<color>(legal_move);
 
 		if (score >= beta) {
@@ -112,7 +112,7 @@ i32 q_search(Position &board, i32 ply, i32 alpha, i32 beta) {
 }
 
 template<Color color>
-i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) {
+i32 pvs(ThreadData &tdata, Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) {
 
 	t_table.prefetch(board.hash());
 
@@ -144,7 +144,7 @@ i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) 
 	if (in_check) depth++;
 
 	if (depth == 0) {
-		return q_search<color>(board, ply, alpha, beta);
+		return q_search<color>(tdata, board, ply, alpha, beta);
 	}
 
 	TranspositionTableSearchResults tt_probe_results = t_table.probe_for_search(board.hash(), depth, ply);
@@ -183,7 +183,7 @@ i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) 
 
 	if (!pv_node && !in_check && !excluding_move) {
 		if (depth <= 3 && static_eval - 63 + 182 * depth <= alpha) {
-			return q_search<color>(board, ply, alpha, beta);
+			return q_search<color>(tdata, board, ply, alpha, beta);
 		}
 	}
 
@@ -193,7 +193,7 @@ i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) 
 		data.moves_made[ply] = Move();
 		i32 reduction = nmp_reduction(depth, beta, static_eval);
 		i32 depth_prime = std::max(depth - reduction, 0);
-		i32 null_eval = -pvs<~color>(board, depth_prime, ply + 1, -beta, -beta + 1, false);
+		i32 null_eval = -pvs<~color>(tdata, board, depth_prime, ply + 1, -beta, -beta + 1, false);
 
 		board.undo_null<color>();
 		if (null_eval >= beta) return null_eval;
@@ -205,7 +205,7 @@ i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) 
 		return 0;
 	}
 
-	ScoredMoves scored_moves = order_moves<color, MoveGenerationType::ALL>(all_legal_moves, board, ply, data);
+	ScoredMoves scored_moves = order_moves<color, MoveGenerationType::ALL>(all_legal_moves, board, ply, data, tdata);
 
 	Move best_move = select_move(scored_moves, 0);
 	i32 moves_played = 0;
@@ -218,10 +218,10 @@ i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) 
 		if (late_move_prune(pv_node, move_idx, depth, improving)) break;
 		if (futility_prune(static_eval, alpha, value, depth)) break;
 		if (late_move_prune_quiet(pv_node, move_idx, legal_move, depth)) continue;
-		if (history_prune<color>(pv_node, value, depth, legal_move)) continue;
+		if (history_prune<color>(tdata, pv_node, value, depth, legal_move)) continue;
 		if (see_prune_pvs<color>(board, pv_node, depth, value, legal_move)) continue;
 
-		i32 search_extension = singular_extension<color>(board, excluding_move, depth, ply, alpha, beta,
+		i32 search_extension = singular_extension<color>(tdata, board, excluding_move, depth, ply, alpha, beta,
 														 legal_move, tt_probe_results, data);
 
 		board.play<color>(legal_move);
@@ -236,15 +236,15 @@ i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) 
 		i32 reduction = lmr_reduction(pv_node, ply, in_check, improving, move_idx, depth, legal_move);
 
 		if (pv_node && move_idx == 0) {
-			new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -beta, -alpha, false);
+			new_value = -pvs<~color>(tdata, board, search_depth - 1, ply + 1, -beta, -alpha, false);
 		} else {
-			new_value = -pvs<~color>(board, search_depth - reduction - 1, ply + 1, -alpha - 1, -alpha, true);
+			new_value = -pvs<~color>(tdata, board, search_depth - reduction - 1, ply + 1, -alpha - 1, -alpha, true);
 
 			if (new_value > alpha && reduction > 0)
-				new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -alpha - 1, -alpha, true);
+				new_value = -pvs<~color>(tdata, board, search_depth - 1, ply + 1, -alpha - 1, -alpha, true);
 
 			if (new_value > alpha && new_value < beta)
-				new_value = -pvs<~color>(board, search_depth - 1, ply + 1, -beta, -alpha, false);
+				new_value = -pvs<~color>(tdata, board, search_depth - 1, ply + 1, -beta, -alpha, false);
 		}
 
 		board.undo<color>(legal_move);
@@ -262,9 +262,9 @@ i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) 
 
 			if (value > alpha) {
 				alpha = value;
-				update_history<color>(board, scored_moves, best_move, depth, move_idx, ply, data);
+				update_history<color>(tdata, board, scored_moves, best_move, depth, move_idx, ply, data);
 				if (alpha >= beta) {
-					update_killers(best_move, ply);
+					update_killers(tdata, best_move, ply);
 					break;
 				}
 			}
@@ -283,7 +283,7 @@ i32 pvs(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null) 
 }
 
 template<Color color>
-PVSData aspiration_windows(Position& board, i32 prev_score, i16 depth, i32 time_limit) {
+PVSData aspiration_windows(ThreadData &tdata, Position &board, i32 prev_score, i16 depth, i32 time_limit) {
 	reset_data();
 	data.time_limit = time_limit;
 	i32 alpha = NEG_INF_CHESS;
@@ -299,7 +299,7 @@ PVSData aspiration_windows(Position& board, i32 prev_score, i16 depth, i32 time_
 		if (alpha < -ASP_WINDOW_FULL_SEARCH_BOUNDS) alpha = NEG_INF_CHESS;
 		if (beta  > ASP_WINDOW_FULL_SEARCH_BOUNDS) beta  = POS_INF_CHESS;
 
-		data.value = pvs<color>(board, depth, 0, alpha, beta, false);
+		data.value = pvs<color>(tdata, board, depth, 0, alpha, beta, false);
 		i32 score = data.value;
 		if (score <= alpha) {
 			alpha = std::max(alpha - delta, NEG_INF_CHESS);
@@ -315,7 +315,7 @@ PVSData aspiration_windows(Position& board, i32 prev_score, i16 depth, i32 time_
 }
 
 template<Color color>
-void iterative_deepening(Position& board, BestMoveSearchParameters& params) {
+void iterative_deepening(ThreadData &tdata, Position &board, BestMoveSearchParameters &params) {
 	reset_clock();
 	std::memset(data.nodes_spend.data(), 0, sizeof(data.nodes_spend));
 	data.nodes_searched = 0;
@@ -324,26 +324,28 @@ void iterative_deepening(Position& board, BestMoveSearchParameters& params) {
 		if (time_elapsed_exceeds(soft_limit, TimeResolution::Milliseconds)) {
 			break;
 		}
-		aspiration_windows<color>(board, data.value, sub_depth, params.hard_time_limit);
+		aspiration_windows<color>(tdata, board, data.value, sub_depth, params.hard_time_limit);
 		if (data.search_completed) {
 			update_best_move_results(sub_depth, params.debug_info);
 		}
 	}
 }
 
-void search(Position& board, BestMoveSearchParameters& parameters) {
-	if (board.turn() == BLACK) iterative_deepening<BLACK>(board, parameters);
-	else iterative_deepening<WHITE>(board, parameters);
+void search(ThreadData &tdata, Position &board, BestMoveSearchParameters &parameters) {
+	if (board.turn() == BLACK) iterative_deepening<BLACK>(tdata, board, parameters);
+	else iterative_deepening<WHITE>(tdata, board, parameters);
 }
 
-template i32 q_search<WHITE>(Position &board, i32 ply, i32 alpha, i32 beta);
-template i32 q_search<BLACK>(Position &board, i32 ply, i32 alpha, i32 beta);
+template i32 q_search<WHITE>(ThreadData &tdata, Position &board, i32 ply, i32 alpha, i32 beta);
+template i32 q_search<BLACK>(ThreadData &tdata, Position &board, i32 ply, i32 alpha, i32 beta);
 
-template i32 pvs<WHITE>(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null);
-template i32 pvs<BLACK>(Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null);
+template i32 pvs<WHITE>(ThreadData &tdata, Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null);
+template i32 pvs<BLACK>(ThreadData &tdata, Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null);
 
-template PVSData aspiration_windows<WHITE>(Position& board, i32 prev_score, i16 depth, i32 time_limit);
-template PVSData aspiration_windows<BLACK>(Position& board, i32 prev_score, i16 depth, i32 time_limit);
+template PVSData
+aspiration_windows<WHITE>(ThreadData &tdata, Position &board, i32 prev_score, i16 depth, i32 time_limit);
+template PVSData
+aspiration_windows<BLACK>(ThreadData &tdata, Position &board, i32 prev_score, i16 depth, i32 time_limit);
 
-template void iterative_deepening<WHITE>(Position& board, BestMoveSearchParameters& params);
-template void iterative_deepening<BLACK>(Position& board, BestMoveSearchParameters& params);
+template void iterative_deepening<WHITE>(ThreadData &tdata, Position &board, BestMoveSearchParameters &params);
+template void iterative_deepening<BLACK>(ThreadData &tdata, Position &board, BestMoveSearchParameters &params);

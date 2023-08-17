@@ -6,7 +6,6 @@
 #include "move_search/tables/lmr_table.h"
 
 void initialize_engine() {
-	initialize_move_sort_tables();
 	init_lmr_table();
 	t_table.reset_table();
 }

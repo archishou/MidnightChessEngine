@@ -1,8 +1,6 @@
 #pragma once
-#include "search_constants.h"
-#include "../move_gen/types/move.h"
+#include "move_ordering/ordering_constants.h"
 #include "tables/pv_table.h"
-#include <vector>
 
 struct ScoredMove {
 	Move move;
@@ -18,8 +16,15 @@ struct BestMoveSearchParameters {
 	bool debug_info = false;
 };
 
-typedef Move Line[MAX_DEPTH];
+using Line = Move[MAX_DEPTH];
 extern std::ostream& operator<<(std::ostream& os, const Line& line);
+
+struct ThreadData {
+	array<array<array<i32, NSQUARES>, NSQUARES>, NCOLORS> history{};
+	array<array<array<array<i32, NSQUARES>, NPIECES>, NSQUARES>, NPIECES> continuation_history{};
+	array<array<array<i32, NPIECES>, NSQUARES>, NPIECES> capture_history{};
+	array<array<Move, 2>, MAX_PLY> killers{};
+};
 
 struct PVSData {
 	Move best_move;
