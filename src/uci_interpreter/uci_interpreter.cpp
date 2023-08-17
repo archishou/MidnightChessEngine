@@ -60,13 +60,13 @@ void parse_move_time(Color side_to_play, const string& move_time_s, BestMoveSear
 	}
 }
 
-void uci_go(Position& board, const string& input_line, ReadUCIParameters& uci_parameters) {
+void uci_go(ThreadData &tdata, Position &board, const string &input_line, ReadUCIParameters &uci_parameters) {
 	BestMoveSearchParameters params = {
 			.depth = MAX_DEPTH,
 			.debug_info = uci_parameters.debug_info
 	};
 	parse_move_time(board.turn(), input_line, params);
-	search(board, params);
+	search(tdata, board, params);
 	std::cout << "bestmove " << data.final_best_move << std::endl;
 }
 
@@ -86,7 +86,8 @@ void bench() {
 				.soft_time_limit = 86'400'000,
 				.debug_info = true,
 		};
-		search(p, parameters);
+		ThreadData tdata{};
+		search(tdata, p, parameters);
 		std::cout << "bestmove " << data.final_best_move << std::endl;
 		total_nodes += data.nodes_searched;
 	}
@@ -100,7 +101,9 @@ void bench() {
 
 void read_uci() {
 	Position board;
+	ThreadData tdata{};
 	ReadUCIParameters parameters = {};
+
 	initialize_uci(board);
 
 	string input_line;
@@ -120,6 +123,7 @@ void read_uci() {
 		} else if (input_line == "isready") {
 			std::cout << "readyok" << std::endl;
 		} else if (input_line == "ucinewgame") {
+			init_history(tdata);
 			initialize_uci(board);
 		}
 		if (input_line.substr(0, 8) == "position") {
@@ -130,7 +134,7 @@ void read_uci() {
 		} else if (input_line == "debug off") {
 			parameters.debug_info = false;
 		} else if (input_line.substr(0, 2 ) == "go") {
-			uci_go(board, input_line, parameters);
+			uci_go(tdata, board, input_line, parameters);
 		} else if (input_line == "bench") {
 			bench();
 		} else if (input_line.substr(0, 14) == "setoption name") {

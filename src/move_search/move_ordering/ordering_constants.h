@@ -3,14 +3,13 @@
 //
 #pragma once
 #include "../types.h"
+#include "../../board/types/piece.h"
 
 constexpr i32 PREVIOUS_BEST_MOVE_BONUS = 10'000'000;
 constexpr i32 PROMOTION_BONUS = PREVIOUS_BEST_MOVE_BONUS / 10;  // 1'000'000
 constexpr i32 MVV_LVA_BONUS = PROMOTION_BONUS / 10;  // 100'000
 constexpr i32 KILLER_MOVE_BONUS = MVV_LVA_BONUS / 10;  // 10'000
 constexpr i32 IN_OPP_PAWN_TERRITORY_PENALTY = -350;
-
-constexpr i32 NKILLERS = 2;
 
 constexpr i32 ORDERING_PAWN_VALUE = 100;
 constexpr i32 ORDERING_KNIGHT_VALUE = 320;

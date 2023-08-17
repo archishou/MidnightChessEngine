@@ -3,6 +3,7 @@
 //
 #pragma once
 #include "../search_constants.h"
+#include "../../move_gen/types/move.h"
 
 using PVTable = array<array<Move, MAX_DEPTH>, MAX_DEPTH>;
 

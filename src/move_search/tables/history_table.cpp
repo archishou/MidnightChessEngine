@@ -3,66 +3,62 @@
 //
 #include "history_table.h"
 
-array<array<array<i32, NSQUARES>, NSQUARES>, NCOLORS> history;
-array<array<array<array<i32, NSQUARES>, NPIECES>, NSQUARES>, NPIECES> continuation_history;
-array<array<array<i32, NPIECES>, NSQUARES>, NPIECES> capture_history;
-array<array<Move, NKILLERS>, MAX_PLY> killers;
-
-void init_history() {
-	for (int i = 0; i < NSQUARES; i++) {
-		for (int j = 0; j < NSQUARES; j++) {
-			history[WHITE][i][j] = 0;
-			history[BLACK][i][j] = 0;
+void init_history(ThreadData &tdata) {
+	for (i32 i = 0; i < NSQUARES; i++) {
+		for (i32 j = 0; j < NSQUARES; j++) {
+			tdata.history[WHITE][i][j] = 0;
+			tdata.history[BLACK][i][j] = 0;
 		}
 	}
 
-	for (int previous_move_ptype = 0; previous_move_ptype < NPIECES; previous_move_ptype++) {
-		for (int previous_move_to = 0; previous_move_to < NSQUARES; previous_move_to++) {
-			for (int move_ptype = 0; move_ptype < NPIECES; move_ptype++) {
-				for (int move_to = 0; move_to < NSQUARES; move_to++) {
-					continuation_history[previous_move_ptype][previous_move_to][move_ptype][move_to] = 0;
+	for (i32 previous_move_ptype = 0; previous_move_ptype < NPIECES; previous_move_ptype++) {
+		for (i32 previous_move_to = 0; previous_move_to < NSQUARES; previous_move_to++) {
+			for (i32 move_ptype = 0; move_ptype < NPIECES; move_ptype++) {
+				for (i32 move_to = 0; move_to < NSQUARES; move_to++) {
+					tdata.continuation_history[previous_move_ptype][previous_move_to][move_ptype][move_to] = 0;
 				}
 			}
 		}
 	}
 
-	for (int attacking = 0; attacking < NPIECES; attacking++) {
-		for (int capture_to = 0; capture_to < NSQUARES; capture_to++) {
-			for (int piece_attacked = 0; piece_attacked < NPIECES; piece_attacked++) {
-				capture_history[attacking][capture_to][piece_attacked] = 0;
+	for (i32 attacking = 0; attacking < NPIECES; attacking++) {
+		for (i32 capture_to = 0; capture_to < NSQUARES; capture_to++) {
+			for (i32 piece_attacked = 0; piece_attacked < NPIECES; piece_attacked++) {
+				tdata.capture_history[attacking][capture_to][piece_attacked] = 0;
 			}
 		}
 	}
 
-	for (int i = 0; i < MAX_PLY; i++) {
-		for (int j = 0; j < NKILLERS; j++) {
-			killers[i][j] = Move();
+	for (i32 i = 0; i < MAX_PLY; i++) {
+		for (i32 j = 0; j < 2; j++) {
+			tdata.killers[i][j] = Move();
 		}
 	}
 }
 
-void update_history_entry(int& history_entry, int bonus) {
+void update_history_entry(i32& history_entry, i32 bonus) {
 	history_entry -= (history_entry * abs(bonus)) / 324;
 	history_entry += bonus * 32;
 }
 
-void update_killers(Move &best_move, int ply) {
-	killers[ply][1] = killers[ply][0];
-	killers[ply][0] = best_move;
+void update_killers(ThreadData &tdata, Move &best_move, i32 ply) {
+	tdata.killers[ply][1] = tdata.killers[ply][0];
+	tdata.killers[ply][0] = best_move;
 }
 
-void update_continuation_history(Position &board, Move previous_move, Move attempted_move, int bonus) {
+void update_continuation_history(ThreadData &tdata, Position &board, Move previous_move, Move attempted_move, i32 bonus) {
 	update_history_entry(
-			continuation_history
+			tdata.continuation_history
 			[board.piece_at(previous_move.from())][previous_move.to()]
 			[board.piece_at(attempted_move.from())][attempted_move.to()],
 			bonus);
 }
 
-void update_capture_history(Position &board, Move attempted_move, int bonus) {
+void update_capture_history(ThreadData &tdata, Position &board, Move attempted_move, i32 bonus) {
 	update_history_entry(
-			capture_history[board.piece_at(attempted_move.from())]
-							[attempted_move.to()]
-							[board.piece_at(attempted_move.to())],
-							bonus);
+			tdata.capture_history
+				[board.piece_at(attempted_move.from())]
+				[attempted_move.to()]
+				[board.piece_at(attempted_move.to())],
+				bonus);
 }

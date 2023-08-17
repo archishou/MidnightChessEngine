@@ -4,17 +4,6 @@
 #include "board_types.h"
 
 constexpr u32 NPIECE_TYPES = 7;
-/*
-enum PieceType : u32 {
-	PAWN,
-	KNIGHT,
-	BISHOP,
-	ROOK,
-	QUEEN,
-	KING,
-	NO_PIECE_TYPE
-};
- */
 class PieceType {
 public:
 	constexpr PieceType() : m_value{0} {}
@@ -31,7 +20,6 @@ constexpr PieceType ROOK{3};
 constexpr PieceType QUEEN{4};
 constexpr PieceType KING{5};
 constexpr PieceType NO_PIECE_TYPE{6};
-
 
 constexpr i8 NPIECES = 15;
 class Piece {
