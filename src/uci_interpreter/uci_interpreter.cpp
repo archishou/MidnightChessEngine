@@ -59,16 +59,12 @@ void parse_move_time(Color side_to_play, const string& move_time_s, SearchParame
 		std::tie(params.soft_time_limit, params.hard_time_limit) = allocate_time(btime, binc, moves_to_go);
 	}
 }
-
-void uci_go(ThreadData &tdata, Position &board,
-			const string &input_line, ReadUCIParameters &uci_parameters) {
-	SearchParameters params = {
-			.depth = MAX_DEPTH,
-			.debug_info = uci_parameters.debug_info
-	};
+void uci_go(ThreadData &tdata, Position &board, const string &input_line, SearchParameters &sparams) {
 	SearchData sdata = {};
-	parse_move_time(board.turn(), input_line, params);
-	search(sdata, tdata, board, params);
+	sdata.hard_node_limit = sparams.node_limit;
+
+	parse_move_time(board.turn(), input_line, sparams);
+	search(sdata, tdata, board, sparams);
 	std::cout << "bestmove " << sdata.final_best_move << std::endl;
 }
 
@@ -105,14 +101,13 @@ void bench() {
 void read_uci() {
 	Position board;
 	ThreadData tdata{};
-	ReadUCIParameters parameters = {};
+	SearchParameters sparams{};
 
 	initialize_uci(board);
 
-	string input_line;
-
 	std::cout.setf(std::ios::unitbuf);
 
+	string input_line;
 	while (std::getline(std::cin, input_line)) {
 		if (input_line == "uci") {
 			std::cout << "id name Midnight v7" << std::endl;
@@ -133,11 +128,11 @@ void read_uci() {
 			uci_position(board, input_line);
 		} else if (input_line == "stop") {
 		} else if (input_line == "debug on") {
-			parameters.debug_info = true;
+			sparams.debug_info = true;
 		} else if (input_line == "debug off") {
-			parameters.debug_info = false;
+			sparams.debug_info = false;
 		} else if (input_line.substr(0, 2 ) == "go") {
-			uci_go(tdata, board, input_line, parameters);
+			uci_go(tdata, board, input_line, sparams);
 		} else if (input_line == "bench") {
 			bench();
 		} else if (input_line.substr(0, 14) == "setoption name") {

@@ -88,7 +88,7 @@ std::string Position::fen() const {
 		<< castling_rights
 		<< (ep_square() == NO_SQUARE ? " -" : " " + std::string(SQ_TO_STRING[ep_square()]))
 		<< " "
-		<< "0" << " "
+		<< std::to_string(fifty_move_rule()) << " "
 		<< "1";
 	return fen.str();
 }
