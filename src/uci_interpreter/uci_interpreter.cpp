@@ -30,7 +30,7 @@ void uci_position(Position& board, const string& input_line) {
 	}
 }
 
-void parse_move_time(Color side_to_play, const string& move_time_s, BestMoveSearchParameters& params) {
+void parse_move_time(Color side_to_play, const string& move_time_s, SearchParameters& params) {
 	std::vector<string> tokens = split(move_time_s);
 	// Possible inputs to parse
 	// input --> go movetime xxx
@@ -60,14 +60,16 @@ void parse_move_time(Color side_to_play, const string& move_time_s, BestMoveSear
 	}
 }
 
-void uci_go(ThreadData &tdata, Position &board, const string &input_line, ReadUCIParameters &uci_parameters) {
-	BestMoveSearchParameters params = {
+void uci_go(ThreadData &tdata, Position &board,
+			const string &input_line, ReadUCIParameters &uci_parameters) {
+	SearchParameters params = {
 			.depth = MAX_DEPTH,
 			.debug_info = uci_parameters.debug_info
 	};
+	SearchData sdata = {};
 	parse_move_time(board.turn(), input_line, params);
-	search(tdata, board, params);
-	std::cout << "bestmove " << data.final_best_move << std::endl;
+	search(sdata, tdata, board, params);
+	std::cout << "bestmove " << sdata.final_best_move << std::endl;
 }
 
 void bench() {
@@ -80,16 +82,17 @@ void bench() {
 
 		std::cout << "\nPosition: " << idx + 1 << " " << BENCH_FENS[idx] << std::endl;
 
-		BestMoveSearchParameters parameters = {
+		SearchParameters parameters = {
 				.depth = 14,
 				.hard_time_limit = 86'400'000, // 1 Day
 				.soft_time_limit = 86'400'000,
 				.debug_info = true,
 		};
+		SearchData sdata{};
 		ThreadData tdata{};
-		search(tdata, p, parameters);
-		std::cout << "bestmove " << data.final_best_move << std::endl;
-		total_nodes += data.nodes_searched;
+		search(sdata, tdata, p, parameters);
+		std::cout << "bestmove " << sdata.final_best_move << std::endl;
+		total_nodes += sdata.nodes_searched;
 	}
 	auto end = std::chrono::steady_clock::now();
 	auto total_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();

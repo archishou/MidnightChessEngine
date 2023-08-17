@@ -21,11 +21,11 @@ extern void update_killers(ThreadData &tdata, Move &best_move, int ply);
 
 template<Color color>
 void
-update_history(ThreadData &tdata, Position &board, ScoredMoves &ordered_moves, Move &best_move,
-			   int depth, int move_idx, int ply, PVSData &data) {
+update_history(ThreadData &tdata, Position &board, ScoredMoves &ordered_moves, Move &best_move, int depth, int move_idx,
+			   int ply) {
 
-	const Move one_move_ago = ply > 0 ? data.moves_made[ply - 1] : Move();
-	const Move two_move_ago = ply > 1 ? data.moves_made[ply - 2] : Move();
+	const Move one_move_ago = ply > 0 ? tdata.thread_stack[ply - 1].move : Move();
+	const Move two_move_ago = ply > 1 ? tdata.thread_stack[ply - 2].move : Move();
 
 	int history_bonus = depth * depth + depth - 1;
 

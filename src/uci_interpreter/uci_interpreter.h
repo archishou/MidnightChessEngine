@@ -19,7 +19,7 @@ struct ReadUCIParameters {
 
 void initialize_uci(Position& p);
 void uci_position(Position& board, const string& input_line);
-void parse_move_time(Color side_to_play, const string& move_time_s, BestMoveSearchParameters& params);
+void parse_move_time(Color side_to_play, const string& move_time_s, SearchParameters& params);
 void uci_go(ThreadData &tdata, Position &board, const string &input_line, ReadUCIParameters &uci_parameters);
 void bench();
 void read_uci();

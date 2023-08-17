@@ -90,13 +90,13 @@ int capture_move_score(Move move, Position &board, ThreadData &tdata) {
 }
 
 template<Color color>
-int history_score(Move &move, int ply, Position &board, PVSData &data, ThreadData &tdata) {
+int history_score(Move &move, int ply, Position &board, SearchData &data, ThreadData &tdata) {
 	if (!move.is_quiet()) return 0;
 	if (move == tdata.killers[ply][0]) return KILLER_MOVE_BONUS + 2000;
 	else if (move == tdata.killers[ply][1]) return KILLER_MOVE_BONUS + 1000;
 
-	Move one_mv_ago = ply > 0 ? data.moves_made[ply - 1] : Move();
-	Move two_mv_ago = ply > 1 ? data.moves_made[ply - 2] : Move();
+	Move one_mv_ago = ply > 0 ? tdata.thread_stack[ply - 1].move : Move();
+	Move two_mv_ago = ply > 1 ? tdata.thread_stack[ply - 2].move : Move();
 
 	int one_mv_ago_score = tdata.continuation_history[board.piece_at(one_mv_ago.from())][one_mv_ago.to()][board.piece_at(move.from())][move.to()];
 	one_mv_ago_score = one_mv_ago != Move() ? one_mv_ago_score : 0;
@@ -116,7 +116,7 @@ int in_opponent_pawn_territory(Move move, Position& board) {
 }
 
 template<Color color, MoveGenerationType move_gen_type>
-ScoredMoves order_moves(MoveList<color, move_gen_type>& move_list, Position& board, int ply, PVSData& data, ThreadData& tdata) {
+ScoredMoves order_moves(MoveList<color, move_gen_type>& move_list, Position& board, int ply, SearchData& data, ThreadData& tdata) {
 	ScoredMoves scored_moves;
 	scored_moves.reserve(move_list.size());
 	Move previous_best_move = Move();

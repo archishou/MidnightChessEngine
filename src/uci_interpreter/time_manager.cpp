@@ -3,6 +3,8 @@
 //
 #include "time_manager.h"
 
+array<array<u64, NSQUARES>, NSQUARES> nodes_spent{};
+
 TimeBounds allocate_time(i32 time_remaining, i32 increment, i32 moves_to_go) {
 	TimeBounds time_bounds{};
 	if (moves_to_go == -1) time_bounds = allocate_time_standard(time_remaining, increment);

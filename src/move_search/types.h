@@ -9,7 +9,7 @@ struct ScoredMove {
 
 using ScoredMoves = std::vector<ScoredMove>;
 
-struct BestMoveSearchParameters {
+struct SearchParameters {
 	i16 depth = MAX_DEPTH;
 	i32 hard_time_limit = DEFAULT_SEARCH_TIME;
 	i32 soft_time_limit = DEFAULT_SEARCH_TIME;
@@ -19,14 +19,22 @@ struct BestMoveSearchParameters {
 using Line = Move[MAX_DEPTH];
 extern std::ostream& operator<<(std::ostream& os, const Line& line);
 
+struct SearchStack {
+	Move move{};
+	Move excluded_move{};
+	i32 static_eval{};
+};
+
 struct ThreadData {
 	array<array<array<i32, NSQUARES>, NSQUARES>, NCOLORS> history{};
 	array<array<array<array<i32, NSQUARES>, NPIECES>, NSQUARES>, NPIECES> continuation_history{};
 	array<array<array<i32, NPIECES>, NSQUARES>, NPIECES> capture_history{};
 	array<array<Move, 2>, MAX_PLY> killers{};
+
+	array<SearchStack, MAX_PLY> thread_stack{};
 };
 
-struct PVSData {
+struct SearchData {
 	Move best_move;
 	Move final_best_move;
 	bool search_completed{};
@@ -36,10 +44,6 @@ struct PVSData {
 	u64 nodes_searched{};
 	i32 seldepth{};
 
-	array<Move, MAX_PLY> moves_made{};
 	i32 time_limit{};
 
-	array<Move, MAX_PLY> excluded_moves{};
-	array<array<u64, NSQUARES>, NSQUARES> nodes_spend{};
-	array<i32, MAX_PLY> evals{};
 };
