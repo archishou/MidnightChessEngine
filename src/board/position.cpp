@@ -16,6 +16,7 @@ Position::Position(const std::string& fen) {
 }
 
 void Position::reset() {
+	nnue.reset();
 	state_history.clear();
 
 	pieces.fill(0);
@@ -24,18 +25,20 @@ void Position::reset() {
 	side = WHITE;
 }
 
-template<bool update_hash>
+template<bool feature_update>
 void Position::place_piece(Piece piece, Square square) {
 	pieces[piece] |= square_to_bitboard(square);
 	board[square] = piece;
-	if constexpr (update_hash) {
+	if constexpr (feature_update) {
+		nnue.update_feature<ADD_TO_SQUARE>(piece, square);
 		state_history.top().hash ^= ZOBRIST_PIECE_SQUARE[piece][square];
 	}
 }
 
-template<bool update_hash>
+template<bool feature_update>
 void Position::remove_piece(Square square) {
-	if constexpr (update_hash) {
+	if constexpr (feature_update) {
+		nnue.update_feature<RM_FROM_SQUARE>(piece_at(square), square);
 		state_history.top().hash ^= ZOBRIST_PIECE_SQUARE[piece_at(square)][square];
 	}
 	pieces[piece_at(square)] &= ~square_to_bitboard(square);
@@ -121,7 +124,7 @@ void Position::set_fen(const std::string& fen_string) {
 	for (char ch : position) {
 		if (isdigit(ch)) square += std::stoi(std::string(1, ch)) * EAST;
 		else if (ch == '/') square += SOUTH_SOUTH;
-		else place_piece<ENABLE_HASH_UPDATE>(piece_from_char(ch), square++);
+		else place_piece<ENABLE_HASH_NNUE_UPDATE>(piece_from_char(ch), square++);
 	}
 
 	state_history.top().from_to = PositionState::NO_CASTLING_MASK;
@@ -192,10 +195,13 @@ void Position::play(Move move) {
 	next_state.hash ^= ZOBRIST_CASTLING_RIGHTS[castling_state(state_history.peek().from_to)];
 	next_state.hash ^= ZOBRIST_CASTLING_RIGHTS[castling_state(next_state.from_to)];
 	next_state.hash ^= ZOBRIST_EP_SQUARE[state_history.peek().ep_square];
+	nnue.push_copy();
 	state_history.push(next_state);
 
-	if (move.type() & CAPTURE_TYPE && move.type() != ENPASSANT) remove_piece<ENABLE_HASH_UPDATE>(move.to());
-	move_piece<ENABLE_HASH_UPDATE>(move.from(), move.to());
+	if (move.type() & CAPTURE_TYPE && move.type() != ENPASSANT)
+		remove_piece<ENABLE_HASH_NNUE_UPDATE>(move.to());
+
+	move_piece<ENABLE_HASH_NNUE_UPDATE>(move.from(), move.to());
 
 	MoveType type = move.type();
 	switch (type) {
@@ -203,36 +209,36 @@ void Position::play(Move move) {
 			state_history.top().ep_square = move.from() + relative_dir<color, NORTH>();
 			break;
 		case OO:
-			if constexpr (color == WHITE) move_piece<ENABLE_HASH_UPDATE>(h1, f1);
-			else move_piece<ENABLE_HASH_UPDATE>(h8, f8);
+			if constexpr (color == WHITE) move_piece<ENABLE_HASH_NNUE_UPDATE>(h1, f1);
+			else move_piece<ENABLE_HASH_NNUE_UPDATE>(h8, f8);
 			break;
 		case OOO:
-			if constexpr (color == WHITE) move_piece<ENABLE_HASH_UPDATE>(a1, d1);
-			else move_piece<ENABLE_HASH_UPDATE>(a8, d8);
+			if constexpr (color == WHITE) move_piece<ENABLE_HASH_NNUE_UPDATE>(a1, d1);
+			else move_piece<ENABLE_HASH_NNUE_UPDATE>(a8, d8);
 			break;
 		case ENPASSANT:
-			remove_piece<ENABLE_HASH_UPDATE>(move.to() + relative_dir<color, SOUTH>());
+			remove_piece<ENABLE_HASH_NNUE_UPDATE>(move.to() + relative_dir<color, SOUTH>());
 			state_history.top().captured = make_piece<~color, PAWN>();
 			break;
 		case PR_KNIGHT | CAPTURE_TYPE: [[fallthrough]];
 		case PR_KNIGHT:
-			remove_piece<ENABLE_HASH_UPDATE>(move.to());
-			place_piece<ENABLE_HASH_UPDATE>(make_piece<color, KNIGHT>(), move.to());
+			remove_piece<ENABLE_HASH_NNUE_UPDATE>(move.to());
+			place_piece<ENABLE_HASH_NNUE_UPDATE>(make_piece<color, KNIGHT>(), move.to());
 			break;
 		case PR_BISHOP | CAPTURE_TYPE: [[fallthrough]];
 		case PR_BISHOP:
-			remove_piece<ENABLE_HASH_UPDATE>(move.to());
-			place_piece<ENABLE_HASH_UPDATE>(make_piece<color, BISHOP>(), move.to());
+			remove_piece<ENABLE_HASH_NNUE_UPDATE>(move.to());
+			place_piece<ENABLE_HASH_NNUE_UPDATE>(make_piece<color, BISHOP>(), move.to());
 			break;
 		case PR_ROOK | CAPTURE_TYPE: [[fallthrough]];
 		case PR_ROOK:
-			remove_piece<ENABLE_HASH_UPDATE>(move.to());
-			place_piece<ENABLE_HASH_UPDATE>(make_piece<color, ROOK>(), move.to());
+			remove_piece<ENABLE_HASH_NNUE_UPDATE>(move.to());
+			place_piece<ENABLE_HASH_NNUE_UPDATE>(make_piece<color, ROOK>(), move.to());
 			break;
 		case PR_QUEEN | CAPTURE_TYPE: [[fallthrough]];
 		case PR_QUEEN:
-			remove_piece<ENABLE_HASH_UPDATE>(move.to());
-			place_piece<ENABLE_HASH_UPDATE>(make_piece<color, QUEEN>(), move.to());
+			remove_piece<ENABLE_HASH_NNUE_UPDATE>(move.to());
+			place_piece<ENABLE_HASH_NNUE_UPDATE>(make_piece<color, QUEEN>(), move.to());
 			break;
 		default: break;
 	}
@@ -242,24 +248,25 @@ void Position::play(Move move) {
 
 template<Color color>
 void Position::undo(Move move) {
+	nnue.pop();
 	PositionState old_state = state_history.pop();
 
-	move_piece<DISABLE_HASH_UPDATE>(move.to(), move.from());
-	place_piece<DISABLE_HASH_UPDATE>(old_state.captured, move.to());
+	move_piece<DISABLE_HASH_NNUE_UPDATE>(move.to(), move.from());
+	place_piece<DISABLE_HASH_NNUE_UPDATE>(old_state.captured, move.to());
 
 	MoveType type = move.type();
 	switch (type) {
 		case OO:
-			if constexpr (color == WHITE) move_piece<DISABLE_HASH_UPDATE>(f1, h1);
-			else move_piece<DISABLE_HASH_UPDATE>(f8, h8);
+			if constexpr (color == WHITE) move_piece<DISABLE_HASH_NNUE_UPDATE>(f1, h1);
+			else move_piece<DISABLE_HASH_NNUE_UPDATE>(f8, h8);
 			break;
 		case OOO:
-			if constexpr (color == WHITE) move_piece<DISABLE_HASH_UPDATE>(d1, a1);
-			else move_piece<DISABLE_HASH_UPDATE>(d8, a8);
+			if constexpr (color == WHITE) move_piece<DISABLE_HASH_NNUE_UPDATE>(d1, a1);
+			else move_piece<DISABLE_HASH_NNUE_UPDATE>(d8, a8);
 			break;
 		case ENPASSANT:
-			remove_piece<DISABLE_HASH_UPDATE>(move.to());
-			place_piece<DISABLE_HASH_UPDATE>(make_piece<~color, PAWN>(), move.to() + relative_dir<color, SOUTH>());
+			remove_piece<DISABLE_HASH_NNUE_UPDATE>(move.to());
+			place_piece<DISABLE_HASH_NNUE_UPDATE>(make_piece<~color, PAWN>(), move.to() + relative_dir<color, SOUTH>());
 			break;
 		case PR_KNIGHT | CAPTURE_TYPE:
 		case PR_KNIGHT:
@@ -269,8 +276,8 @@ void Position::undo(Move move) {
 		case PR_ROOK:
 		case PR_QUEEN | CAPTURE_TYPE:
 		case PR_QUEEN:
-			remove_piece<DISABLE_HASH_UPDATE>(move.from());
-			place_piece<DISABLE_HASH_UPDATE>(make_piece<color, PAWN>(), move.from());
+			remove_piece<DISABLE_HASH_NNUE_UPDATE>(move.from());
+			place_piece<DISABLE_HASH_NNUE_UPDATE>(make_piece<color, PAWN>(), move.from());
 			break;
 		default: break;
 	}
@@ -297,14 +304,14 @@ void Position::undo_null() {
 	state_history.pop();
 }
 
-template void Position::place_piece<Position::ENABLE_HASH_UPDATE>(Piece piece, Square square);
-template void Position::place_piece<Position::DISABLE_HASH_UPDATE>(Piece piece, Square square);
+template void Position::place_piece<Position::ENABLE_HASH_NNUE_UPDATE>(Piece piece, Square square);
+template void Position::place_piece<Position::DISABLE_HASH_NNUE_UPDATE>(Piece piece, Square square);
 
-template void Position::remove_piece<Position::ENABLE_HASH_UPDATE>(Square square);
-template void Position::remove_piece<Position::DISABLE_HASH_UPDATE>(Square square);
+template void Position::remove_piece<Position::ENABLE_HASH_NNUE_UPDATE>(Square square);
+template void Position::remove_piece<Position::DISABLE_HASH_NNUE_UPDATE>(Square square);
 
-template void Position::move_piece<Position::ENABLE_HASH_UPDATE>(Square from, Square to);
-template void Position::move_piece<Position::DISABLE_HASH_UPDATE>(Square from, Square to);
+template void Position::move_piece<Position::ENABLE_HASH_NNUE_UPDATE>(Square from, Square to);
+template void Position::move_piece<Position::DISABLE_HASH_NNUE_UPDATE>(Square from, Square to);
 
 template void Position::play<WHITE>(Move move);
 template void Position::play<BLACK>(Move move);

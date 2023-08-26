@@ -92,7 +92,12 @@ void single_thread_datagen(const string& output_file_path,
 			else game_result = DatagenGameResults::DRAW;
 		} else game_result = DatagenGameResults::DRAW;
 
-		for (const auto& game_info : collected_fens | std::views::drop(1)) {
+		auto skip_one = false;
+		for (const auto& game_info : collected_fens) {
+			if (!skip_one) {
+				skip_one = true;
+				continue;
+			}
 			if (std::abs(game_info.value) >= MATE_BOUND) break;
 
 			total_fens_collected += 1;

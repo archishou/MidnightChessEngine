@@ -11,6 +11,7 @@
 #include "types/board_types.h"
 #include "../utils/stack.h"
 #include "../move_gen/tables/attack_tables.h"
+#include "../evaluation/evaluate.h"
 
 class Position;
 
@@ -47,8 +48,10 @@ private:
 	static constexpr i16 POSITION_STATE_SIZE = 1000;
 	Stack<PositionState, POSITION_STATE_SIZE> state_history{};
 
-	static constexpr bool ENABLE_HASH_UPDATE = true;
-	static constexpr bool DISABLE_HASH_UPDATE = false;
+	NNUE nnue{};
+
+	static constexpr bool ENABLE_HASH_NNUE_UPDATE = true;
+	static constexpr bool DISABLE_HASH_NNUE_UPDATE = false;
 
 	template<bool update_hash>
 	void place_piece(Piece piece, Square square);
@@ -72,6 +75,9 @@ public:
 	[[nodiscard]] inline ZobristHash hash() const { return state_history.peek().hash; }
 	[[nodiscard]] inline Bitboard from_to() const { return state_history.peek().from_to; }
 	[[nodiscard]] inline Color turn() const { return side; }
+
+	template<Color color>
+	[[nodiscard]] i16 evaluate() { return nnue.evaluate<color>(); }
 
 	enum Repetition : i32 {
 		TWO_FOLD,

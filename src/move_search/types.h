@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "move_ordering/ordering_constants.h"
 #include "tables/pv_table.h"
 
