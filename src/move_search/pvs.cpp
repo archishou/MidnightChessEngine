@@ -51,7 +51,7 @@ i32 q_search(SearchData &sdata, ThreadData &tdata, Position &board, i32 ply, i32
 
 	t_table.prefetch(board.hash());
 
-	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
+	if (ply >= MAX_PLY - 2) return board.evaluate<color>();
 
 	if ((sdata.nodes_searched % 1024 == 0 && time_elapsed_exceeds(sdata.time_limit, TimeResolution::Milliseconds)) ||
 		(sdata.nodes_searched > sdata.hard_node_limit && sdata.hard_node_limit != -1)) {
@@ -62,7 +62,7 @@ i32 q_search(SearchData &sdata, ThreadData &tdata, Position &board, i32 ply, i32
 
 	sdata.seldepth = std::max(sdata.seldepth, ply);
 
-	const i32 stand_pat = evaluate<color>(board);
+	const i32 stand_pat = board.evaluate<color>();
 	if (stand_pat >= beta) return beta;
 	if (alpha < stand_pat) alpha = stand_pat;
 
@@ -114,7 +114,7 @@ i32 pvs(SearchData &sdata, ThreadData &tdata, Position &board, i16 depth, i32 pl
 
 	t_table.prefetch(board.hash());
 
-	if (ply >= MAX_PLY - 2) return evaluate<color>(board);
+	if (ply >= MAX_PLY - 2) return board.evaluate<color>();
 
 	if ((sdata.nodes_searched % 1024 == 0 && time_elapsed_exceeds(sdata.time_limit, TimeResolution::Milliseconds)) ||
 		(sdata.nodes_searched > sdata.hard_node_limit && sdata.hard_node_limit != -1)) {
@@ -164,7 +164,7 @@ i32 pvs(SearchData &sdata, ThreadData &tdata, Position &board, i16 depth, i32 pl
 	if (static_eval_tt.entry_found) {
 		static_eval = static_eval_tt.entry.value;
 	} else {
-		static_eval = evaluate<color>(board);
+		static_eval = board.evaluate<color>();
 	}
 
 	tdata.thread_stack[ply].static_eval = static_eval;
