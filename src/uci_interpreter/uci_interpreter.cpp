@@ -72,6 +72,7 @@ void uci_go(ThreadData &tdata, Position &board, const string &input_line, Search
 void bench() {
 	u64 total_nodes = 0;
 	auto start = std::chrono::steady_clock::now();
+	auto tdata = std::make_unique<ThreadData>();
 	for (auto idx = 0; idx < BENCH_SIZE; idx++) {
 		Position p;
 		initialize_uci(p);
@@ -86,8 +87,8 @@ void bench() {
 				.debug_info = true,
 		};
 		SearchData sdata{};
-		ThreadData tdata{};
-		search(sdata, tdata, p, parameters);
+		init_history(*tdata);
+		search(sdata, *tdata, p, parameters);
 		std::cout << "bestmove " << sdata.final_best_move << std::endl;
 		total_nodes += sdata.nodes_searched;
 	}
@@ -101,7 +102,7 @@ void bench() {
 
 void read_uci() {
 	Position board;
-	ThreadData tdata{};
+	auto tdata = std::make_unique<ThreadData>();
 	SearchParameters sparams{};
 
 	initialize_uci(board);
@@ -122,7 +123,7 @@ void read_uci() {
 		} else if (input_line == "isready") {
 			std::cout << "readyok" << std::endl;
 		} else if (input_line == "ucinewgame") {
-			init_history(tdata);
+			init_history(*tdata);
 			initialize_uci(board);
 		}
 		if (input_line.substr(0, 8) == "position") {
@@ -133,7 +134,7 @@ void read_uci() {
 		} else if (input_line == "debug off") {
 			sparams.debug_info = false;
 		} else if (input_line.substr(0, 2 ) == "go") {
-			uci_go(tdata, board, input_line, sparams);
+			uci_go(*tdata, board, input_line, sparams);
 		} else if (input_line == "bench") {
 			bench();
 		} else if (input_line.substr(0, 14) == "setoption name") {
