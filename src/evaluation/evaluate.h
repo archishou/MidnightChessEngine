@@ -10,7 +10,7 @@
 #include "../board/types/piece.h"
 
 constexpr usize INPUT_LAYER_SIZE = NSQUARES * 12;
-constexpr usize HIDDEN_LAYER1_SIZE = 384;
+constexpr usize HIDDEN_LAYER1_SIZE = 128;
 
 constexpr i32 CRELU_MIN = 0;
 constexpr i32 CRELU_MAX = 255;
