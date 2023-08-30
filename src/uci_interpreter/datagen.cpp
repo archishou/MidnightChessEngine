@@ -15,6 +15,7 @@ Position datagen_random_game(std::atomic<bool>& run) {
 
 	bool board_generated = false;
 	while (!board_generated && run.load()) {
+		board.set_fen(INITIAL_BOARD_FEN);
 		for (usize idx = 0; idx < num_initial_moves; idx++) {
 			board_generated = true;
 			if (board.turn() == WHITE) {
@@ -50,14 +51,16 @@ void single_thread_datagen(const string& output_file_path,
 
 	std::ofstream output_fens;
 	output_fens.open(output_file_path, std::ios_base::out | std::ios_base::app);
+	std::vector<DatagenGameInfo> collected_fens{};
+	collected_fens.reserve(256);
 
 	while (run.load()) {
 		Position board = datagen_random_game(run);
 		initialize_engine();
 		init_history(*tdata);
 
+		collected_fens.clear();
 		usize legal_move_size;
-		std::vector<DatagenGameInfo> collected_fens{};
 		do {
 			if (board.turn() == WHITE) {
 				MoveList<WHITE, MoveGenerationType::ALL> move_list(board);
@@ -69,7 +72,8 @@ void single_thread_datagen(const string& output_file_path,
 
 			if (legal_move_size != 0) {
 				SearchData sdata = {};
-				sdata.hard_node_limit = sparams.node_limit = 10'000;
+				sparams.soft_time_limit = sparams.hard_time_limit = 86'400'000;
+				sdata.hard_node_limit = 8'000'000;
 				sdata.soft_node_limit = 5'000;
 				search(sdata, *tdata, board, sparams);
 

@@ -13,7 +13,6 @@ void uci_position(Position& board, const string& input_line) {
 		string uci_moves;
 		if (input_line.size() > 17) uci_moves = input_line.substr(24, input_line.size() - 24);
 		board.set_fen(INITIAL_BOARD_FEN);
-		std::cout << "SET FEN" << std::endl;
 		uci_update_position_from_moves(board,  uci_moves);
 	} else {
 		auto fen_start = static_cast<i32>(input_line.find("position fen ")) + 13;
@@ -62,8 +61,6 @@ void parse_move_time(Color side_to_play, const string& move_time_s, SearchParame
 }
 void uci_go(ThreadData &tdata, Position &board, const string &input_line, SearchParameters &sparams) {
 	SearchData sdata = {};
-	sdata.hard_node_limit = sparams.node_limit;
-
 	parse_move_time(board.turn(), input_line, sparams);
 	search(sdata, tdata, board, sparams);
 	std::cout << "bestmove " << sdata.final_best_move << std::endl;
@@ -147,9 +144,6 @@ void read_uci() {
 			}
 		} else if (input_line == "hash size") {
 			std::cout << t_table.entry_count() << " entries" << std::endl;
-		} else if (input_line == "eval") {
-			if (board.turn() == WHITE) std::cout << board.evaluate<WHITE>() << std::endl;
-			else std::cout << board.evaluate<BLACK>() << std::endl;
 		}
 	}
 }
