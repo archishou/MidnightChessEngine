@@ -12,7 +12,6 @@ using ScoredMoves = std::vector<ScoredMove>;
 
 struct SearchParameters {
 	i16 depth = MAX_DEPTH;
-	i64 node_limit = -1;
 	i32 hard_time_limit = DEFAULT_SEARCH_TIME;
 	i32 soft_time_limit = DEFAULT_SEARCH_TIME;
 	bool debug_info = false;
