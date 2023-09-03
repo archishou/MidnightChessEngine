@@ -7,7 +7,7 @@
 #undef _MSC_VER
 #endif
 #include "../3rd_party/incbin.h"
-INCBIN(nnue, "src/evaluation/netM002.nnue");
+INCBIN(nnue, "src/evaluation/netM003.nnue");
 const NNUEParams &nnue_params = *reinterpret_cast<const NNUEParams *>(gnnueData);
 
 std::pair<usize, usize> NNUE::index_of(Piece piece, Square square) {
