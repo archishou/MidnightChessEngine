@@ -2,12 +2,13 @@
 // Created by Archishmaan Peyyety on 1/9/23.
 //
 #pragma once
-#include "../engine.h"
+#include <tuple>
+#include <memory>
+#include <sstream>
 #include "uci_move_parse.h"
 #include "time_manager.h"
-#include "sstream"
-#include <tuple>
 #include "bench_fens.h"
+#include "../engine.h"
 #include "../utils/fen_constants.h"
 #include "../utils/helpers.h"
 #include "../move_search/types.h"
