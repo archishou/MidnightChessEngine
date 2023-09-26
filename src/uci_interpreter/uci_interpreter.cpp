@@ -100,7 +100,9 @@ void bench() {
 void read_uci() {
 	Position board;
 	auto tdata = std::make_unique<ThreadData>();
-	SearchParameters sparams{};
+	SearchParameters sparams{
+		.debug_info = true
+	};
 
 	initialize_uci(board);
 
@@ -109,7 +111,7 @@ void read_uci() {
 	string input_line;
 	while (std::getline(std::cin, input_line)) {
 		if (input_line == "uci") {
-			std::cout << "id name Midnight v7" << std::endl;
+			std::cout << "id name Midnight v8" << std::endl;
 			std::cout << "id author Archishmaan Peyyety" << std::endl;
 			std::cout << "option name Hash type spin default 64 min 1 max 1024" << std::endl;
 			std::cout << "option name Threads type spin default 1 min 1 max 1" << std::endl;
