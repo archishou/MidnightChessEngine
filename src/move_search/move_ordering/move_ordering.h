@@ -90,7 +90,7 @@ int capture_move_score(Move move, Position &board, ThreadData &tdata) {
 }
 
 template<Color color>
-int history_score(Move &move, int ply, Position &board, SearchData &data, ThreadData &tdata) {
+int history_score(Move &move, int ply, Position &board, ThreadData &tdata) {
 	if (!move.is_quiet()) return 0;
 	if (move == tdata.killers[ply][0]) return KILLER_MOVE_BONUS + 2000;
 	else if (move == tdata.killers[ply][1]) return KILLER_MOVE_BONUS + 1000;
@@ -116,7 +116,7 @@ int in_opponent_pawn_territory(Move move, Position& board) {
 }
 
 template<Color color, MoveGenerationType move_gen_type>
-ScoredMoves order_moves(MoveList<color, move_gen_type>& move_list, Position& board, int ply, SearchData& data, ThreadData& tdata) {
+ScoredMoves order_moves(MoveList<color, move_gen_type>& move_list, Position& board, int ply, ThreadData& tdata) {
 	ScoredMoves scored_moves;
 	scored_moves.reserve(move_list.size());
 	Move previous_best_move = Move();
@@ -129,7 +129,7 @@ ScoredMoves order_moves(MoveList<color, move_gen_type>& move_list, Position& boa
 		score += hash_move_score(move, previous_best_move);
 		score += capture_move_score<color>(move, board, tdata);
 		score += promotion_move_score(move);
-		score += history_score<color>(move, ply, board, data, tdata);
+		score += history_score<color>(move, ply, board, tdata);
 		score += in_opponent_pawn_territory<color>(move, board);
 		// Score negated for sorting. We want to evaluate high scoring moves first.
 		scored_move.score = -score;

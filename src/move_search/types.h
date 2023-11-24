@@ -43,7 +43,7 @@ struct SearchData {
 	i32 final_value{};
 	// triangular-table-table
 	PV pv{};
-	u64 nodes_searched{};
+	i64 nodes_searched{};
 	i32 seldepth{};
 
 	i32 time_limit{};

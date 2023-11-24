@@ -2,7 +2,6 @@
 // Created by Archishmaan Peyyety on 4/16/23.
 //
 #include "pvs.h"
-#include "../board/position.h"
 #include "../uci_interpreter/time_manager.h"
 
 using enum TTNodeType;
@@ -77,7 +76,7 @@ i32 q_search(SearchData &sdata, ThreadData &tdata, Position &board, i32 ply, i32
 
 	auto best_move = EMPTY_MOVE;
 	MoveList<color, MoveGenerationType::CAPTURES> capture_moves(board);
-	ScoredMoves scored_moves = order_moves<color, MoveGenerationType::CAPTURES>(capture_moves, board, ply, sdata, tdata);
+	ScoredMoves scored_moves = order_moves<color, MoveGenerationType::CAPTURES>(capture_moves, board, ply, tdata);
 	i32 futility = stand_pat + Q_SEARCH_FUTILITY_MARGIN;
 	for (i32 move_idx = 0; move_idx < static_cast<i32>(scored_moves.size()); move_idx++) {
 		const Move legal_move = select_move(scored_moves, move_idx);
@@ -203,7 +202,7 @@ i32 pvs(SearchData &sdata, ThreadData &tdata, Position &board, i16 depth, i32 pl
 		return 0;
 	}
 
-	ScoredMoves scored_moves = order_moves<color, MoveGenerationType::ALL>(all_legal_moves, board, ply, sdata, tdata);
+	ScoredMoves scored_moves = order_moves<color, MoveGenerationType::ALL>(all_legal_moves, board, ply, tdata);
 
 	Move best_move = select_move(scored_moves, 0);
 	i32 moves_played = 0;
