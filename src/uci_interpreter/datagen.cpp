@@ -3,13 +3,13 @@
 //
 #include <atomic>
 #include "datagen.h"
+#include <filesystem>
 #include "../engine.h"
 
 Position datagen_random_game(std::atomic<bool>& run) {
 	std::random_device dev;
 	auto seed = dev();
 	std::mt19937 rng(seed);
-	std::cout << "Randomized Seed: " << seed << "\n";
 	urng heads_tails(0, 1);
 
 	Position board{INITIAL_BOARD_FEN};
@@ -125,9 +125,13 @@ void datagen(const i32 thread_count, const string& output_directory) {
 	std::atomic<usize> total_fens_collected{0};
 	std::atomic<bool> run{true};
 	for (i32 idx = 0; idx < thread_count; idx += 1) {
+		std::filesystem::path root(output_directory);
+		std::filesystem::path file_name("fens" + std::to_string(idx) + ".txt");
+		auto output_path = root / file_name;
+		std::cout << output_path << "\n";
 		threads.emplace_back(
-				[&output_directory, idx, &total_fens_collected, &run] {
-					single_thread_datagen(output_directory + "fens" + std::to_string(idx) + ".txt", total_fens_collected, run);
+				[&output_path, &total_fens_collected, &run] {
+					single_thread_datagen(output_path, total_fens_collected, run);
 				});
 	}
 
@@ -136,7 +140,7 @@ void datagen(const i32 thread_count, const string& output_directory) {
 		string input_line{};
 		while (std::getline(std::cin, input_line)) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-			if (input_line != "stop") continue;
+			if (input_line.empty()) continue;
 			run.store(false);
 			break;
 		}
