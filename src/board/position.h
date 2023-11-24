@@ -45,7 +45,7 @@ private:
 	std::array<Bitboard, NPIECES> pieces{};
 	std::array<Piece, NSQUARES> board{};
 
-	static constexpr i16 POSITION_STATE_SIZE = 1000;
+	static constexpr i16 POSITION_STATE_SIZE = 4096;
 	Stack<PositionState, POSITION_STATE_SIZE> state_history{};
 
 	NNUE nnue{};
