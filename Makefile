@@ -31,14 +31,6 @@ else
     CXXFLAGS += -pthread
 endif
 
-# Change const-expr limit to generate magic tables at compile time.
-CONSTEXPR_LIMIT := 900000000
-ifeq ($(CXX),clang++)
-	CXXFLAGS += -fconstexpr-steps=$(CONSTEXPR_LIMIT)
-else
-	CXXFLAGS += -fconstexpr-ops-limit=$(CONSTEXPR_LIMIT)
-endif
-
 ifneq (,$(findstring clang,$(shell $(CXX) --version)))
     ifneq ($(DETECTED_OS),Darwin)
         LDFLAGS += -fuse-ld=lld
