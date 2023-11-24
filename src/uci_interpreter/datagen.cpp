@@ -46,12 +46,13 @@ Position datagen_random_game(std::atomic<bool>& run) {
 	return board;
 }
 
-void single_thread_datagen(const string& output_file_path,
+void single_thread_datagen(auto output_file_path,
 						   std::atomic<usize>& total_fens_collected, std::atomic<bool>& run) {
 	auto tdata = std::make_unique<ThreadData>();
 	SearchParameters sparams{};
 
 	std::ofstream output_fens;
+	std::cout << "Opening " << output_file_path << std::endl;
 	output_fens.open(output_file_path, std::ios_base::out | std::ios_base::app);
 	std::vector<DatagenGameInfo> collected_fens{};
 	collected_fens.reserve(256);
@@ -130,7 +131,7 @@ void datagen(const i32 thread_count, const string& output_directory) {
 		auto output_path = root / file_name;
 		std::cout << output_path << "\n";
 		threads.emplace_back(
-				[&output_path, &total_fens_collected, &run] {
+				[output_path, &total_fens_collected, &run] {
 					single_thread_datagen(output_path, total_fens_collected, run);
 				});
 	}
