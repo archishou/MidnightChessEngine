@@ -7,7 +7,9 @@
 
 Position datagen_random_game(std::atomic<bool>& run) {
 	std::random_device dev;
-	std::mt19937 rng(dev());
+	auto seed = dev();
+	std::mt19937 rng(seed);
+	std::cout << "Randomized Seed: " << seed << "\n";
 	urng heads_tails(0, 1);
 
 	Position board{INITIAL_BOARD_FEN};
