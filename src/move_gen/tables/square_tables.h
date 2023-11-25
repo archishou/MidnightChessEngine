@@ -20,7 +20,7 @@ namespace tables {
 		}
 		return squares_in_between;
 	}
-	static array<array<Bitboard, NSQUARES>, NSQUARES> squares_in_between = generate_squares_in_between();
+	const static array<array<Bitboard, NSQUARES>, NSQUARES> squares_in_between = generate_squares_in_between();
 
 	static array<array<Bitboard, NSQUARES>, NSQUARES> generate_square_line() {
 		array<array<Bitboard, NSQUARES>, NSQUARES> square_line{};
@@ -36,7 +36,7 @@ namespace tables {
 		}
 		return square_line;
 	}
-	static array<array<Bitboard, NSQUARES>, NSQUARES> square_line = generate_square_line();
+	const static array<array<Bitboard, NSQUARES>, NSQUARES> square_line = generate_square_line();
 
 	inline static Bitboard square_in_between(Square sq1, Square sq2) {
 		return squares_in_between[sq1][sq2];

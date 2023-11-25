@@ -184,8 +184,8 @@ namespace tables {
 		return bishop_attack_masks;
 	}
 
-	static array<Bitboard, NSQUARES> rook_attack_masks = generate_rook_attack_masks();
-	static array<Bitboard, NSQUARES> bishop_attack_masks = generate_bishop_attack_masks();
+	const static array<Bitboard, NSQUARES> rook_attack_masks = generate_rook_attack_masks();
+	const static array<Bitboard, NSQUARES> bishop_attack_masks = generate_bishop_attack_masks();
 
 	[[nodiscard]] static Bitboard generate_slow_sliding_attacks(Square sq, Direction direction, Bitboard occupancy) {
 		Bitboard attacks{};
@@ -218,7 +218,6 @@ namespace tables {
 			   generate_slow_sliding_attacks(sq, SOUTH_EAST, occupancy) |
 			   generate_slow_sliding_attacks(sq, SOUTH_WEST, occupancy);
 	}
-
 
 	[[nodiscard]] static array<array<Bitboard, ROOK_TABLE_SIZE>, NSQUARES> generate_rook_attack_table() {
 		array<array<Bitboard, ROOK_TABLE_SIZE>, NSQUARES> rook_attack_table{};
@@ -254,14 +253,14 @@ namespace tables {
 		return bishop_attack_table;
 	}
 
-	static array<array<Bitboard, ROOK_TABLE_SIZE>, NSQUARES> rook_attack_table = generate_rook_attack_table();
+	const static array<array<Bitboard, ROOK_TABLE_SIZE>, NSQUARES> rook_attack_table = generate_rook_attack_table();
 
 	static Bitboard get_rook_attacks(Square square, Bitboard occ) {
 		usize index = ((occ & rook_attack_masks[square]) * ROOK_MAGICS[square]) >> ROOK_SHIFTS[square];
 		return rook_attack_table[square][index];
 	}
 
-	static array<array<Bitboard, BISHOP_TABLE_SIZE>, NSQUARES> bishop_attack_table = generate_bishop_attack_table();
+	const static array<array<Bitboard, BISHOP_TABLE_SIZE>, NSQUARES> bishop_attack_table = generate_bishop_attack_table();
 
 	static Bitboard get_bishop_attacks(Square square, Bitboard occ) {
 		usize index = ((occ & bishop_attack_masks[square]) * BISHOP_MAGICS[square]) >> BISHOP_SHIFTS[square];
