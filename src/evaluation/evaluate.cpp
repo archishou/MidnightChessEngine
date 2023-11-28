@@ -8,7 +8,7 @@
 #endif
 #define INCBIN_SILENCE_BITCODE_WARNING
 #include "../3rd_party/incbin.h"
-INCBIN(nnue, "src/evaluation/netM003.nnue");
+INCBIN(nnue, "src/evaluation/netM004.nnue");
 const NNUEParams &nnue_params = *reinterpret_cast<const NNUEParams *>(gnnueData);
 
 std::pair<usize, usize> NNUE::index_of(Piece piece, Square square) {
