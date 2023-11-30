@@ -8,6 +8,7 @@
 #include <vector>
 #include "../board/types/square.h"
 #include "../board/types/piece.h"
+#include "simd.h"
 
 constexpr usize INPUT_LAYER_SIZE = NSQUARES * 12;
 constexpr usize HIDDEN_LAYER1_SIZE = 768;
@@ -60,6 +61,14 @@ struct NNUE {
 					  const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
 					  const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights);
 
+	i32 crelu_flatten_simd(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
+						   const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
+						   const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights);
+
+	i32 crelu_flatten_norm(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
+						   const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
+						   const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights);
+
 	void reset() {
 		m_accumulator_stack.clear();
 		m_accumulator_stack.push_back({});
@@ -92,16 +101,32 @@ struct NNUE {
 	inline void add_feature(std::array<i16, HIDDEN_LAYER1_SIZE> &input,
 							const std::array<i16, INPUT_LAYER_SIZE * HIDDEN_LAYER1_SIZE> &weights,
 							usize offset) {
-		for (usize i = 0; i < input.size(); ++i) {
-			input[i] += weights[offset + i];
+		if constexpr (arch_type == SimdArchType::NONE) {
+			for (usize i = 0; i < input.size(); ++i) {
+				input[i] += weights[offset + i];
+			}
+		} else {
+			for (usize i = 0; i < input.size(); i += REGISTER_WIDTH) {
+				auto simd_reg_input = load_register(&input[i]);
+				auto simd_reg_weigh = load_register(&weights[offset + i]);
+				store(&input[i], vec_add(simd_reg_input, simd_reg_weigh));
+			}
 		}
 	}
 
 	inline void remove_feature(std::array<i16, HIDDEN_LAYER1_SIZE> &input,
 							   const std::array<i16, INPUT_LAYER_SIZE * HIDDEN_LAYER1_SIZE> &weights,
 							   usize offset) {
-		for (usize i = 0; i < input.size(); ++i) {
-			input[i] -= weights[offset + i];
+		if constexpr (arch_type == SimdArchType::NONE) {
+			for (usize i = 0; i < input.size(); ++i) {
+				input[i] -= weights[offset + i];
+			}
+		} else {
+			for (usize i = 0; i < input.size(); i += REGISTER_WIDTH) {
+				auto simd_reg_input = load_register(&input[i]);
+				auto simd_reg_weigh = load_register(&weights[offset + i]);
+				store(&input[i], vec_sub(simd_reg_input, simd_reg_weigh));
+			}
 		}
 	}
 

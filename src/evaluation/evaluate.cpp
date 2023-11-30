@@ -24,9 +24,9 @@ std::pair<usize, usize> NNUE::index_of(Piece piece, Square square) {
 	return {white_idx, black_idx};
 }
 
-i32 NNUE::crelu_flatten(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
-						const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
-						const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights) {
+i32 NNUE::crelu_flatten_norm(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
+							 const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
+							 const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights) {
 	i32 sum = 0;
 
 	for (usize i = 0; i < HIDDEN_LAYER1_SIZE; ++i) {
@@ -35,4 +35,35 @@ i32 NNUE::crelu_flatten(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 	}
 
 	return sum / QA;
+}
+
+i32 NNUE::crelu_flatten_simd(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
+							 const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
+							 const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights) {
+	i32 sum = 0;
+
+	for (usize i = 0; i < HIDDEN_LAYER1_SIZE; i += REGISTER_WIDTH) {
+		auto simd_input = load_register(&us[i]);
+		simd_input = vec_clamp(CRELU_MIN, CRELU_MAX, simd_input);
+		auto simd_weigh = load_register(&weights[i]);
+		auto product = vec_mul(simd_input, simd_weigh);
+		sum += vec_horizontal_add(product);
+
+		simd_input = load_register(&them[i]);
+		simd_input = vec_clamp(CRELU_MIN, CRELU_MAX, simd_input);
+		simd_weigh = load_register(&weights[i + HIDDEN_LAYER1_SIZE]);
+		product = vec_mul(simd_input, simd_weigh);
+		sum += vec_horizontal_add(product);
+	}
+
+	return sum;
+}
+
+i32 NNUE::crelu_flatten(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
+						const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
+						const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights) {
+	if constexpr (arch_type == SimdArchType::NONE) {
+		return crelu_flatten_norm(us, them, weights);
+	}
+	return crelu_flatten_simd(us, them, weights);
 }
