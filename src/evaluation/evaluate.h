@@ -8,13 +8,14 @@
 #include <vector>
 #include "../board/types/square.h"
 #include "../board/types/piece.h"
+#include "simd.h"
 
 constexpr usize INPUT_LAYER_SIZE = NSQUARES * 12;
 constexpr usize HIDDEN_LAYER1_SIZE = 768;
 
 constexpr i32 SCALE = 400;
 
-constexpr i32 QA = 255;
+constexpr i32 QA = 181;
 constexpr i32 QB = 64;
 
 constexpr i32 QAB = QA * QB;
@@ -56,9 +57,17 @@ struct NNUE {
 	~NNUE() = default;
 
 	std::pair<usize, usize> index_of(Piece piece, Square square);
-	i32 crelu_flatten(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
+	i32 screlu_flatten(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 					  const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
 					  const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights);
+
+	i32 screlu_flatten_simd(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
+						   const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
+						   const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights);
+
+	i32 screlu_flatten_norm(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
+						   const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
+						   const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights);
 
 	void reset() {
 		m_accumulator_stack.clear();
@@ -92,16 +101,32 @@ struct NNUE {
 	inline void add_feature(std::array<i16, HIDDEN_LAYER1_SIZE> &input,
 							const std::array<i16, INPUT_LAYER_SIZE * HIDDEN_LAYER1_SIZE> &weights,
 							usize offset) {
-		for (usize i = 0; i < input.size(); ++i) {
-			input[i] += weights[offset + i];
+		if constexpr (arch_type == SimdArchType::NONE) {
+			for (usize i = 0; i < input.size(); ++i) {
+				input[i] += weights[offset + i];
+			}
+		} else {
+			for (usize i = 0; i < input.size(); i += REGISTER_WIDTH) {
+				auto simd_reg_input = loadi16_register(&input[i]);
+				auto simd_reg_weigh = loadi16_register(&weights[offset + i]);
+				store_veci16(&input[i], veci16_add(simd_reg_input, simd_reg_weigh));
+			}
 		}
 	}
 
 	inline void remove_feature(std::array<i16, HIDDEN_LAYER1_SIZE> &input,
 							   const std::array<i16, INPUT_LAYER_SIZE * HIDDEN_LAYER1_SIZE> &weights,
 							   usize offset) {
-		for (usize i = 0; i < input.size(); ++i) {
-			input[i] -= weights[offset + i];
+		if constexpr (arch_type == SimdArchType::NONE) {
+			for (usize i = 0; i < input.size(); ++i) {
+				input[i] -= weights[offset + i];
+			}
+		} else {
+			for (usize i = 0; i < input.size(); i += REGISTER_WIDTH) {
+				auto simd_reg_input = loadi16_register(&input[i]);
+				auto simd_reg_weigh = loadi16_register(&weights[offset + i]);
+				store_veci16(&input[i], veci16_sub(simd_reg_input, simd_reg_weigh));
+			}
 		}
 	}
 
@@ -110,9 +135,9 @@ struct NNUE {
 		auto output = 0;
 		const auto& m_curr = m_accumulator_stack.back();
 		if constexpr (color == WHITE) {
-			output = crelu_flatten(m_curr.white, m_curr.black, nnue_params.output_weights);
+			output = screlu_flatten(m_curr.white, m_curr.black, nnue_params.output_weights);
 		} else {
-			output = crelu_flatten(m_curr.black, m_curr.white, nnue_params.output_weights);
+			output = screlu_flatten(m_curr.black, m_curr.white, nnue_params.output_weights);
 		}
 		return (output + nnue_params.output_bias) * SCALE / QAB;
 	}
