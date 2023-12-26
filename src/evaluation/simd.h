@@ -90,17 +90,26 @@ auto vec_horizontal_add(auto vec) {
 
     auto sum4 = _mm256_hadd_epi32(sum8, sum8); // 4 numbers
 
+
     auto sum2 = _mm256_hadd_epi32(sum4, sum4); // 2 numbers
+
+    auto lower_number = _mm256_castsi256_si128(sum2);
+    auto higher_number =  _mm256_extractf128_si256(sum2, 1);
+    auto result = _mm_add_epi32(lower_number, higher_number);
+    return _mm_extract_epi32(result, 0);
+
+    //auto sum = _mm256_hadd_epi32(sum2, sum2); // 1 number
+
 /*
     std::array<i32, 8> nums = {};
-    _mm256_store_si256((__m256i*)&nums, sum2);
+    _mm256_store_si256((__m256i*)&nums, sum);
     std::cout << "Start" << std::endl;
     for (auto num : nums) {
         std::cout << num << "," << std::endl;
     }
     std::cout << "END" << std::endl;
-    auto sum = _mm256_hadd_epi32(sum2, sum2); // 1 number
-*/
-    return _mm256_extract_epi32(sum2, 0) + _mm256_extract_epi32(sum2, 4);
+
+    return _mm256_extract_epi32(sum, 0);
+    */
 #endif
 }
