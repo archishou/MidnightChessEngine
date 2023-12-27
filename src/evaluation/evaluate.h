@@ -10,10 +10,7 @@
 #include "../board/types/piece.h"
 
 constexpr usize INPUT_LAYER_SIZE = NSQUARES * 12;
-constexpr usize HIDDEN_LAYER1_SIZE = 512;
-
-constexpr i32 CRELU_MIN = 0;
-constexpr i32 CRELU_MAX = 255;
+constexpr usize HIDDEN_LAYER1_SIZE = 768;
 
 constexpr i32 SCALE = 400;
 
@@ -44,8 +41,9 @@ struct alignas(64) LazyHiddenLayer {
 	}
 };
 
-constexpr i32 crelu(i16 x) {
-	return std::clamp(static_cast<i32>(x), CRELU_MIN, CRELU_MAX);
+constexpr i32 screlu(i16 x) {
+	auto clamped = std::clamp(static_cast<i32>(x), 0, QA);
+	return clamped * clamped;
 }
 
 struct NNUE {
