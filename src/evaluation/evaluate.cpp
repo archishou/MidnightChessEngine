@@ -8,7 +8,7 @@
 #endif
 #define INCBIN_SILENCE_BITCODE_WARNING
 #include "../3rd_party/incbin.h"
-INCBIN(nnue, "src/evaluation/netM005.nnue");
+INCBIN(nnue, "src/evaluation/netM006.nnue");
 const NNUEParams &nnue_params = *reinterpret_cast<const NNUEParams *>(gnnueData);
 
 std::pair<usize, usize> NNUE::index_of(Piece piece, Square square) {
@@ -30,9 +30,9 @@ i32 NNUE::crelu_flatten(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 	i32 sum = 0;
 
 	for (usize i = 0; i < HIDDEN_LAYER1_SIZE; ++i) {
-		sum += crelu(us[i]) * weights[i];
-		sum += crelu(them[i]) * weights[HIDDEN_LAYER1_SIZE + i];
+		sum += screlu(us[i]) * weights[i];
+		sum += screlu(them[i]) * weights[HIDDEN_LAYER1_SIZE + i];
 	}
 
-	return sum;
+	return sum / QA;
 }
