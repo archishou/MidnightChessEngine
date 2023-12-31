@@ -8,7 +8,7 @@
 #endif
 #define INCBIN_SILENCE_BITCODE_WARNING
 #include "../3rd_party/incbin.h"
-INCBIN(nnue, "/Users/archishmaan/Documents/CodeProjects/chess-engine/src/evaluation/netM006.nnue");
+INCBIN(nnue, "src/evaluation/netM006.nnue");
 const NNUEParams &nnue_params = *reinterpret_cast<const NNUEParams *>(gnnueData);
 
 std::pair<usize, usize> NNUE::index_of(Piece piece, Square square) {
@@ -42,7 +42,6 @@ i32 NNUE::screlu_flatten_simd(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 							 const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights) {
 	auto sum = veci32_zero();
 
-	auto manual_sum = 0;
 	for (usize i = 0; i < HIDDEN_LAYER1_SIZE; i += REGISTER_WIDTH) {
 		auto simd_input = loadi16_register(&us[i]);
 		simd_input = veci16_clamp(simd_input, 0, QA);
@@ -51,31 +50,15 @@ i32 NNUE::screlu_flatten_simd(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 		auto product = veci16_mul_pair_accumi32(simd_input, simd_weigh);
 		sum = veci32_add(sum, product);
 
-		i32 us_sum = 0;
-		for (usize nidx = i; nidx < i + REGISTER_WIDTH; nidx++) {
-			us_sum += screlu(us[nidx]) * weights[nidx];
-		}
-		assert(us_sum == veci32_horizontal_add(product));
-
 		simd_input = loadi16_register(&them[i]);
 		simd_input = veci16_clamp(simd_input, 0, QA);
 		simd_input = veci16_mul(simd_input, simd_input);
 		simd_weigh = loadi16_register(&weights[i + HIDDEN_LAYER1_SIZE]);
 		product = veci16_mul_pair_accumi32(simd_input, simd_weigh);
 		sum = veci32_add(sum, product);
-
-		i32 them_sum = 0;
-		for (usize nidx = i; nidx < i + REGISTER_WIDTH; nidx++) {
-			them_sum += screlu(them[nidx]) * weights[HIDDEN_LAYER1_SIZE + nidx];
-		}
-		assert(them_sum == veci32_horizontal_add(product));
-
-		manual_sum += us_sum + them_sum;
-		assert(manual_sum == veci32_horizontal_add(sum));
 	}
 
-	assert(manual_sum == veci32_horizontal_add(sum));
-	return veci32_horizontal_add(sum);
+	return veci32_horizontal_add(sum) / QA;
 }
 
 i32 NNUE::screlu_flatten(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
@@ -84,6 +67,5 @@ i32 NNUE::screlu_flatten(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 	if constexpr (arch_type == SimdArchType::NONE) {
 		return screlu_flatten_norm(us, them, weights);
 	}
-	assert(screlu_flatten_norm(us, them, weights) == screlu_flatten_simd(us, them, weights));
 	return screlu_flatten_simd(us, them, weights);
 }
