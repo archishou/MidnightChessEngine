@@ -20,7 +20,7 @@ static constexpr usize REGISTER_WIDTH = 16;
 static constexpr auto arch_type = SimdArchType::NONE;
 #endif
 
-auto inline loadi32_register([[maybe_unused]] auto value) {
+auto inline loadi16_register([[maybe_unused]] auto value) {
 #if defined(__ARM_NEON)
 	return vld1q_s16(value);
 #elif defined(__AVX2__)
@@ -102,21 +102,6 @@ auto inline veci16_clamp([[maybe_unused]] auto min, [[maybe_unused]] auto max, [
 #endif
 }
 
-auto inline veci16_pairwise_horizontal([[maybe_unused]] auto vec) {
-#if defined(__ARM_NEON)
-	return vpaddlq_s16(vec);
-#elif defined(__AVX2__)
-	auto lower128_16bit = _mm256_castsi256_si128(vec);      // 8 numbers
-    auto upper128_16bit = _mm256_extractf128_si256(vec, 1); // 8 numbers
-    auto lower8_32bit = _mm256_cvtepi16_epi32(lower128_16bit);  // sign extend to 32 bits
-    auto upper8_32bit = _mm256_cvtepi16_epi32(upper128_16bit); // sign extend to 32 bits
-
-    return _mm256_add_epi32(lower8_32bit, upper8_32bit); // add a and b // 8 numbers
-#else
-	return 0;
-#endif
-}
-
 // Adds
 auto inline veci32_horizontal_add([[maybe_unused]] auto vec) {
 #if defined(__ARM_NEON)
@@ -129,6 +114,19 @@ auto inline veci32_horizontal_add([[maybe_unused]] auto vec) {
     auto higher_number =  _mm256_extractf128_si256(sum2, 1);
     auto result = _mm_add_epi32(lower_number, higher_number);
     return _mm_extract_epi32(result, 0);
+#else
+	return 0;
+#endif
+}
+
+auto inline veci16_mul_pair_accumi32([[maybe_unused]] auto vec1,
+									  [[maybe_unused]] auto vec2) {
+#if defined(__ARM_NEON)
+	auto mul_low = vmull_s16(vget_low_s16(vec1), vget_low_s16(vec2));
+	auto mul_high = vmull_s16(vget_high_s16(vec1), vget_high_s16(vec2));
+	return veci32_add(mul_low, mul_high);
+#elif defined(__AXV2__)
+	return _mm256_madd_epi16(vec1, vec2);
 #else
 	return 0;
 #endif

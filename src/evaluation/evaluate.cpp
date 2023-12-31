@@ -8,7 +8,7 @@
 #endif
 #define INCBIN_SILENCE_BITCODE_WARNING
 #include "../3rd_party/incbin.h"
-INCBIN(nnue, "src/evaluation/netM006.nnue");
+INCBIN(nnue, "/Users/archishmaan/Documents/CodeProjects/chess-engine/src/evaluation/netM006.nnue");
 const NNUEParams &nnue_params = *reinterpret_cast<const NNUEParams *>(gnnueData);
 
 std::pair<usize, usize> NNUE::index_of(Piece piece, Square square) {
@@ -43,17 +43,17 @@ i32 NNUE::crelu_flatten_simd(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 	auto sum = veci32_zero();
 
 	for (usize i = 0; i < HIDDEN_LAYER1_SIZE; i += REGISTER_WIDTH) {
-		auto simd_input = loadi32_register(&us[i]);
+		auto simd_input = loadi16_register(&us[i]);
 		simd_input = veci16_clamp(CRELU_MIN, CRELU_MAX, simd_input);
-		auto simd_weigh = loadi32_register(&weights[i]);
-		auto product = veci16_mul(simd_input, simd_weigh);
-		sum = veci32_add(sum, veci16_pairwise_horizontal(product));
+		auto simd_weigh = loadi16_register(&weights[i]);
+		auto product = veci16_mul_pair_accumi32(simd_input, simd_weigh);
+		sum = veci32_add(sum, product);
 
-		simd_input = loadi32_register(&them[i]);
+		simd_input = loadi16_register(&them[i]);
 		simd_input = veci16_clamp(CRELU_MIN, CRELU_MAX, simd_input);
-		simd_weigh = loadi32_register(&weights[i + HIDDEN_LAYER1_SIZE]);
-		product = veci16_mul(simd_input, simd_weigh);
-		sum = veci32_add(sum, veci16_pairwise_horizontal(product));
+		simd_weigh = loadi16_register(&weights[i + HIDDEN_LAYER1_SIZE]);
+		product = veci16_mul_pair_accumi32(simd_input, simd_weigh);
+		sum = veci32_add(sum, product);
 	}
 
 	return veci32_horizontal_add(sum);

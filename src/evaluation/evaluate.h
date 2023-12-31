@@ -107,8 +107,8 @@ struct NNUE {
 			}
 		} else {
 			for (usize i = 0; i < input.size(); i += REGISTER_WIDTH) {
-				auto simd_reg_input = loadi32_register(&input[i]);
-				auto simd_reg_weigh = loadi32_register(&weights[offset + i]);
+				auto simd_reg_input = loadi16_register(&input[i]);
+				auto simd_reg_weigh = loadi16_register(&weights[offset + i]);
 				store_veci16(&input[i], veci16_add(simd_reg_input, simd_reg_weigh));
 			}
 		}
@@ -123,8 +123,8 @@ struct NNUE {
 			}
 		} else {
 			for (usize i = 0; i < input.size(); i += REGISTER_WIDTH) {
-				auto simd_reg_input = loadi32_register(&input[i]);
-				auto simd_reg_weigh = loadi32_register(&weights[offset + i]);
+				auto simd_reg_input = loadi16_register(&input[i]);
+				auto simd_reg_weigh = loadi16_register(&weights[offset + i]);
 				store_veci16(&input[i], veci16_sub(simd_reg_input, simd_reg_weigh));
 			}
 		}
