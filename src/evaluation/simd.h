@@ -20,7 +20,7 @@ static constexpr usize REGISTER_WIDTH = 16;
 static constexpr auto arch_type = SimdArchType::NONE;
 #endif
 
-auto load_register([[maybe_unused]] auto value) {
+auto inline load_register([[maybe_unused]] auto value) {
 #if defined(__ARM_NEON)
 	return vld1q_s16(value);
 #elif defined(__AVX2__)
@@ -30,7 +30,7 @@ auto load_register([[maybe_unused]] auto value) {
 #endif
 }
 
-auto store([[maybe_unused]] auto value, [[maybe_unused]] auto simd_register) {
+auto inline store([[maybe_unused]] auto value, [[maybe_unused]] auto simd_register) {
 #if defined(__ARM_NEON)
 	vst1q_s16(value, simd_register);
 #elif defined(__AVX2__)
@@ -38,7 +38,17 @@ auto store([[maybe_unused]] auto value, [[maybe_unused]] auto simd_register) {
 #endif
 }
 
-auto vec_add([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
+auto inline vec_zero() {
+#if defined(__ARM_NEON)
+	return vdupq_n_s16(0);
+#elif defined(__AVX2__)
+	return _mm256_setzero_si256();
+#else
+	return 0;
+#endif
+}
+
+auto inline vec_add([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #if defined(__ARM_NEON)
 	return vaddq_s16(vec1, vec2);
 #elif defined(__AVX2__)
@@ -48,7 +58,17 @@ auto vec_add([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #endif
 }
 
-auto vec_sub([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
+auto inline veci32_add([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
+#if defined(__ARM_NEON)
+	return vaddq_s32(vec1, vec2);
+#elif defined(__AVX2__)
+	return _mm256_add_epi32(vec1, vec2);
+#else
+	return 0;
+#endif
+}
+
+auto inline vec_sub([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #if defined(__ARM_NEON)
 	return vsubq_s16(vec1, vec2);
 #elif defined(__AVX2__)
@@ -58,7 +78,7 @@ auto vec_sub([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #endif
 }
 
-auto vec_mul([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
+auto inline vec_mul([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #if defined(__ARM_NEON)
 	return vmulq_s16(vec1, vec2);
 #elif defined(__AVX2__)
@@ -68,7 +88,7 @@ auto vec_mul([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #endif
 }
 
-auto vec_clamp([[maybe_unused]] auto min, [[maybe_unused]] auto max, [[maybe_unused]] auto vec) {
+auto inline vec_clamp([[maybe_unused]] auto min, [[maybe_unused]] auto max, [[maybe_unused]] auto vec) {
 #if defined(__ARM_NEON)
 	vec = vminq_s16(vdupq_n_s16(max), vec);
 	vec = vmaxq_s16(vdupq_n_s16(min), vec);
@@ -82,19 +102,27 @@ auto vec_clamp([[maybe_unused]] auto min, [[maybe_unused]] auto max, [[maybe_unu
 #endif
 }
 
-// Adds
-auto vec_horizontal_add([[maybe_unused]] auto vec) {
+auto inline vec_pairwise_horizontal_addi16([[maybe_unused]] auto vec) {
 #if defined(__ARM_NEON)
-	auto result32 = vpaddlq_s16(vec);
-	return vaddvq_s32(result32);
+	return vpaddlq_s16(vec);
 #elif defined(__AVX2__)
 	auto lower128_16bit = _mm256_castsi256_si128(vec);      // 8 numbers
     auto upper128_16bit = _mm256_extractf128_si256(vec, 1); // 8 numbers
     auto lower8_32bit = _mm256_cvtepi16_epi32(lower128_16bit);  // sign extend to 32 bits
     auto upper8_32bit = _mm256_cvtepi16_epi32(upper128_16bit); // sign extend to 32 bits
 
-    auto sum8 = _mm256_add_epi32(lower8_32bit, upper8_32bit); // add a and b // 8 numbers
-    auto sum4 = _mm256_hadd_epi32(sum8, sum8); // 4 numbers
+    return _mm256_add_epi32(lower8_32bit, upper8_32bit); // add a and b // 8 numbers
+#else
+	return 0;
+#endif
+}
+
+// Adds
+auto inline veci32_horizontal_add([[maybe_unused]] auto vec) {
+#if defined(__ARM_NEON)
+	return vaddvq_s32(vec);
+#elif defined(__AVX2__)
+    auto sum4 = _mm256_hadd_epi32(vec, vec); // 4 numbers
     auto sum2 = _mm256_hadd_epi32(sum4, sum4); // 2 numbers
 
     auto lower_number = _mm256_castsi256_si128(sum2);
