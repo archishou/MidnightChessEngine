@@ -20,7 +20,7 @@ static constexpr usize REGISTER_WIDTH = 16;
 static constexpr auto arch_type = SimdArchType::NONE;
 #endif
 
-auto inline load_register([[maybe_unused]] auto value) {
+auto inline loadi32_register([[maybe_unused]] auto value) {
 #if defined(__ARM_NEON)
 	return vld1q_s16(value);
 #elif defined(__AVX2__)
@@ -30,7 +30,7 @@ auto inline load_register([[maybe_unused]] auto value) {
 #endif
 }
 
-auto inline store([[maybe_unused]] auto value, [[maybe_unused]] auto simd_register) {
+auto inline store_veci16([[maybe_unused]] auto value, [[maybe_unused]] auto simd_register) {
 #if defined(__ARM_NEON)
 	vst1q_s16(value, simd_register);
 #elif defined(__AVX2__)
@@ -38,9 +38,9 @@ auto inline store([[maybe_unused]] auto value, [[maybe_unused]] auto simd_regist
 #endif
 }
 
-auto inline vec_zero() {
+auto inline veci32_zero() {
 #if defined(__ARM_NEON)
-	return vdupq_n_s16(0);
+	return vdupq_n_s32(0);
 #elif defined(__AVX2__)
 	return _mm256_setzero_si256();
 #else
@@ -48,7 +48,7 @@ auto inline vec_zero() {
 #endif
 }
 
-auto inline vec_add([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
+auto inline veci16_add([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #if defined(__ARM_NEON)
 	return vaddq_s16(vec1, vec2);
 #elif defined(__AVX2__)
@@ -68,7 +68,7 @@ auto inline veci32_add([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #endif
 }
 
-auto inline vec_sub([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
+auto inline veci16_sub([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #if defined(__ARM_NEON)
 	return vsubq_s16(vec1, vec2);
 #elif defined(__AVX2__)
@@ -78,7 +78,7 @@ auto inline vec_sub([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #endif
 }
 
-auto inline vec_mul([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
+auto inline veci16_mul([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #if defined(__ARM_NEON)
 	return vmulq_s16(vec1, vec2);
 #elif defined(__AVX2__)
@@ -88,7 +88,7 @@ auto inline vec_mul([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #endif
 }
 
-auto inline vec_clamp([[maybe_unused]] auto min, [[maybe_unused]] auto max, [[maybe_unused]] auto vec) {
+auto inline veci16_clamp([[maybe_unused]] auto min, [[maybe_unused]] auto max, [[maybe_unused]] auto vec) {
 #if defined(__ARM_NEON)
 	vec = vminq_s16(vdupq_n_s16(max), vec);
 	vec = vmaxq_s16(vdupq_n_s16(min), vec);
@@ -102,7 +102,7 @@ auto inline vec_clamp([[maybe_unused]] auto min, [[maybe_unused]] auto max, [[ma
 #endif
 }
 
-auto inline vec_pairwise_horizontal_addi16([[maybe_unused]] auto vec) {
+auto inline veci16_pairwise_horizontal([[maybe_unused]] auto vec) {
 #if defined(__ARM_NEON)
 	return vpaddlq_s16(vec);
 #elif defined(__AVX2__)

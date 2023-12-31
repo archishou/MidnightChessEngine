@@ -3479,7 +3479,7 @@ using ticks_t = timer_large_integer::type;
         void store(T desired, std::memory_order order = std::memory_order_seq_cst) DOCTEST_NOEXCEPT {
             // first value becomes desired", all others become 0.
             for(auto& c : m_atomics) {
-                c.atomic.store(desired, order);
+                c.atomic.storei16_vec(desired, order);
                 desired = {};
             }
         }

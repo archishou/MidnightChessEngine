@@ -40,20 +40,20 @@ i32 NNUE::crelu_flatten_norm(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 i32 NNUE::crelu_flatten_simd(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 							 const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
 							 const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights) {
-	auto sum = vec_zero();
+	auto sum = veci32_zero();
 
 	for (usize i = 0; i < HIDDEN_LAYER1_SIZE; i += REGISTER_WIDTH) {
-		auto simd_input = load_register(&us[i]);
-		simd_input = vec_clamp(CRELU_MIN, CRELU_MAX, simd_input);
-		auto simd_weigh = load_register(&weights[i]);
-		auto product = vec_mul(simd_input, simd_weigh);
-		sum = veci32_add(sum, vec_pairwise_horizontal_addi16(product));
+		auto simd_input = loadi32_register(&us[i]);
+		simd_input = veci16_clamp(CRELU_MIN, CRELU_MAX, simd_input);
+		auto simd_weigh = loadi32_register(&weights[i]);
+		auto product = veci16_mul(simd_input, simd_weigh);
+		sum = veci32_add(sum, veci16_pairwise_horizontal(product));
 
-		simd_input = load_register(&them[i]);
-		simd_input = vec_clamp(CRELU_MIN, CRELU_MAX, simd_input);
-		simd_weigh = load_register(&weights[i + HIDDEN_LAYER1_SIZE]);
-		product = vec_mul(simd_input, simd_weigh);
-		sum = veci32_add(sum, vec_pairwise_horizontal_addi16(product));
+		simd_input = loadi32_register(&them[i]);
+		simd_input = veci16_clamp(CRELU_MIN, CRELU_MAX, simd_input);
+		simd_weigh = loadi32_register(&weights[i + HIDDEN_LAYER1_SIZE]);
+		product = veci16_mul(simd_input, simd_weigh);
+		sum = veci32_add(sum, veci16_pairwise_horizontal(product));
 	}
 
 	return veci32_horizontal_add(sum);
