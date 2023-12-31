@@ -15,7 +15,7 @@ constexpr usize HIDDEN_LAYER1_SIZE = 768;
 
 constexpr i32 SCALE = 400;
 
-constexpr i32 QA = 255;
+constexpr i32 QA = 181;
 constexpr i32 QB = 64;
 
 constexpr i32 QAB = QA * QB;
@@ -57,15 +57,15 @@ struct NNUE {
 	~NNUE() = default;
 
 	std::pair<usize, usize> index_of(Piece piece, Square square);
-	i32 crelu_flatten(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
+	i32 screlu_flatten(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 					  const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
 					  const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights);
 
-	i32 crelu_flatten_simd(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
+	i32 screlu_flatten_simd(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 						   const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
 						   const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights);
 
-	i32 crelu_flatten_norm(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
+	i32 screlu_flatten_norm(const std::array<i16, HIDDEN_LAYER1_SIZE> &us,
 						   const std::array<i16, HIDDEN_LAYER1_SIZE> &them,
 						   const std::array<i16, HIDDEN_LAYER1_SIZE * 2> &weights);
 
@@ -135,9 +135,9 @@ struct NNUE {
 		auto output = 0;
 		const auto& m_curr = m_accumulator_stack.back();
 		if constexpr (color == WHITE) {
-			output = crelu_flatten(m_curr.white, m_curr.black, nnue_params.output_weights);
+			output = screlu_flatten(m_curr.white, m_curr.black, nnue_params.output_weights);
 		} else {
-			output = crelu_flatten(m_curr.black, m_curr.white, nnue_params.output_weights);
+			output = screlu_flatten(m_curr.black, m_curr.white, nnue_params.output_weights);
 		}
 		return (output + nnue_params.output_bias) * SCALE / QAB;
 	}

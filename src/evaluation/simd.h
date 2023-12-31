@@ -18,6 +18,7 @@ static constexpr usize REGISTER_WIDTH = 16;
 
 #else
 static constexpr auto arch_type = SimdArchType::NONE;
+static constexpr usize REGISTER_WIDTH = 0;
 #endif
 
 auto inline loadi16_register([[maybe_unused]] auto value) {
@@ -88,7 +89,7 @@ auto inline veci16_mul([[maybe_unused]] auto vec1, [[maybe_unused]] auto vec2) {
 #endif
 }
 
-auto inline veci16_clamp([[maybe_unused]] auto min, [[maybe_unused]] auto max, [[maybe_unused]] auto vec) {
+auto inline veci16_clamp([[maybe_unused]] auto vec, [[maybe_unused]] auto min, [[maybe_unused]] auto max) {
 #if defined(__ARM_NEON)
 	vec = vminq_s16(vdupq_n_s16(max), vec);
 	vec = vmaxq_s16(vdupq_n_s16(min), vec);
