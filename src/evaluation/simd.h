@@ -126,7 +126,7 @@ auto inline veci16_mul_pair_accumi32([[maybe_unused]] auto vec1,
 	auto mul_low = vmull_s16(vget_low_s16(vec1), vget_low_s16(vec2));
 	auto mul_high = vmull_s16(vget_high_s16(vec1), vget_high_s16(vec2));
 	return veci32_add(mul_low, mul_high);
-#elif defined(__AXV2__)
+#elif defined(__AVX2__)
 	return _mm256_madd_epi16(vec1, vec2);
 #else
 	return 0;
