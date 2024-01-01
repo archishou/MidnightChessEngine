@@ -8,7 +8,7 @@ enum class SimdArchType {
 
 #if defined(__ARM_NEON)
 #include <arm_neon.h>
-static constexpr auto arch_type = SimdArchType::ARM_NEON;
+static constexpr auto arch_type = SimdArchType::NONE;
 static constexpr usize REGISTER_WIDTH = 8;
 
 #elif defined(__AVX2__)
