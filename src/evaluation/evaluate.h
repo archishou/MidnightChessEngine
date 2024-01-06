@@ -51,7 +51,7 @@ struct NNUE {
 	std::vector<LazyHiddenLayer> m_accumulator_stack{};
 
 	explicit NNUE() {
-		m_accumulator_stack.reserve(256);
+		m_accumulator_stack.reserve(512);
 	}
 
 	~NNUE() = default;

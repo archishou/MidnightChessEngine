@@ -2,6 +2,7 @@
 // Created by Archishmaan Peyyety on 6/21/23.
 //
 #include "uci_interpreter.h"
+#include <thread>
 
 void initialize_uci(Position& p) {
 	initialize_engine();
@@ -62,7 +63,29 @@ void parse_move_time(Color side_to_play, const string& move_time_s, SearchParame
 void uci_go(ThreadData &tdata, Position &board, const string &input_line, SearchParameters &sparams) {
 	SearchData sdata = {};
 	parse_move_time(board.turn(), input_line, sparams);
-	search(sdata, tdata, board, sparams);
+	if (sparams.thread_count == 1) {
+		search(sdata, tdata, board, sparams);
+		std::cout << "bestmove " << sdata.final_best_move << std::endl;
+		return;
+	}
+	std::vector<std::thread> threads{};
+	for (i32 idx = 0; idx < sparams.thread_count; idx += 1) {
+		threads.emplace_back(
+			[&sdata, &tdata, &board, idx, sparams]() mutable -> void {
+				if (idx != 0) {
+					sparams.debug_info = false;
+					SearchData _sdata = {};
+					auto _tdata = std::make_unique<ThreadData>(tdata);
+					auto _board = board;
+					auto _sparams = sparams;
+					search(_sdata, *_tdata, _board, _sparams);
+				} else {
+					search(sdata, tdata, board, sparams);
+				}
+			}
+		);
+	}
+	for (auto& t : threads) t.join();
 	std::cout << "bestmove " << sdata.final_best_move << std::endl;
 }
 
@@ -114,7 +137,7 @@ void read_uci() {
 			std::cout << "id name Midnight v8" << std::endl;
 			std::cout << "id author Archishmaan Peyyety" << std::endl;
 			std::cout << "option name Hash type spin default 64 min 1 max 1024" << std::endl;
-			std::cout << "option name Threads type spin default 1 min 1 max 1" << std::endl;
+			std::cout << "option name Threads type spin default 1 min 1 max 512" << std::endl;
 			std::cout << "uciok" << std::endl;
 		} else if (input_line == "quit") {
 			std::cout << "Bye Bye" << std::endl;
@@ -132,7 +155,7 @@ void read_uci() {
 			sparams.debug_info = true;
 		} else if (input_line == "debug off") {
 			sparams.debug_info = false;
-		} else if (input_line.substr(0, 2 ) == "go") {
+		} else if (input_line.substr(0, 2) == "go") {
 			uci_go(*tdata, board, input_line, sparams);
 		} else if (input_line == "bench") {
 			bench();
@@ -143,6 +166,9 @@ void read_uci() {
 			if (parsed_options[2] == "hash") {
 				auto mb = std::stoi(parsed_options[4]);
 				t_table.resize(mb);
+			} else if (parsed_options[2] == "threads") {
+				auto threads = std::stoi(parsed_options[4]);
+				sparams.thread_count = threads;
 			}
 		} else if (input_line == "hash size") {
 			std::cout << t_table.entry_count() << " entries" << std::endl;

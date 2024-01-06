@@ -14,6 +14,7 @@ struct SearchParameters {
 	i16 depth = MAX_DEPTH;
 	i32 hard_time_limit = DEFAULT_SEARCH_TIME;
 	i32 soft_time_limit = DEFAULT_SEARCH_TIME;
+	i32 thread_count = 1;
 	bool debug_info = false;
 };
 

@@ -26,11 +26,10 @@ void update_best_move_results(SearchData &sdata, int sub_depth, bool debug) {
 	for (auto i = 0; i < sdata.pv.length[0]; i++) {
 		pv[i] = sdata.pv.table[0][i];
 	}
-	if (debug) {
-		std::cout	<< "info depth " << sub_depth << " seldepth " << sdata.seldepth
-					 <<  " score cp " << sdata.value << " time " << get_elapsed_time(TimeResolution::Milliseconds)
-					 << " nodes " << sdata.nodes_searched << " pv " << pv << std::endl;
-	}
+	if (!debug) return;
+	std::cout << "info depth " 	<< sub_depth 			<< " seldepth " << sdata.seldepth
+			  <<  " score cp " 	<< sdata.value 			<< " time " 	<< get_elapsed_time(TimeResolution::Milliseconds)
+			  << " nodes " 		<< sdata.nodes_searched << " pv " 		<< pv << std::endl;
 }
 
 int scale_soft_time_limit(SearchParameters &params, SearchData& sdata, int depth) {
