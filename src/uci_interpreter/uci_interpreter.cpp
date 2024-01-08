@@ -72,13 +72,13 @@ void uci_go(ThreadData &tdata, Position &board, const string &input_line, Search
 	Move main_thread_bm = {};
 	for (i32 idx = 0; idx < sparams.thread_count; idx += 1) {
 		threads.emplace_back(
-			[&main_thread_bm, &tdata, &board, &sparams, idx]() {
-				SearchData _sdata = {};
+			[&, idx]() {
 				auto _tdata = std::make_unique<ThreadData>(tdata);
 				auto _board = board;
+				_board.reserve_nnue_capacity();
 				auto _sparams = sparams;
 				_sparams.debug_info = idx == 0;
-				_board.reserve_nnue_capacity();
+				SearchData _sdata = {};
 				search(_sdata, *_tdata, _board, _sparams);
 				if (idx == 0) main_thread_bm = _sdata.final_best_move;
 			}
