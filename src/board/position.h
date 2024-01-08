@@ -70,6 +70,8 @@ public:
 	Position() = default;
 	explicit Position(const std::string& fen);
 
+	inline void reserve_nnue_capacity() { nnue.m_accumulator_stack.reserve(512); }
+
 	[[nodiscard]] inline u16 fifty_move_rule() const { return state_history.peek().fifty_move_rule; }
 	[[nodiscard]] inline Square ep_square() const { return state_history.peek().ep_square; }
 	[[nodiscard]] inline ZobristHash hash() const { return state_history.peek().hash; }

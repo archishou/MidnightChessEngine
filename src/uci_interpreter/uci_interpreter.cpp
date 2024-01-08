@@ -69,24 +69,23 @@ void uci_go(ThreadData &tdata, Position &board, const string &input_line, Search
 		return;
 	}
 	std::vector<std::thread> threads{};
+	Move main_thread_bm = {};
 	for (i32 idx = 0; idx < sparams.thread_count; idx += 1) {
 		threads.emplace_back(
-			[&sdata, &tdata, &board, idx, sparams]() mutable -> void {
-				if (idx != 0) {
-					sparams.debug_info = false;
-					SearchData _sdata = {};
-					auto _tdata = std::make_unique<ThreadData>(tdata);
-					auto _board = board;
-					auto _sparams = sparams;
-					search(_sdata, *_tdata, _board, _sparams);
-				} else {
-					search(sdata, tdata, board, sparams);
-				}
+			[&main_thread_bm, &tdata, &board, &sparams, idx]() {
+				SearchData _sdata = {};
+				auto _tdata = std::make_unique<ThreadData>(tdata);
+				auto _board = board;
+				auto _sparams = sparams;
+				_sparams.debug_info = idx == 0;
+				_board.reserve_nnue_capacity();
+				search(_sdata, *_tdata, _board, _sparams);
+				if (idx == 0) main_thread_bm = _sdata.final_best_move;
 			}
 		);
 	}
 	for (auto& t : threads) t.join();
-	std::cout << "bestmove " << sdata.final_best_move << std::endl;
+	std::cout << "bestmove " << main_thread_bm << std::endl;
 }
 
 void bench() {
