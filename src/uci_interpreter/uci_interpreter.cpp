@@ -66,6 +66,7 @@ void uci_go(ThreadData &tdata, Position &board, const string &input_line, Search
 	}
 	std::vector<std::thread> threads{};
 	SearchData final_sdata = {};
+	auto final_tdata = std::make_unique<ThreadData>();
 	for (i32 idx = 0; idx < sparams.thread_count; idx += 1) {
 		threads.emplace_back(
 			[&, idx]() {
@@ -76,13 +77,17 @@ void uci_go(ThreadData &tdata, Position &board, const string &input_line, Search
 				_sparams.debug_info = idx == 0;
 				SearchData _sdata = {};
 				search(_sdata, *_tdata, _board, _sparams);
-				if (idx == 0) final_sdata = _sdata;
+				if (idx == 0) {
+					final_sdata = _sdata;
+					*final_tdata = *_tdata;
+				}
 			}
 		);
 	}
 	for (auto& t : threads) t.join();
 	std::cout << "bestmove " << final_sdata.final_best_move << std::endl;
 	sdata = final_sdata;
+	tdata = *final_tdata;
 }
 
 void bench() {
@@ -104,6 +109,7 @@ void bench() {
 		};
 		SearchData sdata{};
 		string _;
+		init_history(*tdata);
 		uci_go(*tdata, p, _, parameters, sdata, false);
 		total_nodes += sdata.nodes_searched;
 	}
