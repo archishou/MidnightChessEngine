@@ -60,16 +60,12 @@ void parse_move_time(Color side_to_play, const string& move_time_s, SearchParame
 		std::tie(params.soft_time_limit, params.hard_time_limit) = allocate_time(btime, binc, moves_to_go);
 	}
 }
-void uci_go(ThreadData &tdata, Position &board, const string &input_line, SearchParameters &sparams) {
-	SearchData sdata = {};
-	parse_move_time(board.turn(), input_line, sparams);
-	if (sparams.thread_count == 1) {
-		search(sdata, tdata, board, sparams);
-		std::cout << "bestmove " << sdata.final_best_move << std::endl;
-		return;
+void uci_go(ThreadData &tdata, Position &board, const string &input_line, SearchParameters &sparams, SearchData& sdata, bool parse_time) {
+	if (parse_time) {
+		parse_move_time(board.turn(), input_line, sparams);
 	}
 	std::vector<std::thread> threads{};
-	Move main_thread_bm = {};
+	SearchData final_sdata = {};
 	for (i32 idx = 0; idx < sparams.thread_count; idx += 1) {
 		threads.emplace_back(
 			[&, idx]() {
@@ -80,12 +76,13 @@ void uci_go(ThreadData &tdata, Position &board, const string &input_line, Search
 				_sparams.debug_info = idx == 0;
 				SearchData _sdata = {};
 				search(_sdata, *_tdata, _board, _sparams);
-				if (idx == 0) main_thread_bm = _sdata.final_best_move;
+				if (idx == 0) final_sdata = _sdata;
 			}
 		);
 	}
 	for (auto& t : threads) t.join();
-	std::cout << "bestmove " << main_thread_bm << std::endl;
+	std::cout << "bestmove " << final_sdata.final_best_move << std::endl;
+	sdata = final_sdata;
 }
 
 void bench() {
@@ -106,9 +103,8 @@ void bench() {
 				.debug_info = true,
 		};
 		SearchData sdata{};
-		init_history(*tdata);
-		search(sdata, *tdata, p, parameters);
-		std::cout << "bestmove " << sdata.final_best_move << std::endl;
+		string _;
+		uci_go(*tdata, p, _, parameters, sdata, false);
 		total_nodes += sdata.nodes_searched;
 	}
 	auto end = std::chrono::steady_clock::now();

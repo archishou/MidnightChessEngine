@@ -17,13 +17,18 @@ public:
 
 	inline void push(const T& element) {
 		data[length++] = element;
+		assert(length < Capacity);
 	}
 
 	inline void push(const T&& constructed_element) {
 		data[length++] = std::move(constructed_element);
+		assert(length < Capacity);
 	}
 
-	inline T pop() { return data[length-- -1]; }
+	inline T pop() {
+		return data[length-- -1];
+		assert(length >= 0);
+	}
 
 	[[nodiscard]] inline T peek() const { return data[length - 1]; }
 	[[nodiscard]] inline T& top() { return data[length - 1]; }
@@ -37,12 +42,20 @@ public:
 
 	[[nodiscard]] inline auto empty() const { return length == 0; }
 
-	[[nodiscard]] inline auto operator[](usize i) const { return data[i]; }
+	[[nodiscard]] inline auto operator[](usize i) const {
+		assert(i < length);
+		assert(i >= 0);
+		return data[i];
+	}
 
 	[[nodiscard]] inline auto begin() { return data.begin(); }
 	[[nodiscard]] inline auto end() { return data.begin() + static_cast<std::ptrdiff_t>(length); }
 
-	[[nodiscard]] inline auto &operator[](usize i) { return data[i]; }
+	[[nodiscard]] inline auto &operator[](usize i) {
+		assert(i < length);
+		assert(i >= 0);
+		return data[i];
+	}
 
 	[[nodiscard]] inline auto begin() const { return data.begin(); }
 	[[nodiscard]] inline auto end() const { return data.begin() + static_cast<std::ptrdiff_t>(length); }
