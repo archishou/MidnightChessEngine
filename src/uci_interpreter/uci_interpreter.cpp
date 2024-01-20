@@ -65,6 +65,7 @@ void uci_go(ThreadData &tdata, Position &board, const string &input_line, Search
 		parse_move_time(board.turn(), input_line, sparams);
 	}
 	std::vector<std::thread> threads{};
+	std::vector<SearchParameters> nsparams(sparams.thread_count, sparams);
 	SearchData final_sdata = {};
 	auto final_tdata = std::make_unique<ThreadData>();
 	for (i32 idx = 0; idx < sparams.thread_count; idx += 1) {
@@ -73,14 +74,19 @@ void uci_go(ThreadData &tdata, Position &board, const string &input_line, Search
 				auto _tdata = std::make_unique<ThreadData>(tdata);
 				auto _board = board;
 				_board.reserve_nnue_capacity();
-				auto _sparams = sparams;
-				_sparams.debug_info = idx == 0;
+				nsparams[idx].debug_info = idx == 0;
+				if (idx != 0) {
+					nsparams[idx].soft_time_limit = 86'400'000;
+					nsparams[idx].hard_time_limit = 86'400'000;
+				}
 				SearchData _sdata = {};
-				search(_sdata, *_tdata, _board, _sparams);
+				search(_sdata, *_tdata, _board, nsparams[idx]);
 				if (idx == 0) {
 					final_sdata = _sdata;
 					*final_tdata = *_tdata;
+					for (auto& tsparams : nsparams) tsparams.hard_time_limit = tsparams.soft_time_limit = 0;
 				}
+				std::cout << idx << std::endl;
 			}
 		);
 	}
