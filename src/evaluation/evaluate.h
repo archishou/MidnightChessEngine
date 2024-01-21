@@ -77,13 +77,13 @@ struct NNUE {
 
 	void push_copy() {
 		auto& m_curr = m_accumulator_stack.back();
-		assert(m_accumulator_stack.size() < m_accumulator_stack.capacity());
+//		assert(m_accumulator_stack.size() < m_accumulator_stack.capacity());
 		m_accumulator_stack.push_back(m_curr);
 	}
 
 	void pop() {
 		m_accumulator_stack.pop_back();
-		assert(!m_accumulator_stack.empty());
+//		assert(!m_accumulator_stack.empty());
 	}
 
 	template <bool add_to_square>
