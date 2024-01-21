@@ -27,8 +27,7 @@ template<Color color>
 i32 pvs(SearchData &sdata, ThreadData &tdata, Position &board, i16 depth, i32 ply, i32 alpha, i32 beta, bool do_null);
 
 template<Color color>
-SearchData
-aspiration_windows(SearchData &sdata, ThreadData &tdata, Position &board, i32 prev_score, i16 depth, i32 time_limit);
+void aspiration_windows(SearchData &sdata, ThreadData &tdata, Position &board, i32 prev_score, i16 depth, i32 time_limit);
 
 template<Color color>
 void iterative_deepening(SearchData &sdata, ThreadData &tdata, Position &board, SearchParameters &params);

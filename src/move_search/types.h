@@ -1,4 +1,5 @@
 #pragma once
+#include <atomic>
 #include <vector>
 #include "move_ordering/ordering_constants.h"
 #include "tables/pv_table.h"
@@ -12,8 +13,8 @@ using ScoredMoves = std::vector<ScoredMove>;
 
 struct SearchParameters {
 	i16 depth = MAX_DEPTH;
-	i32 hard_time_limit = DEFAULT_SEARCH_TIME;
-	i32 soft_time_limit = DEFAULT_SEARCH_TIME;
+	std::atomic<i32> hard_time_limit{DEFAULT_SEARCH_TIME};
+	std::atomic<i32> soft_time_limit{DEFAULT_SEARCH_TIME};
 	i32 thread_count = 1;
 	bool debug_info = false;
 };
@@ -34,6 +35,8 @@ struct ThreadData {
 	array<array<Move, 2>, MAX_PLY> killers{};
 
 	array<SearchStack, MAX_PLY> thread_stack{};
+
+	i32 tidx = 0;
 };
 
 struct SearchData {
@@ -47,7 +50,24 @@ struct SearchData {
 	i64 nodes_searched{};
 	i32 seldepth{};
 
-	i32 time_limit{};
+	std::atomic<i32> time_limit{0};
 	i64 hard_node_limit = -1;
 	i64 soft_node_limit = -1;
+
+	SearchData& operator=(const SearchData& other) {
+		best_move = other.best_move;
+		final_best_move = other.final_best_move;
+		search_completed = other.search_completed;
+		value = other.value;
+		final_value = other.final_value;
+
+		pv = other.pv;
+		nodes_searched = other.nodes_searched;
+		seldepth = other.seldepth;
+
+		time_limit = other.time_limit.load();
+		hard_node_limit = other.hard_node_limit;
+		soft_node_limit = other.soft_node_limit;
+		return *this;
+	}
 };
