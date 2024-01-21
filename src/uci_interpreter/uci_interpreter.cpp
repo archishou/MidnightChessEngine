@@ -92,12 +92,10 @@ void uci_go(ThreadData &tdata, Position &board, const string &input_line, Search
 				if (idx == 0) {
 					final_sdata = nsdata[idx];
 					*final_tdata = *copied_tdata;
-					for (auto &sd: nsdata) {
-						sd.time_limit = 0;
-					}
-					for (auto &tsparams: nsparams) {
-						tsparams.hard_time_limit = 0;
-						tsparams.soft_time_limit = 0;
+					for (i32 midx = 0; midx < sparams.thread_count; midx += 1) {
+						nsparams[midx].hard_time_limit = 0;
+						nsparams[midx].soft_time_limit = 0;
+						nsdata[midx].time_limit = 0;
 					}
 				}
 			}
