@@ -33,8 +33,9 @@ void update_best_move_results(SearchData &sdata, int sub_depth, bool debug) {
 }
 
 int scale_soft_time_limit(SearchParameters &params, SearchData& sdata, int depth) {
-	if (params.soft_time_limit == params.hard_time_limit && params.soft_time_limit == 86'400'000) return params.soft_time_limit;
-	if (depth <= 7) return params.soft_time_limit;
+	if (params.soft_time_limit == params.hard_time_limit && params.soft_time_limit == 86'400'000)
+		return params.soft_time_limit;
+	if (depth <= 9) return params.soft_time_limit;
 
 	Move best_move = sdata.best_move;
 	auto best_move_nodes_spent = static_cast<double>(nodes_spent[best_move.from()][best_move.to()]);
@@ -248,7 +249,7 @@ i32 pvs(SearchData &sdata, ThreadData &tdata, Position &board, i16 depth, i32 pl
 
 		board.undo<color>(legal_move);
 		if (!sdata.search_completed) return 0;
-		if (ply == 0) {
+		if (ply == 0 && tdata.tidx == 0) {
 			u64 node_diff = sdata.nodes_searched - nodes_before_search;
 			nodes_spent[legal_move.from()][legal_move.to()] += node_diff;
 		}
@@ -282,8 +283,7 @@ i32 pvs(SearchData &sdata, ThreadData &tdata, Position &board, i16 depth, i32 pl
 }
 
 template<Color color>
-SearchData
-aspiration_windows(SearchData &sdata, ThreadData &tdata, Position &board, i32 prev_score, i16 depth, i32 time_limit) {
+void aspiration_windows(SearchData &sdata, ThreadData &tdata, Position &board, i32 prev_score, i16 depth, i32 time_limit) {
 	reset_search_data(sdata);
 	sdata.time_limit = time_limit;
 	i32 alpha = NEG_INF_CHESS;
@@ -297,7 +297,7 @@ aspiration_windows(SearchData &sdata, ThreadData &tdata, Position &board, i32 pr
 
 	while (true) {
 		if (alpha < -ASP_WINDOW_FULL_SEARCH_BOUNDS) alpha = NEG_INF_CHESS;
-		if (beta  > ASP_WINDOW_FULL_SEARCH_BOUNDS) beta  = POS_INF_CHESS;
+		if (beta  > ASP_WINDOW_FULL_SEARCH_BOUNDS)  beta  = POS_INF_CHESS;
 
 		sdata.value = pvs<color>(sdata, tdata, board, depth, 0, alpha, beta, false);
 		i32 score = sdata.value;
@@ -311,7 +311,6 @@ aspiration_windows(SearchData &sdata, ThreadData &tdata, Position &board, i32 pr
 		delta += delta * 2 / 3;
 	}
 	sdata.best_move = sdata.pv.table[0][0];
-	return sdata;
 }
 
 template<Color color>
@@ -345,10 +344,10 @@ template i32 pvs<WHITE>(SearchData &sdata, ThreadData &tdata, Position &board, i
 template i32 pvs<BLACK>(SearchData &sdata, ThreadData &tdata, Position &board, i16 depth,
 						i32 ply, i32 alpha, i32 beta, bool do_null);
 
-template SearchData
+template void
 aspiration_windows<WHITE>(SearchData &sdata, ThreadData &tdata, Position &board,
 						  i32 prev_score, i16 depth, i32 time_limit);
-template SearchData
+template void
 aspiration_windows<BLACK>(SearchData &sdata, ThreadData &tdata, Position &board,
 						  i32 prev_score, i16 depth, i32 time_limit);
 
