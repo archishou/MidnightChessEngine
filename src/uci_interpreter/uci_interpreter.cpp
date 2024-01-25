@@ -154,7 +154,7 @@ void read_uci() {
 		if (input_line == "uci") {
 			std::cout << "id name Midnight v9" << std::endl;
 			std::cout << "id author Archishmaan Peyyety" << std::endl;
-			std::cout << "option name Hash type spin default 64 min 1 max 1024" << std::endl;
+			std::cout << "option name Hash type spin default 64 min 1 max 32768" << std::endl;
 			std::cout << "option name Threads type spin default 1 min 1 max 512" << std::endl;
 			std::cout << "uciok" << std::endl;
 		} else if (input_line == "quit") {

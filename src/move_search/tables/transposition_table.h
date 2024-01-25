@@ -40,7 +40,7 @@ public:
 	TranspositionTableSearchResults probe_for_move_ordering(ZobristHash hash);
 	TranspositionTableSearchResults probe_for_search(ZobristHash hash, i32 depth, i32 ply);
 	TranspositionTableSearchResults probe_eval(ZobristHash hash, i32 ply);
-	i32 mb_to_entries(i32 mb);
+	usize mb_to_entries(i32 mb);
 	explicit TranspositionTable(i32 mb = 64);
 	size_t entry_count();
 

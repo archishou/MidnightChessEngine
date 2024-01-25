@@ -102,13 +102,13 @@ TranspositionTableSearchResults TranspositionTable::probe_eval(ZobristHash hash,
 	return results;
 }
 
-i32 TranspositionTable::mb_to_entries(i32 mb) {
-	i32 bytes = mb * 1'048'576;
-	return static_cast<i32>(bytes / sizeof(TranspositionTableEntry));
+usize TranspositionTable::mb_to_entries(i32 mb) {
+	usize bytes = mb * 1'048'576;
+	return static_cast<usize>(bytes / sizeof(TranspositionTableEntry));
 }
 
 void TranspositionTable::resize(i32 mb) {
-	i32 entries = mb_to_entries(mb);
+	usize entries = mb_to_entries(mb);
 	transposition_table.resize(entries);
 	transposition_table.shrink_to_fit();
 	reset_table();
