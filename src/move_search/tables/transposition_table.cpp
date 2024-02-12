@@ -103,7 +103,7 @@ TranspositionTableSearchResults TranspositionTable::probe_eval(ZobristHash hash,
 }
 
 usize TranspositionTable::mb_to_entries(i32 mb) {
-	usize bytes = mb * 1'048'576;
+	usize bytes = static_cast<usize>(mb) * 1'048'576;
 	return static_cast<usize>(bytes / sizeof(TranspositionTableEntry));
 }
 
