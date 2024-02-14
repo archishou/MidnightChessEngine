@@ -51,6 +51,7 @@ struct SearchData {
 	i32 seldepth{};
 
 	std::atomic<i32> time_limit{0};
+	std::atomic<bool> stopped{false};
 	i64 hard_node_limit = -1;
 	i64 soft_node_limit = -1;
 
@@ -66,6 +67,7 @@ struct SearchData {
 		seldepth = other.seldepth;
 
 		time_limit = other.time_limit.load();
+		stopped = other.stopped.load();
 		hard_node_limit = other.hard_node_limit;
 		soft_node_limit = other.soft_node_limit;
 		return *this;

@@ -93,9 +93,7 @@ void uci_go(ThreadData &tdata, Position &board, const string &input_line, Search
 					final_sdata = nsdata[idx];
 					*final_tdata = *copied_tdata;
 					for (i32 midx = 0; midx < sparams.thread_count; midx += 1) {
-						nsparams[midx].hard_time_limit = 0;
-						nsparams[midx].soft_time_limit = 0;
-						nsdata[midx].time_limit = 0;
+						nsdata[midx].stopped = true;
 					}
 				}
 			}
