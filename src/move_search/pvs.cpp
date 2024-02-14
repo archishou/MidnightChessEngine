@@ -52,7 +52,7 @@ i32 q_search(SearchData &sdata, ThreadData &tdata, Position &board, i32 ply, i32
 
 	if (ply >= MAX_PLY - 2) return board.evaluate<color>();
 
-	if ((sdata.nodes_searched % 1024 == 0 && (time_elapsed_exceeds(sdata.time_limit, TimeResolution::Milliseconds) || sdata.stopped)) ||
+	if ((sdata.nodes_searched % 1024 == 0 && (sdata.stopped || time_elapsed_exceeds(sdata.time_limit, TimeResolution::Milliseconds))) ||
 		(sdata.nodes_searched > sdata.hard_node_limit && sdata.hard_node_limit != -1)) {
 
 		sdata.search_completed = false;
@@ -115,7 +115,7 @@ i32 pvs(SearchData &sdata, ThreadData &tdata, Position &board, i16 depth, i32 pl
 
 	if (ply >= MAX_PLY - 2) return board.evaluate<color>();
 
-	if ((sdata.nodes_searched % 1024 == 0 && (time_elapsed_exceeds(sdata.time_limit, TimeResolution::Milliseconds) || sdata.stopped)) ||
+	if ((sdata.nodes_searched % 1024 == 0 && (sdata.stopped || time_elapsed_exceeds(sdata.time_limit, TimeResolution::Milliseconds))) ||
 		(sdata.nodes_searched > sdata.hard_node_limit && sdata.hard_node_limit != -1)) {
 
 		sdata.search_completed = false;
