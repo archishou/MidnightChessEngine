@@ -73,8 +73,8 @@ public:
 constexpr Move EMPTY_MOVE = Move();
 
 inline array<string , 16> MOVE_TYPE_UCI = {
-		"", "", "", "", "N", "B", "R", "Q",
-		"", "", "", "", "N", "B", "R", "Q"
+		"", "", "", "", "n", "b", "r", "q",
+		"", "", "", "", "n", "b", "r", "q"
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Move& m) {
